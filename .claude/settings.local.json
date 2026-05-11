@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py -m pip install python-pptx --quiet)",
+      "Bash(py build_sample.py)",
+      "Bash(py build_handover.py)",
+      "Bash(py build_studio.py)",
+      "Bash(py -c \"from PIL import Image; [print\\(n, Image.open\\(n\\).size, f'aspect h/w={Image.open\\(n\\).size[1]/Image.open\\(n\\).size[0]:.4f}'\\) for n in ['apparel.png', 'apparel1.png', 'bp.png', 'bp1.png']]\")",
+      "Bash(python -c \"import openpyxl; print\\('openpyxl', openpyxl.__version__\\)\")",
+      "Bash(python3 -c \"import openpyxl; print\\('openpyxl', openpyxl.__version__\\)\")",
+      "Bash(py --version)",
+      "Bash(py *)"
+    ]
+  }
+}

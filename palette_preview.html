@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hand &amp; Rule — a design system for Create Project</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  /* ===== Palette tokens ===== */
+  :root {
+    --soot: #151211;
+    --paper: #F4EEE3;
+    --paper-soft: #ECE4D3;
+    --thread: #B15030;     /* Apparel — warm, organic */
+    --rule: #254872;       /* Blueprint — cool, precise */
+    --brass: #C29046;      /* Unifying warm accent */
+    --ash: #898378;
+    --hairline: #D5CAB4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--soot);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 88px 0 64px;
+    position: relative;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 88px;
+    width: 3px;
+    height: 80px;
+    background: var(--thread);
+  }
+  .hero .label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--thread);
+    margin-left: 24px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin: 28px 0 8px;
+  }
+  .hero h1 .amp {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--rule);
+  }
+  .hero .tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--ash);
+    max-width: 720px;
+    margin-top: 16px;
+  }
+  .hero .tagline-ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--ash);
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+  .hero .meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ash);
+  }
+
+  /* ============ SECTIONS ============ */
+  .section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .section-no {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--thread);
+    font-weight: 500;
+    padding-top: 12px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .section-title em { color: var(--rule); font-weight: 300; }
+  .section-lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--ash);
+    max-width: 720px;
+    margin-top: 18px;
+  }
+
+  /* ============ THE CONCEPT ============ */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 32px;
+  }
+  .concept-card {
+    padding: 36px;
+    border-radius: 2px;
+    position: relative;
+    min-height: 240px;
+  }
+  .concept-card.hand { background: var(--paper-soft); color: var(--soot); border-left: 4px solid var(--thread); }
+  .concept-card.rule { background: var(--soot); color: var(--paper); border-left: 4px solid var(--rule); }
+  .concept-card .kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    font-size: 92px;
+    line-height: 1;
+    opacity: 0.16;
+    position: absolute;
+    right: 24px;
+    top: 16px;
+  }
+  .concept-card.rule .kanji { color: var(--paper); }
+  .concept-card .head {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .concept-card.hand .head { color: var(--thread); }
+  .concept-card.rule .head { color: var(--brass); }
+  .concept-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.1;
+    margin-top: 10px;
+  }
+  .concept-card p {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    max-width: 360px;
+    opacity: 0.82;
+  }
+  .concept-card .product {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid currentColor;
+    opacity: 0.9;
+  }
+
+  /* ============ PALETTE ============ */
+  .palette-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    margin-top: 24px;
+  }
+  .swatch {
+    padding: 28px 20px 24px;
+    min-height: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .swatch .role {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.75;
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+  .swatch .name {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .swatch .name-ja {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    margin-top: 4px;
+    opacity: 0.75;
+  }
+  .swatch .hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    margin-top: 12px;
+    opacity: 0.55;
+    letter-spacing: 1px;
+  }
+  .sw-soot    { background: var(--soot);    color: var(--paper); }
+  .sw-paper   { background: var(--paper-soft);  color: var(--soot); }
+  .sw-thread  { background: var(--thread);  color: var(--paper); }
+  .sw-rule    { background: var(--rule);    color: var(--paper); }
+  .sw-brass   { background: var(--brass);   color: var(--soot); }
+  .sw-ash     { background: var(--ash);     color: var(--paper); }
+
+  /* ============ TYPOGRAPHY SPECIMEN ============ */
+  .type-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 48px;
+    align-items: start;
+    margin-top: 32px;
+  }
+  .type-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--ash);
+  }
+  .type-meta b {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 18px;
+    color: var(--soot);
+    display: block;
+    margin-bottom: 6px;
+    letter-spacing: 0;
+  }
+  .type-meta .block { margin-bottom: 28px; }
+
+  .type-specimen { position: relative; }
+  .type-specimen .huge {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 148px;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--soot);
+  }
+  .type-specimen .huge em { font-style: italic; font-weight: 300; color: var(--rule); }
+  .type-specimen .medium {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.15;
+    margin-top: 32px;
+  }
+  .type-specimen .medium em { font-style: italic; color: var(--thread); }
+  .type-specimen .medium-ja {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 400;
+    font-size: 26px;
+    margin-top: 14px;
+    color: var(--ash);
+  }
+  .type-specimen .small {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-top: 24px;
+    color: var(--soot);
+    max-width: 540px;
+  }
+  .type-specimen .smaller {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--thread);
+    margin-top: 20px;
+  }
+
+  /* ============ MOCK SLIDES ============ */
+  .mock-wrap {
+    display: grid;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .mock {
+    aspect-ratio: 16/9;
+    padding: 52px 64px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 30px 80px rgba(21, 18, 17, 0.12);
+    border-radius: 2px;
+  }
+
+  /* Mock 1 — Cover */
+  .mock-cover { background: var(--paper); color: var(--soot); }
+  .mock-cover::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--rule);
+  }
+  .mock-cover .eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rule);
+    font-weight: 700;
+  }
+  .mock-cover .rule-sm {
+    width: 48px;
+    height: 3px;
+    background: var(--thread);
+    margin-top: 8px;
+  }
+  .mock-cover .title-row {
+    margin-top: 28px;
+  }
+  .mock-cover h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 54px;
+    line-height: 1;
+    color: var(--rule);
+    margin-bottom: 4px;
+  }
+  .mock-cover h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 96px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .mock-cover .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: 24px;
+    color: var(--ash);
+  }
+  .mock-cover .subtitle-ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    margin-top: 6px;
+    color: var(--ash);
+  }
+  .mock-cover .hanko {
+    position: absolute;
+    top: 52px;
+    right: 64px;
+    width: 68px;
+    height: 68px;
+    background: var(--thread);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    font-size: 32px;
+  }
+  .mock-cover .footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--hairline);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ash);
+  }
+
+  /* Mock 2 — Products with color-coded accents */
+  .mock-products {
+    background: var(--paper);
+    color: var(--soot);
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .mock-products .half {
+    padding: 48px 44px;
+    position: relative;
+  }
+  .mock-products .half.left {
+    background: var(--paper);
+    border-right: 1px solid var(--hairline);
+  }
+  .mock-products .half.right {
+    background: var(--soot);
+    color: var(--paper);
+  }
+  .mock-products .half .tag {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .mock-products .left .tag { color: var(--thread); }
+  .mock-products .right .tag { color: var(--brass); }
+  .mock-products .half h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1;
+    margin-top: 16px;
+    letter-spacing: -0.02em;
+  }
+  .mock-products .half .scene {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.4;
+    margin-top: 32px;
+    max-width: 360px;
+  }
+  .mock-products .half .scene em {
+    font-weight: 500;
+    font-style: normal;
+  }
+  .mock-products .left .scene em { color: var(--thread); }
+  .mock-products .right .scene em { color: var(--brass); }
+  .mock-products .half .ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11px;
+    margin-top: 16px;
+    opacity: 0.7;
+  }
+  .mock-products .half .product-rule {
+    width: 36px;
+    height: 3px;
+    margin-top: 20px;
+  }
+  .mock-products .left .product-rule { background: var(--thread); }
+  .mock-products .right .product-rule { background: var(--brass); }
+
+  /* Mock 3 — In Brief with journey */
+  .mock-brief { background: var(--paper); color: var(--soot); }
+  .mock-brief::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--rule);
+  }
+  .mock-brief .eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rule);
+    font-weight: 700;
+  }
+  .mock-brief h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.05;
+    margin-top: 14px;
+    letter-spacing: -0.01em;
+  }
+  .mock-brief .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ash);
+    margin-top: 8px;
+  }
+  .mock-brief .journey {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    align-items: center;
+    position: relative;
+    margin-top: 40px;
+  }
+  .mock-brief .path {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 50%;
+    height: 1px;
+    background: var(--hairline);
+    z-index: 0;
+  }
+  .mock-brief .path::after, .mock-brief .path::before {
+    content: '▸';
+    position: absolute;
+    top: -11px;
+    color: var(--thread);
+    font-size: 14px;
+  }
+  .mock-brief .path::before { left: 31%; }
+  .mock-brief .path::after { left: 64%; }
+  .mock-brief .station {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .mock-brief .chapter-mark {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    color: var(--thread);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .mock-brief .circle {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: var(--paper-soft);
+    border: 1.5px solid var(--thread);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--rule);
+  }
+  .mock-brief .circle.narrow { font-size: 18px; }
+  .mock-brief .caption {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    margin-top: 14px;
+    font-weight: 600;
+  }
+  .mock-brief .caption-ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 10px;
+    margin-top: 4px;
+    color: var(--ash);
+  }
+
+  /* ============ COMPARISON ============ */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+    font-family: 'Inter', sans-serif;
+  }
+  .compare-col {
+    padding: 24px;
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+  }
+  .compare-col.before { background: var(--paper-soft); opacity: 0.6; }
+  .compare-col.after { background: var(--paper); border-color: var(--thread); }
+  .compare-col .heading {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--thread);
+    margin-bottom: 16px;
+  }
+  .compare-col.before .heading { color: var(--ash); }
+  .compare-col dl dt {
+    font-weight: 600;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .compare-col dl dd {
+    color: var(--ash);
+    font-size: 13px;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+  .compare-col dl dt:first-child { margin-top: 0; }
+
+  /* ============ FOOTER / DECISION ============ */
+  .decide {
+    padding: 120px 0;
+    text-align: center;
+    background: var(--soot);
+    color: var(--paper);
+    position: relative;
+  }
+  .decide::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 40px;
+    transform: translateX(-50%);
+    width: 56px;
+    height: 2px;
+    background: var(--brass);
+  }
+  .decide h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 52px;
+    line-height: 1.1;
+  }
+  .decide h2 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--brass);
+  }
+  .decide p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ash);
+    margin-top: 16px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="label">PROPOSED DESIGN SYSTEM · CREATE PROJECT</div>
+    <h1>Hand <span class="amp">&amp;</span> Rule</h1>
+    <div class="tagline">A palette built around the two things Create Project makes:
+      fabric, and the lines that discipline it.</div>
+    <div class="tagline-ja">創られるものに寄り添う配色 — 織物の温もりと、設計の冷静さ。</div>
+    <div class="meta">
+      <span>PROPOSAL · V1</span>
+      <span>CREATE PROJECT · Q2 · 2026</span>
+    </div>
+  </section>
+
+  <!-- ============ THE CONCEPT ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-no">§ 01 — CONCEPT</div>
+      <div>
+        <div class="section-title">Two hands at the <em>same bench.</em></div>
+        <div class="section-lede">The palette isn't decorative. Each accent belongs to a product domain —
+          so colour carries meaning before a word is read.</div>
+      </div>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card hand">
+        <div class="kanji">織</div>
+        <div class="head">THE HAND · 織</div>
+        <h3>Warm, organic, human.</h3>
+        <p>The colour of fabric, of skin, of sunrise on a studio wall.
+          This is how Apparel sounds in the deck — tactile, generous, alive.</p>
+        <span class="product">APPAREL · THREAD</span>
+      </div>
+      <div class="concept-card rule">
+        <div class="kanji">線</div>
+        <div class="head">THE RULE · 線</div>
+        <h3>Cool, precise, honest.</h3>
+        <p>The colour of ink on vellum, of a drafting pencil, of a midnight shift.
+          This is how Blueprint sounds in the deck — measured, calm, exact.</p>
+        <span class="product">BLUEPRINT · RULE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PALETTE ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-no">§ 02 — PALETTE</div>
+      <div>
+        <div class="section-title">Six colours. <em>Each with a role.</em></div>
+        <div class="section-lede">Two neutrals hold the page.
+          Two accents carry the two products.
+          Brass and ash play the supporting voices.</div>
+      </div>
+    </div>
+
+    <div class="palette-row">
+      <div class="swatch sw-soot">
+        <div class="role">TEXT · 地</div>
+        <div class="name">Soot</div>
+        <div class="name-ja">煤 <span style="font-family:Inter; font-size:10px; margin-left:4px; opacity:0.6;">SUSU</span></div>
+        <div class="hex">#151211</div>
+      </div>
+      <div class="swatch sw-paper">
+        <div class="role">PAPER</div>
+        <div class="name">Parchment</div>
+        <div class="name-ja">紙 <span style="font-family:Inter; font-size:10px; margin-left:4px; opacity:0.6;">KAMI</span></div>
+        <div class="hex">#F4EEE3</div>
+      </div>
+      <div class="swatch sw-thread">
+        <div class="role">APPAREL</div>
+        <div class="name">Thread</div>
+        <div class="name-ja">糸 <span style="font-family:Inter; font-size:10px; margin-left:4px; opacity:0.6;">ITO</span></div>
+        <div class="hex">#B15030</div>
+      </div>
+      <div class="swatch sw-rule">
+        <div class="role">BLUEPRINT</div>
+        <div class="name">Rule</div>
+        <div class="name-ja">線 <span style="font-family:Inter; font-size:10px; margin-left:4px; opacity:0.6;">SEN</span></div>
+        <div class="hex">#254872</div>
+      </div>
+      <div class="swatch sw-brass">
+        <div class="role">HIGHLIGHT</div>
+        <div class="name">Brass</div>
+        <div class="name-ja">真鍮 <span style="font-family:Inter; font-size:10px; margin-left:4px; opacity:0.6;">SHINCHU</span></div>
+        <div class="hex">#C29046</div>
+      </div>
+      <div class="swatch sw-ash">
+        <div class="role">SECONDARY</div>
+        <div class="name">Ash</div>
+        <div class="name-ja">灰 <span style="font-family:Inter; font-size:10px; margin-left:4px; opacity:0.6;">HAI</span></div>
+        <div class="hex">#898378</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TYPOGRAPHY ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-no">§ 03 — TYPOGRAPHY</div>
+      <div>
+        <div class="section-title">Fraunces &amp; <em>Inter.</em></div>
+        <div class="section-lede">A warm, contemporary serif with real personality — paired with a geometric sans
+          that stays out of its way. Distinctive without being loud.</div>
+      </div>
+    </div>
+
+    <div class="type-grid">
+      <div class="type-meta">
+        <div class="block">
+          <b>Fraunces</b>
+          Display · Variable serif<br>
+          Weights 300 / 400 / 600 / 700<br>
+          Italics: 300 / 400 / 600<br>
+          Used for: titles, pull-quotes, numerals
+        </div>
+        <div class="block">
+          <b>Inter</b>
+          Body · Geometric sans<br>
+          Weights 300–700<br>
+          Used for: body, kickers, captions, labels
+        </div>
+        <div class="block">
+          <b>Noto Serif / Sans JP</b>
+          Japanese parallel<br>
+          Modern mincho + gothic<br>
+          Used for: JP display + body
+        </div>
+        <div class="block">
+          <b>JetBrains Mono</b>
+          Monospace (sparingly)<br>
+          Used for: page numbers, hex codes, metadata
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="huge">Ag <em>Ag</em></div>
+        <div class="medium">A <em>quiet</em> revolution, <em>precisely</em> measured.</div>
+        <div class="medium-ja">静かな革新を、正確に記す。</div>
+        <div class="small">The pairing works because neither font tries to win the argument.
+          Fraunces brings warmth and quirk to every heading; Inter gives body copy room to be read.
+          Japanese parallels sit naturally because Noto's proportions are modernist, not historical.</div>
+        <div class="smaller">Fraunces + Inter + Noto — a system</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MOCK SLIDES ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-no">§ 04 — IN THE DECK</div>
+      <div>
+        <div class="section-title">Three slides, <em>to feel it.</em></div>
+        <div class="section-lede">Cover, products, in-brief — three moments where the system shows its hand.</div>
+      </div>
+    </div>
+
+    <div class="mock-wrap">
+
+      <!-- Cover mock -->
+      <div class="mock mock-cover">
+        <div>
+          <div class="eyebrow">AIBOS · CREATE PROJECT</div>
+          <div class="rule-sm"></div>
+          <div class="title-row">
+            <h2>A Note from</h2>
+            <h1>Create Project</h1>
+          </div>
+          <div class="subtitle">Two products, a team of seven, and the quarter behind them.</div>
+          <div class="subtitle-ja">二つのプロダクト、七人のチーム、そしてこの四半期の歩み。</div>
+        </div>
+        <div class="footer">
+          <span>Q2 · 2026春 · SPRING 2026</span>
+          <span>FOR THE BOARD · 取締役会用</span>
+        </div>
+        <div class="hanko">創</div>
+      </div>
+
+      <!-- Products mock — the colour split -->
+      <div class="mock mock-products">
+        <div class="half left">
+          <div class="tag">其ノ壱 · APPAREL</div>
+          <h3>Apparel</h3>
+          <div class="product-rule"></div>
+          <div class="scene">
+            A brand uploads one photo of a garment. The team picks the model, the background, the mood —
+            and a <em>full campaign</em> returns in minutes.
+          </div>
+          <div class="ja">一枚の商品写真から、プロ仕様のキャンペーンへ。</div>
+        </div>
+        <div class="half right">
+          <div class="tag">其ノ弐 · BLUEPRINT</div>
+          <h3>Blueprint</h3>
+          <div class="product-rule"></div>
+          <div class="scene">
+            An engineer drops a drawing into Blueprint. Minutes later, the parts list,
+            <em>the errors, and the text</em> come back — structured, searchable, ready.
+          </div>
+          <div class="ja">図面を投げ込むだけで、解析・部品表・検査が返ってくる。</div>
+        </div>
+      </div>
+
+      <!-- In Brief mock — the circular journey -->
+      <div class="mock mock-brief">
+        <div>
+          <div class="eyebrow">§ 12 · IN BRIEF · 概要</div>
+          <h3>In Brief.</h3>
+          <div class="lede">Four figures that map this quarter — the journey in numbers.</div>
+        </div>
+
+        <div class="journey">
+          <div class="path"></div>
+          <div class="station">
+            <div class="chapter-mark">一</div>
+            <div class="circle">2</div>
+            <div class="caption">products live</div>
+            <div class="caption-ja">本番稼働中</div>
+          </div>
+          <div class="station">
+            <div class="chapter-mark">二</div>
+            <div class="circle">7</div>
+            <div class="caption">engineers</div>
+            <div class="caption-ja">一つのチーム</div>
+          </div>
+          <div class="station">
+            <div class="chapter-mark">三</div>
+            <div class="circle narrow">1→100+</div>
+            <div class="caption">photo to campaign</div>
+            <div class="caption-ja">一枚から百枚超へ</div>
+          </div>
+          <div class="station">
+            <div class="chapter-mark">四</div>
+            <div class="circle narrow">hrs→min</div>
+            <div class="caption">blueprint review</div>
+            <div class="caption-ja">数時間から数分へ</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-top:30px; font-size:10px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--ash);">
+          <span>CONCEPT · IN BRIEF</span>
+          <span>12 / 14</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ BEFORE / AFTER COMPARISON ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-no">§ 05 — WHAT CHANGES</div>
+      <div>
+        <div class="section-title">From workshop <em>to studio.</em></div>
+        <div class="section-lede">The v9 deck leans into traditional Japanese pigments.
+          The proposed system is more editorial, more modern, and — most importantly — more distinctly yours.</div>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="compare-col before">
+        <div class="heading">CURRENT · V9</div>
+        <dl>
+          <dt>Palette name</dt>
+          <dd>Japanese pigments (sumi, kinari, ai, shu)</dd>
+          <dt>Feel</dt>
+          <dd>Traditional workshop, heritage craft</dd>
+          <dt>Display font</dt>
+          <dd>Georgia (ubiquitous system serif)</dd>
+          <dt>Body font</dt>
+          <dd>Segoe UI</dd>
+          <dt>Accent logic</dt>
+          <dd>One red for everything</dd>
+          <dt>Distinctiveness</dt>
+          <dd>Common among Japan-leaning decks</dd>
+        </dl>
+      </div>
+      <div class="compare-col after">
+        <div class="heading">PROPOSED · HAND &amp; RULE</div>
+        <dl>
+          <dt>Palette name</dt>
+          <dd>Hand &amp; Rule — hand (thread) + rule (line)</dd>
+          <dt>Feel</dt>
+          <dd>Contemporary editorial, Tokyo publishing</dd>
+          <dt>Display font</dt>
+          <dd>Fraunces — warm, variable, high-personality</dd>
+          <dt>Body font</dt>
+          <dd>Inter — modernist geometric sans</dd>
+          <dt>Accent logic</dt>
+          <dd>Thread for Apparel, Rule for Blueprint — meaning in colour</dd>
+          <dt>Distinctiveness</dt>
+          <dd>Unlikely to be seen elsewhere — your house style</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ DECIDE ============ -->
+<section class="decide">
+  <h2>So — do I rebuild the deck <em>in this?</em></h2>
+  <p>One word and I'll port all fourteen slides. Or tell me what to push further —
+    more editorial, bolder accents, different typeface entirely.</p>
+</section>
+
+</body>
+</html>

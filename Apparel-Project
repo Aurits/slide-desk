@@ -1,0 +1,201 @@
+Maintenance Optimization Audit Report
+Project Name	 APPAREL – CREATE PROJECT
+Prepared By	 AMBROSE ALANDA
+Date	 17TH.3.2026
+Scope Summary	Nextjs frontend, FastApi backend and Comfyui Engine for apparel generation
+Section 1: Task Inventory
+List every maintenance task under each category. Use the example row (yellow) as a guide for depth.Type: Recurring / Occasional / Ad-hoc  	Frequency: Daily / Weekly / Monthly / As needed
+Criticality: Critical (service down) / High (degraded) / Medium (inconvenience) / Low (cosmetic)
+#	Task	Type	Frequency	Effort (h)	Criticality	Notes
+Bug Fixes & Incidents
+1.1	Investigate & fix client-reported backend and ComfyUI pipeline bugs	Occasional	Monthly	2–4 h	Critical	Covers FastAPI errors and ComfyUI job failures. Muzuva leads; Otai covers bugs outside the conversation layer.
+1.2	Investigate & fix client-reported frontend bugs (Next.js)	Occasional	Monthly	~2 h/bug	High	Crispus leads UI fixes; Muzuva covers conversation-related frontend bugs.
+1.3	Respond to production incidents and error spikes	Ad-hoc	As needed	1–4 h	Critical	Covers 5xx spikes, ComfyUI job failures, and access errors. Muzuva leads backend triage; Lauben leads infra response.
+ 	 	 	 	 	 	 
+Monitoring & Alerting
+2.1	Monitor application jobs, service health, and GCP costs	Recurring	Daily / Weekly	15–30 min	Critical	Daily: confirm all services are up and ComfyUI jobs are processing. Weekly: review GCP billing for compute, storage, and API spend. Ambrose leads.
+2.2	Review application logs for silent errors and performance issues	Recurring	Weekly	~1 h	High	Scan FastAPI and ComfyUI logs for retry storms, slow generation times, and memory growth. Muzuva and Otai own app logs; Lauben covers infra logs.
+Deployments & Releases
+3.1	Deploy bug fixes and patches to production	Recurring	Weekly	~1 h	Critical	Covers Next.js and FastAPI deployments via CI/CD pipeline. Requires post-deploy smoke tests.
+3.2	Update staging environment and validate parity with production	Recurring	Monthly	~1 h	High	Sync staging with latest code and config. Confirm env vars, dependencies, and services match production before any release.
+3.3	Update and maintain ComfyUI instance	Occasional	Monthly	2–3 h	High	Update base images for the ComfyUI instance that has been redeveloped by Muzuva
+Database Operations
+4.1	Audit and maintain production and dev databases	Recurring	Monthly	1–2 h	High	Check data integrity, remove orphaned job records and stale generation outputs. Covers prod and dev/staging. Ambrose, Muzuva and Otai own DB maintenance.
+4.2	Run schema migrations for bug fixes and dependency updates	Occasional	As needed	1–2 h	High	Apply and test Alembic migrations in staging before production. Maintain rollback scripts. Muzuva and Otai own migration execution.
+Third-Party Services
+5.1	Monitor Qwen and OpenAI API usage, rate limits, and costs	Recurring	Weekly / Monthly	~30 min	High	Review usage for both APIs. Check for 429 errors in logs and tune retry/backoff config as needed. Muzuva owns both integrations; Otai as backup.
+5.2	Rotate and renew Qwen and OpenAI API keys	Occasional	Every 90 days / as needed	~30 min	Critical	Rotate keys per security policy. 
+ 	 	 	 	 	 	 
+Client Requests
+6.1	Apply client-requested UI/UX improvements and configuration changes	Ad-hoc	As needed	1–3 h	Medium	Minor layout, labelling, or workflow adjustments to existing screens. Excludes new features. Crispus leads UI; Muzuva handles conversation-layer changes.
+6.2	Investigate and fix client-reported bugs (from support channel)	Ad-hoc	As needed	1–4 h	High	Reproduce and resolve bugs raised by client outside internal monitoring. May span any layer. Muzuva triages and routes. Tracked separately from 1.1 and 1.2.
+ 	 	 	 	 	 	 
+Infrastructure & Environment
+7.1	SSL renewal, DNS management, and domain configuration	Occasional	As needed	~30 min	Critical	Renew SSL certs before expiry for prod and staging. Update DNS records when infrastructure changes. Both cause immediate outage if missed. Ambrose and Rodrick owns.
+7.2	Review and right-size cloud resources and manage ComfyUI instance scaling	Recurring	Monthly	1–2 h	High	Analyze GPU instance, compute, and storage utilization. Scale ComfyUI instances up/down based on job load to manage cost. Lauben owns; Muzuva contributes capacity requirements.
+Code Maintenance
+8.1	Update and audit npm/pip dependencies for security vulnerabilities	Recurring	Monthly	1–2 h	High	Run npm audit (frontend) and pip-audit (backend/engine). Apply patches on a branch and test before merging. Crispus owns frontend; Muzuva and Otai own backend and ComfyUI deps.
+8.2	Refactor frontend and clean up legacy backend and ComfyUI pipeline code	Occasional	Quarterly	3–6 h	Low	Remove deprecated React patterns, unused FastAPI routes, and orphaned ComfyUI workflow nodes. Dedicated PRs only, never bundled with bug fixes.
+Documentation
+9.1	Update project documentation, API docs, and deployment docs	Occasional	As needed / after each release	1–3 h	Medium	Keep FastAPI Swagger docs, deployment procedures, and rollback instructions current. Required after any release that changes endpoint behaviour. Muzuva and Lauben jointly own.
+9.2	Document ComfyUI workflow definitions, model configs, and system onboarding	Occasional	As needed	2–4 h	High	The ComfyUI engine is the most opaque component. Document workflow nodes, model weights, generation parameters, and conversation-layer integration. Muzuva is primary owner — high single-dependency risk.
+ 	 	 	 	 	 	 
+
+And additional as required per project basis
+ 
+Section 2: Skill & Owner Mapping
+For each task from Section 1. Single Dependency: Yes / No
+#	Task	Current Owner	Required Skills	Backup	S.D.?	Notes
+1.1	Fix client-reported backend and ComfyUI pipeline bugs	Muzuva, Otai	FastAPI debugging, ComfyUI workflow internals, Python, job queue analysis	Otai (non-conversation bugs)	NO	Muzuva leads ComfyUI and conversation-layer bugs; Otai covers all other backend failures.
+1.2	Fix client-reported frontend bugs (Next.js)	Crispus, Muzuva	Next.js, React state management, REST API debugging, browser DevTools	Crispus ↔ Muzuva	NO	Crispus leads UI fixes; Muzuva covers conversation-related frontend bugs.
+1.3	Respond to production incidents and error spikes	Muzuva, Lauben	GCP Cloud Logging, incident triage, log correlation, rollback decisions, Cloud Run/GCE operations	Otai, Ambrose	NO	Muzuva leads backend triage; Lauben leads infra response.
+2.1	Monitor application jobs, service health, and GCP costs	Ambrose, Rodrick	GCP Cloud Monitoring, billing console, ComfyUI job queue metrics, cost anomaly detection	Muzuva	NO	Ambrose leads oversight; Rodrick monitors infra metrics. Muzuva as backup.
+2.2	Review application logs for silent errors and performance issues	Muzuva, Otai	GCP Cloud Logging, FastAPI log format, ComfyUI execution trace reading, latency analysis	Lauben, Rodrick (infra logs)	NO	Muzuva and Otai own app-layer logs; Lauben covers infra and instance-level logs.
+3.1	Deploy bug fixes and patches to production	Rodrick	GCP Cloud Build.	Lauben, Muzuva	NO	Rodrick owns prod pipeline. Lauben and Muzuva can deploy in their absence.
+3.2	Update staging and validate parity with production	Lauben, Ambrose	GCP environment config, env var management, staging deployment, service dependency validation	Muzuva	NO	Infra-led. Crispus and Muzuva validate their layers post-deploy.
+3.3	Update and maintain ComfyUI instance	Muzuva, Lauben	ComfyUI workflow config, model weight management, Docker builds, GPU instance management	Otai (partial)	YES	Muzuva owns the redeveloped ComfyUI pipeline config and experience.
+4.1	Audit and maintain production and dev databases	Ambrose, Muzuva, Otai	SQL, ORM profiling, GCP Cloud SQL Insights, stale data identification	Any of the three owners	NO	All three share ownership. Job records and stale generation outputs are the main cleanup targets.
+4.2	Run schema migrations	Muzuva, Otai	Alembic, SQL schema design, FastAPI ORM, rollback scripting	Ambrose	NO	PR review → staging test → backup verified → prod run.
+5.1	Monitor Qwen and OpenAI API usage, rate limits.	Muzuva, Otai	Qwen and OpenAI usage, 429 error handling, httpx retry/backoff config	Ambrose	NO	Muzuva owns both integrations; Otai is direct backup for monitoring and alert response.
+5.2	Rotate and renew Qwen and OpenAI API keys	Rodrick	API key lifecycle management, zero-downtime rotation across environments	Ambrose, Lauben	NO	Rodrick leads rotation; Muzuva verifies integration-side.
+6.1	Apply client-requested UI/UX improvements	Crispus, Muzuva	Next.js, React, UI config patterns, deployment pipeline	Crispus ↔ Muzuva	NO	Crispus leads UI changes; Muzuva handles conversation-layer adjustments.
+6.2	Investigate and fix client-reported bugs.	Muzuva, Crispus	Full-stack triage across Next.js, FastAPI, and ComfyUI engine	Otai, Lauben	NO	Muzuva triages and routes by layer. Tracked separately from 1.1 and 1.2.
+7.1	SSL renewal, DNS management, and domain configuration	Ambrose, Rodrick	GCP Cloud DNS, SSL/TLS certificate management, domain registrar access, DNS record types	Lauben	NO	Ambrose and Rodrick jointly own. Lauben is backup — registrar access should be confirmed.
+7.2	Right-size cloud resources and manage ComfyUI instance scaling	Rodrick, Lauben	GCP resource metrics, GPU instance sizing, Cloud Run config, cost optimization	Muzuva	NO	Rodrick and Lauben own infra scaling; Ambrose contributes oversight. Muzuva provides capacity requirements.
+8.1	Update and audit npm/pip dependencies for security vulnerabilities	Crispus (npm) / Muzuva, Otai (pip)	npm audit, pip-audit, CVE triage, dependency pinning, patch branch testing	Muzuva (npm) / Ambrose (pip)	NO	Split by layer. ComfyUI dependency updates need extra caution — may affect generation pipeline.
+8.2	Refactor frontend and clean up legacy backend and ComfyUI pipeline code	Full team (by layer)	React refactoring (frontend) / FastAPI + Python + ComfyUI node cleanup (backend & engine)	Full team	NO	Each owner works within their layer. Dedicated PRs only — never bundled with bug fixes.
+9.1	Update project docs, API docs, and deployment docs	Muzuva	FastAPI OpenAPI/Swagger, deployment process knowledge, technical writing	Otai, Ambrose	NO	Required after every release that changes endpoint behaviour or deployment steps.
+9.2	Document ComfyUI workflow definitions, model configs, and system onboarding	Muzuva	ComfyUI workflow internals, model weight references, generation parameter tuning, conversation-layer integration	Otai (partial)	YES	Partial docs exist but insufficient for independent transfer.
+
+ 
+Section 3: Dependency Risk Assessment
+Only for tasks marked “Yes” in the Single Dependency column above.
+Transferable: Yes (with docs) / Yes (with training) / Difficult / No
+#	Task	Sole Owner	Transferable?	Time to Train	Docs Exist?	Notes
+3.3	Update and maintain ComfyUI instance	Muzuva	Yes (with training)	1 week	Partial	Lauben covers Instance steps but not pipeline config. Otai is transfer target — requires hands-on walkthroughs and written config docs from Muzuva.
+9.2	Document ComfyUI workflow definitions, model configs, and system onboarding	Muzuva	Yes (with training)	1 week	Partial	Otai is transfer target once Muzuva produces written docs.
+Section 4: Access & Credentials Inventory
+List who has access to what. Do NOT write actual passwords or secrets — record service name, who has access.
+Service / System	Who Has Access	Single Holder?	Notes
+Production Servers
+Production	Ambrose, Muzuva, Rodrick	No	
+Staging	Ambrose, Muzuva, Rodrick, Crispus	No	
+Dev	Ambrose, Muzuva, Rodrick, Crispus	No	
+Database
+Production	Ambrose, Muzuva, Rodrick	No	
+Staging + Dev	Ambrose, Muzuva, Rodrick, Crispus	No	
+Third-Party Services
+Qwen API	Ambrose, Muzuva, Rodrick, Crispus, Lauben, Otai	No	 
+OpenAI API	Ambrose, Muzuva, Rodrick, Crispus, Lauben, Otai	No	 
+CI/CD & Deployment
+Production	Ambrose, Muzuva, Rodrick	No	
+Staging + Dev	Ambrose, Muzuva, Rodrick, Crispus, Lauben, Otai	No	
+App Store Accounts
+ N/A	 	 	 
+ 	 	 	 
+Client Environments
+Production	Ambrose, Muzuva, Rodrick	No	 
+Dev	Ambrose, Muzuva, Rodrick, Crispus, Lauben, Otai	No	 
+
+ 
+
+
+
+
+
+Section 5: Minimum Team Proposal
+Based on your findings from Sections 1–4, propose the smallest team that can sustain this project.
+5a. Recommended Team
+Team Member	Role & Responsibilities	% or hrs/wk	Notes
+Muzuva	Backend Lead & ComfyUI Owner. FastAPI maintenance, ComfyUI pipeline redevelopment, conversation-layer frontend integration, and API monitoring.	40 hrs/wk	
+Rodrick	DevOps & Security. CI/CD pipeline, production deployments, and API key/secret management.	24 hrs/wk	
+Crispus	Frontend Maintenance. Next.js/React bug fixes, client UI/UX changes, and frontend dependency audits.	16 hrs/wk	
+Lauben	Infrastructure & Scaling. ComfyUI GPU instance scaling, GCP resource management, and SSL/DNS.	16 hrs/wk	
+Otai	Backend Support. FastAPI bug fixes, database maintenance, migrations, and dependency audits.	16 hrs/wk	
+ 
+5b. Required Knowledge Transfer
+Action	From	To	Duration	Notes
+ComfyUI pipeline config, workflow docs, model configs, and hands-on update drill	Muzuva	Otai, Lauben	1 week	Muzuva produces written docs and walks Otai through a supervised update. Output covers nodes, model weights, parameters, and conversation-layer integration.
+Production deployment documentation	Rodrick	Lauben, Muzuva	2–3 days	Runbook covers end-to-end Next.js and FastAPI deployment steps. Lauben and Muzuva each perform one deployment before operating independently.
+ 
+5c. Remaining Risks & Gaps
+Risk / Gap	Impact	Mitigation
+ComfyUI pipeline knowledge concentrated in Muzuva — no full backup and no deployment docs exist today	Critical	Complete both 5b transfers before minimum team operates. Otai takes ComfyUI backup ownership; Lauben takes deployment backup ownership.
+Ambrose owns service monitoring but is not on the minimum team; DNS/SSL registrar access unconfirmed for Lauben	High	Hand monitoring ownership to Lauben with a documented checklist. Confirm Lauben's registrar access.
+
+ 
+Section 6: Undocumented Knowledge & Processes
+List processes you do that are NOT written down anywhere. Deployment workarounds, manual data fixes, environment quirks, things only you know.
+#	Process / Knowledge	Who Knows This	Details & When It’s Needed
+1	ComfyUI pipeline configuration, model weight references, and conversation-layer integration points — the full setup is not formally documented outside Muzuva's working knowledge	Muzuva	Needed during any ComfyUI instance update, incident diagnosis, or onboarding of a new engineer. Partial docs exist but are insufficient for independent operation. Otai has some exposure but cannot fully substitute today.
+2	ComfyUI instance scaling thresholds and manual spin-up/down procedure — the criteria for when to scale GPU instances and the exact steps are not written down	Lauben	Needed during high job-load periods or cost-management reviews. Lauben makes these decisions by judgement. Without documentation, no one else can execute this correctly in their absence.
+
+
+
+
+
+
+
+
+
+
+
+
+Section 7: Exit Implementation Plan (April – June 2026)
+7a. Scope Boundary from 1 April 2026
+
+In Scope (permitted)	Out of Scope (excluded)
+Bug fixes on existing functionality
+Monitoring and alerting
+Scheduled deployments of patches
+DB audits, cleanup, and migration of existing schemas
+Dependency updates and security patches
+Configuration changes to existing features
+Updating existing documentation and runbooks
+SSL/DNS renewals and ComfyUI instance upkeep	New feature development
+ComfyUI redevelopment or model expansion
+New third-party integrations
+Investigative or R&D tasks
+Any scope not explicitly listed as maintenance
+7b. Resource Roll-off Schedule
+Team Member	Roll-off Date	Milestone / Condition	Handover Responsibility
+Crispus	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Otai	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Lauben	🚩 TBD	ComfyUI scaling SOP and instance management guide completed and verified	ComfyUI scaling documentation and GPU instance management handover
+Muzuva	🚩 TBD	ComfyUI pipeline docs complete and Otai has passed independent update drill	ComfyUI pipeline config, workflow docs, model configs, and conversation-layer integration
+Rodrick	🚩 TBD	Deployment runbook complete and verified by Lauben and Muzuva independently	CI/CD pipeline, production deployment runbook, and API key rotation SOP
+Ambrose	Last to exit	All handover docs complete and formally signed off by client	Systems oversight, final documentation sign-off, access handover log
+
+7c. Mandatory Handover Documentation
+Document	Description	Owner	Audience	Deadline	Status
+End-User Guide	Step-by-step guide covering core user workflows — submitting apparel generation jobs, viewing and interpreting generated outputs, adjusting generation parameters, and navigating the UI.	Crispus, Muzuva	Non-technical (end users)	🚩 TBD	Not started
+Admin / Operator Guide	Covers user management, job queue monitoring, ComfyUI instance health checks, cost review procedures, and client-side escalation steps for administrators.	Ambrose, Muzuva	Technical (client admin)	🚩 TBD	Not started
+API Reference	Full documentation of all client-accessible FastAPI endpoints — request/response schemas, authentication, error codes, rate limits, and usage examples for Qwen and OpenAI integrations.	Muzuva, Otai	Technical (client developers)	🚩 TBD	Swagger/OpenAPI partial — narrative reference not started
+System Architecture Overview	Describes the full system stack (Next.js, FastAPI, ComfyUI engine), component relationships, data flow, and infrastructure topology including GPU instance layout and API integrations.	Ambrose, Muzuva	Both	🚩 TBD	Not started
+ComfyUI Pipeline Technical Reference	Documents workflow node definitions, model weight references, generation parameters, conversation-layer integration points, and known failure modes. Covers the redeveloped pipeline by Muzuva.	Muzuva	Technical	🚩 TBD	Partial — insufficient for independent transfer
+Deployment & Release Runbook	End-to-end production deployment procedure covering CI/CD pipeline steps, secret management, Next.js and FastAPI deployment order, post-deploy smoke tests, and rollback steps.	Rodrick, Ambrose	Technical	🚩 TBD	Not started
+ComfyUI Scaling & Instance Management SOP	Documents GPU instance scaling criteria, spin-up/down procedures, cost thresholds, and health check steps for the ComfyUI engine pool.	Lauben	Technical	🚩 TBD	Not started — currently undocumented tribal knowledge
+Incident Response Playbook	Step-by-step response procedures for each critical failure category — production outage, ComfyUI job failure, API rate-limit breach, auth failure — including escalation contacts.	Muzuva, Rodrick	Technical	🚩 TBD	Not started
+API Key Rotation SOP (Qwen & OpenAI)	Standard operating procedure for rotating Qwen and OpenAI API keys — steps for GCP Secret Manager update, environment verification across staging and production, and zero-downtime confirmation.	Rodrick, Muzuva	Technical	🚩 TBD	Not started
+Access & Credentials Handover Log	Complete record of all system access points, current holders, and formal transfer of credentials to the client. Based on Section 4 — must be signed off at exit.	Ambrose	Both	Before last member exits	Section 4 drafted — formal log not started
+Known Issues & Open Items Log	List of known bugs, technical debt, and unresolved items being handed over. Each item must include severity, workaround if any, and recommended next action for the client team.	Ambrose, Muzuva	Both	Before last member exits	Not started
+
+7d. Exit Risk Assessment
+
+Risk / Gap	Impact	Mitigation
+ComfyUI pipeline knowledge concentrated in Muzuva — no full backup and insufficient documentation exist today	Critical	ComfyUI Pipeline Technical Reference and hands-on transfer to Otai must be completed before Muzuva's roll-off. This is a gate condition for exit.
+Ambrose owns service monitoring but is not on the minimum team — monitoring will be unowned after their exit without a formal handover	Critical	Monitoring ownership formally transferred to Lauben with a documented daily/weekly checklist before Ambrose exits.
+ComfyUI scaling thresholds and instance management steps exist only in Lauben's knowledge — undocumented	High	Lauben produces ComfyUI Scaling SOP before their roll-off. Rodrick to verify and be briefed on the procedure as backup.
+No deployment runbook exists — client cannot execute a production deployment without the team after exit	High	Rodrick and Ambrose jointly produce runbook. Lauben and Muzuva each perform one supervised deployment to verify before Rodrick exits.
+Roll-off dates not yet defined — handover deadlines cannot be enforced without a confirmed schedule	High	Roll-off schedule (7b) must be agreed and confirmed with client before 1 April 2026.
+
+
+
+Additional Comments
+Add any observations, concerns, or suggestions that do not fit into the sections above.
+ 
+ 
+ 
+ 
+
+

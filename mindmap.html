@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Educational Cognition · A Living Learning Atlas</title>
+<style>
+  /* ============================================================
+     BASE
+     ============================================================ */
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    height: 100%;
+    background:
+      radial-gradient(1400px 900px at 12% 8%,  #fef9ed 0%, transparent 60%),
+      radial-gradient(1200px 800px at 88% 92%, #eef5fb 0%, transparent 60%),
+      radial-gradient(900px 600px at 50% 50%,  #fdfbf4 0%, transparent 70%),
+      linear-gradient(135deg, #fbf9f2 0%, #f5f3eb 55%, #faf7ee 100%);
+    color: #2b2a2a;
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============================================================
+     HEADER
+     ============================================================ */
+  .header {
+    position: fixed; top: 22px; left: 28px; z-index: 30;
+    pointer-events: none;
+  }
+  .header h1 {
+    margin: 0;
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-weight: 500;
+    font-size: 32px;
+    letter-spacing: -0.015em;
+    color: #1c1b1a;
+    line-height: 1.05;
+  }
+  .header h1 .em { color: #b78f3a; font-style: italic; }
+  .header .sub {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6b6863;
+    letter-spacing: 0.03em;
+    max-width: 440px;
+    line-height: 1.55;
+  }
+  .header .crest {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 6px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #b78f3a;
+    font-weight: 700;
+  }
+  .header .crest .line { width: 30px; height: 1px; background: currentColor; opacity: 0.55; }
+
+  /* ============================================================
+     LEGEND
+     ============================================================ */
+  .legend {
+    position: fixed; top: 26px; right: 28px; z-index: 30;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    background: rgba(255,255,255,0.80);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.04);
+    padding: 11px 13px;
+    border-radius: 14px;
+    box-shadow: 0 10px 26px rgba(60,55,40,0.08);
+    max-width: 540px;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.32s cubic-bezier(0.4,0,0.2,1), transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  }
+  .legend.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .legend .lg {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #4a4845;
+    padding: 4px 9px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.05);
+    font-weight: 500;
+  }
+  .legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  /* ============================================================
+     CONTROLS
+     ============================================================ */
+  .controls {
+    position: fixed; bottom: 76px; left: 50%;
+    z-index: 30;
+    display: flex; gap: 6px;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(0,0,0,0.05);
+    padding: 7px;
+    border-radius: 20px;
+    box-shadow: 0 14px 34px rgba(60,55,40,0.10);
+    opacity: 0;
+    transform: translate(-50%, 12px);
+    pointer-events: none;
+    transition: opacity 0.32s cubic-bezier(0.4,0,0.2,1), transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  }
+  .controls.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+  }
+  .controls button {
+    border: none; background: transparent;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 13px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4a4845;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .controls button:hover { background: #f3efe7; color: #1f1e1d; }
+  .controls button:active { transform: translateY(1px); }
+  .controls .icon { width: 44px; padding: 10px 0; font-size: 18px; }
+  .controls .sep { width: 1px; background: rgba(0,0,0,0.08); margin: 4px 2px; }
+
+  /* ============================================================
+     MINI-MAP
+     ============================================================ */
+  .minimap {
+    position: fixed; bottom: 76px; right: 26px; z-index: 30;
+    width: 192px; height: 192px;
+    background: rgba(255,255,255,0.84);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(60,55,40,0.08);
+    overflow: hidden;
+    padding: 8px;
+    opacity: 0;
+    transform: translateX(12px);
+    pointer-events: none;
+    transition: opacity 0.32s cubic-bezier(0.4,0,0.2,1), transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  }
+  .minimap.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .minimap svg { width: 100%; height: 100%; display: block; cursor: pointer; }
+  .minimap-label {
+    position: absolute; top: -19px; left: 6px;
+    font-size: 10.5px; color: #6b6863;
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  }
+
+  /* ============================================================
+     STAGE
+     ============================================================ */
+  .stage { position: fixed; inset: 0; }
+  .canvas-wrap {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    cursor: grab;
+  }
+  .canvas-wrap.grabbing { cursor: grabbing; }
+  .canvas {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    transform-origin: 0 0;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+    will-change: transform;
+  }
+  .canvas.dragging { transition: none; }
+
+  .connectors {
+    position: absolute;
+    left: -1900px; top: -1900px;
+    width: 3800px; height: 3800px;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .connectors path {
+    fill: none;
+    stroke-width: 1.4;
+    opacity: 0.5;
+    stroke-linecap: round;
+    transition: opacity 0.25s, stroke-width 0.25s;
+  }
+  .connectors path.trunk-edge  { stroke-width: 2.6; opacity: 0.72; }
+  .connectors path.branch-edge { stroke-width: 1.6; opacity: 0.55; }
+  .connectors path.leaf-edge   { stroke-width: 1.1; opacity: 0.42; }
+  .connectors path.cross-link  { stroke-dasharray: 6 7; opacity: 0.28; }
+  .connectors path.highlighted { opacity: 1; stroke-width: 2.8; }
+  .connectors path.dimmed      { opacity: 0.07; }
+
+  /* ============================================================
+     DECORATION
+     ============================================================ */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0.32;
+    filter: blur(38px);
+  }
+  .deco.d1 { width: 380px; height: 380px; left: -960px; top: -780px; background: #e8d4a0; }
+  .deco.d2 { width: 320px; height: 320px; left: 760px;  top: -640px; background: #c8b8e0; }
+  .deco.d3 { width: 360px; height: 360px; left: -640px; top: 660px;  background: #b8d8b8; }
+  .deco.d4 { width: 340px; height: 340px; left: 860px;  top: 580px;  background: #f1c89e; }
+
+  .ringDeco {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(120,110,85,0.10);
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     NODES — base
+     ============================================================ */
+  .node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border: 1.5px solid var(--line);
+    box-shadow: 0 5px 16px rgba(60,55,40,0.07);
+    color: var(--fg);
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      left 0.5s cubic-bezier(0.4, 0.0, 0.2, 1),
+      top 0.5s cubic-bezier(0.4, 0.0, 0.2, 1),
+      box-shadow 0.25s, background 0.25s,
+      transform 0.25s, opacity 0.3s, border-color 0.25s;
+    user-select: none;
+    z-index: 2;
+    --bg: #fff;
+    --fg: #2c2c2c;
+    --line: #e2dfd9;
+  }
+  .node:hover {
+    box-shadow: 0 12px 30px rgba(60,55,40,0.16);
+    transform: translate(-50%, -50%) scale(1.06);
+    z-index: 5;
+  }
+  .node.dimmed { opacity: 0.16; }
+  .node.highlighted { box-shadow: 0 12px 32px rgba(60,55,40,0.17); z-index: 5; }
+  .node.appearing { opacity: 0; transform: translate(-50%, -50%) scale(0.55); }
+  .node.disappearing { opacity: 0; transform: translate(-50%, -50%) scale(0.55); }
+
+  /* ============================================================
+     ROOT — medallion with halo
+     ============================================================ */
+  .node[data-kind="root"] {
+    padding: 28px 44px;
+    border-radius: 56px;
+    background: linear-gradient(150deg, #ffffff 0%, #fdf6e3 100%);
+    color: #1f1e1d;
+    border: 2.5px solid #d8c79a;
+    box-shadow:
+      0 22px 60px rgba(60,55,40,0.16),
+      inset 0 0 0 7px rgba(255, 244, 220, 0.65);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .node[data-kind="root"]::before {
+    content: ""; position: absolute; inset: -12px;
+    border-radius: 64px;
+    border: 1px dashed rgba(120, 110, 90, 0.32);
+    pointer-events: none;
+  }
+  .node[data-kind="root"]::after {
+    content: ""; position: absolute; inset: -28px;
+    border-radius: 80px;
+    border: 1px solid rgba(120, 110, 90, 0.10);
+    pointer-events: none;
+  }
+  .node[data-kind="root"] .medallion {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #fff7e0, #f1d990);
+    border: 2px solid #c4a85a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    color: #8b6a1c;
+    box-shadow: 0 4px 14px rgba(196, 168, 90, 0.35), inset 0 -2px 4px rgba(140, 110, 40, 0.15);
+    margin-bottom: 4px;
+  }
+  .node[data-kind="root"] .label {
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .node[data-kind="root"] .sublabel {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.26em;
+    color: #b78f3a;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+
+  /* ============================================================
+     TRUNK — academic card with icon badge
+     ============================================================ */
+  .node[data-kind="trunk"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 22px 14px 14px;
+    border-radius: 36px;
+    border-width: 2.2px;
+    box-shadow: 0 9px 26px rgba(60,55,40,0.11);
+  }
+  .node[data-kind="trunk"] .icon-badge {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.05);
+  }
+  .node[data-kind="trunk"] .text {
+    display: flex; flex-direction: column; gap: 1px;
+    min-width: 0;
+  }
+  .node[data-kind="trunk"] .label {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0.005em;
+  }
+  .node[data-kind="trunk"] .sublabel {
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.82;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .node[data-kind="trunk"] .badge { margin-left: 8px; }
+
+  /* ============================================================
+     BRANCH
+     ============================================================ */
+  .node[data-kind="branch"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px 11px 14px;
+    border-radius: 26px;
+  }
+  .node[data-kind="branch"] .dot-mark {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+  .node[data-kind="branch"] .label {
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+  }
+
+  /* ============================================================
+     LEAF
+     ============================================================ */
+  .node[data-kind="leaf"] {
+    padding: 8px 14px;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 2px 9px rgba(60,55,40,0.05);
+  }
+  .node[data-kind="leaf"] .label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1f1e1d;
+    letter-spacing: 0.005em;
+  }
+  .node[data-kind="leaf"]:hover .label { color: var(--fg); }
+  .node[data-kind="leaf"]:hover { border-color: var(--fg); }
+
+  /* ============================================================
+     COLOUR PALETTE — high-contrast academic
+     all foregrounds tuned to ≥ 6:1 against their backgrounds
+     ============================================================ */
+  .node[data-type="theory"]       { --bg:#eaf2fa; --fg:#1c4374; --line:#8fb1d4; }
+  .node[data-type="cognitive"]    { --bg:#ede7f6; --fg:#3a1f6e; --line:#a78fcc; }
+  .node[data-type="teaching"]     { --bg:#def1ed; --fg:#175650; --line:#7cb5a8; }
+  .node[data-type="curriculum"]   { --bg:#f7ecd6; --fg:#6a410e; --line:#bb9450; }
+  .node[data-type="assessment"]   { --bg:#fbe0db; --fg:#7a2823; --line:#cf7e72; }
+  .node[data-type="ai"]           { --bg:#ece2f9; --fg:#3f2278; --line:#a98bcf; }
+  .node[data-type="outcomes"]     { --bg:#e2eedd; --fg:#2a5728; --line:#90b88c; }
+  .node[data-type="human"]        { --bg:#fbe6d3; --fg:#783a10; --line:#d18a55; }
+  .node[data-type="institutions"] { --bg:#dfe7ee; --fg:#26395a; --line:#8aa5c0; }
+  .node[data-type="future"]       { --bg:#f7ecc6; --fg:#664a0c; --line:#bf9930; }
+
+  .node[data-kind="trunk"][data-type="theory"]       { background:#c8dbef; color:#11305a; border-color:#578bbf; }
+  .node[data-kind="trunk"][data-type="cognitive"]    { background:#d4c4ec; color:#250f58; border-color:#7f5dab; }
+  .node[data-kind="trunk"][data-type="teaching"]     { background:#b9dccf; color:#0d3835; border-color:#54988a; }
+  .node[data-kind="trunk"][data-type="curriculum"]   { background:#ecd5a8; color:#4f3007; border-color:#a78540; }
+  .node[data-kind="trunk"][data-type="assessment"]   { background:#f3bbb1; color:#521a17; border-color:#bb695b; }
+  .node[data-kind="trunk"][data-type="ai"]           { background:#d3bee9; color:#2a1361; border-color:#8765b9; }
+  .node[data-kind="trunk"][data-type="outcomes"]     { background:#c4d8be; color:#173f1a; border-color:#62925e; }
+  .node[data-kind="trunk"][data-type="human"]        { background:#f0c89e; color:#552809; border-color:#b27538; }
+  .node[data-kind="trunk"][data-type="institutions"] { background:#b8c8d6; color:#162a48; border-color:#557397; }
+  .node[data-kind="trunk"][data-type="future"]       { background:#ecca6c; color:#3f2c06; border-color:#a47b1c; }
+
+  .node[data-kind="branch"] { background: var(--bg); }
+
+  /* ============================================================
+     BADGE
+     ============================================================ */
+  .node .badge {
+    display: inline-block;
+    margin-left: 9px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.62);
+    background: rgba(0,0,0,0.08);
+    padding: 2px 8px;
+    border-radius: 11px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .node[data-collapsed="false"] .badge { background: rgba(0,0,0,0.14); color: rgba(0,0,0,0.72); }
+
+  /* ============================================================
+     PROMPT BAR
+     ============================================================ */
+  .prompt-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 35;
+    background: rgba(255, 252, 244, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 -6px 24px rgba(60,55,40,0.07);
+  }
+  .bar-header {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+  }
+  .prompt-toggle {
+    flex: 1;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 14px 24px 14px 32px;
+    text-align: left;
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a4540;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .bar-tools {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 22px 6px 10px;
+    border-left: 1px solid rgba(0,0,0,0.06);
+  }
+  .bar-tools .tool {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 13px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #998f80;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .bar-tools .tool:hover {
+    background: rgba(183,143,58,0.10);
+    color: #6f5520;
+  }
+  .bar-tools .tool.active {
+    background: rgba(183,143,58,0.18);
+    color: #6f5520;
+  }
+  .bar-tools .tool .ic {
+    font-size: 13px;
+    letter-spacing: 0;
+    opacity: 0.85;
+    transform: translateY(-0.5px);
+  }
+  .bar-tools .tool.active .ic { opacity: 1; }
+  .prompt-toggle:hover { background: rgba(0,0,0,0.02); }
+  .prompt-toggle .left { display: inline-flex; align-items: center; gap: 10px; }
+  .prompt-toggle .left .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #b78f3a;
+    box-shadow: 0 0 0 5px rgba(183,143,58,0.18);
+  }
+  .prompt-toggle .meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #998f80;
+    margin-left: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .prompt-toggle .arrow {
+    transition: transform 0.3s;
+    font-size: 14px;
+    color: #998f80;
+  }
+  .prompt-toggle.open .arrow { transform: rotate(180deg); }
+
+  .prompt-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .prompt-content.open { max-height: 540px; }
+
+  .prompt-inner {
+    padding: 4px 32px 22px;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .ptab-bar {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .ptab {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8a847a;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .ptab .pnum {
+    background: rgba(183,143,58,0.15);
+    color: #b78f3a;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .ptab:hover { color: #4a4540; }
+  .ptab.active { color: #1f1e1d; border-bottom-color: #b78f3a; }
+  .ptab.active .pnum { background: #b78f3a; color: #fff8e1; }
+  .ptab-meta {
+    margin-left: auto;
+    font-size: 11px;
+    color: #998f80;
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+
+  .ptab-panel { display: none; }
+  .ptab-panel.active { display: block; }
+
+  /* code-style prompt rendering */
+  .prompt-code {
+    background: #fbf6e8;
+    border: 1px solid #ead9aa;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: #3a352d;
+    overflow: auto;
+    max-height: 380px;
+    margin: 0;
+    position: relative;
+  }
+  .prompt-code::-webkit-scrollbar { width: 8px; height: 8px; }
+  .prompt-code::-webkit-scrollbar-thumb { background: #d4b773; border-radius: 4px; }
+  .prompt-code::-webkit-scrollbar-track { background: transparent; }
+  .prompt-code .line {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    column-gap: 14px;
+    padding: 0 18px 0 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt-code .line:hover { background: rgba(183,143,58,0.07); }
+  .prompt-code .ln {
+    text-align: right;
+    color: #c6a960;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+    border-right: 1px solid rgba(183,143,58,0.18);
+    padding-right: 10px;
+    padding-left: 12px;
+    font-size: 10.5px;
+  }
+  .prompt-code .lc { min-width: 0; }
+  .prompt-code .line.heading .lc {
+    color: #8a6a1f;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .prompt-code .line.divider .lc { color: #c6a960; opacity: 0.65; }
+  .prompt-code .line.bullet .lc::before {
+    content: "";
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #b78f3a;
+    margin-right: 8px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+  }
+  .prompt-code .line.blank { height: 6px; }
+  .prompt-code .line.blank .lc { content: ""; }
+
+  /* notes panel */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 18px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+  .notes-grid::-webkit-scrollbar { width: 6px; }
+  .notes-grid::-webkit-scrollbar-thumb { background: #d9d2bf; border-radius: 4px; }
+  .notes-grid .nrow {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 8px;
+    align-items: baseline;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #3d3b38;
+    padding: 8px 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .notes-grid .nrow .marker {
+    color: #b78f3a;
+    font-weight: 700;
+    font-size: 11px;
+    background: rgba(183,143,58,0.12);
+    padding: 2px 0;
+    text-align: center;
+    border-radius: 6px;
+    line-height: 1.4;
+  }
+  .notes-grid .nrow strong { color: #1f1e1d; font-weight: 700; }
+
+  /* ============================================================
+     TOOLTIPS
+     ============================================================ */
+  .tooltip {
+    position: fixed;
+    z-index: 60;
+    background: #1f1d1a;
+    color: #f3eee0;
+    font-size: 11.5px;
+    padding: 7px 12px;
+    border-radius: 9px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+    letter-spacing: 0.02em;
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .tooltip.show { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .header h1 { font-size: 22px; }
+    .header .sub { font-size: 11.5px; }
+    .legend { max-width: 240px; padding: 8px; gap: 4px; }
+    .legend .lg { font-size: 10px; padding: 3px 7px; }
+    .minimap { width: 130px; height: 130px; }
+    .controls button { padding: 8px 13px; font-size: 12px; }
+    .controls .icon { width: 38px; padding: 8px 0; font-size: 16px; }
+    .notes-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="legend" id="legend"></div>
+
+<div class="stage">
+  <div class="canvas-wrap" id="wrap">
+    <div class="deco d1"></div>
+    <div class="deco d2"></div>
+    <div class="deco d3"></div>
+    <div class="deco d4"></div>
+    <div class="ringDeco" style="width:880px;height:880px;"></div>
+    <div class="ringDeco" style="width:1820px;height:1820px;"></div>
+    <div class="ringDeco" style="width:2760px;height:2760px;"></div>
+    <div class="canvas" id="canvas">
+      <svg class="connectors" id="connectors" viewBox="-1900 -1900 3800 3800"
+           xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="icon" id="zoom-in" title="Zoom in">+</button>
+    <button class="icon" id="zoom-out" title="Zoom out">−</button>
+    <div class="sep"></div>
+    <button id="reset" title="Reset view">Reset</button>
+    <button id="expand-all" title="Expand all">Expand</button>
+    <button id="collapse-all" title="Collapse all">Collapse</button>
+    <button id="focus-edu" title="Centre education core">Focus</button>
+  </div>
+
+  <div class="minimap">
+    <span class="minimap-label">Overview</span>
+    <svg id="minimap-svg" viewBox="-1450 -1450 2900 2900"></svg>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<aside class="prompt-bar" id="prompt-bar">
+  <div class="bar-header">
+    <button class="prompt-toggle" id="prompt-toggle">
+      <span class="left">
+        <span class="dot"></span>
+        AI Prompting &amp; Reasoning Workflow
+        <span class="meta">2 prompts · 1 structural shift</span>
+      </span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="bar-tools" id="bar-tools">
+      <button class="tool" data-panel="legend"><span class="ic">◐</span>Legend</button>
+      <button class="tool" data-panel="minimap"><span class="ic">▦</span>Overview</button>
+      <button class="tool" data-panel="controls"><span class="ic">⊕</span>Controls</button>
+    </div>
+  </div>
+  <div class="prompt-content" id="prompt-content">
+    <div class="prompt-inner">
+      <div class="ptab-bar">
+        <button class="ptab active" data-tab="p1"><span class="pnum">01</span> Initial Brief</button>
+        <button class="ptab" data-tab="p2"><span class="pnum">02</span> Education Refinement</button>
+        <button class="ptab" data-tab="notes"><span class="pnum">★</span> Structural Notes</button>
+        <span class="ptab-meta">prompts rendered as source · scroll within block</span>
+      </div>
+
+      <div class="ptab-panel active" data-panel="p1">
+        <pre class="prompt-code" id="prompt-1"></pre>
+      </div>
+      <div class="ptab-panel" data-panel="p2">
+        <pre class="prompt-code" id="prompt-2"></pre>
+      </div>
+      <div class="ptab-panel" data-panel="notes">
+        <div class="notes-grid">
+          <div class="nrow"><span class="marker">01</span><span><strong>Education-dominant spine.</strong> All 10 trunks are educational. AI, organization, evaluation &amp; emotion appear only as supporting branches inside them.</span></div>
+          <div class="nrow"><span class="marker">02</span><span><strong>Trunk &gt; Leaf weighting.</strong> Node size, padding and radius all signal hierarchy. Trunks read as cards with icon badges; leaves stay light and minimal.</span></div>
+          <div class="nrow"><span class="marker">03</span><span><strong>Hidden links.</strong> Dashed gold curves expose non-obvious adjacencies: Theory ↔ AI, Cognition ↔ Assessment, Curriculum ↔ Outcomes, Mind ↔ Heart.</span></div>
+          <div class="nrow"><span class="marker">04</span><span><strong>Prompting as reasoning.</strong> The prompt itself is encoded as a node — treated as a learning behaviour rather than a tool.</span></div>
+          <div class="nrow"><span class="marker">05</span><span><strong>Visibility of understanding.</strong> Knowledge gaps and surface-vs-deep learning live inside Assessment, where they belong structurally.</span></div>
+          <div class="nrow"><span class="marker">06</span><span><strong>Human validation matters.</strong> AI organizes plausibly but cannot judge what's missing — the map is a thinking surface, not a verdict.</span></div>
+          <div class="nrow"><span class="marker">07</span><span><strong>Shift between prompts.</strong> Prompt 01 produced a balanced 6-trunk wheel; Prompt 02 collapsed AI/Org/Eval/Emotion into educational sub-trunks, growing the spine to 10.</span></div>
+          <div class="nrow"><span class="marker">08</span><span><strong>Categorization changes meaning.</strong> Moving "AI" from a peer trunk to a child of "AI in Education" reframes it as a learning tool, not a competing domain.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script>
+/* ============================================================
+   DATA · education-dominant tree
+   ============================================================ */
+const TREE = {
+  id: 'root', kind: 'root', type: 'root',
+  label: 'Learning & Knowledge',
+  sublabel: 'Educational Cognition Map',
+  icon: '✦',
+  children: [
+    {
+      id: 'theory', label: 'Learning Theory', type: 'theory', icon: '📚',
+      sublabel: 'How learning happens',
+      tip: 'Foundational models of how humans acquire knowledge.',
+      children: [
+        { id: 't-constructivism', label: 'Constructivism', children: [
+          { label: 'Active Learning' }, { label: 'Discovery' },
+          { label: 'Schemas' }, { label: 'Piaget' }, { label: 'Vygotsky' }
+        ]},
+        { id: 't-behaviorism', label: 'Behaviorism', children: [
+          { label: 'Reinforcement' }, { label: 'Stimulus / Response' },
+          { label: 'Drill & Practice' }, { label: 'Skinner' }
+        ]},
+        { id: 't-cognitivism', label: 'Cognitivism', children: [
+          { label: 'Information Processing' }, { label: 'Schema Theory' },
+          { label: 'Working Memory' }, { label: 'Encoding' }
+        ]},
+        { id: 't-connectivism', label: 'Connectivism', children: [
+          { label: 'Networked Knowledge' }, { label: 'Digital Learning' },
+          { label: 'Distributed Cognition' }, { label: 'Pattern Recognition' }
+        ]},
+        { id: 't-experiential', label: 'Experiential', children: [
+          { label: 'Reflection' }, { label: 'Action Learning' },
+          { label: 'Practice' }, { label: 'Kolb Cycle' }
+        ]},
+        { id: 't-social', label: 'Social Learning', children: [
+          { label: 'Modelling' }, { label: 'Imitation' },
+          { label: 'Collaboration' }, { label: 'Bandura' }
+        ]}
+      ]
+    },
+    {
+      id: 'cognitive', label: 'Cognitive Development', type: 'cognitive', icon: '🧠',
+      sublabel: 'How the mind builds',
+      tip: 'The mental machinery underneath learning.',
+      children: [
+        { id: 'c-memory', label: 'Memory', children: [
+          { label: 'Working Memory' }, { label: 'Long-term Memory' },
+          { label: 'Encoding' }, { label: 'Retrieval' }, { label: 'Knowledge Retention' }
+        ]},
+        { id: 'c-attention', label: 'Attention', children: [
+          { label: 'Focus' }, { label: 'Selective Attention' },
+          { label: 'Task Switching' }, { label: 'Sustained Effort' }
+        ]},
+        { id: 'c-reasoning', label: 'Reasoning', children: [
+          { label: 'Deductive' }, { label: 'Inductive' },
+          { label: 'Analogical' }, { label: 'Critical Thinking' },
+          { label: 'Structured Logic' }
+        ]},
+        { id: 'c-meta', label: 'Metacognition', children: [
+          { label: 'Self-Awareness' }, { label: 'Reflection' },
+          { label: 'Planning' }, { label: 'Monitoring' },
+          { label: 'Thinking about Thinking' }
+        ]},
+        { id: 'c-problem', label: 'Problem Solving', children: [
+          { label: 'Heuristics' }, { label: 'Analysis' },
+          { label: 'Synthesis' }, { label: 'Application' }
+        ]},
+        { id: 'c-creativity', label: 'Creativity', children: [
+          { label: 'Divergent Thinking' }, { label: 'Convergent Thinking' },
+          { label: 'Imagination' }, { label: 'Generalization' },
+          { label: 'Association' }
+        ]}
+      ]
+    },
+    {
+      id: 'teaching', label: 'Teaching Systems', type: 'teaching', icon: '🎓',
+      sublabel: 'How knowledge is delivered',
+      tip: 'The practices teachers use to move learning forward.',
+      children: [
+        { id: 'te-pedagogy', label: 'Pedagogy', children: [
+          { label: 'Methods' }, { label: 'Scaffolding' },
+          { label: 'Differentiation' }, { label: 'Inquiry-based' }
+        ]},
+        { id: 'te-teacher', label: 'Teacher Development', children: [
+          { label: 'Training' }, { label: 'Mentorship' },
+          { label: 'Professional Practice' }, { label: 'Growth' }
+        ]},
+        { id: 'te-class', label: 'Classroom Management', children: [
+          { label: 'Engagement' }, { label: 'Climate' },
+          { label: 'Pacing' }, { label: 'Discipline' }, { label: 'Attendance' }
+        ]},
+        { id: 'te-delivery', label: 'Modes of Delivery', children: [
+          { label: 'Lectures' }, { label: 'Discussion' },
+          { label: 'Demonstration' }, { label: 'Workshops' },
+          { label: 'Teaching' }
+        ]},
+        { id: 'te-resources', label: 'Resources', children: [
+          { label: 'Textbooks' }, { label: 'Materials' },
+          { label: 'Courses' }, { label: 'Digital Tools' }
+        ]},
+        { id: 'te-relation', label: 'Teacher ↔ Student', children: [
+          { label: 'Trust' }, { label: 'Authority' },
+          { label: 'Care' }, { label: 'Strictness' }, { label: 'Relationships' }
+        ]}
+      ]
+    },
+    {
+      id: 'curriculum', label: 'Curriculum & Content', type: 'curriculum', icon: '📖',
+      sublabel: 'What is learned',
+      tip: 'The architecture of what students encounter.',
+      children: [
+        { id: 'cu-design', label: 'Curriculum Design', children: [
+          { label: 'Standards' }, { label: 'Sequencing' },
+          { label: 'Outcomes Mapping' }, { label: 'Goals' }
+        ]},
+        { id: 'cu-subjects', label: 'Subjects', children: [
+          { label: 'STEM' }, { label: 'Humanities' },
+          { label: 'Arts' }, { label: 'Languages' }
+        ]},
+        { id: 'cu-adaptive', label: 'Adaptive Curriculum', children: [
+          { label: 'Personalization' }, { label: 'Branching Paths' },
+          { label: 'Mastery Learning' }, { label: 'Pacing' }
+        ]},
+        { id: 'cu-skill', label: 'Skill Pathways', children: [
+          { label: 'Foundational' }, { label: 'Specialized' },
+          { label: 'Cross-curricular' }, { label: 'Skill Development' }
+        ]},
+        { id: 'cu-content', label: 'Content Resources', children: [
+          { label: 'Textbooks' }, { label: 'Open Resources' },
+          { label: 'Digital Libraries' }, { label: 'Research Papers' }
+        ]},
+        { id: 'cu-prep', label: 'Preparation', children: [
+          { label: 'Study Habits' }, { label: 'Practice' },
+          { label: 'Goal Setting' }, { label: 'Continuity' }
+        ]}
+      ]
+    },
+    {
+      id: 'assessment', label: 'Assessment & Feedback', type: 'assessment', icon: '✏️',
+      sublabel: 'How learning is measured',
+      tip: 'Measurement is where understanding becomes visible — or hidden.',
+      children: [
+        { id: 'a-formative', label: 'Formative', children: [
+          { label: 'Quizzes' }, { label: 'Check-ins' },
+          { label: 'Observation' }, { label: 'Discussion' }
+        ]},
+        { id: 'a-summative', label: 'Summative', children: [
+          { label: 'Exams' }, { label: 'Tests' },
+          { label: 'Final Projects' }, { label: 'Standardized' }
+        ]},
+        { id: 'a-records', label: 'Records', children: [
+          { label: 'Grades' }, { label: 'Passes' },
+          { label: 'Retakes' }, { label: 'Attendance' },
+          { label: 'Transcripts' }
+        ]},
+        { id: 'a-feedback', label: 'Feedback', children: [
+          { label: 'Reflection' }, { label: 'Coaching' },
+          { label: 'Adjustment' }, { label: 'Iteration' }
+        ]},
+        { id: 'a-criteria', label: 'Criteria', children: [
+          { label: 'Output Quality' }, { label: 'Process Visibility' },
+          { label: 'Understanding Depth' }, { label: 'Comparison' }
+        ]},
+        { id: 'a-gaps', label: 'Hidden Gaps', children: [
+          { label: 'Surface vs Deep' }, { label: 'Knowledge Gaps' },
+          { label: 'Misconceptions' }, { label: 'Visibility of Reasoning' }
+        ]}
+      ]
+    },
+    {
+      id: 'ai-edu', label: 'AI in Education', type: 'ai', icon: '◈',
+      sublabel: 'Machine-assisted learning',
+      tip: 'How AI augments — and risks obscuring — the learning process.',
+      children: [
+        { id: 'ai-tutor', label: 'AI Tutoring', children: [
+          { label: 'Personalized Tutors' }, { label: '24/7 Q&A' },
+          { label: 'Conversational Practice' }, { label: 'Worked Examples' }
+        ]},
+        { id: 'ai-adaptive', label: 'Adaptive Learning', children: [
+          { label: 'Pathways' }, { label: 'Mastery Pacing' },
+          { label: 'Difficulty Tuning' }, { label: 'Personalization' }
+        ]},
+        { id: 'ai-assess', label: 'AI Assessment', children: [
+          { label: 'Auto-grading' }, { label: 'Visibility of Reasoning' },
+          { label: 'Surfacing Hidden Gaps' }, { label: 'Quality Assurance' }
+        ]},
+        { id: 'ai-prompt', label: 'Prompting as Reasoning', children: [
+          { label: 'Prompt Engineering' }, { label: 'Prompt Recording' },
+          { label: 'Workflow Standardization' }, { label: 'AI Synthesis' }
+        ]},
+        { id: 'ai-categorize', label: 'AI Categorization', children: [
+          { label: 'Structure Generation' }, { label: 'AI-assisted Organization' },
+          { label: 'Visual Synthesis' }, { label: 'Mind Mapping' }
+        ]},
+        { id: 'ai-ethics', label: 'Ethics & Validation', children: [
+          { label: 'Human Validation' }, { label: 'Transparency' },
+          { label: 'Accountability' }, { label: 'Ethical AI Use' },
+          { label: 'Equity' }
+        ]}
+      ]
+    },
+    {
+      id: 'outcomes', label: 'Learning Outcomes', type: 'outcomes', icon: '🌱',
+      sublabel: 'What learning produces',
+      tip: 'The downstream value of a learning system.',
+      children: [
+        { id: 'o-knowledge', label: 'Knowledge', children: [
+          { label: 'Recall' }, { label: 'Understanding' },
+          { label: 'Wisdom' }, { label: 'Experience' }
+        ]},
+        { id: 'o-skills', label: 'Skills', children: [
+          { label: 'Cognitive Skills' }, { label: 'Practical Skills' },
+          { label: 'Social Skills' }, { label: 'Skill Development' }
+        ]},
+        { id: 'o-career', label: 'Career', children: [
+          { label: 'Employment' }, { label: 'Salary' },
+          { label: 'Specialization' }, { label: 'Projects' }
+        ]},
+        { id: 'o-society', label: 'Society', children: [
+          { label: 'Citizenship' }, { label: 'Responsibility' },
+          { label: 'Contribution' }, { label: 'Value' }
+        ]},
+        { id: 'o-continuity', label: 'Lifelong Learning', children: [
+          { label: 'Continuity' }, { label: 'Reskilling' },
+          { label: 'Future of Work' }, { label: 'Adaptation' }
+        ]},
+        { id: 'o-meaning', label: 'Meaning', children: [
+          { label: 'Happiness' }, { label: 'Self-Realization' },
+          { label: 'Confidence' }, { label: 'Purpose' }
+        ]}
+      ]
+    },
+    {
+      id: 'human', label: 'Human Factors', type: 'human', icon: '💛',
+      sublabel: 'The learner inside',
+      tip: 'The emotional, motivational and relational layer of learning.',
+      children: [
+        { id: 'h-motivation', label: 'Motivation', children: [
+          { label: 'Curiosity' }, { label: 'Goals' },
+          { label: 'Drive' }, { label: 'Effort' }
+        ]},
+        { id: 'h-emotion', label: 'Emotion', children: [
+          { label: 'Feeling' }, { label: 'Confidence' },
+          { label: 'Pressure' }, { label: 'Relaxation' },
+          { label: 'Happiness' }
+        ]},
+        { id: 'h-safety', label: 'Psychological Safety', children: [
+          { label: 'Trust' }, { label: 'Openness' },
+          { label: 'Vulnerability' }, { label: 'Belonging' }
+        ]},
+        { id: 'h-relations', label: 'Relationships', children: [
+          { label: 'Teacher ↔ Student' }, { label: 'Parent ↔ Child' },
+          { label: 'Peers' }, { label: 'Mentors' }
+        ]},
+        { id: 'h-abilities', label: 'Abilities & Practice', children: [
+          { label: 'Talent' }, { label: 'Effort' },
+          { label: 'Practice' }, { label: 'Developing Abilities' }
+        ]},
+        { id: 'h-discipline', label: 'Discipline', children: [
+          { label: 'Strictness' }, { label: 'Laziness' },
+          { label: 'Self-Regulation' }, { label: 'Procrastination' }
+        ]}
+      ]
+    },
+    {
+      id: 'institutions', label: 'Educational Systems', type: 'institutions', icon: '🏛️',
+      sublabel: 'Structures around learning',
+      tip: 'The institutions and organizations that hold education in place.',
+      children: [
+        { id: 'i-schools', label: 'Schools', children: [
+          { label: 'Primary' }, { label: 'Secondary' },
+          { label: 'Charter' }, { label: 'Private' }
+        ]},
+        { id: 'i-higher', label: 'Higher Education', children: [
+          { label: 'Colleges' }, { label: 'Universities' },
+          { label: 'Research Labs' }, { label: 'Postgraduate' }
+        ]},
+        { id: 'i-policy', label: 'Policy', children: [
+          { label: 'Government' }, { label: 'Ministry of Education' },
+          { label: 'Rules & Regulations' }, { label: 'Standards' }
+        ]},
+        { id: 'i-leadership', label: 'Educational Leadership', children: [
+          { label: 'Principals' }, { label: 'Deans' },
+          { label: 'Administrators' }, { label: 'Decision Making' }
+        ]},
+        { id: 'i-orglearn', label: 'Organizational Learning', children: [
+          { label: 'Continuity' }, { label: 'Scaling' },
+          { label: 'Operational Structure' }, { label: 'Team Capability' }
+        ]},
+        { id: 'i-economics', label: 'Economics', children: [
+          { label: 'Cost' }, { label: 'Funding' },
+          { label: 'Value Exchange' }, { label: 'Productivity' },
+          { label: 'Efficiency' }
+        ]}
+      ]
+    },
+    {
+      id: 'future', label: 'Future of Learning', type: 'future', icon: '✶',
+      sublabel: 'Where learning is going',
+      tip: 'Emerging directions for how we will learn and teach.',
+      children: [
+        { id: 'f-edtech', label: 'Educational Technology', children: [
+          { label: 'Platforms' }, { label: 'Digital Tools' },
+          { label: 'Online Learning' }, { label: 'Physical Learning' },
+          { label: 'Digital / Physical' }
+        ]},
+        { id: 'f-research', label: 'Research', children: [
+          { label: 'Educational Research' }, { label: 'Sample Data' },
+          { label: 'Forecasting' }, { label: 'Evidence-based' }
+        ]},
+        { id: 'f-meta', label: 'Meta-Cognition', children: [
+          { label: 'Structure Discovery' }, { label: 'Categorization Effects' },
+          { label: 'Prompting as Reasoning' }, { label: 'Self-Reflection' }
+        ]},
+        { id: 'f-emergent', label: 'Emergent Insight', children: [
+          { label: 'Unexpected Connections' }, { label: 'Disproportionate Value' },
+          { label: 'Hidden Variables' }, { label: 'Color Coding' }
+        ]},
+        { id: 'f-equity', label: 'Equity & Access', children: [
+          { label: 'Inclusion' }, { label: 'Differentiation' },
+          { label: 'Affordability' }, { label: 'Reach' }
+        ]},
+        { id: 'f-lifelong', label: 'Lifelong Pathways', children: [
+          { label: 'Adaptive Lifelong' }, { label: 'Reskilling' },
+          { label: 'Career Pivot' }, { label: 'Self-directed' }
+        ]}
+      ]
+    }
+  ]
+};
+
+const CROSS_LINKS = [
+  { from: 'theory',       to: 'ai-edu',      note: 'Theory ↔ AI-assisted learning' },
+  { from: 'cognitive',    to: 'assessment',  note: 'Cognition ↔ Visibility' },
+  { from: 'teaching',     to: 'assessment',  note: 'Teaching ↔ Feedback loops' },
+  { from: 'curriculum',   to: 'outcomes',    note: 'What is taught ↔ What is learned' },
+  { from: 'human',        to: 'outcomes',    note: 'Emotion ↔ Outcomes' },
+  { from: 'ai-edu',       to: 'assessment',  note: 'AI ↔ Hidden gap detection' },
+  { from: 'institutions', to: 'curriculum',  note: 'Policy ↔ Curriculum' },
+  { from: 'future',       to: 'theory',      note: 'Emergent ↔ Foundational' },
+  { from: 'cognitive',    to: 'human',       note: 'Mind ↔ Heart' },
+  { from: 'teaching',     to: 'human',       note: 'Pedagogy ↔ Relationships' }
+];
+
+/* ============================================================
+   PREP
+   ============================================================ */
+function prep(node, depth = 0, parent = null) {
+  if (!node.id) node.id = (parent.id + '-' + node.label).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+  if (!node.type && parent) node.type = parent.type;
+  if (!node.kind) node.kind = depth === 0 ? 'root' : depth === 1 ? 'trunk' : depth === 2 ? 'branch' : 'leaf';
+  node._parent = parent;
+  node._depth = depth;
+  node.collapsed = (depth >= 2);
+  if (node.children) node.children.forEach(c => prep(c, depth + 1, node));
+}
+prep(TREE);
+
+const NODE_MAP = new Map();
+(function indexAll(n) { NODE_MAP.set(n.id, n); (n.children || []).forEach(indexAll); })(TREE);
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+const RADII = [0, 480, 1020, 1480];
+const TWO_PI = Math.PI * 2;
+
+function visibleLeafCount(node) {
+  if (node.collapsed || !node.children || !node.children.length) return 1;
+  return node.children.reduce((s, c) => s + visibleLeafCount(c), 0);
+}
+
+function layout(node, a0, a1, depth) {
+  const ang = (a0 + a1) / 2;
+  let r = RADII[Math.min(depth, RADII.length - 1)];
+  if (depth === 2 && node._parent && node._parent.children) {
+    const idx = node._parent.children.indexOf(node);
+    r += (idx % 2) * 90;
+  }
+  node.x = depth === 0 ? 0 : Math.cos(ang - Math.PI / 2) * r;
+  node.y = depth === 0 ? 0 : Math.sin(ang - Math.PI / 2) * r;
+  node.angle = ang;
+  if (!node.collapsed && node.children && node.children.length) {
+    const total = visibleLeafCount(node);
+    const span = a1 - a0;
+    let cur = a0;
+    for (const c of node.children) {
+      const leaves = visibleLeafCount(c);
+      const cs = span * (leaves / total);
+      layout(c, cur, cur + cs, depth + 1);
+      cur += cs;
+    }
+  }
+}
+
+/* ============================================================
+   COLOURS
+   ============================================================ */
+const TYPE_COLOR = {
+  root:         { stroke: '#a07320' },
+  theory:       { stroke: '#2e609a' },
+  cognitive:    { stroke: '#553ba0' },
+  teaching:     { stroke: '#2d7a6f' },
+  curriculum:   { stroke: '#946823' },
+  assessment:   { stroke: '#a64a43' },
+  ai:           { stroke: '#6841a8' },
+  outcomes:     { stroke: '#3f7c3d' },
+  human:        { stroke: '#a45620' },
+  institutions: { stroke: '#3f5f86' },
+  future:       { stroke: '#8d6a15' }
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const canvas = document.getElementById('canvas');
+const svg = document.getElementById('connectors');
+const SVGNS = 'http://www.w3.org/2000/svg';
+const nodeEls = new Map();
+const tooltip = document.getElementById('tooltip');
+
+function countAllLeaves(node) {
+  if (!node.children || !node.children.length) return 1;
+  return node.children.reduce((s, c) => s + countAllLeaves(c), 0);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function createNodeEl(node) {
+  const el = document.createElement('div');
+  el.className = 'node appearing';
+  el.dataset.id = node.id;
+  el.dataset.type = node.type || 'root';
+  el.dataset.kind = node.kind;
+  el.dataset.collapsed = node.collapsed ? 'true' : 'false';
+
+  const hasChildren = node.children && node.children.length > 0;
+  const total = hasChildren ? countAllLeaves(node) : 0;
+  const badge = (hasChildren && node.kind !== 'root')
+    ? `<span class="badge">${node.collapsed ? '+' : '−'}${total}</span>` : '';
+
+  let html = '';
+  if (node.kind === 'root') {
+    html += `<span class="medallion">${escapeHtml(node.icon || '')}</span>`;
+    html += `<span class="label">${escapeHtml(node.label)}</span>`;
+    if (node.sublabel) html += `<span class="sublabel">${escapeHtml(node.sublabel)}</span>`;
+  } else if (node.kind === 'trunk') {
+    html += `<span class="icon-badge">${escapeHtml(node.icon || '')}</span>`;
+    html += `<span class="text">
+               <span class="label">${escapeHtml(node.label)}</span>
+               ${node.sublabel ? `<span class="sublabel">${escapeHtml(node.sublabel)}</span>` : ''}
+             </span>${badge}`;
+  } else if (node.kind === 'branch') {
+    html += `<span class="dot-mark"></span><span class="label">${escapeHtml(node.label)}</span>${badge}`;
+  } else {
+    html += `<span class="label">${escapeHtml(node.label)}</span>`;
+  }
+  el.innerHTML = html;
+
+  el.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (hasChildren) {
+      node.collapsed = !node.collapsed;
+      render();
+    }
+  });
+  el.addEventListener('dblclick', (e) => {
+    e.stopPropagation();
+    focusNode(node);
+  });
+  el.addEventListener('mouseenter', (e) => onHover(node, true, e));
+  el.addEventListener('mouseleave', () => onHover(node, false));
+  el.addEventListener('mousemove', (e) => {
+    if (node.tip && tooltip.classList.contains('show')) {
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top  = (e.clientY + 14) + 'px';
+    }
+  });
+  return el;
+}
+
+function radialPath(p, c) {
+  const pr = Math.hypot(p.x, p.y) || 1;
+  const cr = Math.hypot(c.x, c.y);
+  if (pr < 2) return `M ${p.x} ${p.y} L ${c.x} ${c.y}`;
+  const mid = (pr + cr) / 2;
+  const pa = Math.atan2(p.y, p.x);
+  const ca = Math.atan2(c.y, c.x);
+  const c1x = Math.cos(pa) * mid, c1y = Math.sin(pa) * mid;
+  const c2x = Math.cos(ca) * mid, c2y = Math.sin(ca) * mid;
+  return `M ${p.x} ${p.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${c.x} ${c.y}`;
+}
+
+function render() {
+  layout(TREE, 0, TWO_PI, 0);
+
+  const visible = new Set();
+  (function walk(n) {
+    visible.add(n.id);
+    if (!n.collapsed && n.children) n.children.forEach(walk);
+  })(TREE);
+
+  visible.forEach(id => {
+    const node = NODE_MAP.get(id);
+    let el = nodeEls.get(id);
+    if (!el) {
+      el = createNodeEl(node);
+      canvas.appendChild(el);
+      nodeEls.set(id, el);
+      requestAnimationFrame(() => el.classList.remove('appearing'));
+    } else {
+      el.dataset.collapsed = node.collapsed ? 'true' : 'false';
+      const badgeEl = el.querySelector('.badge');
+      if (badgeEl) {
+        const total = countAllLeaves(node);
+        badgeEl.textContent = (node.collapsed ? '+' : '−') + total;
+      }
+    }
+    el.style.left = node.x + 'px';
+    el.style.top  = node.y + 'px';
+  });
+
+  for (const [id, el] of nodeEls.entries()) {
+    if (!visible.has(id)) {
+      el.classList.add('disappearing');
+      setTimeout(() => { el.remove(); }, 320);
+      nodeEls.delete(id);
+    }
+  }
+
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  CROSS_LINKS.forEach(link => {
+    const a = NODE_MAP.get(link.from), b = NODE_MAP.get(link.to);
+    if (!a || !b || !visible.has(a.id) || !visible.has(b.id)) return;
+    const path = document.createElementNS(SVGNS, 'path');
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const nx = -dy * 0.22, ny = dx * 0.22;
+    path.setAttribute('d', `M ${a.x} ${a.y} Q ${mx + nx} ${my + ny} ${b.x} ${b.y}`);
+    path.setAttribute('stroke', '#b78f3a');
+    path.setAttribute('class', 'cross-link');
+    path.dataset.from = a.id;
+    path.dataset.to = b.id;
+    svg.appendChild(path);
+  });
+
+  (function drawEdges(n) {
+    if (n.collapsed || !n.children) return;
+    n.children.forEach(c => {
+      const path = document.createElementNS(SVGNS, 'path');
+      path.setAttribute('d', radialPath(n, c));
+      path.setAttribute('stroke', TYPE_COLOR[c.type]?.stroke || '#bbb');
+      const cls = c.kind === 'trunk' ? 'trunk-edge'
+                : c.kind === 'branch' ? 'branch-edge' : 'leaf-edge';
+      path.setAttribute('class', cls);
+      path.dataset.from = n.id;
+      path.dataset.to = c.id;
+      svg.appendChild(path);
+      drawEdges(c);
+    });
+  })(TREE);
+
+  drawMinimap();
+}
+
+/* ============================================================
+   HOVER
+   ============================================================ */
+function onHover(node, isOn, evt) {
+  if (isOn && node.tip) {
+    tooltip.textContent = node.tip;
+    tooltip.classList.add('show');
+    if (evt) {
+      tooltip.style.left = (evt.clientX + 14) + 'px';
+      tooltip.style.top  = (evt.clientY + 14) + 'px';
+    }
+  } else {
+    tooltip.classList.remove('show');
+  }
+  if (!isOn) {
+    nodeEls.forEach(el => { el.classList.remove('dimmed'); el.classList.remove('highlighted'); });
+    svg.querySelectorAll('path').forEach(p => { p.classList.remove('highlighted'); p.classList.remove('dimmed'); });
+    return;
+  }
+  const keep = new Set();
+  let n = node; while (n) { keep.add(n.id); n = n._parent; }
+  (function down(x) {
+    keep.add(x.id);
+    if (!x.collapsed && x.children) x.children.forEach(down);
+  })(node);
+  CROSS_LINKS.forEach(l => {
+    if (l.from === node.id) keep.add(l.to);
+    if (l.to === node.id) keep.add(l.from);
+  });
+  nodeEls.forEach((el, id) => {
+    if (keep.has(id)) el.classList.add('highlighted');
+    else el.classList.add('dimmed');
+  });
+  svg.querySelectorAll('path').forEach(p => {
+    if (keep.has(p.dataset.from) && keep.has(p.dataset.to)) p.classList.add('highlighted');
+    else p.classList.add('dimmed');
+  });
+}
+
+/* ============================================================
+   PAN · ZOOM · FOCUS
+   ============================================================ */
+const wrap = document.getElementById('wrap');
+let panX = 0, panY = 0, scale = 0.40;
+function updateTransform() {
+  canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  updateMinimapViewport();
+}
+
+function focusNode(node, targetScale) {
+  const ts = targetScale ?? (node.kind === 'root' ? 0.5
+                          : node.kind === 'trunk' ? 0.72
+                          : node.kind === 'branch' ? 0.95 : 1.15);
+  scale = ts;
+  panX = -node.x * scale;
+  panY = -node.y * scale;
+  updateTransform();
+}
+
+let dragging = false, lx = 0, ly = 0;
+wrap.addEventListener('mousedown', (e) => {
+  if (e.target.closest('.node')) return;
+  dragging = true; lx = e.clientX; ly = e.clientY;
+  wrap.classList.add('grabbing');
+  canvas.classList.add('dragging');
+});
+window.addEventListener('mousemove', (e) => {
+  if (!dragging) return;
+  panX += e.clientX - lx;
+  panY += e.clientY - ly;
+  lx = e.clientX; ly = e.clientY;
+  updateTransform();
+});
+window.addEventListener('mouseup', () => {
+  if (!dragging) return;
+  dragging = false;
+  wrap.classList.remove('grabbing');
+  canvas.classList.remove('dragging');
+});
+
+wrap.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = wrap.getBoundingClientRect();
+  const cx = rect.width / 2, cy = rect.height / 2;
+  const mx = e.clientX - rect.left - cx;
+  const my = e.clientY - rect.top - cy;
+  const old = scale;
+  const factor = Math.exp(-e.deltaY * 0.0014);
+  scale = Math.max(0.14, Math.min(3.0, scale * factor));
+  const ratio = scale / old;
+  panX = mx - (mx - panX) * ratio;
+  panY = my - (my - panY) * ratio;
+  canvas.classList.add('dragging');
+  updateTransform();
+  clearTimeout(wrap._zt);
+  wrap._zt = setTimeout(() => canvas.classList.remove('dragging'), 60);
+}, { passive: false });
+
+let pinchStart = 0, pinchScale = 1;
+wrap.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    if (e.target.closest('.node')) return;
+    dragging = true; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+    canvas.classList.add('dragging');
+  } else if (e.touches.length === 2) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    pinchStart = Math.hypot(dx, dy);
+    pinchScale = scale;
+  }
+}, { passive: true });
+wrap.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 1 && dragging) {
+    panX += e.touches[0].clientX - lx;
+    panY += e.touches[0].clientY - ly;
+    lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+    updateTransform();
+  } else if (e.touches.length === 2) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const d = Math.hypot(dx, dy);
+    scale = Math.max(0.14, Math.min(3.0, pinchScale * (d / pinchStart)));
+    updateTransform();
+  }
+}, { passive: true });
+wrap.addEventListener('touchend', () => {
+  dragging = false;
+  canvas.classList.remove('dragging');
+});
+
+/* ============================================================
+   CONTROLS
+   ============================================================ */
+document.getElementById('zoom-in').onclick = () => { scale = Math.min(3.0, scale * 1.2); updateTransform(); };
+document.getElementById('zoom-out').onclick = () => { scale = Math.max(0.14, scale / 1.2); updateTransform(); };
+document.getElementById('reset').onclick = () => {
+  (function rec(n, d){
+    n.collapsed = d >= 2;
+    if (n.children) n.children.forEach(c => rec(c, d+1));
+  })(TREE, 0);
+  panX = 0; panY = 0; scale = 0.40;
+  updateTransform();
+  render();
+};
+document.getElementById('expand-all').onclick = () => {
+  (function rec(n){ if (n.children){ n.collapsed = false; n.children.forEach(rec);} })(TREE);
+  render();
+};
+document.getElementById('collapse-all').onclick = () => {
+  (function rec(n, d){
+    if (n.children) { n.collapsed = d >= 1; n.children.forEach(c => rec(c, d+1)); }
+  })(TREE, 0);
+  render();
+};
+document.getElementById('focus-edu').onclick = () => { focusNode(TREE, 0.55); };
+
+/* ============================================================
+   LEGEND
+   ============================================================ */
+const LEGEND_ITEMS = [
+  { c: '#2e609a', t: 'Learning Theory' },
+  { c: '#553ba0', t: 'Cognitive Development' },
+  { c: '#2d7a6f', t: 'Teaching' },
+  { c: '#946823', t: 'Curriculum' },
+  { c: '#a64a43', t: 'Assessment' },
+  { c: '#6841a8', t: 'AI in Education' },
+  { c: '#3f7c3d', t: 'Outcomes' },
+  { c: '#a45620', t: 'Human Factors' },
+  { c: '#3f5f86', t: 'Systems' },
+  { c: '#8d6a15', t: 'Future' }
+];
+const legendEl = document.getElementById('legend');
+LEGEND_ITEMS.forEach(it => {
+  const span = document.createElement('span');
+  span.className = 'lg';
+  span.innerHTML = `<span class="dot" style="background:${it.c}"></span>${it.t}`;
+  legendEl.appendChild(span);
+});
+const lk = document.createElement('span');
+lk.className = 'lg';
+lk.innerHTML = `<span class="dot" style="background:transparent; border:1.5px dashed #b78f3a"></span>Hidden link`;
+legendEl.appendChild(lk);
+
+/* ============================================================
+   MINIMAP
+   ============================================================ */
+const miniSvg = document.getElementById('minimap-svg');
+function drawMinimap() {
+  while (miniSvg.firstChild) miniSvg.removeChild(miniSvg.firstChild);
+  (function walk(n){
+    if (!n.collapsed && n.children) n.children.forEach(c => {
+      const ln = document.createElementNS(SVGNS, 'line');
+      ln.setAttribute('x1', n.x); ln.setAttribute('y1', n.y);
+      ln.setAttribute('x2', c.x); ln.setAttribute('y2', c.y);
+      ln.setAttribute('stroke', TYPE_COLOR[c.type]?.stroke || '#ccc');
+      ln.setAttribute('stroke-width', '9');
+      ln.setAttribute('opacity', '0.5');
+      miniSvg.appendChild(ln);
+      walk(c);
+    });
+  })(TREE);
+  const visible = new Set();
+  (function walk(n){
+    visible.add(n.id);
+    if (!n.collapsed && n.children) n.children.forEach(walk);
+  })(TREE);
+  visible.forEach(id => {
+    const n = NODE_MAP.get(id);
+    const dot = document.createElementNS(SVGNS, 'circle');
+    dot.setAttribute('cx', n.x); dot.setAttribute('cy', n.y);
+    const r = n.kind === 'root' ? 48 : n.kind === 'trunk' ? 32 : n.kind === 'branch' ? 18 : 10;
+    dot.setAttribute('r', r);
+    dot.setAttribute('fill', TYPE_COLOR[n.type]?.stroke || '#bbb');
+    dot.setAttribute('opacity', n.kind === 'leaf' ? 0.55 : 0.9);
+    miniSvg.appendChild(dot);
+  });
+  const rect = document.createElementNS(SVGNS, 'rect');
+  rect.setAttribute('id', 'mini-vp');
+  rect.setAttribute('fill', 'none');
+  rect.setAttribute('stroke', '#1f1d1a');
+  rect.setAttribute('stroke-width', '9');
+  rect.setAttribute('stroke-dasharray', '16 12');
+  rect.setAttribute('opacity', '0.5');
+  miniSvg.appendChild(rect);
+  updateMinimapViewport();
+}
+function updateMinimapViewport() {
+  const rect = document.getElementById('mini-vp');
+  if (!rect) return;
+  const w = window.innerWidth, h = window.innerHeight;
+  const vw = w / scale, vh = h / scale;
+  const cx = -panX / scale, cy = -panY / scale;
+  rect.setAttribute('x', cx - vw / 2);
+  rect.setAttribute('y', cy - vh / 2);
+  rect.setAttribute('width', vw);
+  rect.setAttribute('height', vh);
+}
+window.addEventListener('resize', updateMinimapViewport);
+miniSvg.addEventListener('click', (e) => {
+  const rect = miniSvg.getBoundingClientRect();
+  const mx = ((e.clientX - rect.left) / rect.width  - 0.5) * 2900;
+  const my = ((e.clientY - rect.top)  / rect.height - 0.5) * 2900;
+  panX = -mx * scale;
+  panY = -my * scale;
+  updateTransform();
+});
+
+/* ============================================================
+   PROMPT BAR · TABS · CODE RENDERING
+   ============================================================ */
+const tog = document.getElementById('prompt-toggle');
+const cnt = document.getElementById('prompt-content');
+tog.addEventListener('click', () => {
+  tog.classList.toggle('open');
+  cnt.classList.toggle('open');
+});
+
+/* floating-panel toggles in the bottom bar */
+const PANEL_MAP = {
+  legend:   document.getElementById('legend'),
+  minimap:  document.querySelector('.minimap'),
+  controls: document.querySelector('.controls')
+};
+document.querySelectorAll('.bar-tools .tool').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const key = btn.dataset.panel;
+    const el = PANEL_MAP[key];
+    if (!el) return;
+    const showing = el.classList.toggle('visible');
+    btn.classList.toggle('active', showing);
+    if (showing && key === 'minimap') drawMinimap();
+  });
+});
+
+document.querySelectorAll('.ptab').forEach(t => {
+  t.addEventListener('click', () => {
+    const key = t.dataset.tab;
+    document.querySelectorAll('.ptab').forEach(x => x.classList.toggle('active', x === t));
+    document.querySelectorAll('.ptab-panel').forEach(p => {
+      p.classList.toggle('active', p.dataset.panel === key);
+    });
+  });
+});
+
+function renderPromptCode(el, text) {
+  const lines = text.split('\n');
+  el.innerHTML = lines.map((raw, i) => {
+    const num = String(i + 1).padStart(3, ' ');
+    const escaped = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const t = raw.trim();
+    let cls = 'line';
+    if (t === '') cls += ' blank';
+    else if (/^={5,}/.test(t)) cls += ' divider';
+    else if (/^[A-Z][A-Z0-9 &/\-]{2,}\s*$/.test(t) && t.length <= 60) cls += ' heading';
+    else if (/^[-*]\s+/.test(t) || /^[0-9]+\.\s+/.test(t)) cls += ' bullet';
+    return `<span class="${cls}"><span class="ln">${num}</span><span class="lc">${escaped}</span></span>`;
+  }).join('');
+}
+
+const PROMPT_1 = `You are an advanced systems-thinking, educational cognition, organizational design, and AI-structure synthesis assistant.
+
+Your ONLY objective is to generate a highly visual, structured, interactive MINDMAP as a SINGLE self-contained HTML file.
+
+DO NOT generate:
+- essays
+- long report sections
+- academic-style explanations
+- large textual summaries
+- documentation-heavy outputs
+
+The PRIMARY OUTPUT must be:
+- a VISUAL MINDMAP
+- highly organized
+- interactive
+- expandable/collapsible
+- visually connected
+- aesthetically clean
+- easy to navigate
+- focused on relationships and structures
+
+The final deliverable must be:
+- ONE standalone HTML file
+- with embedded CSS and JavaScript
+- no external dependencies required unless absolutely necessary
+- immediately runnable in browser
+
+==================================================
+CORE OBJECTIVE
+==================================================
+
+The purpose of this exercise is NOT business implementation.
+
+The purpose is:
+- structure discovery
+- concept synthesis
+- relationship mapping
+- trunk/branch identification
+- AI-assisted categorization
+- visualization of thinking patterns
+- standardization of reasoning workflows
+
+The mindmap should visually represent:
+- how concepts connect
+- which nodes are central ("trunks")
+- which nodes are branches/leaves
+- emotional vs logical structures
+- AI vs human reasoning
+- educational structures
+- operational structures
+- relationship density
+- hidden conceptual intersections
+
+==================================================
+IMPORTANT SESSION INSIGHTS
+==================================================
+
+The following ideas are CRITICAL and should influence the structure:
+
+- AI can improve outputs while hiding understanding gaps
+- Education requires visibility of misunderstanding
+- Work environments prioritize output quality
+- Mindmaps reveal thinking structures
+- Trunk concepts are more important than isolated leaves
+- Emotional concepts are important structural signals
+- Prompting itself represents human reasoning
+- Categorization changes interpretation
+- Valuable discoveries emerge from unexpected connections
+- Human reasoning is nonlinear and associative
+- AI should assist organization, not replace interpretation
+- Structure discovery itself may become a leadership skill
+- Some concepts carry disproportionately high value
+- Relationship visualization is more important than summaries
+
+==================================================
+VISUAL STYLE REQUIREMENTS
+==================================================
+
+The visual style should be:
+
+- Light background (NOT dark mode)
+- Elegant
+- Minimalistic
+- Creative
+- Professional
+- Spacious
+- Modern
+- Easy to read
+
+Use:
+- soft color palettes
+- thin connectors
+- smooth animations
+- rounded nodes
+- layered hierarchy
+- floating node structures
+- subtle shadows
+- curved relationship lines
+- expandable clusters
+- hover interactions
+
+Typography:
+- use modern creative fonts
+- readable and elegant
+- avoid overly technical styling
+
+Add:
+- small artistic illustrations/icons where appropriate
+- subtle educational/AI/organizational symbolic visuals
+- lightweight conceptual illustrations
+- minimal visual clutter
+
+The visual design should feel like:
+- a creative strategic thinking board
+- an AI-assisted cognition map
+- a modern systems-thinking visualization
+- a research-lab conceptual framework
+
+==================================================
+MANDATORY STRUCTURE
+==================================================
+
+The HTML mindmap MUST contain:
+
+1. Central Root Node
+2. Primary Trunk Categories
+3. Secondary Branch Structures
+4. Leaf Concepts
+5. Relationship Connectors
+6. Emotional/Abstract Layer
+7. AI & Human Reasoning Layer
+8. Organizational Structure Layer
+9. Educational Structure Layer
+10. Hidden Variable Connections
+
+The structure should visually distinguish:
+- trunk nodes
+- branch nodes
+- leaf nodes
+- emotional nodes
+- operational nodes
+- AI-related nodes
+- educational nodes
+
+==================================================
+INTERACTION REQUIREMENTS
+==================================================
+
+The HTML must support:
+
+- zooming
+- panning
+- node expansion/collapse
+- hover highlighting
+- smooth transitions
+- relationship tracing
+- node grouping
+- clickable category focus
+
+Optional:
+- draggable nodes
+- animated connectors
+- mini-map overview
+
+==================================================
+IMPORTANT OUTPUT CONSTRAINT
+==================================================
+
+DO NOT turn the output into a written report.
+
+The page should be:
+~80–90% VISUAL MINDMAP
+~10–20% supporting contextual labels
+
+Keep textual explanations VERY SHORT.
+
+==================================================
+BOTTOM EXPANDABLE SECTION
+==================================================
+
+At the BOTTOM of the HTML page:
+
+Create an expandable/collapsible section titled:
+
+"AI Prompting & Reasoning Workflow"
+
+Inside this section include:
+
+1. The FULL prompt used
+2. Prompt engineering logic
+3. Why certain categories were created
+4. How prompting influences structure
+5. Differences between AI organization and human reasoning
+6. Important limitations of AI-generated categorization
+7. Human validation importance
+
+This section should:
+- remain collapsed by default
+- expand smoothly
+- visually separate from the main mindmap
+
+==================================================
+COLOR STRUCTURE
+==================================================
+
+Use simple soft colors:
+
+Education -> Soft Blue
+Human emotions/thinking -> Soft Orange
+AI/Digital -> Soft Purple
+Organization/Business -> Soft Green
+Evaluation/Measurement -> Soft Red
+Abstract/Philosophical -> Soft Gold
+
+Trunk nodes:
+- slightly darker
+- slightly larger
+- more visually emphasized
+
+==================================================
+CONCEPTS TO INCLUDE
+==================================================
+
+EDUCATION:
+Knowledge, Learning, Understanding, Wisdom, Research, Experience,
+Teaching, Application, Evaluation, Exams, Tests, Curriculum,
+Lectures, Courses, Textbooks, Institutions, Schools, Colleges,
+Universities, Teachers, Students, Parents, Government,
+Ministry of Education, Rules & Regulations, Grades, Passes,
+Retakes, Attendance, Preparation, Goals, Process, Value, Career,
+Society, Salary, Business, Projects, Future, Responsibility,
+Curiosity, Reflection, Emotion, Happiness, Continuity
+
+HUMAN THINKING & LEARNING:
+Trunk, Branch, Structure, Connection, Categorization, Color coding,
+Association, Visualization, Self-reflection, Comparison,
+Developing abilities, Thinking ability, Talent, Effort, Practice,
+Confidence, Creativity, Generalization, Knowledge gaps,
+Psychological safety, Pressure, Relaxation, Laziness, Strictness,
+Feeling, Relationships, Teacher/Student relationship,
+Parent/Child relationship
+
+AI & DIGITAL:
+AI, Digital tools, Digital/Physical, Online learning,
+Physical learning, AI-assisted organization, Prompt engineering,
+Workflow standardization, Prompt recording, AI categorization,
+AI synthesis, AI structure generation, AI-assisted evaluation,
+Visibility of reasoning, Hidden understanding gaps,
+Human validation, Quality assurance, Ethical AI usage,
+Transparency, Accountability
+
+ORGANIZATIONAL:
+Company, Business, Projects, Cost, Cost cutting, Value exchange,
+Growth, Scaling, Hiring ability, Evaluation, Management,
+Leadership, Decision making, Operational structure, Continuity,
+Organizational learning, Team capability, Risk, Productivity,
+Efficiency, Sample data, Forecasting, Systematic thinking,
+Structured logic
+
+==================================================
+FINAL GOAL
+==================================================
+
+Generate a deeply interconnected, visually elegant HTML mindmap
+that transforms these concepts into a structured intelligence
+system showing:
+- human thinking flows
+- conceptual relationships
+- educational structures
+- AI reasoning structures
+- organizational cognition
+- emotional influence patterns
+- trunk vs branch dynamics
+- visibility vs hidden structures
+
+The result should feel like:
+- a living conceptual ecosystem
+- a strategic cognition interface
+- a next-generation AI-assisted mindmap
+- a visual reasoning architecture
+- a leadership thinking framework
+
+FINAL OUTPUT:
+ONLY return the complete HTML file.
+DO NOT add explanations outside the HTML.`;
+
+const PROMPT_2 = `You over-produced explanatory sections and under-produced the actual EDUCATION-FOCUSED MINDMAP.
+
+Revise the entire output.
+
+The PRIMARY OBJECTIVE is NOT general conceptual discussion.
+
+The PRIMARY OBJECTIVE is:
+
+- a LARGE-SCALE EDUCATION-CENTERED VISUAL MINDMAP
+- focused on EDUCATION SYSTEMS, LEARNING, HUMAN THINKING,
+  AI IN EDUCATION, KNOWLEDGE DEVELOPMENT, REASONING STRUCTURES
+- with the other categories only acting as SUPPORTING CONNECTION LAYERS
+- visually dominant educational hierarchy
+- extremely readable
+- easy to navigate
+- zoomable, scrollable, spacious, visually clean
+
+The current result still feels too much like:
+- documentation
+- essay sections
+- conceptual article formatting
+- textual reasoning panels
+
+Reduce that dramatically.
+
+The output should feel like:
+- a strategic education cognition map
+- an AI-assisted educational intelligence system
+- a next-generation learning architecture visualization
+- a visual educational ecosystem
+- a structured knowledge universe
+
+==================================================
+CRITICAL REVISION REQUIREMENTS
+==================================================
+
+1. EDUCATION MUST DOMINATE THE MAP
+   The central structure should revolve around:
+   Education, Learning, Knowledge, Understanding, Thinking,
+   Curriculum, Teaching, Students, Teachers, Educational Systems,
+   Educational Evaluation, Educational Growth, Human Learning
+   Processes, Cognitive Development, Knowledge Visibility,
+   Learning Outcomes, AI in Education.
+
+   The other categories — AI, Organization, Evaluation,
+   Human Emotion, Abstract Thinking — should mainly SUPPORT
+   and CONNECT to educational structures.
+
+   Education should occupy the largest visual territory.
+
+2. REDUCE WORDY PANELS
+   The lower explanation section is too large and too text-heavy.
+   Instead:
+   - keep ONLY a SMALL expandable prompt section at the bottom
+   - make it compact, scrollable, elegant
+   - not dominant, max height constrained
+   - visually secondary
+   The mindmap itself must dominate the page.
+
+3. MAKE THE MINDMAP MUCH CLEARER
+   Improve: node spacing, visual hierarchy, readability,
+   label visibility, connector clarity, navigation clarity.
+   Increase: node sizes, font sizes, spacing between major
+   trunks, readability at zoomed-out levels.
+   Avoid clutter.
+
+4. MAKE EDUCATIONAL HIERARCHIES CLEAR
+   The visual hierarchy should clearly separate:
+   ROOT
+   -> Educational Domains
+   -> Learning Structures
+   -> Teaching Systems
+   -> Cognitive Processes
+   -> Evaluation Structures
+   -> AI-Assisted Learning
+   -> Outcomes
+   -> Human Factors
+   Use clear trunk -> branch -> leaf progression.
+
+5. IMPROVE NAVIGATION
+   The map should feel smooth and intuitive.
+   MANDATORY: drag to move, wheel zoom, touch zoom, minimap,
+   focus mode, smooth expand/collapse, hover highlights,
+   readable connectors, centered navigation, intelligent spacing.
+
+6. MAKE IT FEEL LIKE A LIVING EDUCATIONAL SYSTEM
+   The map should visually communicate growth, learning flow,
+   knowledge movement, reasoning pathways, educational
+   relationships, educational ecosystems, conceptual development.
+   NOT just random nodes.
+
+7. VISUAL STYLE
+   Keep: light background, soft academic aesthetic, elegant
+   typography, modern educational visual language.
+   Use: subtle artistic educational illustrations, soft symbolic
+   icons, minimal cognitive visuals, elegant gradients, clean
+   academic design.
+   Avoid: dark mode, cyberpunk, overly technical UI, excessive
+   dashboards, harsh colors, dense panels.
+
+8. FONT & NODE IMPROVEMENTS
+   Increase: readability, font scaling, node width, node padding,
+   spacing consistency.
+   Major educational trunks should feel important, central,
+   visually weighted.
+
+9. STRUCTURAL INTELLIGENCE
+   The map should reveal:
+   - relationships between learning and AI
+   - relationships between teaching and evaluation
+   - relationships between thinking and understanding
+   - hidden educational gaps
+   - knowledge visibility
+   - educational feedback loops
+   - curriculum systems
+   - emotional impacts on learning
+   - organizational influence on education
+   - AI-assisted reasoning
+
+10. HTML OUTPUT REQUIREMENTS
+    Return:
+    - ONE COMPLETE HTML FILE ONLY
+    - embedded CSS, embedded JavaScript
+    - self-contained, immediately runnable
+    NO markdown explanations.
+    NO essay sections.
+    NO external commentary.
+
+11. IMPORTANT DESIGN CORRECTION
+    The current output still behaves like a webpage with a
+    mindmap attached. Reverse this.
+    It should behave like:
+    A MASSIVE INTERACTIVE EDUCATIONAL MINDMAP
+    with only a small supporting prompt section.
+
+12. MAKE THE PROMPT SECTION BETTER
+    At the bottom:
+    - create a compact expandable/collapsible section
+    - smooth animations
+    - elegant academic styling
+    - internally scrollable
+    Include:
+    - the original prompt used
+    - AI reasoning notes
+    - structural observations
+    - educational insights
+    - prompting workflow notes
+    Keep it visually lightweight, not dominant, hidden by default.
+
+13. EDUCATIONAL EXPANSION
+    Expand educational branches deeply. Examples:
+    Education
+    -> Learning Theory
+    -> Cognitive Development
+    -> Knowledge Retention
+    -> Classroom Systems
+    -> AI Tutoring
+    -> Curriculum Design
+    -> Human Motivation
+    -> Assessment Systems
+    -> Research
+    -> Educational Technology
+    -> Future of Learning
+    -> Adaptive Learning
+    -> Skill Development
+    -> Reflection
+    -> Educational Equity
+    -> Teacher Development
+    -> Knowledge Transfer
+    -> Creativity
+    -> Problem Solving
+    -> Educational Leadership
+    -> Lifelong Learning
+    Expand intelligently beyond the original words.
+
+14. FINAL EXPERIENCE TARGET
+    The final result should feel like:
+    - an educational intelligence network
+    - a visual cognition engine
+    - an AI-assisted educational architecture
+    - a strategic learning ecosystem
+    - a conceptual educational atlas
+    - a future-of-learning interface
+
+    The experience should immediately communicate:
+    THIS IS ABOUT EDUCATION, LEARNING, THINKING,
+    AND KNOWLEDGE STRUCTURES.
+    NOT generic conceptual categorization.`;
+
+renderPromptCode(document.getElementById('prompt-1'), PROMPT_1);
+renderPromptCode(document.getElementById('prompt-2'), PROMPT_2);
+
+/* ============================================================
+   GO
+   ============================================================ */
+updateTransform();
+render();
+</script>
+</body>
+</html>

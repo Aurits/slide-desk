@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cognition Mindmap — Structure Discovery Framework</title>
+<style>
+  /* ------------------------------------------------------------------
+     COLOR SYSTEM
+     Education       = Blue    #4A90E2
+     Human/Emotion   = Orange  #F39C5C
+     AI/Digital      = Purple  #9B7BE0
+     Organizational  = Green   #5FB87A
+     Evaluation      = Red     #E66B6B
+     Abstract/Trunk  = Gold    #D4A547
+     Trunk emphasis  = Dark    #1B1F2E + gold accent
+  ------------------------------------------------------------------ */
+
+  :root {
+    --c-edu:   #4A90E2;
+    --c-emo:   #F39C5C;
+    --c-ai:    #9B7BE0;
+    --c-org:   #5FB87A;
+    --c-eval:  #E66B6B;
+    --c-abs:   #D4A547;
+    --c-trunk: #1B1F2E;
+
+    --bg-0: #0c0e1a;
+    --bg-1: #141828;
+    --bg-2: #1d2235;
+    --text: #e6e8f0;
+    --text-dim: #9aa0b4;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-0);
+    color: var(--text);
+    font-family: -apple-system, "Inter", "Segoe UI", Roboto, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ------- LAYOUT ------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(12,14,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+  }
+  .nav .brand {
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 13px;
+    color: var(--c-abs);
+    margin-right: auto;
+  }
+  .nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav a:hover { color: var(--text); }
+
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+
+  section {
+    margin-bottom: 90px;
+    scroll-margin-top: 80px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--c-abs);
+    margin-bottom: 12px;
+    padding: 4px 10px;
+    border: 1px solid rgba(212,165,71,0.3);
+    border-radius: 999px;
+  }
+
+  h1 {
+    font-size: 44px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    background: linear-gradient(135deg, #fff 0%, #b8bdd2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.15;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  h3 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }
+  p  { color: var(--text-dim); margin: 0 0 14px; }
+  .lead { font-size: 17px; color: var(--text); max-width: 800px; }
+
+  /* ------- HERO ------- */
+  .hero {
+    padding: 80px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+  .hero .meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hero .meta span strong { color: var(--c-abs); font-weight: 600; }
+
+  /* ------- CARDS ------- */
+  .grid {
+    display: grid;
+    gap: 18px;
+  }
+  .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+  .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .card {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.18); }
+  .card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--c-abs);
+  }
+  .card.edu::before   { background: var(--c-edu); }
+  .card.emo::before   { background: var(--c-emo); }
+  .card.ai::before    { background: var(--c-ai); }
+  .card.org::before   { background: var(--c-org); }
+  .card.eval::before  { background: var(--c-eval); }
+  .card.abs::before   { background: var(--c-abs); }
+
+  .card .tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text-dim);
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .card.edu .tag  { background: rgba(74,144,226,0.15);  color: var(--c-edu); }
+  .card.emo .tag  { background: rgba(243,156,92,0.15);  color: var(--c-emo); }
+  .card.ai .tag   { background: rgba(155,123,224,0.15); color: var(--c-ai); }
+  .card.org .tag  { background: rgba(95,184,122,0.15);  color: var(--c-org); }
+  .card.eval .tag { background: rgba(230,107,107,0.15); color: var(--c-eval); }
+  .card.abs .tag  { background: rgba(212,165,71,0.15);  color: var(--c-abs); }
+
+  .card ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 14px; }
+  .card ul li { margin-bottom: 5px; }
+
+  /* ------- TRUNK CARDS (high-emphasis) ------- */
+  .trunk-card {
+    background: linear-gradient(135deg, #1B1F2E 0%, #232842 100%);
+    border: 1px solid rgba(212,165,71,0.25);
+    box-shadow: 0 0 0 1px rgba(212,165,71,0.08), 0 12px 40px rgba(0,0,0,0.4);
+    border-radius: 14px;
+    padding: 26px;
+    position: relative;
+  }
+  .trunk-card .trunk-num {
+    position: absolute;
+    top: 18px; right: 22px;
+    font-size: 36px;
+    font-weight: 800;
+    color: rgba(212,165,71,0.25);
+    font-family: Georgia, serif;
+  }
+  .trunk-card h3 {
+    color: var(--c-abs);
+    font-size: 17px;
+    margin-bottom: 10px;
+    padding-right: 50px;
+  }
+  .trunk-card p { color: var(--text); font-size: 14px; margin: 0; }
+
+  /* ------- COLLAPSIBLE NODES (mindmap) ------- */
+  .mindmap-tree {
+    background: radial-gradient(ellipse at top, rgba(155,123,224,0.06), transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(74,144,226,0.06), transparent 60%),
+                var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  details.node {
+    margin: 6px 0;
+    border-left: 2px solid var(--border);
+    padding-left: 16px;
+  }
+  details.node > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    transition: background 0.2s;
+    font-size: 14px;
+    user-select: none;
+  }
+  details.node > summary::-webkit-details-marker { display: none; }
+  details.node > summary::before {
+    content: "▸";
+    color: var(--text-dim);
+    transition: transform 0.2s;
+    display: inline-block;
+    font-size: 10px;
+  }
+  details.node[open] > summary::before { transform: rotate(90deg); }
+  details.node > summary:hover { background: rgba(255,255,255,0.06); }
+  details.node[open] > summary { background: rgba(255,255,255,0.05); }
+
+  /* Color the node by category */
+  details.node.edu  > summary { border-left: 3px solid var(--c-edu);  }
+  details.node.emo  > summary { border-left: 3px solid var(--c-emo);  }
+  details.node.ai   > summary { border-left: 3px solid var(--c-ai);   }
+  details.node.org  > summary { border-left: 3px solid var(--c-org);  }
+  details.node.eval > summary { border-left: 3px solid var(--c-eval); }
+  details.node.abs  > summary { border-left: 3px solid var(--c-abs);  }
+
+  details.node.trunk > summary {
+    background: linear-gradient(90deg, rgba(212,165,71,0.18), rgba(212,165,71,0.04));
+    border: 1px solid rgba(212,165,71,0.35);
+    font-weight: 600;
+    color: var(--c-abs);
+    box-shadow: 0 0 20px rgba(212,165,71,0.08);
+  }
+  details.node.trunk > summary::before { color: var(--c-abs); }
+
+  details.node .body {
+    padding: 8px 14px 4px 14px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  .leaves {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 6px 0 4px;
+  }
+  .chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    font-size: 12px;
+    border: 1px solid var(--border);
+  }
+  .chip.edu  { background: rgba(74,144,226,0.12);  color: #9ec5f0; border-color: rgba(74,144,226,0.3); }
+  .chip.emo  { background: rgba(243,156,92,0.12);  color: #f7c198; border-color: rgba(243,156,92,0.3); }
+  .chip.ai   { background: rgba(155,123,224,0.12); color: #c5b1f0; border-color: rgba(155,123,224,0.3); }
+  .chip.org  { background: rgba(95,184,122,0.12);  color: #a4d8b5; border-color: rgba(95,184,122,0.3); }
+  .chip.eval { background: rgba(230,107,107,0.12); color: #f0a5a5; border-color: rgba(230,107,107,0.3); }
+  .chip.abs  { background: rgba(212,165,71,0.12);  color: #e8c97e; border-color: rgba(212,165,71,0.3); }
+  .chip.emotional {
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(243,156,92,0.0); }
+    50%     { box-shadow: 0 0 0 4px rgba(243,156,92,0.15); }
+  }
+
+  /* ------- RELATIONSHIP MAP ------- */
+  .rel-map {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    overflow-x: auto;
+  }
+  .rel-map svg { width: 100%; height: auto; min-width: 720px; }
+
+  .rel-edge {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--c-abs);
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .rel-edge .from { color: var(--c-edu); font-weight: 600; }
+  .rel-edge .to   { color: var(--c-emo); font-weight: 600; }
+  .rel-edge .arrow { color: var(--text-dim); margin: 0 8px; }
+
+  /* ------- COMPARISON TABLE ------- */
+  table.compare {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  table.compare th, table.compare td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  table.compare th {
+    background: var(--bg-2);
+    font-weight: 600;
+    color: var(--text);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  table.compare th.ai-col    { color: var(--c-ai); }
+  table.compare th.human-col { color: var(--c-emo); }
+  table.compare td:first-child { font-weight: 600; color: var(--text); }
+  table.compare tr:last-child td { border-bottom: none; }
+  table.compare tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ------- LEGEND ------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 18px 0 30px;
+  }
+  .legend .item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .legend .swatch {
+    width: 14px; height: 14px; border-radius: 4px;
+  }
+
+  /* ------- APPENDIX ------- */
+  details.appendix {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+  }
+  details.appendix > summary {
+    cursor: pointer;
+    padding: 18px 22px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-2);
+    user-select: none;
+    transition: background 0.2s;
+  }
+  details.appendix > summary:hover { background: rgba(255,255,255,0.05); }
+  details.appendix > summary::-webkit-details-marker { display: none; }
+  details.appendix > summary::before {
+    content: "▸";
+    color: var(--c-abs);
+    transition: transform 0.2s;
+  }
+  details.appendix[open] > summary::before { transform: rotate(90deg); }
+  details.appendix > summary .label {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+  details.appendix > summary .hint {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  details.appendix pre {
+    margin: 0;
+    padding: 24px 28px;
+    background: #07080f;
+    color: #d6dae8;
+    font-family: "SF Mono", Menlo, Monaco, "Cascadia Mono", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre;
+    border-top: 1px solid var(--border);
+  }
+  details.appendix pre code { color: inherit; background: none; }
+
+  /* ------- FOOTER ------- */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+    padding: 30px 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* ------- UTIL ------- */
+  .quote {
+    border-left: 3px solid var(--c-abs);
+    padding: 12px 18px;
+    background: rgba(212,165,71,0.05);
+    font-style: italic;
+    color: var(--text);
+    margin: 18px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .small { font-size: 13px; }
+  .muted { color: var(--text-dim); }
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand">⬢ STRUCTURE DISCOVERY FRAMEWORK</div>
+  <a href="#summary">Summary</a>
+  <a href="#categories">Categories</a>
+  <a href="#trunk">Trunk vs Branch</a>
+  <a href="#mindmap">Mindmap</a>
+  <a href="#relations">Relations</a>
+  <a href="#hidden">Hidden</a>
+  <a href="#ai-vs-human">AI vs Human</a>
+  <a href="#prompting">Prompting</a>
+  <a href="#future">Future</a>
+  <a href="#appendix">Appendix</a>
+</nav>
+
+<main>
+
+  <!-- ============== HERO ============== -->
+  <section class="hero">
+    <span class="eyebrow">Cognitive Architecture · Session Synthesis</span>
+    <h1>Mapping the Hidden Structures of<br/>Thinking, Learning &amp; AI Collaboration</h1>
+    <p class="lead">
+      A research-grade synthesis of fragmented session notes into a coherent intelligence map.
+      The objective is not to summarise — it is to surface the <em>trunk concepts</em> beneath the leaves,
+      detect the emotional and operational variables that conventional analysis ignores, and visualise the
+      reasoning that AI-assisted work tends to conceal.
+    </p>
+    <div class="meta">
+      <span>Domain · <strong>Cognition, Education, Organization, AI</strong></span>
+      <span>Mode · <strong>Synthesis, not implementation</strong></span>
+      <span>Status · <strong>Structure-discovery phase</strong></span>
+    </div>
+  </section>
+
+  <!-- ============== EXECUTIVE SUMMARY ============== -->
+  <section id="summary">
+    <span class="eyebrow">01 · Executive Summary</span>
+    <h2>The Central Thesis</h2>
+    <p class="lead">
+      In a landscape where AI produces high-quality output on demand, the differentiating human skill becomes
+      <strong>structure discovery</strong> — the ability to externalise reasoning, name ambiguity, and identify
+      which nodes carry the system. Mindmaps are not visualisations of what is already known; they are
+      instruments for surfacing the architecture beneath thought itself.
+    </p>
+
+    <div class="grid cols-3" style="margin-top: 28px;">
+      <div class="card abs">
+        <span class="tag">Premise</span>
+        <h3>Output quality ≠ Understanding</h3>
+        <p>AI can polish outputs while concealing the gaps in comprehension underneath. Evaluation systems
+           that grade only the surface miss the structural failure beneath.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Method</span>
+        <h3>Trunks before leaves</h3>
+        <p>Most concepts in a domain are interchangeable leaves. A small number of trunks carry the weight.
+           Finding them is the work; the rest follows.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Stake</span>
+        <h3>Structure discovery is leadership</h3>
+        <p>When AI handles execution, the strategic edge moves to whoever can see the shape of a problem
+           clearly enough to point at it. That skill is teachable, but currently untaught.</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      "Categorisation itself can become an invention. The act of naming a structure brings it into operational existence."
+    </div>
+  </section>
+
+  <!-- ============== CONCEPT CATEGORIES ============== -->
+  <section id="categories">
+    <span class="eyebrow">02 · Concept Categories</span>
+    <h2>Six Domains, Color-Coded</h2>
+    <p>The raw session notes cluster into six conceptual fields. Each domain has its own logic, vocabulary,
+       and characteristic failure modes. Cross-domain intersections are where most useful invention occurs.</p>
+
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:var(--c-edu)"></span>Education</div>
+      <div class="item"><span class="swatch" style="background:var(--c-emo)"></span>Human / Emotion</div>
+      <div class="item"><span class="swatch" style="background:var(--c-ai)"></span>AI &amp; Digital</div>
+      <div class="item"><span class="swatch" style="background:var(--c-org)"></span>Organizational</div>
+      <div class="item"><span class="swatch" style="background:var(--c-eval)"></span>Evaluation</div>
+      <div class="item"><span class="swatch" style="background:var(--c-abs)"></span>Abstract / Trunk</div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card edu">
+        <span class="tag">Education</span>
+        <h3>The Knowledge → Wisdom Stack</h3>
+        <p>From raw knowledge through learning, understanding, and wisdom; institutional layers; the
+           teacher-student-parent-government quadrilateral; preparation, attendance, grades, retakes.</p>
+        <ul>
+          <li>Vertical: knowledge → understanding → wisdom</li>
+          <li>Horizontal: curriculum → lecture → exam → application</li>
+          <li>Stakeholders: students, teachers, parents, ministry</li>
+          <li>Outcome variables: grades, career, salary, society</li>
+        </ul>
+      </div>
+
+      <div class="card emo">
+        <span class="tag">Human Cognition &amp; Emotion</span>
+        <h3>The Affective Substrate</h3>
+        <p>The variables most operational dashboards never measure — psychological safety, pressure,
+           relaxation, motivation, relationships, confidence — and the cognitive moves that depend on them.</p>
+        <ul>
+          <li>States: pressure, relaxation, curiosity, happiness</li>
+          <li>Capacities: thinking, creativity, generalization, effort</li>
+          <li>Bonds: teacher-student, parent-child relationship quality</li>
+          <li>Gaps: hidden understanding, knowledge gaps, laziness</li>
+        </ul>
+      </div>
+
+      <div class="card ai">
+        <span class="tag">AI &amp; Digital Systems</span>
+        <h3>Tools, Transparency, Validation</h3>
+        <p>AI as organizational assistant rather than answer engine. The central tension: AI can raise
+           output quality while lowering the visibility of human understanding.</p>
+        <ul>
+          <li>Capabilities: categorisation, synthesis, structure generation</li>
+          <li>Risks: hidden understanding gaps, false fluency</li>
+          <li>Controls: human validation, transparency, accountability</li>
+          <li>Workflow: prompt engineering, prompt recording, standardisation</li>
+        </ul>
+      </div>
+
+      <div class="card org">
+        <span class="tag">Organizational Systems</span>
+        <h3>Operational &amp; Strategic Layer</h3>
+        <p>How structure discovery scales: hiring, decision-making, continuity, organisational learning.
+           The trunk concepts here are continuity and team capability, not cost.</p>
+        <ul>
+          <li>Strategy: growth, scaling, value exchange, forecasting</li>
+          <li>Capability: hiring, evaluation, leadership, team capacity</li>
+          <li>Operations: productivity, efficiency, risk, continuity</li>
+          <li>Thinking: systematic, structured logic, sample data</li>
+        </ul>
+      </div>
+
+      <div class="card eval">
+        <span class="tag">Evaluation</span>
+        <h3>The Measurement Problem</h3>
+        <p>Education and work both depend on evaluation systems. AI makes most existing systems unreliable
+           by allowing surface success without underlying comprehension.</p>
+        <ul>
+          <li>Instruments: exams, tests, grades, passes, retakes</li>
+          <li>Outcomes: career signal, hiring filter, society sorting</li>
+          <li>Blind spots: invisible reasoning, AI-assisted outputs</li>
+          <li>Reform need: visibility of process, not just product</li>
+        </ul>
+      </div>
+
+      <div class="card abs">
+        <span class="tag">Abstract Structures</span>
+        <h3>The Meta-Layer</h3>
+        <p>Concepts about concepts. Trunk and branch, categorisation, visualisation, structure — the
+           vocabulary needed to talk about the thinking itself.</p>
+        <ul>
+          <li>Forms: trunk, branch, leaf, connection, intersection</li>
+          <li>Operations: categorise, associate, visualise, generalise</li>
+          <li>Outputs: mindmap, framework, model, taxonomy</li>
+          <li>Discipline: reasoning made externally legible</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== TRUNK VS BRANCH ============== -->
+  <section id="trunk">
+    <span class="eyebrow">03 · Trunk vs Branch Analysis</span>
+    <h2>The Seven Trunks</h2>
+    <p>Out of ~150 raw concepts surfaced in the session, the following seven carry disproportionate
+       weight. Each trunk anchors a cluster of branches; remove the trunk and the structure collapses.</p>
+
+    <div class="grid cols-2" style="margin-top: 24px;">
+      <div class="trunk-card">
+        <span class="trunk-num">01</span>
+        <h3>Understanding Visibility</h3>
+        <p>The single most important variable across education, work, and AI use. When output is visible
+           but understanding is not, every downstream system — grading, hiring, promotion — degrades.</p>
+      </div>
+      <div class="trunk-card">
+        <span class="trunk-num">02</span>
+        <h3>Trunk Over Leaves</h3>
+        <p>Concepts are not equal. A few high-density nodes structure the field; the rest are interchangeable.
+           Time spent on leaves before trunks is wasted time.</p>
+      </div>
+      <div class="trunk-card">
+        <span class="trunk-num">03</span>
+        <h3>Categorisation as Invention</h3>
+        <p>To name a category is to bring a structure into operational existence. The act of categorisation
+           does not describe reality — it partitions it, and the partition itself can be the contribution.</p>
+      </div>
+      <div class="trunk-card">
+        <span class="trunk-num">04</span>
+        <h3>Emotional Substrate</h3>
+        <p>Pressure, safety, curiosity, relationship quality are not soft variables — they are the
+           operational substrate that determines whether any of the harder systems function at all.</p>
+      </div>
+      <div class="trunk-card">
+        <span class="trunk-num">05</span>
+        <h3>Externalised Reasoning</h3>
+        <p>A prompt is reasoning made external. A mindmap is reasoning made spatial. Both make the
+           previously private structure of thought legible — to the self and to others.</p>
+      </div>
+      <div class="trunk-card">
+        <span class="trunk-num">06</span>
+        <h3>Relationship as Performance Variable</h3>
+        <p>Teacher-student, parent-child, manager-report — the quality of these bonds predicts learning
+           and output more reliably than any curriculum or process design.</p>
+      </div>
+      <div class="trunk-card" style="grid-column: span 2;">
+        <span class="trunk-num">07</span>
+        <h3>Structure Discovery as Strategic Competence</h3>
+        <p>When AI handles execution and even synthesis, the durable human contribution becomes the
+           capacity to see the shape of a problem clearly enough to name it. This is currently no one's
+           job description — and is likely to become several people's.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== INTERACTIVE MINDMAP ============== -->
+  <section id="mindmap">
+    <span class="eyebrow">04 · Interactive Mindmap</span>
+    <h2>Color-Coded Conceptual Tree</h2>
+    <p>Click any node to expand. Trunk concepts are gold-emphasised. Emotional leaves carry a subtle
+       pulse — they are operational variables, not decoration.</p>
+
+    <div class="mindmap-tree">
+
+      <!-- ROOT -->
+      <details class="node trunk" open>
+        <summary>⬢ Structure of Thinking, Learning &amp; AI Collaboration</summary>
+
+        <!-- EDUCATION TRUNK -->
+        <details class="node trunk edu" open>
+          <summary>Education — Knowledge → Wisdom Pipeline</summary>
+
+          <details class="node edu">
+            <summary>Cognitive Stack</summary>
+            <div class="leaves">
+              <span class="chip edu">Knowledge</span>
+              <span class="chip edu">Learning</span>
+              <span class="chip edu">Understanding</span>
+              <span class="chip edu">Wisdom</span>
+              <span class="chip edu">Research</span>
+              <span class="chip edu">Experience</span>
+              <span class="chip edu">Application</span>
+              <span class="chip edu">Reflection</span>
+            </div>
+            <div class="body small muted">The vertical axis of education. Output of each layer becomes input of the next; layers are often conflated in evaluation.</div>
+          </details>
+
+          <details class="node edu">
+            <summary>Institutional Stack</summary>
+            <div class="leaves">
+              <span class="chip edu">Schools</span>
+              <span class="chip edu">Colleges</span>
+              <span class="chip edu">Universities</span>
+              <span class="chip edu">Curriculum</span>
+              <span class="chip edu">Lectures</span>
+              <span class="chip edu">Courses</span>
+              <span class="chip edu">Textbooks</span>
+              <span class="chip edu">Ministry of Education</span>
+              <span class="chip edu">Rules &amp; Regulations</span>
+            </div>
+          </details>
+
+          <details class="node edu">
+            <summary>Stakeholders &amp; Their Asymmetries</summary>
+            <div class="leaves">
+              <span class="chip edu">Students</span>
+              <span class="chip edu">Teachers</span>
+              <span class="chip edu">Parents</span>
+              <span class="chip edu">Government</span>
+              <span class="chip edu">Society</span>
+            </div>
+            <div class="body small muted">Each stakeholder optimises a different metric. The system survives only when metrics align — rarely.</div>
+          </details>
+
+          <details class="node eval">
+            <summary>Evaluation Apparatus →</summary>
+            <div class="leaves">
+              <span class="chip eval">Exams</span>
+              <span class="chip eval">Tests</span>
+              <span class="chip eval">Grades</span>
+              <span class="chip eval">Passes</span>
+              <span class="chip eval">Retakes</span>
+              <span class="chip eval">Attendance</span>
+            </div>
+            <div class="body small muted">Cross-link → see Evaluation trunk. AI exposure makes most current instruments unreliable.</div>
+          </details>
+
+          <details class="node edu">
+            <summary>Downstream Outcomes</summary>
+            <div class="leaves">
+              <span class="chip edu">Career</span>
+              <span class="chip edu">Salary</span>
+              <span class="chip edu">Business</span>
+              <span class="chip edu">Projects</span>
+              <span class="chip edu">Responsibility</span>
+              <span class="chip edu">Future</span>
+            </div>
+          </details>
+        </details>
+
+        <!-- HUMAN COGNITION TRUNK -->
+        <details class="node trunk emo" open>
+          <summary>Human Cognition &amp; Emotional Substrate</summary>
+
+          <details class="node emo">
+            <summary>Thinking Structures</summary>
+            <div class="leaves">
+              <span class="chip emo">Association</span>
+              <span class="chip emo">Categorisation</span>
+              <span class="chip emo">Comparison</span>
+              <span class="chip emo">Generalisation</span>
+              <span class="chip emo">Visualisation</span>
+              <span class="chip emo">Self-reflection</span>
+              <span class="chip emo">Relating to topic</span>
+            </div>
+          </details>
+
+          <details class="node emo">
+            <summary>Capacities &amp; Development</summary>
+            <div class="leaves">
+              <span class="chip emo">Talent</span>
+              <span class="chip emo">Effort</span>
+              <span class="chip emo">Practice</span>
+              <span class="chip emo">Thinking ability</span>
+              <span class="chip emo">Creativity</span>
+              <span class="chip emo">Confidence</span>
+              <span class="chip emo">Re-education</span>
+            </div>
+          </details>
+
+          <details class="node emo" open>
+            <summary>Affective States (operational variables)</summary>
+            <div class="leaves">
+              <span class="chip emo emotional">Psychological safety</span>
+              <span class="chip emo emotional">Pressure</span>
+              <span class="chip emo emotional">Relaxation</span>
+              <span class="chip emo emotional">Curiosity</span>
+              <span class="chip emo emotional">Happiness</span>
+              <span class="chip emo emotional">Laziness</span>
+              <span class="chip emo emotional">Strictness</span>
+              <span class="chip emo emotional">Feeling</span>
+            </div>
+            <div class="body small muted">These are not soft — they are the operational substrate. Pulsing chips mark structural signals usually treated as decoration.</div>
+          </details>
+
+          <details class="node emo">
+            <summary>Relationship Dyads</summary>
+            <div class="leaves">
+              <span class="chip emo">Teacher ↔ Student</span>
+              <span class="chip emo">Parent ↔ Child</span>
+              <span class="chip emo">Manager ↔ Report</span>
+              <span class="chip emo">Peer ↔ Peer</span>
+            </div>
+            <div class="body small muted">Bond quality predicts learning and output more reliably than process design.</div>
+          </details>
+
+          <details class="node emo">
+            <summary>Gaps &amp; Failure Modes</summary>
+            <div class="leaves">
+              <span class="chip emo">Understanding gaps</span>
+              <span class="chip emo">Knowledge gaps</span>
+              <span class="chip emo">Hidden weakness</span>
+            </div>
+          </details>
+        </details>
+
+        <!-- AI TRUNK -->
+        <details class="node trunk ai" open>
+          <summary>AI &amp; Digital Systems</summary>
+
+          <details class="node ai">
+            <summary>AI Capabilities</summary>
+            <div class="leaves">
+              <span class="chip ai">Categorisation</span>
+              <span class="chip ai">Synthesis</span>
+              <span class="chip ai">Structure generation</span>
+              <span class="chip ai">Output quality</span>
+              <span class="chip ai">Assisted evaluation</span>
+            </div>
+          </details>
+
+          <details class="node ai">
+            <summary>Risks &amp; Tensions</summary>
+            <div class="leaves">
+              <span class="chip ai">Hidden understanding gaps</span>
+              <span class="chip ai">False fluency</span>
+              <span class="chip ai">Reasoning concealment</span>
+              <span class="chip ai">Over-reliance</span>
+            </div>
+            <div class="body small muted">The central tension: AI raises output quality and lowers visibility of understanding. Evaluation systems built for human-only output break here.</div>
+          </details>
+
+          <details class="node ai">
+            <summary>Controls &amp; Governance</summary>
+            <div class="leaves">
+              <span class="chip ai">Human validation</span>
+              <span class="chip ai">Transparency</span>
+              <span class="chip ai">Accountability</span>
+              <span class="chip ai">Ethical use</span>
+              <span class="chip ai">Quality assurance</span>
+            </div>
+          </details>
+
+          <details class="node ai">
+            <summary>Workflow Practices</summary>
+            <div class="leaves">
+              <span class="chip ai">Prompt engineering</span>
+              <span class="chip ai">Prompt recording</span>
+              <span class="chip ai">Workflow standardisation</span>
+              <span class="chip ai">AI-assisted organisation</span>
+            </div>
+          </details>
+
+          <details class="node ai">
+            <summary>Digital / Physical Axis</summary>
+            <div class="leaves">
+              <span class="chip ai">Online learning</span>
+              <span class="chip ai">Physical learning</span>
+              <span class="chip ai">Digital tools</span>
+              <span class="chip ai">Hybrid environments</span>
+            </div>
+          </details>
+        </details>
+
+        <!-- ORGANIZATIONAL TRUNK -->
+        <details class="node trunk org">
+          <summary>Organizational &amp; Operational Layer</summary>
+
+          <details class="node org">
+            <summary>Strategy</summary>
+            <div class="leaves">
+              <span class="chip org">Growth</span>
+              <span class="chip org">Scaling</span>
+              <span class="chip org">Value exchange</span>
+              <span class="chip org">Cost</span>
+              <span class="chip org">Cost-cutting</span>
+              <span class="chip org">Forecasting</span>
+            </div>
+          </details>
+
+          <details class="node org">
+            <summary>Capability</summary>
+            <div class="leaves">
+              <span class="chip org">Hiring</span>
+              <span class="chip org">Evaluation</span>
+              <span class="chip org">Leadership</span>
+              <span class="chip org">Decision making</span>
+              <span class="chip org">Team capability</span>
+              <span class="chip org">Organisational learning</span>
+            </div>
+          </details>
+
+          <details class="node org">
+            <summary>Operations &amp; Continuity</summary>
+            <div class="leaves">
+              <span class="chip org">Productivity</span>
+              <span class="chip org">Efficiency</span>
+              <span class="chip org">Risk</span>
+              <span class="chip org">Continuity</span>
+              <span class="chip org">Operational structure</span>
+            </div>
+          </details>
+
+          <details class="node org">
+            <summary>Reasoning Modes</summary>
+            <div class="leaves">
+              <span class="chip org">Systematic thinking</span>
+              <span class="chip org">Structured logic</span>
+              <span class="chip org">Sample data</span>
+            </div>
+          </details>
+        </details>
+
+        <!-- EVALUATION TRUNK -->
+        <details class="node trunk eval">
+          <summary>Evaluation &amp; Measurement</summary>
+
+          <details class="node eval">
+            <summary>Instruments</summary>
+            <div class="leaves">
+              <span class="chip eval">Exams</span>
+              <span class="chip eval">Tests</span>
+              <span class="chip eval">Grades</span>
+              <span class="chip eval">Attendance</span>
+              <span class="chip eval">Hiring filters</span>
+            </div>
+          </details>
+
+          <details class="node eval">
+            <summary>Blind Spots</summary>
+            <div class="leaves">
+              <span class="chip eval">Invisible reasoning</span>
+              <span class="chip eval">AI-assisted output</span>
+              <span class="chip eval">Process vs product</span>
+            </div>
+          </details>
+
+          <details class="node eval">
+            <summary>Reform Directions</summary>
+            <div class="leaves">
+              <span class="chip eval">Visible reasoning</span>
+              <span class="chip eval">Process evidence</span>
+              <span class="chip eval">Differentiated standards</span>
+            </div>
+          </details>
+        </details>
+
+        <!-- ABSTRACT TRUNK -->
+        <details class="node trunk abs">
+          <summary>Abstract Meta-Structures</summary>
+
+          <details class="node abs">
+            <summary>Structural Vocabulary</summary>
+            <div class="leaves">
+              <span class="chip abs">Trunk</span>
+              <span class="chip abs">Branch</span>
+              <span class="chip abs">Leaf</span>
+              <span class="chip abs">Connection</span>
+              <span class="chip abs">Intersection</span>
+              <span class="chip abs">Hierarchy</span>
+              <span class="chip abs">Density</span>
+            </div>
+          </details>
+
+          <details class="node abs">
+            <summary>Operations on Structure</summary>
+            <div class="leaves">
+              <span class="chip abs">Categorise</span>
+              <span class="chip abs">Associate</span>
+              <span class="chip abs">Visualise</span>
+              <span class="chip abs">Generalise</span>
+              <span class="chip abs">Externalise</span>
+            </div>
+          </details>
+
+          <details class="node abs">
+            <summary>Strategic Implication</summary>
+            <div class="leaves">
+              <span class="chip abs">Structure discovery</span>
+              <span class="chip abs">Leadership capability</span>
+              <span class="chip abs">Reasoning transparency</span>
+            </div>
+          </details>
+        </details>
+
+      </details>
+    </div>
+  </section>
+
+  <!-- ============== RELATIONSHIPS ============== -->
+  <section id="relations">
+    <span class="eyebrow">05 · Relationship Mapping</span>
+    <h2>Cross-Domain Edges</h2>
+    <p>The interesting structure is rarely inside a category — it is the edges between them. The following
+       edges are high-density intersections surfaced in the session.</p>
+
+    <div class="rel-map" style="margin-top: 22px;">
+      <svg viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#9aa0b4"/>
+          </marker>
+        </defs>
+
+        <!-- Nodes -->
+        <g font-family="sans-serif" font-size="13" text-anchor="middle">
+          <g>
+            <circle cx="160" cy="100" r="46" fill="#4A90E2" opacity="0.85"/>
+            <text x="160" y="105" fill="#fff" font-weight="600">Education</text>
+          </g>
+          <g>
+            <circle cx="500" cy="60" r="46" fill="#D4A547" opacity="0.85"/>
+            <text x="500" y="65" fill="#1B1F2E" font-weight="700">Structure</text>
+          </g>
+          <g>
+            <circle cx="840" cy="100" r="46" fill="#9B7BE0" opacity="0.85"/>
+            <text x="840" y="105" fill="#fff" font-weight="600">AI</text>
+          </g>
+          <g>
+            <circle cx="160" cy="380" r="46" fill="#F39C5C" opacity="0.85"/>
+            <text x="160" y="385" fill="#fff" font-weight="600">Emotion</text>
+          </g>
+          <g>
+            <circle cx="500" cy="420" r="46" fill="#5FB87A" opacity="0.85"/>
+            <text x="500" y="425" fill="#fff" font-weight="600">Organization</text>
+          </g>
+          <g>
+            <circle cx="840" cy="380" r="46" fill="#E66B6B" opacity="0.85"/>
+            <text x="840" y="385" fill="#fff" font-weight="600">Evaluation</text>
+          </g>
+          <g>
+            <circle cx="500" cy="240" r="62" fill="#1B1F2E" stroke="#D4A547" stroke-width="2"/>
+            <text x="500" y="238" fill="#D4A547" font-weight="700" font-size="14">Understanding</text>
+            <text x="500" y="256" fill="#D4A547" font-weight="700" font-size="14">Visibility</text>
+          </g>
+        </g>
+
+        <!-- Edges to center node -->
+        <g stroke="#9aa0b4" stroke-width="1.5" fill="none" opacity="0.5" marker-end="url(#arrow)">
+          <line x1="195" y1="125" x2="450" y2="220"/>
+          <line x1="500" y1="106" x2="500" y2="178"/>
+          <line x1="805" y1="125" x2="555" y2="218"/>
+          <line x1="195" y1="355" x2="450" y2="262"/>
+          <line x1="500" y1="374" x2="500" y2="302"/>
+          <line x1="805" y1="355" x2="555" y2="262"/>
+        </g>
+
+        <!-- Cross edges -->
+        <g stroke="#D4A547" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.5">
+          <line x1="200" y1="100" x2="800" y2="100"/>
+          <line x1="200" y1="380" x2="800" y2="380"/>
+          <line x1="840" y1="146" x2="840" y2="334"/>
+          <line x1="160" y1="146" x2="160" y2="334"/>
+        </g>
+
+        <text x="500" y="465" fill="#9aa0b4" font-family="sans-serif" font-size="11" text-anchor="middle">
+          Dashed gold lines = peer-category bridges. Solid arrows = pressure toward the central trunk.
+        </text>
+      </svg>
+    </div>
+
+    <h3 style="margin-top: 36px;">Key Edges (read as: A → B)</h3>
+    <div class="rel-edge"><span class="from">Education</span><span class="arrow">→</span><span class="to">Process</span><span class="arrow">→</span><span class="to">Application</span> · the canonical pipeline; breakage usually happens at the application step</div>
+    <div class="rel-edge"><span class="from">AI Output Quality</span><span class="arrow">⇄</span><span class="to">Understanding Visibility</span> · inverse relationship under current evaluation systems</div>
+    <div class="rel-edge"><span class="from">Relationships</span><span class="arrow">→</span><span class="to">Learning Quality</span> · bond quality is the dominant predictor</div>
+    <div class="rel-edge"><span class="from">Trunks</span><span class="arrow">→</span><span class="to">High-Value Structures</span> · density follows trunks, not leaves</div>
+    <div class="rel-edge"><span class="from">Categorisation</span><span class="arrow">→</span><span class="to">Discovery Mechanism</span> · the partition is the insight</div>
+    <div class="rel-edge"><span class="from">Emotional Structures</span><span class="arrow">→</span><span class="to">Hidden Operational Variables</span> · affect is infrastructure</div>
+    <div class="rel-edge"><span class="from">Prompting</span><span class="arrow">→</span><span class="to">Externalised Reasoning</span> · the prompt is the shape of the question</div>
+    <div class="rel-edge"><span class="from">Structure Discovery</span><span class="arrow">→</span><span class="to">Leadership Capability</span> · seeing the shape becomes the strategic skill</div>
+    <div class="rel-edge"><span class="from">Understanding Gaps</span><span class="arrow">→</span><span class="to">Necessary for Education</span> · gaps are the surface where learning attaches</div>
+    <div class="rel-edge"><span class="from">AI-Assisted Output</span><span class="arrow">→</span><span class="to">May Conceal Weakness</span> · quality is now a misleading proxy</div>
+    <div class="rel-edge"><span class="from">Evaluation Systems</span><span class="arrow">→</span><span class="to">Need Visible Reasoning</span> · process must become evidence</div>
+    <div class="rel-edge"><span class="from">Pressure vs Relaxation</span><span class="arrow">⇄</span><span class="to">Performance Curve</span> · neither extreme produces output</div>
+    <div class="rel-edge"><span class="from">Talent vs Effort</span><span class="arrow">→</span><span class="to">Different Pathways</span> · same destination, different roads</div>
+    <div class="rel-edge"><span class="from">Digital vs Physical</span><span class="arrow">→</span><span class="to">Different Learning Topologies</span> · channel shapes cognition</div>
+    <div class="rel-edge"><span class="from">Research</span><span class="arrow">⇄</span><span class="to">Application</span> · transfer cycle, both directions</div>
+  </section>
+
+  <!-- ============== HIDDEN VARIABLES ============== -->
+  <section id="hidden">
+    <span class="eyebrow">06 · Hidden Variables &amp; Emotional Signals</span>
+    <h2>What Conventional Dashboards Miss</h2>
+    <p>Most operational and educational measurement instruments ignore the variables that actually
+       determine outcomes. The following hidden variables emerged from session content. Each is treated
+       here as a structural signal, not as a "soft" concern.</p>
+
+    <div class="grid cols-3">
+      <div class="card emo">
+        <span class="tag">Hidden Var</span>
+        <h3>Psychological Safety</h3>
+        <p>The precondition for asking, admitting confusion, exposing gaps. No safety → no learning, regardless of curriculum quality.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Hidden Var</span>
+        <h3>Pressure Balance</h3>
+        <p>Productive tension lives in a narrow band between paralysis and complacency. Most institutions overshoot one direction.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Hidden Var</span>
+        <h3>Relational Continuity</h3>
+        <p>Stable teacher-student or manager-report pairings outperform process improvements, but rarely show on org charts.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Hidden Var</span>
+        <h3>Curiosity Capital</h3>
+        <p>The unmeasured fuel of self-directed learning. Depletes silently under poor evaluation systems.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Hidden Var</span>
+        <h3>Strictness ↔ Laziness Axis</h3>
+        <p>Most environments occupy one pole. Useful learning happens in the middle, but the middle has no name.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Hidden Var</span>
+        <h3>Motivation Topology</h3>
+        <p>Career, salary, society, parental expectation — these compose a force field, not a single drive.</p>
+      </div>
+    </div>
+
+    <div class="quote" style="margin-top: 30px;">
+      "Affect is infrastructure. The choice to treat it as decoration is a structural choice with structural consequences."
+    </div>
+  </section>
+
+  <!-- ============== AI VS HUMAN ============== -->
+  <section id="ai-vs-human">
+    <span class="eyebrow">07 · AI vs Human Reasoning</span>
+    <h2>Where They Diverge, Where They Need Each Other</h2>
+    <p>The point of comparison is not to rank but to assign. Each form of reasoning is durable in some
+       region and brittle in another; the architecture question is which goes where.</p>
+
+    <table class="compare" style="margin-top: 22px;">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th class="ai-col">AI Reasoning</th>
+          <th class="human-col">Human Reasoning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Output Speed</td><td>Near-instant, large volume</td><td>Slower, narrower bandwidth</td></tr>
+        <tr><td>Pattern Form</td><td>Statistical, distributional</td><td>Associative, emotional, embodied</td></tr>
+        <tr><td>Gap Detection</td><td>Often invisible — confidence intact</td><td>Felt as confusion, hesitation, unease</td></tr>
+        <tr><td>Categorisation</td><td>Co-occurrence-driven</td><td>Meaning-driven, value-laden</td></tr>
+        <tr><td>Self-Validation</td><td>Cannot reliably self-audit</td><td>Required outside auditor for AI work</td></tr>
+        <tr><td>Continuity</td><td>Session-bound by default</td><td>Persistent, relational, narrative</td></tr>
+        <tr><td>Failure Mode</td><td>Fluent but wrong</td><td>Honest but slow or vague</td></tr>
+        <tr><td>Best Role</td><td>Structure generation, synthesis, draft</td><td>Trunk detection, judgement, validation</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid cols-2" style="margin-top: 30px;">
+      <div class="card ai">
+        <span class="tag">AI Strength</span>
+        <h3>Structure Generation at Scale</h3>
+        <p>AI can produce a comprehensive draft taxonomy in seconds. The taxonomy may be technically valid
+           and operationally wrong — but the speed of draft permits more iterations of human judgement.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Human Strength</span>
+        <h3>Trunk Detection</h3>
+        <p>Identifying which nodes carry weight is a value judgement informed by context AI cannot access:
+           who is in the room, what the political constraints are, what has failed before, what feels off.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== STRUCTURE DISCOVERY INSIGHTS ============== -->
+  <section id="discovery">
+    <span class="eyebrow">08 · Structure Discovery Insights</span>
+    <h2>Working Principles</h2>
+
+    <div class="grid cols-2">
+      <div class="card abs">
+        <span class="tag">Principle</span>
+        <h3>The trunk carries the structure</h3>
+        <p>Leaves are interchangeable; trunks are not. Audit any taxonomy by removing one node at a time
+           and asking what collapses. Trunks announce themselves through their fragility under removal.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Principle</span>
+        <h3>Categories are tools, not facts</h3>
+        <p>A category is a cognitive instrument, not a property of the world. Two valid categorisations of
+           the same field will surface different problems and different opportunities.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Principle</span>
+        <h3>Invention lives at intersections</h3>
+        <p>Connecting two previously unrelated structures yields disproportionate insight. Map the edges,
+           not just the nodes.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Principle</span>
+        <h3>Density marks value</h3>
+        <p>Where many edges meet, that node is doing structural work. Densely cross-linked nodes are
+           candidate trunks even if they were not introduced as such.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Principle</span>
+        <h3>Emotional ≠ decorative</h3>
+        <p>If a concept resists categorisation, suspect it is operational. Pressure, curiosity, safety —
+           these are structural signals first, sentiments second.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Principle</span>
+        <h3>Visibility is the contribution</h3>
+        <p>Often the value of a mindmap is not the conclusion but the act of making implicit reasoning
+           inspectable. Inspectable reasoning is correctable reasoning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== PROMPTING REFLECTION ============== -->
+  <section id="prompting">
+    <span class="eyebrow">09 · Prompting Workflow Reflection</span>
+    <h2>The Prompt Is Reasoning Made External</h2>
+    <p>The shape of a prompt is the shape of the asker's thinking. Recording prompts is therefore not
+       just provenance — it is a record of the structure of attention itself.</p>
+
+    <div class="grid cols-2">
+      <div class="card ai">
+        <span class="tag">Observation</span>
+        <h3>How prompting changes structure</h3>
+        <p>A prompt that names six categories will return six clusters; a prompt that asks "what is missing"
+           will return absences. The prompt pre-shapes the answer before any model has run.</p>
+      </div>
+      <div class="card ai">
+        <span class="tag">Observation</span>
+        <h3>How categorisation affects interpretation</h3>
+        <p>Once a categorisation is in place, subsequent interpretation tends to conform to it. Choosing a
+           taxonomy early is a high-leverage and under-considered decision.</p>
+      </div>
+      <div class="card ai">
+        <span class="tag">Observation</span>
+        <h3>How AI reasoning differs from human reasoning</h3>
+        <p>AI moves through plausible-next-token space; humans move through associative-with-affect space.
+           The two converge on similar outputs through different terrain.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Observation</span>
+        <h3>Where human judgement is still required</h3>
+        <p>At the boundary between draft and decision. Drafts AI; decisions humans. The trunk identification
+           step in particular resists automation because it is value-laden.</p>
+      </div>
+    </div>
+
+    <div class="quote" style="margin-top: 28px;">
+      "The act of prompting externalises reasoning that was previously private. The record of prompts is the record of the asker becoming visible to themselves."
+    </div>
+  </section>
+
+  <!-- ============== FUTURE EXPANSION ============== -->
+  <section id="future">
+    <span class="eyebrow">10 · Future Expansion Areas</span>
+    <h2>Where This Framework Wants to Go Next</h2>
+    <p>Each of the following is a candidate for the next round of structure discovery. They are intentionally
+       not over-specified — the point is direction, not deliverable.</p>
+
+    <div class="grid cols-3">
+      <div class="card edu">
+        <span class="tag">Direction</span>
+        <h3>Evaluation Reform for the AI Era</h3>
+        <p>Design grading and hiring instruments that surface reasoning, not just output. Process-as-evidence rubrics; reasoning traces as artefact.</p>
+      </div>
+      <div class="card emo">
+        <span class="tag">Direction</span>
+        <h3>Operational Integration of Affect</h3>
+        <p>Treat psychological safety, pressure-balance, and relational continuity as measurable inputs to org dashboards rather than HR mood data.</p>
+      </div>
+      <div class="card abs">
+        <span class="tag">Direction</span>
+        <h3>Teaching Structure Discovery</h3>
+        <p>Curriculum for the skill of seeing the shape of a problem. Trunk-detection drills, edge-mapping exercises, taxonomic audits.</p>
+      </div>
+      <div class="card ai">
+        <span class="tag">Direction</span>
+        <h3>AI-Human Reasoning Audit Protocols</h3>
+        <p>Standardised methods for assessing where AI contribution ends and human judgement began. Required artefacts for AI-assisted work.</p>
+      </div>
+      <div class="card org">
+        <span class="tag">Direction</span>
+        <h3>Structure Discovery as a Role</h3>
+        <p>Identify the job description that doesn't exist yet: someone whose deliverable is the shape of a problem made legible to the team.</p>
+      </div>
+      <div class="card eval">
+        <span class="tag">Direction</span>
+        <h3>Visibility Instruments</h3>
+        <p>Tools — like this document — that turn reasoning into something inspectable. Templates, frameworks, and rituals for making thought legible.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== APPENDIX ============== -->
+  <section id="appendix">
+    <span class="eyebrow">Appendix · A</span>
+    <h2>Originating Prompt (For Records)</h2>
+    <p>The prompt below produced this document. It is preserved verbatim because, in the framework's own
+       terms, the prompt is part of the thinking — its structure is visible in the structure of the output.</p>
+
+    <details class="appendix">
+      <summary>
+        <span class="label">Show originating prompt</span>
+        <span class="hint">click to expand · plain text</span>
+      </summary>
+<pre><code>You are acting as a strategic thinking, systems analysis, educational psychology, organizational design, and knowledge-structuring researcher.
+
+Your task is NOT to simply summarize the attached concepts.
+
+Your role is to:
+1. Deeply research and expand the conceptual surface area of the ideas
+2. Discover hidden relationships between concepts
+3. Categorize and restructure the concepts into a highly organized mindmap system
+4. Identify "trunk" concepts vs "branch" concepts
+5. Expand weakly developed nodes into broader conceptual frameworks
+6. Detect emotional, educational, organizational, cognitive, operational, and philosophical dimensions
+7. Transform fragmented abstract notes into a coherent structured intelligence map
+8. Create a professional visual HTML mindmap output
+
+The final output MUST be:
+- A SINGLE self-contained HTML file
+- Fully styled with CSS
+- Interactive if possible
+- Visually organized
+- Color-coded
+- Readable
+- Professional
+- Suitable for executive discussion and future expansion
+
+The HTML should visually represent:
+- relationships
+- categories
+- hierarchy
+- dependencies
+- trunk structures
+- conceptual intersections
+- human thinking flows
+
+The objective is NOT business implementation yet.
+
+The focus is:
+- synthesis
+- categorization
+- structure discovery
+- abstraction analysis
+- relationship discovery
+- thinking visibility
+- systemization of reasoning
+
+IMPORTANT CONTEXT FROM THE SESSION:
+The session emphasized that:
+- AI can improve output quality while hiding understanding gaps
+- Education and work environments require different AI evaluation standards
+- Mindmaps reveal hidden thinking structures
+- The "trunk" of a concept is more important than isolated leaves
+- Valuable inventions often emerge from connecting unrelated structures
+- Prompting itself represents human reasoning structure
+- AI should assist organization, not replace human interpretation
+- Understanding visibility is critical
+- Categorization itself can become an invention
+- Emotional and abstract concepts should not be ignored
+- Large structures often contain only a few high-value nodes
+- Human relationships, emotions, pressure, continuity, and motivation are hidden operational variables
+- Structure discovery may become a future leadership skill
+- AI-assisted organization should still preserve reasoning transparency
+
+IMPORTANT ANALYSIS INSTRUCTIONS:
+Before generating the mindmap:
+1. Perform broad conceptual expansion on every major category
+2. Research related educational theories, systems thinking models, organizational psychology concepts, knowledge structures, learning theories, human behavior systems, cognitive science principles, and AI-human collaboration frameworks
+3. Expand beyond the explicit notes
+4. Infer hidden structures where appropriate
+5. Preserve ambiguity where concepts are not fully defined
+6. Do NOT over-optimize into business equations yet
+7. Focus on deep structure discovery
+8. Treat emotional concepts as important structural signals
+9. Detect repeated patterns and high-density conceptual intersections
+10. Distinguish clearly between:
+   - root concepts
+   - trunk concepts
+   - branch concepts
+   - leaf concepts
+
+OUTPUT REQUIREMENTS:
+The HTML output should contain:
+
+1. Executive Summary Section
+2. Concept Categories Section
+3. Trunk vs Branch Analysis
+4. Relationship Mapping
+5. Hidden Variables and Emotional Signals
+6. AI vs Human Reasoning Observations
+7. Structure Discovery Insights
+8. Color-coded Interactive Mindmap
+9. Prompting Workflow Reflection
+10. Future Expansion Areas
+
+VISUAL REQUIREMENTS:
+Use:
+- expandable/collapsible nodes
+- color coding by category
+- relationship arrows or connectors
+- layered hierarchy
+- spacing that avoids clutter
+- modern clean UI
+- readable typography
+- trunk nodes visually emphasized
+- emotional nodes visually distinct
+- AI-related concepts visually grouped
+- educational structures visually grouped
+- organizational structures visually grouped
+
+COLOR SUGGESTION:
+- Education = Blue
+- Human behavior/emotions = Orange
+- AI/Digital systems = Purple
+- Organizational systems = Green
+- Evaluation/measurement = Red
+- Abstract/high-level structures = Gold
+- Trunk concepts = Dark/high-emphasis nodes
+
+IMPORTANT:
+The prompts themselves are part of the thinking process.
+Include a section showing:
+- how prompting changes structure
+- how categorization affects interpretation
+- how AI reasoning differs from human reasoning
+- where human judgment is still required
+
+The final HTML should feel like:
+- a research-grade thinking framework
+- a systems-analysis visualization
+- a strategic educational cognition map
+- a future organizational reasoning model
+
+Below are the extracted concepts and categories from the session.
+
+==================================================
+RAW CONCEPTS
+==================================================
+
+EDUCATION:
+Knowledge
+Learning
+Understanding
+Wisdom
+Research
+Experience
+Teaching
+Application
+Evaluation
+Exams
+Tests
+Curriculum
+Lectures
+Courses
+Textbooks
+Institutions
+Schools
+Colleges
+Universities
+Teachers
+Students
+Parents
+Government
+Ministry of Education
+Rules &amp; Regulations
+Grades
+Passes
+Retakes
+Attendance
+Preparation
+Goals
+Process
+Value
+Career
+Society
+Salary
+Business
+Projects
+Future
+Responsibility
+Curiosity
+Reflection
+Emotion
+Happiness
+Continuity
+
+HUMAN THINKING &amp; LEARNING STRUCTURES:
+Trunk
+Branch
+Structure
+Connection
+Categorization
+Color coding
+Association
+Visualization
+Self-reflection
+Relating myself to the topic
+Comparison
+Knowing
+Campaigning
+Developing abilities
+Re-education
+Thinking ability
+Talent
+Effort
+Practice
+Confidence
+Creativity
+Generalization
+Understanding gaps
+Knowledge gaps
+Human behavior
+Psychological safety
+Pressure
+Relaxation
+Laziness
+Strictness
+Feeling
+Relationships
+Teacher/Student relationship
+Parent/Child relationship
+
+DIGITAL &amp; AI CONCEPTS:
+AI
+Digital tools
+Digital/Physical
+Online learning
+Physical learning
+AI-assisted organization
+Prompt engineering
+Workflow standardization
+Prompt recording
+AI categorization
+AI synthesis
+AI structure generation
+AI-assisted evaluation
+Visibility of reasoning
+Hidden understanding gaps
+Human validation
+Quality assurance
+Ethical AI usage
+Transparency
+Accountability
+
+ORGANIZATIONAL &amp; OPERATIONAL CONCEPTS:
+Company
+Business
+Projects
+Cost
+Cost cutting
+Value exchange
+Growth
+Scaling
+Hiring ability
+Evaluation
+Management
+Leadership
+Decision making
+Operational structure
+Continuity
+Organizational learning
+Team capability
+Risk
+Productivity
+Efficiency
+Sample data
+Forecasting
+Systematic thinking
+Structured logic
+
+RELATIONSHIP IDEAS DISCUSSED:
+- Education → Process → Application
+- AI → Output Quality vs Understanding Visibility
+- Relationships → Learning Quality
+- Trunks → High-value structures
+- Categorization → Discovery mechanism
+- Emotional structures → Hidden operational variables
+- Human reasoning → Nonlinear and associative
+- Prompting → Externalized reasoning
+- Structure discovery → Leadership capability
+- Understanding gaps → Necessary for education
+- AI-assisted outputs → May conceal weakness
+- Evaluation systems → Need visible reasoning
+- Emotional safety → Impacts learning capability
+- Pressure vs Relaxation → Different performance effects
+- Talent vs Effort → Different educational pathways
+- Digital vs Physical → Different learning environments
+- Research vs Application → Knowledge transfer cycle
+
+FINAL TASK:
+Generate a deeply researched, highly organized, visually advanced HTML mindmap system that expands these concepts into a comprehensive cognitive, educational, organizational, and AI-human reasoning framework.
+
+The final output MUST be production-quality HTML.</code></pre>
+    </details>
+  </section>
+
+  <footer>
+    STRUCTURE DISCOVERY FRAMEWORK · Synthesis Layer · Self-contained HTML
+  </footer>
+
+</main>
+
+</body>
+</html>

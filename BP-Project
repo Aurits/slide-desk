@@ -1,0 +1,209 @@
+Maintenance Optimization Audit Report
+Project Name	 BLUEPRINT – CREATE PROJECT
+Prepared By	 AMBROSE ALANDA
+Date	 17TH.3.2026
+Scope Summary	Nextjs frontend application, FastApi backend and LangGragh bp workflow engine
+Section 1: Task Inventory
+List every maintenance task under each category. Use the example row (yellow) as a guide for depth.Type: Recurring / Occasional / Ad-hoc  	Frequency: Daily / Weekly / Monthly / As needed
+Criticality: Critical (service down) / High (degraded) / Medium (inconvenience) / Low (cosmetic)
+#	Task	Type	Frequency	Effort (h)	Criticality	Notes
+Bug Fixes & Incidents
+1.1	Investigate & fix job processing failures during LangGraph BP engine calls.	Recurring	Weekly	2–4 h	Critical	Diagnose stuck/failed graph execution jobs. Inspect task queue, and retry logic. Involves workflow log analysis + FastAPI task dispatch. Restart or replay failed jobs as needed.
+1.2	Investigate & fix client-reported UI bugs (Next.js frontend)	Recurring	Weekly	~2 h/bug	High	Triage and reproduce bugs reported by client across dashboard and results canvas UI. Debugging involves React component state, API response handling, and browser compatibility.
+1.3	Resolve access failures (auth/permission errors blocking users)	Recurring	As needed	1–2 h	Critical	Investigate 401/403 errors, broken sessions, or role-permission mismatches. Spans FastAPI auth middleware, token validation, and frontend session handling. 
+1.4	Respond to production error spikes from monitoring alerts	Ad-hoc	As needed	1–4 h	Critical	Reactive response to sudden increases in 5xx errors, unhandled exceptions, or timeout alerts. Involves log inspection, rollback decisions, and hotfix deployment if needed.
+Monitoring & Alerting
+ 						
+2.1	Daily health check of production services (API, engine, frontend)	Recurring	Daily	~15 min	Critical	Review server health dashboards, notifications, and error rates across FastAPI backend and workflow engine. Confirm all services are responding. 
+2.2	Set up and maintain error monitoring & notification channels	Occasional	As needed	2–4 h	High	Configure and update alert rules (error thresholds, downtime triggers). Maintain notification routing to Slack/email. Update contact lists when team changes. 
+2.3	Monitor Gemini API cost and usage, review monthly spend and token consumption	Recurring	Weekly / Monthly	~30 min	High	Check Google Cloud billing dashboard for AI API costs. Track token usage trends, model call volume, and projected monthly spend. Flag anomalies early. Links to task 5.1 (rate limit monitoring).
+2.4	Review application logs for silent errors and performance degradation	Recurring	Weekly	~1 h	High	Manually or via cloud console, scan FastAPI and workflow logs for non-alerted issues: slow queries, retry storms, memory growth, unexpected null responses from AI layer.
+Deployments & Releases
+3.1	Deploy bug fixes and patches to production (backend + frontend)	Recurring	Weekly	~1 h	Critical	Build, test, and deploy patched code via cloud build pipeline. Covers Next.js frontend build and FastAPI container deployment. Requires secret management and post-deploy smoke tests. 
+3.2	Review and clean up production environment (stale containers, unused resources)	Recurring	Monthly	1–2 h	Medium	Audit running services, stopped containers, orphaned volumes, and unused environment variables. Remove stale resources to reduce cost and attack surface.
+3.3	Update and maintain VM/container templates for production environment	Occasional	Monthly	2–3 h	High	Update base VM images or Docker base images with latest OS patches and runtime versions. Rebuild and test templates before applying to production. 
+3.4	Validate staging environment parity with production before each release	Recurring	Weekly	~30 min	High	Confirm staging env config, dependencies, and data fixtures match production. Prevents "works on staging, breaks on prod" incidents. 
+Database Operations
+4.1	Set up and maintain automated database backup & restoration pipeline	Occasional	Setup once; verify monthly	3–5 h setup; ~30 min verify	Critical	Configure automated daily/weekly DB backups. Periodically test restoration to confirm backup integrity. Document restoration procedure in runbook. 
+4.2	Enforce database & resource network isolation (VPC/private subnet config)	Occasional	As needed / after infra changes	2–4 h	Critical	Ensure DB is not publicly accessible. Configure and review VPC rules, security groups, and private subnet assignments. Re-validate after any infrastructure change. "vc" noted, assuming VPC. 
+4.3	Run schema migrations for bug fixes and dependency updates	Occasional	As needed	1–2 h	High	Apply Alembic (or equivalent) migrations during patch deployments. Review migration scripts before execution. Maintain rollback scripts for all migrations.
+4.4	Identify and optimize slow or high-cost database queries	Recurring	Monthly	1–3 h	Medium	Review slow query logs. Add indexes or rewrite queries where needed. Particularly important for job state tables which may grow rapidly.
+Third-Party Services
+5.1	Monitor Gemini API rate limits and optimize throughput (batching, retry logic, quota management)	Recurring	Weekly	~1 h	High	Review Google Cloud AI quota dashboard. Check for 429 rate-limit errors in logs. Tune request batching, concurrency limits, and exponential backoff in workflow job manager to maximize throughput within quota. Escalate to quota increase request if consistently hitting limits.
+5.2	Rotate and renew Gemini API keys and secrets	Occasional	Every 90 days / as needed	~30 min	Critical	Rotate API keys per security policy. Update secrets in deployment environment (env vars / secrets manager). Confirm no service disruption after rotation.
+ 	 	 	 	 	 	 
+Client Requests
+6.1	Apply client-requested UI/UX configuration changes to existing screens	Ad-hoc	As needed	1–3 h	Medium	Implement minor layout, labelling, color, or results screen adjustments requested by client. Excludes new screens or features. Changes deployed through standard release pipeline.
+6.2	Investigate and fix client-reported bugs (triaged from support channel)	Ad-hoc	As needed	1–4 h	High	Receive, reproduce, and resolve bugs surfaced by the client outside of internal monitoring. May span frontend (Next.js), API (FastAPI), or BP engine (LangGraph). Separate from proactive bug fixing (1.2) as these are client-initiated. 
+Infrastructure & Environment
+7.1	Review and right-size cloud resource volumes (compute, memory, storage)	Recurring	Monthly	1–2 h	High	Analyse resource utilisation metrics. Upsize or downsize compute/storage allocations to balance cost and performance. Particularly relevant as cloud run job loads fluctuate. 
+7.2	Manage and audit environment variables across all environments	Occasional	As needed	~1 h	High	Keep env variables (API keys, DB URLs, feature flags) in sync across local, staging, and production. Audit for stale or unused vars. Use secrets manager where possible; never commit to version control.
+7.4	Maintain and monitor CI/CD pipeline health	Recurring	Weekly	~30 min	High	Ensure build pipelines are passing. Investigate and fix failing pipeline steps. Update pipeline config when dependencies or deploy targets change.
+7.5	DNS management and domain/subdomain configuration	Occasional	As needed	~30 min	Critical	Update DNS records (A, CNAME, TXT) when infrastructure changes. Incorrect DNS causes full service outage. 
+ 	 	 	 	 	 	 
+Code Maintenance
+8.1	Update and audit npm/pip dependencies for security vulnerabilities	Recurring	Monthly	1–2 h	High	Run npm audit / pip-audit or equivalent. Review CVE advisories for Next.js, FastAPI, LangGraph, and all libraries. Apply patches in a branch and test before merging to main.
+8.2	Refactor and remove deprecated code across frontend and backend	Occasional	Quarterly	3–6 h	Medium	Identify and remove deprecated API calls, outdated React patterns, and unused FastAPI routes. Reduces future maintenance burden and improves readability.
+8.3	Clean up unused code, dead routes, and orphaned files	Occasional	Quarterly	2–3 h	Low	Remove commented-out code blocks, unused components, and dead API endpoints. Improves codebase clarity. Should be done in a separate PR and reviewed carefully.
+8.4	Maintain and update automated test suites	Recurring	As needed (after each patch)	1–2 h	High	Keep unit and integration tests passing after each bug fix or dependency update. Add regression tests for recurring bug classes. 
+Documentation
+9.1	Update API documentation to reflect endpoint changes and bug fix behaviour	Recurring	After each release	~1 h	Medium	Keep FastAPI auto-docs (Swagger/OpenAPI) accurate. Update any manually maintained API reference docs when endpoint behaviour changes.
+9.2	Write and maintain deployment & runbook documentation	Occasional	As needed	2–4 h	High	Document step-by-step deployment procedures, rollback instructions, and incident response playbooks. Critical for reducing single-person dependency. 
+9.3	Write onboarding & system overview documentation for new team members	Occasional	As needed	3–5 h	Medium	Maintain a README covering system architecture, local setup and repo structure. Updated when the system meaningfully changes. Critical for reducing bus-factor risk.
+9.4	Document bp workflow integration, prompt patterns, and LangGraph graph structure	Occasional	As needed	2–4 h	High	The BP engine is the most opaque part of the system. Document integration points,  templates, parameters, and decisions made. High single-dependency risk if undocumented.
+
+Active Architecture Initiative: In Implementation (Issue #429)
+GPU Inference / Workflow Execution Decoupling
+Currently, GPU VMs run the entire job (18–27 min) even though actual GPU inference takes only 2–4 min (3–16% of job time). The remaining 80%+ is Gemini API calls and CPU work, GPU sits idle but the slot stays locked. This caps throughput at ~64 concurrent jobs under GCP's L4 quota.
+
+The fix: Move workflow execution to Cloud Run Jobs (CPU-only, auto-scaling). GPU VMs become a shared inference-only pool, called via HTTP only during the brief GPU phases. A local proxy inside each Workflow Runner resolves GPU URLs just-in-time, no changes required to bp-workflow-engine. Expected result: 5–30× throughput improvement on the same GPU quota.
+
+Current status: Approved and in active implementation on branch feat/gpu-decouple. System is transitional, both the current co-located path and the new decoupled path exist simultaneously.
+
+Audit impact: Deployments, monitoring, and rollback procedures currently must account for both architecture states. 
+Section 2: Skill & Owner Mapping
+For each task from Section 1. Single Dependency: Yes / No
+#	Task	Current Owner	Required Skills	Backup	S.D.?	Notes
+1.1	Fix job processing failures in BP workflow engine	Ambrose, Aita, Otai	BP workflow engine internals, FastAPI task dispatch, Python async debugging, workflow log analysis, retry logic config	Any backend owner	NO	All three backend owners share this. Rodrick/Lauben can restart infra resources but cannot debug engine logic.
+1.2	Fix client-reported UI bugs (Next.js frontend)	Crispus, Muzuva, Aita	Next.js, React state management, REST API debugging, browser DevTools, cross-browser testing	Crispus ↔ Muzuva	NO	Frontend team covers each other. Backend assists only on API-side root causes.
+1.3	Resolve access failures (auth/permission errors)	Ambrose, Otai, Aita	FastAPI auth middleware, JWT/session handling.	Any backend owner.	NO	Backend owns auth logic. 
+1.4	Respond to production error spikes	Ambrose, Rodrick, Aita	GCP Cloud Logging, incident triage, log correlation, rollback decisions, FastAPI error patterns, Cloud Run operations	Otai, Lauben	NO	Ambrose leads backend diagnosis; Rodrick leads infra response. Both needed for full incident coverage.
+2.1	Daily health check of production services	Rodrick, Lauben	GCP Cloud Monitoring, Cloud Run health dashboards, uptime checks, error rate and latency thresholds	Ambrose	NO	Infra team leads daily checks. Full team should have dashboard read access.
+2.2	Set up and maintain error monitoring & notification channels	Rodrick	GCP alerting policy config, email integration, alert threshold design, escalation routing	Lauben	NO	Lauben is direct backup with equivalent access. Backend team defines threshold values for the application
+2.3	Monitor Gemini API cost and usage	Aita, Otai	GCP Billing console, AI quota dashboard, token usage trend analysis, cost anomaly detection	Ambrose	NO	Backend team leads; Ambrose as backup. Cost spikes often signal retry storms in the engine.
+2.4	Review application logs for silent errors	Ambrose, Otai, Aita	GCP Cloud Logging, FastAPI log format, workflow engine execution trace reading, memory and latency trend analysis	Rodrick, Lauben (infra layer)	NO	Backend owns application log review; infra covers VM and scheduler logs. Correlate using job_id across services.
+3.1	Deploy bug fixes and patches to production	Rodrick, Lauben	GCP Cloud Build, Cloud Run deployment, GCP Secret Manager, smoke testing, rollback execution	Ambrose	NO	Infra owns pipeline execution. Ambrose can deploy in their absence.
+3.2	Review and clean up production environment	Rodrick, Lauben	GCP console, Cloud Run revision cleanup, Artifact Registry pruning, cost analysis	Ambrose, Aita	NO	Infra-led. Backend assists identifying stale workflow job resources. Legacy VM resources only removed after GPU decoupling is stable.
+3.3	Update and maintain VM/container templates	Aita, Ambrose	GCE instance templates, Docker builds, NVIDIA/CUDA compatibility, GPU container stack config, Cloud Run Job definitions	Otai	NO	Backend team tests and sets up the template on dev environment and the infra team update the template on production
+3.4	Validate staging parity with production	Rodrick, Lauben	GCP environment config comparison, env var management, staging deployment, service dependency validation	Ambrose	NO	Infra-led pre-release check. Staging must mirror production env vars, dependency versions, and job definitions.
+4.1	Set up and maintain automated DB backup & restoration pipeline	Rodrick	GCP Cloud SQL backup config, automated scheduling, restoration testing, DB credentials management	Lauben, Aita	NO	
+4.2	Enforce DB & resource network isolation (VPC)	Rodrick, Ambrose	GCP VPC, firewall rules, private subnet config, Cloud SQL private IP, VPC connector for Cloud Run	Lauben, Otai	NO	Rodrick/Lauben own VPC topology; Aita/Ambrose/Otai own DB-level access config. Re-validate after any infra change.
+4.3	Run schema migrations	Ambrose, Otai, Aita	Alembic, SQL schema design, FastAPI ORM, rollback scripting, pre-migration backup verification	Any backend owner	NO	Standard procedure: PR review → staging test → backup verified → prod run. Never bundle with application code changes.
+4.4	Identify and optimize slow DB queries	Ambrose, Otai, Aita	SQL query analysis, slow query logs, indexing strategy, ORM profiling, GCP Cloud SQL Insights	Any backend owner	NO	Job table is the most likely bottleneck 
+5.1	Monitor Gemini API rate limits and optimize throughput	Aita, Otai	GCP AI quota, Gemini 429 handling, httpx retry/backoff config, request batching, workflow engine node concurrency tuning	Ambrose	NO	Backend owns Gemini throttling across VLM nodes. 
+5.2	Rotate and renew Gemini API keys	Client (key holder)	API key lifecycle management — client holds and rotates the Gemini key	Rodrick (integration-side verification)	NO	Gemini key is owned and rotated by the client. Team verifies integration-side after each rotation and updates Secret Manager bindings.
+6.1	Apply client-requested UI/UX config changes	Crispus, Muzuva	Next.js, React, UI config patterns, results canvas, deployment pipeline	Crispus ↔ Muzuva	NO	Frontend team handles all UI-layer requests. Backend involved only if an API change is needed. New feature requests are out of scope.
+6.2	Investigate and fix client-reported bugs	Muzuva, Crispus	Full-stack triage across Next.js, FastAPI, and BP workflow engine	Otai, Aita	NO	Muzuva triages and routes by stack layer. Tracked separately from 1.1 and 1.2.
+7.1	Review and right-size cloud resource volumes	Rodrick, Lauben	GCP resource utilisation metrics, Cloud Run/GCE sizing, storage scaling, cost optimisation	Ambrose	NO	Infra-led. Ambrose contributes Cloud Run Job sizing requirements from the backend perspective.
+7.2	Manage and audit environment variables	Ambrose, Rodrick	GCP Secret Manager, multi-environment config management, feature flag management	Otai, Lauben	NO	Backend owns app-level vars; infra owns pipeline vars. DECOUPLED_MODE_ENABLED must be managed carefully across environments during GPU decoupling rollout.
+7.4	Maintain and monitor CI/CD pipeline health	Rodrick, Lauben	GCP Cloud Build, cloudbuild.yaml, build triggers, Artifact Registry, pipeline failure diagnosis	Ambrose	NO	Infra owns pipeline end-to-end. Ambrose resolves simple failures in their absence. Config must be updated as new services are added (e.g. Workflow Runner Cloud Run Job).
+7.5	DNS management and domain/subdomain configuration	Rodrick	GCP Cloud DNS, DNS record types (A, CNAME, TXT), domain registrar access, TTL config	Lauben (if registrar access confirmed)	NO	Ambrose and Rodrick jointly own. Lauben is backup — registrar access should be confirmed before relying on this.
+8.1	Update and audit dependencies for security vulnerabilities	Crispus (npm) / Aita, Otai (pip)	npm audit, pip-audit, CVE triage, dependency pinning, patch branch testing	Muzuva (npm) / Ambrose (pip)	NO	Split by layer. Engine dependency updates require extra caution may affect graph execution behaviour.
+8.2	Refactor and remove deprecated code	Full team (by layer)	React refactoring (frontend) / FastAPI + Python refactoring (backend & engine)	Full team	NO	Each owner refactors within their layer. Cross-layer PRs require review from both sides.
+8.3	Clean up unused code, dead routes, orphaned files	Full team (by layer)	Codebase familiarity, static analysis tooling, peer code review	Full team	NO	Dedicated PRs only — never bundled with bug fixes. Legacy GPU VM path files removed only after decoupling is stable.
+8.4	Maintain and update automated test suites	Full team (by layer)	pytest, FastAPI test client (backend); Jest, Playwright (frontend); CI integration	Full team	NO	Each sub-team owns their layer's tests. Engine node coverage is highest priority — graph execution regressions are hard to detect without dedicated tests.
+9.1	Update API documentation	Ambrose, Otai, Aita	FastAPI OpenAPI/Swagger, API reference writing, endpoint behaviour documentation	Any backend owner	NO	Updates required on every PR that changes endpoint behaviour. Outdated docs cause frontend integration bugs.
+9.2	Write and maintain deployment documentation	Ambrose, Aita, Rodrick	Full deployment process knowledge across backend and infra layers, technical writing, incident response playbook design	Otai, Lauben	NO	Complete deployment knowledge is split between Ambrose (backend/engine steps) and Rodrick (infra/pipeline steps). Neither alone can document the full procedure — joint effort required.
+9.3	Write onboarding & system overview documentation	Ambrose	Cross-layer system architecture knowledge, technical writing, repo structure, local dev setup	Aita, Lauben, Rodrick (partial)	NO	Ambrose holds the only complete cross-layer system view. No onboarding docs currently exist — critical for reducing bus-factor risk and enabling team transitions.
+9.4	Document BP workflow engine integration, templates	Aita, Ambrose	BP workflow engine architecture, template parameters, BFF-to-engine integration mapping	Otai, Ambrose (partial)	NO	Engine graph structure and design decisions are shared between Aita and Ambrose. Must be documented before April handover — high single-dependency risk if left undone.
+
+ 
+Section 3: Dependency Risk Assessment
+Only for tasks marked “Yes” in the Single Dependency column above.
+Transferable: Yes (with docs) / Yes (with training) / Difficult / No
+#	Task	Sole Owner	Transferable?	Time to Train	Docs Exist?	Notes
+ 	 	 	 	 	 	 
+Section 4: Access & Credentials Inventory
+List who has access to what. Do NOT write actual passwords or secrets — record service name, who has access.
+Service / System	Who Has Access	Single Holder?	Notes
+Production Servers
+ prod	Rodrick, Lauben, Ambrose, Aita	 No	 
+ dev	Rodrick, Lauben, Ambrose, Aita, Otai, Crispus, Muzuva 	 No	 
+Database
+ prod	Rodrick, Lauben, Ambrose, Aita	 No	 
+ dev	Rodrick, Lauben, Ambrose, Aita, Otai, Crispus, Muzuva 	 No	 
+Third-Party Services
+ Gemini API	Rodrick, Lauben, Ambrose, Aita, Otai, Crispus, Muzuva 	 No	 
+ GCP	Rodrick, Lauben, Ambrose, Aita, Otai, Crispus, Muzuva 	 No	 
+CI/CD & Deployment
+ prod	Rodrick, Lauben, Ambrose, Aita	 No	 
+ dev	Rodrick, Lauben, Ambrose, Aita, Otai, Crispus, Muzuva 	 No	 
+App Store Accounts
+ N/A	 	 	 
+ N/A	 	 	 
+Client Environments
+ Prod	Rodrick, Lauben, Ambrose, Aita, Otai, Crispus, Muzuva 	 No	 
+
+ Section 5: Minimum Team Proposal
+Based on your findings from Sections 1–4, propose the smallest team that can sustain this project.
+5a. Recommended Team
+Team Member	Role & Responsibilities	% or hrs/wk	Notes
+Aita	Backend Lead & Workflow Engine Owner. FastAPI backend, BP workflow engine, schema migrations, Gemini throughput monitoring, VM/container template setup (dev), BP engine documentation.	32hrs/wk	Primary contact for engine-layer incidents. Co-owns GPU decoupling (Issue #429) with Ambrose.
+Ambrose	Systems Lead & Cross-Layer Coordinator. System architecture, onboarding and deployment documentation, environment variable management, access failure triage, production incident coordination.	24hrs/wk	Holder of complete cross-layer system view. Primary escalation point for cross-layer bugs and documentation authoring.
+Rodrick	Infrastructure & DevOps Lead. CI/CD pipeline, Cloud Build, production deployments, VM templates (prod), DNS, VPC and network isolation, daily health checks.	24hrs/wk	Primary infra responder. Must co-author deployment runbook with Ambrose before team operates at minimum size.
+Crispus	Frontend Maintenance Owner. Next.js/React bug fixes, client UI/UX changes, frontend dependency audits, frontend test suite.	16hrs/wk	Muzuva is direct backup for all frontend tasks but is not retained on the minimum team.
+ 	 	 	 
+ 
+5b. Required Knowledge Transfer
+Action	From	To	Duration	Notes
+Joint authoring of end-to-end deployment doc.	Ambrose + Rodrick, Aita	Otai, Lauben	1–2 weeks	Must cover pipeline steps, secret management, deployment order, smoke tests, rollback, and DECOUPLED_MODE_ENABLED flag handling.
+DB backup restoration drill independent execution by backup owner	Rodrick	Lauben, Aita	1–2 days	Both perform a supervised restoration before minimum team operates. Confirms runbook accuracy and backup integrity.
+GPU decoupling architecture handover, VM modes, proxy mechanism, switchover steps	Aita, Ambrose	Rodrick, Otai	1 week	All three execution modes (single-job VM, multi-job VM, Cloud Run Job) exist simultaneously. Rodrick and Otai must understand all paths to support deployments and incidents during transition.
+ 
+5c. Remaining Risks & Gaps
+Risk / Gap	Impact	Mitigation
+GPU decoupling transition, dual architecture paths active simultaneously increase deployment and incident complexity	Critical	Full team briefed on both paths before minimum team operates. Runbook must cover both paths and feature flag switchover.
+Ambrose holds the only complete cross-layer system view	Critical	Onboarding docs and engine documentation transfer to Aita must be completed before Ambrose steps back to 30% allocation.
+No combined deployment guide exists	High	Joint runbook (5b item 2) must be completed and independently verified by Aita and Lauben before minimum team operates.
+Gemini API quota not increased ahead of GPU decoupling, parallel Cloud Run Job volume will exceed current limits	High	Submit quota increase request before decoupled architecture goes to production. Monitor 429 error rates during transition.
+
+ 
+Section 6: Undocumented Knowledge & Processes
+List processes you do that are NOT written down anywhere. Deployment workarounds, manual data fixes, environment quirks, things only you know.
+ 	Process / Knowledge	Who Knows This	Details & When It’s Needed
+1	VM processing modes, single-job VM, multi-job VM, and decoupled Cloud Run Job, setup, config differences, and switchover steps are not formally documented	Aita, Ambrose	Needed during any deployment, incident, or onboarding. All three modes exist simultaneously during the GPU decoupling transition. Only Aita and Ambrose can currently determine which mode is active and how to switch between them.
+2	Local proxy mechanism inside the Workflow Runner, intercepts GPU node requests, resolves live inference URLs from the Pool Manager, and forwards to GPU VMs via VPC	Ambrose, Aita	Needed when debugging decoupled-path inference failures or onboarding backend engineers. Not visible in bp-workflow-engine and undocumented outside GitHub issue #429.
+
+
+
+Section 7: Exit Implementation Plan (April – June 2026)
+7a. Scope Boundary from 1 April 2026
+ 	In Scope (permitted)s	Out of Scope (excluded)
+1	Bug fixes on existing functionality
+Monitoring and alerting
+Scheduled deployments of patches
+DB backups, cleanup, migration of existing schemas
+Dependency updates and security patches
+Configuration changes to existing features
+Updating existing documentation and runbooks
+SSL/DNS renewals and infra upkeep	New feature development
+Investigative R&D tasks
+Architecture changes (GPU decoupling work paused or handed over)
+New integrations or third-party onboarding
+Any scope not explicitly listed as maintenance
+7b. Resource Roll-off Schedule
+Team Member	Roll-off Date	Milestone / Condition	Handover Responsibility
+Muzuva	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Crispus	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Lauben	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Otai	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Aita	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Rodrick	🚩 TBD	🚩 To be confirmed	🚩 To be confirmed
+Ambrose	Last to exit	All handover docs complete and verified by client	Systems Lead — owns final sign-off on all documentation
+Team Member	Roll-off Date	Milestone / Condition	Handover Responsibility
+
+7c. Mandatory Handover Documentation
+Document	Description	Owner	Audience	Deadline	Status
+End-User Guide	Step-by-step guide covering core user workflows — logging in, submitting jobs, viewing results, and interpreting outputs on the dashboard and results canvas.	Crispus, Muzuva	Non-technical (end users)	🚩 TBD	Not started
+Admin / Operator Guide	Covers user management, role/permission configuration, job monitoring, system health checks, and escalation procedures for client-side administrators.	Ambrose, Aita	Technical (client admin)	🚩 TBD	Not started
+API Reference	Full documentation of all client-accessible FastAPI endpoints — request/response schemas, authentication, error codes, rate limits, and usage examples.	Ambrose, Otai, Aita	Technical (client developers)	🚩 TBD	Swagger/OpenAPI partial — narrative reference not started
+System Architecture Overview	Describes the full system stack (Next.js, FastAPI, BP workflow engine), component relationships, data flow, and infrastructure topology including the GPU decoupling architecture.	Ambrose	Both	🚩 TBD	Not started
+Deployment & Release Runbook	End-to-end step-by-step production deployment procedure covering pipeline steps, secret management, deployment order, smoke tests, rollback, and DECOUPLED_MODE_ENABLED flag handling.	Ambrose, Rodrick	Technical	🚩 TBD	Not started
+BP Workflow Engine Technical Reference	Documents graph node inventory, prompt templates, model parameters, BFF-to-engine integration points, known failure modes, and the GPU decoupling proxy mechanism.	Aita, Ambrose	Technical	🚩 TBD	In progress
+Incident Response Playbook	Step-by-step response procedures for each critical failure category — production outage, job processing failure, auth failure, error rate spike — including escalation contacts.	Ambrose, Rodrick	Technical	🚩 TBD	Not started
+DB Backup & Restoration SOP	Standard operating procedure for verifying automated backups, executing a full restoration, and validating data integrity post-restore. Includes schedule and retention policy.	Rodrick	Technical	🚩 TBD	Not started
+VM Processing Modes & GPU Decoupling Switchover Guide	Documents all three execution modes (single-job VM, multi-job VM, Cloud Run Job), how to determine which is active, and how to switch between them during and after the transition.	Aita, Ambrose	Technical	🚩 TBD	Not started
+Access & Credentials Handover Log	Complete record of all system access points, current holders, and transfer of credentials to the client. Based on Section 4 — must be formally signed off at exit.	Ambrose	Both	Before last member exits	Section 4 drafted — formal log not started
+Known Issues & Open Items Log	List of any known bugs, technical debt, or unresolved items being handed over. Each item must include severity, workaround if any, and recommended next action for the client team.	Ambrose, Aita	Both	Before last member exits	Not started
+
+7d. Exit Risk Assessment
+Risk / Gap	Impact	Mitigation
+GPU decoupling (Issue #429) still in transition at exit — client inherits a split architecture with undocumented switchover steps	Critical	VM processing modes and proxy mechanism must be fully documented before any team member exits. Aita and Ambrose own this — highest priority handover item.
+Ambrose holds the only complete cross-layer system view — exit without documentation leaves client unable to onboard new engineers	Critical	System overview and onboarding README must be completed by Ambrose before their roll-off date. This is a gate condition for exit.
+No deployment runbook exists — client cannot execute a production deployment without the team	High	Ambrose and Rodrick jointly produce and test runbook before April 30. Aita and Lauben perform at least one supervised deployment to verify it.
+Roll-off dates not yet defined — without a schedule, handover deadlines cannot be enforced	High	Roll-off schedule (7b) must be agreed and confirmed with client before 1 April 2026.
+
+Additional Comments
+Add any observations, concerns, or suggestions that do not fit into the sections above.
+ 
+ 
