@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Educational Cognition Atlas · Print Edition · A4</title>
+<title>教育認知マインドマップ · Educational Cognition Mindmap · A4 · Ambrose Alanda</title>
 <style>
   /* ============================================================
      PRINT PAGE SIZING
@@ -72,79 +72,159 @@
   .screen-hint b { color: #f1d990; font-weight: 700; }
 
   /* ============================================================
-     COVER PAGE
+     JAPANESE / BILINGUAL TYPOGRAPHY
      ============================================================ */
+  .jp {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', 'Fraunces', 'Georgia', serif;
+  }
+  .jp-sans {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', 'Inter', sans-serif;
+  }
+
+  /* ============================================================
+     COVER PAGE — centered bilingual
+     ============================================================ */
+  .page-cover {
+    text-align: center;
+  }
   .cover-crest {
     font-size: 9pt;
     text-transform: uppercase;
     letter-spacing: 0.24em;
     color: #a07320;
     font-weight: 700;
-    margin-bottom: 16pt;
-    display: flex; align-items: center; gap: 10pt;
+    margin: 0 auto 6pt;
+    display: inline-flex; align-items: center; gap: 10pt;
   }
   .cover-crest .line { flex: 0 0 30pt; height: 1px; background: currentColor; opacity: 0.55; }
+  .cover-crest-jp {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', 'Fraunces', serif;
+    font-size: 11pt;
+    letter-spacing: 0.28em;
+    color: #6f5520;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 22pt;
+  }
   .cover-title {
-    font-family: 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
-    font-size: 48pt;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-size: 42pt;
     font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.02;
-    margin: 0;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin: 0 auto;
     color: #1c1b1a;
   }
-  .cover-title .em { color: #a07320; font-style: italic; }
+  .cover-title .em { color: #a07320; font-style: normal; }
+  .cover-title-en {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 18pt;
+    font-weight: 400;
+    color: #6b6863;
+    letter-spacing: -0.005em;
+    margin: 6pt auto 0;
+    font-style: italic;
+  }
   .cover-sub {
-    font-size: 11.5pt;
+    font-size: 10.5pt;
     color: #4a4540;
     letter-spacing: 0.02em;
-    line-height: 1.55;
-    margin-top: 18pt;
-    max-width: 380pt;
+    line-height: 1.6;
+    margin: 22pt auto 0;
+    max-width: 420pt;
+  }
+  .cover-sub .jp-line {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 11pt;
+    color: #2a2620;
+    display: block;
+    margin-bottom: 4pt;
+  }
+  .cover-sub .en-line {
+    font-size: 9pt;
+    color: #6b6863;
+    font-style: italic;
+    display: block;
   }
   .cover-meta {
-    margin-top: 28pt;
+    margin: 26pt auto 0;
     display: flex; gap: 28pt;
     font-size: 8.5pt;
     color: #5a564f;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 480pt;
   }
+  .cover-meta .item { text-align: center; }
   .cover-meta .item .k {
     display: block;
-    font-size: 7.5pt;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 9pt;
     color: #a07320;
     font-weight: 700;
     margin-bottom: 2pt;
+    letter-spacing: 0.08em;
+  }
+  .cover-meta .item .k em {
+    display: block;
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 6.2pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #b78f3a;
+    margin-top: 1pt;
+    opacity: 0.85;
   }
   .cover-meta .item .v {
     font-family: 'JetBrains Mono', 'Menlo', monospace;
     color: #1f1e1d;
     font-weight: 600;
+    font-size: 11pt;
+    display: block;
   }
 
   .cover-legend {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 6pt 28pt;
-    margin-top: 24pt;
-    max-width: 380pt;
+    gap: 8pt 30pt;
+    margin: 26pt auto 0;
+    max-width: 460pt;
+    text-align: left;
   }
   .cover-legend .lg {
-    display: flex; align-items: center; gap: 8pt;
+    display: grid;
+    grid-template-columns: 12pt 1fr;
+    column-gap: 8pt;
+    align-items: start;
     font-size: 10pt;
     color: #2a2620;
   }
   .cover-legend .lg .dot {
-    width: 10pt; height: 10pt; border-radius: 50%;
-    flex-shrink: 0;
+    width: 9pt; height: 9pt; border-radius: 50%;
+    flex-shrink: 0; margin-top: 2.5pt;
   }
-  .cover-legend .lg .nm { font-weight: 600; }
-  .cover-legend .lg .sub {
-    color: #6b6863;
-    margin-left: auto;
-    font-size: 8pt;
+  .cover-legend .lg .text { display: flex; flex-direction: column; line-height: 1.25; }
+  .cover-legend .lg .nm {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-weight: 600;
+    font-size: 10pt;
+    color: #1f1e1d;
+  }
+  .cover-legend .lg .en {
+    font-size: 7.5pt;
+    color: #998f80;
     letter-spacing: 0.04em;
+    font-weight: 500;
+    font-style: italic;
+    margin-top: 1pt;
+  }
+  .cover-legend .lg .sub {
+    font-size: 7pt;
+    color: #6b6863;
+    margin-top: 1pt;
+    font-style: italic;
   }
 
   .cover-howto {
@@ -176,26 +256,68 @@
     left: 18mm;
     right: 18mm;
     border-top: 1px solid #d5cdb8;
-    padding-top: 8pt;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 8.5pt;
-    color: #5a564f;
+    padding-top: 12pt;
+    text-align: center;
   }
-  .url-block .lbl {
+  .url-block .byline {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 6.8pt;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 7.5pt;
+    letter-spacing: 0.26em;
     color: #a07320;
     font-weight: 700;
+    margin-bottom: 4pt;
   }
-  .url-block .url {
+  .url-block .byline-jp {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 7.5pt;
+    color: #6f5520;
+    letter-spacing: 0.18em;
+    margin-right: 4pt;
+  }
+  .url-block .name {
+    display: block;
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-size: 16pt;
+    font-weight: 600;
+    color: #1f1e1d;
+    letter-spacing: 0.02em;
+    margin-bottom: 10pt;
+    line-height: 1.05;
+  }
+  .url-block .url-row {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10pt;
+    font-size: 8pt;
+    padding-top: 6pt;
+    border-top: 1px dashed rgba(120,110,90,0.30);
+  }
+  .url-block .url-row .lbl {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 8pt;
+    color: #a07320;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .url-block .url-row .lbl em {
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 6pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #b78f3a;
+    margin-left: 4pt;
+  }
+  .url-block .url-row .url {
     color: #1f1e1d;
     font-weight: 600;
     letter-spacing: 0.02em;
     font-family: 'JetBrains Mono', 'Menlo', monospace;
-    font-size: 9pt;
+    font-size: 8pt;
+    text-decoration: none;
+    white-space: nowrap;
   }
 
   /* ============================================================
@@ -391,7 +513,197 @@
   .index-cross .rows b { color: #1f1e1d; font-weight: 700; }
 
   /* ============================================================
-     SIMPLIFIED CROSS-LINK LIST (page 4)
+     COMPREHENSIVE ATLAS — page 2 single-page mindmap
+     ============================================================ */
+  .atlas-stage {
+    position: relative;
+    width: 277mm;
+    height: 188mm;
+    margin: 0 auto;
+  }
+  .atlas-conn {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .atlas-cards {
+    position: absolute;
+    inset: 0;
+  }
+  .atlas-card {
+    position: absolute;
+    width: 54mm;
+    height: 55mm;
+    padding: 0;
+    border: none;
+    background: transparent;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    color: #1f1e1d;
+  }
+  .atlas-card .trunk-head {
+    display: grid;
+    grid-template-columns: 9pt 1fr;
+    column-gap: 5pt;
+    align-items: start;
+    margin: 0 0 4pt 0;
+    padding-bottom: 3pt;
+    border-bottom: 1.2pt solid var(--trunk-color);
+  }
+  .atlas-card .trunk-head .tdot {
+    width: 7pt;
+    height: 7pt;
+    border-radius: 50%;
+    background: var(--trunk-color);
+    border: 1.2pt solid #ffffff;
+    box-shadow: 0 0 0 0.4pt var(--trunk-color);
+    flex-shrink: 0;
+    margin-top: 3pt;
+  }
+  .atlas-card .trunk-head .name-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+  }
+  .atlas-card .trunk-head .name {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', 'Fraunces', serif;
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--trunk-color);
+    line-height: 1.1;
+  }
+  .atlas-card .trunk-head .name-en {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-style: italic;
+    font-size: 6.4pt;
+    color: var(--trunk-color);
+    opacity: 0.7;
+    line-height: 1.05;
+    margin-top: 1pt;
+  }
+  .atlas-card .trunk-head .sub {
+    grid-column: 1 / -1;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 5.4pt;
+    color: #6b6863;
+    font-weight: 500;
+    margin-top: 2pt;
+    letter-spacing: 0.02em;
+  }
+  .atlas-card .branches {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5pt;
+  }
+  .atlas-card .branches .b {
+    display: grid;
+    grid-template-columns: 6pt 1fr;
+    gap: 4pt;
+    font-size: 5.2pt;
+    line-height: 1.38;
+    align-items: baseline;
+  }
+  .atlas-card .branches .b .bdot {
+    width: 3pt;
+    height: 3pt;
+    border-radius: 50%;
+    background: var(--trunk-color);
+    margin-top: 2pt;
+    align-self: start;
+  }
+  .atlas-card .branches .b .text { min-width: 0; }
+  .atlas-card .branches .b .bname {
+    font-weight: 700;
+    color: #1f1e1d;
+  }
+  .atlas-card .branches .b .leaves {
+    color: #4a4540;
+  }
+  .atlas-card .branches .b .leaves::before {
+    content: " — ";
+    color: var(--trunk-color);
+    font-weight: 700;
+  }
+
+  .atlas-root {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50mm;
+    height: 50mm;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2.2px solid #a07320;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 5;
+    box-shadow:
+      0 0 0 5pt #ffffff,
+      0 0 0 6pt rgba(160,115,32,0.32);
+  }
+  .atlas-root::before {
+    content: "";
+    position: absolute;
+    inset: -12pt;
+    border-radius: 50%;
+    border: 1px dashed rgba(160,115,32,0.42);
+  }
+  .atlas-root::after {
+    content: "";
+    position: absolute;
+    inset: -24pt;
+    border-radius: 50%;
+    border: 1px solid rgba(160,115,32,0.12);
+  }
+  .atlas-root .crest {
+    font-size: 5.5pt;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #a07320;
+    text-transform: uppercase;
+  }
+  .atlas-root .title {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 12pt;
+    font-weight: 600;
+    line-height: 1.05;
+    color: #1f1e1d;
+    margin: 3pt 0 4pt;
+  }
+  .atlas-root .dot {
+    width: 7.5mm;
+    height: 7.5mm;
+    border-radius: 50%;
+    background: #f1d990;
+    border: 1.8px solid #a07320;
+  }
+
+  .atlas-footer {
+    position: absolute;
+    bottom: 4mm;
+    left: 10mm;
+    right: 10mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7pt;
+    color: #6b6863;
+    letter-spacing: 0.04em;
+  }
+  .atlas-footer .url {
+    font-family: 'JetBrains Mono', monospace;
+    color: #1f1e1d;
+    font-weight: 600;
+  }
+
+  /* ============================================================
+     SIMPLIFIED CROSS-LINK LIST (legacy — kept but unused now)
      ============================================================ */
   .cross-simple {
     margin-top: 16pt;
@@ -423,43 +735,43 @@
   .prompt-banner {
     display: flex;
     align-items: center;
-    gap: 14pt;
-    margin-bottom: 10pt;
-    padding: 8pt 14pt;
+    gap: 12pt;
+    margin-bottom: 8pt;
+    padding: 6pt 12pt;
     background: #1f1d1a;
-    border-radius: 5pt;
+    border-radius: 4pt;
   }
   .prompt-banner .ptag {
-    font-size: 8pt;
+    font-size: 7.5pt;
     font-weight: 700;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: #f1d990;
     flex-shrink: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', 'Inter', sans-serif;
   }
   .prompt-banner .psub {
     font-family: 'Fraunces', 'Georgia', serif;
     font-style: italic;
-    font-size: 10.5pt;
+    font-size: 9.5pt;
     color: #f0ead8;
-    line-height: 1.35;
+    line-height: 1.3;
   }
   .prompt-code-print {
     background: #fbf6e8;
     border: 1px solid #ead9aa;
-    border-radius: 6pt;
-    padding: 12pt 14pt;
-    margin: 0 0 8pt;
+    border-radius: 5pt;
+    padding: 8pt 12pt;
+    margin: 0 0 6pt;
     color: #2a2620;
     column-count: 2;
-    column-gap: 16pt;
+    column-gap: 14pt;
     column-rule: 1px solid rgba(183, 143, 58, 0.18);
     font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
   }
   .prompt-code-print .l {
-    font-size: 6.3pt;
-    line-height: 1.45;
+    font-size: 5.7pt;
+    line-height: 1.38;
     white-space: pre-wrap;
     word-break: break-word;
     display: block;
@@ -467,23 +779,22 @@
   .prompt-code-print .l.h {
     color: #8a6a1f;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    margin: 4pt 0 1pt;
-    padding-top: 2pt;
-    border-top: 1px dashed rgba(183, 143, 58, 0.32);
+    letter-spacing: 0.04em;
+    margin: 3pt 0 0;
+    padding-top: 1pt;
     break-after: avoid-column;
   }
   .prompt-code-print .l.d {
     color: #c6a960;
     opacity: 0.55;
-    font-size: 5.8pt;
+    font-size: 5pt;
   }
-  .prompt-code-print .l.b { height: 3pt; display: block; }
-  .prompt-code-print .l.bul { padding-left: 6pt; }
+  .prompt-code-print .l.b { height: 2pt; display: block; }
+  .prompt-code-print .l.bul { padding-left: 5pt; }
   .prompt-code-print .l.bul::before {
     content: "·";
     color: #b78f3a;
-    margin-right: 5pt;
+    margin-right: 4pt;
     font-weight: 700;
   }
 
@@ -669,78 +980,58 @@
      PAGE 1 · COVER
      ===================================================================== -->
 <section class="page page-cover">
-  <div class="cover-crest"><span class="line"></span> Educational Cognition Atlas <span class="line"></span></div>
+  <div class="cover-crest"><span class="line"></span> Educational Cognition Mindmap <span class="line"></span></div>
+  <div class="cover-crest-jp">教育認知マインドマップ</div>
 
-  <h1 class="cover-title">Learning <span class="em">&amp;</span> Knowledge<br/>Universe</h1>
+  <h1 class="cover-title">学び <span class="em">&amp;</span> 知の宇宙</h1>
+  <div class="cover-title-en">Learning &amp; Knowledge Universe</div>
 
-  <p class="cover-sub">A printed snapshot of how teaching, thinking, AI &amp; human learning interconnect — ten educational domains, their branches, and the hidden adjacencies between them.</p>
+  <p class="cover-sub">
+    <span class="jp-line">教授・思考・AI・人間の学びがどう交わるかの印刷地図 — 10の教育領域、その枝、領域間に潜む隠れたつながり。</span>
+    <span class="en-line">A printed snapshot of how teaching, thinking, AI &amp; human learning interconnect — ten educational domains, their branches, and the hidden adjacencies between them.</span>
+  </p>
 
   <div class="cover-meta">
-    <div class="item"><span class="k">Edition</span><span class="v">Print · A4</span></div>
-    <div class="item"><span class="k">Pages</span><span class="v">7</span></div>
-    <div class="item"><span class="k">Trunks</span><span class="v">10</span></div>
-    <div class="item"><span class="k">Branches</span><span class="v">60</span></div>
-    <div class="item"><span class="k">Cross-links</span><span class="v">10</span></div>
+    <div class="item"><span class="k">版 <em>Edition</em></span><span class="v">印刷 · A4</span></div>
+    <div class="item"><span class="k">ページ <em>Pages</em></span><span class="v">5</span></div>
+    <div class="item"><span class="k">幹 <em>Trunks</em></span><span class="v">10</span></div>
+    <div class="item"><span class="k">枝 <em>Branches</em></span><span class="v">60</span></div>
+    <div class="item"><span class="k">関連 <em>Cross-links</em></span><span class="v">10</span></div>
   </div>
 
   <div class="cover-legend" id="cover-legend"></div>
 
   <div class="url-block">
-    <span class="lbl">Interactive Version</span>
-    <a class="url" href="https://aurits.github.io/slide-desk/mindmap.html">https://aurits.github.io/slide-desk/mindmap.html</a>
+    <span class="byline"><span class="byline-jp">編集</span>Compiled by</span>
+    <span class="name">Ambrose Alanda</span>
+    <span class="url-row">
+      <span class="lbl">インタラクティブ版 <em>Interactive</em></span>
+      <a class="url" href="https://aurits.github.io/slide-desk/mindmap.html">aurits.github.io/slide-desk/mindmap.html</a>
+    </span>
   </div>
 </section>
 
 <!-- =====================================================================
-     PAGE 2 · MAP
+     PAGE 2 · COMPREHENSIVE ATLAS
+     root + 10 trunk cards (with branches + leaves) + cross-links
      ===================================================================== -->
 <section class="page page-map">
   <div class="map-header">
-    <h2 class="map-title">The Map <span class="sm">10 educational domains · 60 branches · 10 hidden links</span></h2>
-    <span class="map-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+    <h2 class="map-title"><span class="jp" style="font-family:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif">マインドマップ</span> · The Mindmap <span class="sm">10領域 · 60の枝 · 280の葉 · 10の隠れた関連</span></h2>
+    <span class="map-meta">Compiled by Ambrose Alanda · aurits.github.io/slide-desk/mindmap.html</span>
   </div>
-  <div class="map-svg-wrap">
-    <svg id="map-svg" viewBox="-140 -90 280 180" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="atlas-stage" id="atlas-stage">
+    <svg class="atlas-conn" id="atlas-conn" viewBox="0 0 277 180" preserveAspectRatio="none"></svg>
+    <div class="atlas-root" id="atlas-root">
+      <div class="crest">教育認知マインドマップ</div>
+      <div class="title">学びと知<br/><span style="font-family:'Fraunces','Georgia',serif;font-style:italic;font-size:8pt;color:#6b6863;font-weight:500;letter-spacing:0">Learning &amp; Knowledge</span></div>
+      <div class="dot" aria-hidden="true"></div>
+    </div>
+    <div class="atlas-cards" id="atlas-cards"></div>
   </div>
-  <div class="map-footer">
-    <span>Educational Cognition Atlas · Print Edition</span>
-    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
-  </div>
-</section>
-
-<!-- =====================================================================
-     PAGE 3 · INDEX A
-     ===================================================================== -->
-<section class="page page-index">
-  <div class="index-header">
-    <h2 class="index-title">Taxonomy <span class="sm">trunks · branches · leaves · part 1</span></h2>
-    <span class="index-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
-  </div>
-  <div class="index-grid" id="index-grid-a"></div>
-  <div class="index-footer">
-    <span>Page 3 / 7 · Educational Cognition Atlas</span>
-    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
-  </div>
-</section>
-
-<!-- =====================================================================
-     PAGE 4 · INDEX B + CROSS-LINKS
-     ===================================================================== -->
-<section class="page page-index">
-  <div class="index-header">
-    <h2 class="index-title">Taxonomy <span class="sm">trunks · branches · leaves · part 2</span></h2>
-    <span class="index-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
-  </div>
-  <div class="index-grid" id="index-grid-b"></div>
-
-  <div class="cross-simple">
-    <div class="cross-label">Hidden cross-links — dashed gold curves on the map</div>
-    <div class="cross-rows" id="cross-rows"></div>
-  </div>
-
-  <div class="index-footer">
-    <span>Page 4 / 7 · Educational Cognition Atlas</span>
-    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
+  <div class="atlas-footer">
+    <span>教育認知マインドマップ · 印刷版 — Compiled by <b style="color:#1f1e1d">Ambrose Alanda</b></span>
+    <span class="url">aurits.github.io/slide-desk/mindmap.html</span>
   </div>
 </section>
 
@@ -749,16 +1040,15 @@
      ===================================================================== -->
 <section class="page page-index page-prompt">
   <div class="prompts-header">
-    <h2 class="prompts-title">Prompt 01 <span class="sm">the initial brief</span></h2>
-    <span class="map-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+    <h2 class="prompts-title"><span style="font-family:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif">プロンプト 01</span> · Prompt 01 <span class="sm">最初のブリーフ · the initial brief</span></h2>
   </div>
   <div class="prompt-banner">
-    <span class="ptag">DISCOVERY</span>
+    <span class="ptag">発見 · DISCOVERY</span>
     <span class="psub">"Build a visual, interactive mindmap — not an essay — that reveals how concepts connect."</span>
   </div>
   <pre class="prompt-code-print" id="print-prompt-1"></pre>
   <div class="index-footer">
-    <span>Prompt 01 · Educational Cognition Atlas</span>
+    <span>プロンプト 01 · Prompt 01 — Compiled by <b style="color:#1f1e1d">Ambrose Alanda</b></span>
     <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
   </div>
 </section>
@@ -768,16 +1058,15 @@
      ===================================================================== -->
 <section class="page page-index page-prompt">
   <div class="prompts-header">
-    <h2 class="prompts-title">Prompt 02 <span class="sm">the education refinement</span></h2>
-    <span class="map-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+    <h2 class="prompts-title"><span style="font-family:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif">プロンプト 02</span> · Prompt 02 <span class="sm">教育への改良 · the education refinement</span></h2>
   </div>
   <div class="prompt-banner">
-    <span class="ptag">REFINEMENT</span>
+    <span class="ptag">改良 · REFINEMENT</span>
     <span class="psub">"Reverse the layout — education dominates; all other categories become supporting branches."</span>
   </div>
   <pre class="prompt-code-print" id="print-prompt-2"></pre>
   <div class="index-footer">
-    <span>Prompt 02 · Educational Cognition Atlas</span>
+    <span>プロンプト 02 · Prompt 02 — Compiled by <b style="color:#1f1e1d">Ambrose Alanda</b></span>
     <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
   </div>
 </section>
@@ -790,7 +1079,7 @@ const TREE = {
   id: 'root', label: 'Learning & Knowledge', type: 'root',
   sublabel: 'Educational Cognition Map',
   children: [
-    { id: 'theory', label: 'Learning Theory', type: 'theory', sublabel: 'How learning happens', children: [
+    { id: 'theory', label: 'Learning Theory', labelJp: '学習理論', type: 'theory', sublabel: 'How learning happens', sublabelJp: '学びの仕組み', children: [
       { id: 't-constructivism', label: 'Constructivism', children: [
         { label: 'Active Learning' }, { label: 'Discovery' }, { label: 'Schemas' }, { label: 'Piaget' }, { label: 'Vygotsky' } ] },
       { id: 't-behaviorism', label: 'Behaviorism', children: [
@@ -804,7 +1093,7 @@ const TREE = {
       { id: 't-social', label: 'Social Learning', children: [
         { label: 'Modelling' }, { label: 'Imitation' }, { label: 'Collaboration' }, { label: 'Bandura' } ] }
     ]},
-    { id: 'cognitive', label: 'Cognitive Development', type: 'cognitive', sublabel: 'How the mind builds', children: [
+    { id: 'cognitive', label: 'Cognitive Development', labelJp: '認知発達', type: 'cognitive', sublabel: 'How the mind builds', sublabelJp: '心の構築', children: [
       { id: 'c-memory', label: 'Memory', children: [
         { label: 'Working Memory' }, { label: 'Long-term Memory' }, { label: 'Encoding' }, { label: 'Retrieval' }, { label: 'Knowledge Retention' } ] },
       { id: 'c-attention', label: 'Attention', children: [
@@ -818,7 +1107,7 @@ const TREE = {
       { id: 'c-creativity', label: 'Creativity', children: [
         { label: 'Divergent Thinking' }, { label: 'Convergent Thinking' }, { label: 'Imagination' }, { label: 'Generalization' }, { label: 'Association' } ] }
     ]},
-    { id: 'teaching', label: 'Teaching Systems', type: 'teaching', sublabel: 'How knowledge is delivered', children: [
+    { id: 'teaching', label: 'Teaching Systems', labelJp: '教授システム', type: 'teaching', sublabel: 'How knowledge is delivered', sublabelJp: '知識の伝達', children: [
       { id: 'te-pedagogy', label: 'Pedagogy', children: [
         { label: 'Methods' }, { label: 'Scaffolding' }, { label: 'Differentiation' }, { label: 'Inquiry-based' } ] },
       { id: 'te-teacher', label: 'Teacher Development', children: [
@@ -832,7 +1121,7 @@ const TREE = {
       { id: 'te-relation', label: 'Teacher ↔ Student', children: [
         { label: 'Trust' }, { label: 'Authority' }, { label: 'Care' }, { label: 'Strictness' }, { label: 'Relationships' } ] }
     ]},
-    { id: 'curriculum', label: 'Curriculum & Content', type: 'curriculum', sublabel: 'What is learned', children: [
+    { id: 'curriculum', label: 'Curriculum & Content', labelJp: 'カリキュラムと内容', type: 'curriculum', sublabel: 'What is learned', sublabelJp: '学ぶ内容', children: [
       { id: 'cu-design', label: 'Curriculum Design', children: [
         { label: 'Standards' }, { label: 'Sequencing' }, { label: 'Outcomes Mapping' }, { label: 'Goals' } ] },
       { id: 'cu-subjects', label: 'Subjects', children: [
@@ -846,7 +1135,7 @@ const TREE = {
       { id: 'cu-prep', label: 'Preparation', children: [
         { label: 'Study Habits' }, { label: 'Practice' }, { label: 'Goal Setting' }, { label: 'Continuity' } ] }
     ]},
-    { id: 'assessment', label: 'Assessment & Feedback', type: 'assessment', sublabel: 'How learning is measured', children: [
+    { id: 'assessment', label: 'Assessment & Feedback', labelJp: '評価とフィードバック', type: 'assessment', sublabel: 'How learning is measured', sublabelJp: '学びの測定', children: [
       { id: 'a-formative', label: 'Formative', children: [
         { label: 'Quizzes' }, { label: 'Check-ins' }, { label: 'Observation' }, { label: 'Discussion' } ] },
       { id: 'a-summative', label: 'Summative', children: [
@@ -860,7 +1149,7 @@ const TREE = {
       { id: 'a-gaps', label: 'Hidden Gaps', children: [
         { label: 'Surface vs Deep' }, { label: 'Knowledge Gaps' }, { label: 'Misconceptions' }, { label: 'Visibility of Reasoning' } ] }
     ]},
-    { id: 'ai-edu', label: 'AI in Education', type: 'ai', sublabel: 'Machine-assisted learning', children: [
+    { id: 'ai-edu', label: 'AI in Education', labelJp: '教育におけるAI', type: 'ai', sublabel: 'Machine-assisted learning', sublabelJp: '機械が支える学び', children: [
       { id: 'ai-tutor', label: 'AI Tutoring', children: [
         { label: 'Personalized Tutors' }, { label: '24/7 Q&A' }, { label: 'Conversational Practice' }, { label: 'Worked Examples' } ] },
       { id: 'ai-adaptive', label: 'Adaptive Learning', children: [
@@ -874,7 +1163,7 @@ const TREE = {
       { id: 'ai-ethics', label: 'Ethics & Validation', children: [
         { label: 'Human Validation' }, { label: 'Transparency' }, { label: 'Accountability' }, { label: 'Ethical AI Use' }, { label: 'Equity' } ] }
     ]},
-    { id: 'outcomes', label: 'Learning Outcomes', type: 'outcomes', sublabel: 'What learning produces', children: [
+    { id: 'outcomes', label: 'Learning Outcomes', labelJp: '学習成果', type: 'outcomes', sublabel: 'What learning produces', sublabelJp: '学びが生むもの', children: [
       { id: 'o-knowledge', label: 'Knowledge', children: [
         { label: 'Recall' }, { label: 'Understanding' }, { label: 'Wisdom' }, { label: 'Experience' } ] },
       { id: 'o-skills', label: 'Skills', children: [
@@ -888,7 +1177,7 @@ const TREE = {
       { id: 'o-meaning', label: 'Meaning', children: [
         { label: 'Happiness' }, { label: 'Self-Realization' }, { label: 'Confidence' }, { label: 'Purpose' } ] }
     ]},
-    { id: 'human', label: 'Human Factors', type: 'human', sublabel: 'The learner inside', children: [
+    { id: 'human', label: 'Human Factors', labelJp: '人間的要素', type: 'human', sublabel: 'The learner inside', sublabelJp: '学び手の内面', children: [
       { id: 'h-motivation', label: 'Motivation', children: [
         { label: 'Curiosity' }, { label: 'Goals' }, { label: 'Drive' }, { label: 'Effort' } ] },
       { id: 'h-emotion', label: 'Emotion', children: [
@@ -902,7 +1191,7 @@ const TREE = {
       { id: 'h-discipline', label: 'Discipline', children: [
         { label: 'Strictness' }, { label: 'Laziness' }, { label: 'Self-Regulation' }, { label: 'Procrastination' } ] }
     ]},
-    { id: 'institutions', label: 'Educational Systems', type: 'institutions', sublabel: 'Structures around learning', children: [
+    { id: 'institutions', label: 'Educational Systems', labelJp: '教育制度', type: 'institutions', sublabel: 'Structures around learning', sublabelJp: '学びを支える構造', children: [
       { id: 'i-schools', label: 'Schools', children: [
         { label: 'Primary' }, { label: 'Secondary' }, { label: 'Charter' }, { label: 'Private' } ] },
       { id: 'i-higher', label: 'Higher Education', children: [
@@ -916,7 +1205,7 @@ const TREE = {
       { id: 'i-economics', label: 'Economics', children: [
         { label: 'Cost' }, { label: 'Funding' }, { label: 'Value Exchange' }, { label: 'Productivity' }, { label: 'Efficiency' } ] }
     ]},
-    { id: 'future', label: 'Future of Learning', type: 'future', sublabel: 'Where learning is going', children: [
+    { id: 'future', label: 'Future of Learning', labelJp: '学びの未来', type: 'future', sublabel: 'Where learning is going', sublabelJp: '学びの行方', children: [
       { id: 'f-edtech', label: 'Educational Technology', children: [
         { label: 'Platforms' }, { label: 'Digital Tools' }, { label: 'Online Learning' }, { label: 'Physical Learning' }, { label: 'Digital / Physical' } ] },
       { id: 'f-research', label: 'Research', children: [
@@ -969,62 +1258,162 @@ trunks.forEach(t => {
   div.className = 'lg';
   div.innerHTML = `
     <span class="dot" style="background:${TYPE_COLOR[t.type]}"></span>
-    <span class="nm">${t.label}</span>
-    <span class="sub">${t.sublabel || ''}</span>
+    <div class="text">
+      <span class="nm">${t.labelJp || t.label}</span>
+      <span class="en">${t.label}</span>
+      <span class="sub">${t.sublabelJp || t.sublabel || ''} · ${t.sublabel || ''}</span>
+    </div>
   `;
   coverLegend.appendChild(div);
 });
 
-/* ============================================================
-   INDEX CARDS (split into two pages: 5 per page)
-   ============================================================ */
-function buildIndex(targetId, list, startNum) {
-  const el = document.getElementById(targetId);
-  list.forEach((t, i) => {
-    const card = document.createElement('div');
-    card.className = 'trunk-card';
-    const color = TYPE_COLOR[t.type];
-    card.style.borderLeftColor = color;
-    card.style.background = '#fdfbf3';
-    const num = String(startNum + i).padStart(2, '0');
-    let html = `
-      <div class="head">
-        <div>
-          <span class="num" style="background:${color}">${num}</span>
-          <span class="name" style="color:${color}">${t.label}</span>
-        </div>
-        <span class="meta">${t.sublabel || ''}</span>
-      </div>
-    `;
-    t.children.forEach(b => {
-      const leaves = b.children.map(l => l.label).join(' · ');
-      html += `<div class="branch"><span class="bn">${b.label}</span><span class="lf">${leaves}</span></div>`;
-    });
-    card.innerHTML = html;
-    el.appendChild(card);
-  });
-}
-buildIndex('index-grid-a', trunks.slice(0, 5), 1);
-buildIndex('index-grid-b', trunks.slice(5, 10), 6);
+const trunkById = Object.fromEntries(trunks.map(t => [t.id, t]));
 
 /* ============================================================
-   CROSS-LINKS LIST
+   COMPREHENSIVE ATLAS — single page with everything
+   Layout: 5 trunk cards on top row, root in middle band,
+   5 trunk cards on bottom row. Connector lines from root
+   to each card. Cross-links drawn as dashed gold curves.
    ============================================================ */
-const crossEl = document.getElementById('cross-rows');
-const trunkById = Object.fromEntries(trunks.map(t => [t.id, t]));
-CROSS_LINKS.forEach(l => {
-  const a = trunkById[l.from], b = trunkById[l.to];
+const CARD_W = 53;        /* mm */
+const CARD_H = 55;        /* mm */
+const STAGE_W = 277;      /* mm — matches .atlas-stage width */
+const STAGE_H = 188;
+const GAP = 1.5;
+const TOP_Y = 0;
+const BOT_Y = STAGE_H - CARD_H;
+const STEP = (STAGE_W - 5 * CARD_W) / 4 + CARD_W; /* = 56 */
+
+const cardPositions = [];
+for (let i = 0; i < 5; i++) cardPositions.push({ x: i * STEP, y: TOP_Y });
+for (let i = 0; i < 5; i++) cardPositions.push({ x: i * STEP, y: BOT_Y });
+
+const atlasCards = document.getElementById('atlas-cards');
+trunks.forEach((t, i) => {
+  const pos = cardPositions[i];
+  const color = TYPE_COLOR[t.type];
+  const card = document.createElement('div');
+  card.className = 'atlas-card';
+  card.style.left = pos.x + 'mm';
+  card.style.top  = pos.y + 'mm';
+  card.style.setProperty('--trunk-color', color);
+
+  let html = `
+    <div class="trunk-head">
+      <span class="tdot"></span>
+      <div class="name-wrap">
+        <span class="name jp">${t.labelJp || t.label}</span>
+        <span class="name-en">${t.label}</span>
+      </div>
+      <span class="sub">${t.sublabelJp || t.sublabel || ''}</span>
+    </div>
+    <div class="branches">
+  `;
+  t.children.forEach(b => {
+    const leaves = b.children.map(l => l.label).join(', ');
+    html += `<div class="b"><span class="bdot"></span><div class="text"><span class="bname">${b.label}</span><span class="leaves">${leaves}</span></div></div>`;
+  });
+  html += `</div>`;
+  card.innerHTML = html;
+  atlasCards.appendChild(card);
+
+  /* trunk-head dot lives at the cluster's top-left.
+     CSS padding 0; .trunk-head dot is 7pt ≈ 2.47mm wide, vertically centered with name baseline.
+     Approximate dot center in stage coords: */
+  const dotOffsetX = 2.5;   /* mm — half-dot from cluster left edge */
+  const dotOffsetY = 4.5;   /* mm — from cluster top down to trunk-head baseline */
+  t._dotX = pos.x + dotOffsetX;
+  t._dotY = pos.y + dotOffsetY;
+
+  /* cluster edge for cross-link curves — use the dot point */
+  t._cardX = t._dotX;
+  t._cardY = t._dotY;
+});
+
+/* connector lines — root center to each card */
+const conn = document.getElementById('atlas-conn');
+const NS = 'http://www.w3.org/2000/svg';
+const rootX = STAGE_W / 2;
+const rootY = STAGE_H / 2;
+
+/* cross-links first (under) — subtle dashed gold between clusters */
+CROSS_LINKS.forEach(link => {
+  const a = trunkById[link.from], b = trunkById[link.to];
   if (!a || !b) return;
-  const row = document.createElement('div');
-  row.className = 'cr';
-  row.innerHTML = `${a.label}<span class="sep">↔</span>${b.label}`;
-  crossEl.appendChild(row);
+  const path = document.createElementNS(NS, 'path');
+  const ax = a._cardX, ay = a._cardY;
+  const bx = b._cardX, by = b._cardY;
+  const mx = (ax + bx) / 2, my = (ay + by) / 2;
+  const dx = bx - ax, dy = by - ay;
+  const nx = -dy * 0.08, ny = dx * 0.08;
+  path.setAttribute('d', `M ${ax} ${ay} Q ${mx + nx} ${my + ny} ${bx} ${by}`);
+  path.setAttribute('stroke', '#c4a14a');
+  path.setAttribute('stroke-width', '0.28');
+  path.setAttribute('stroke-dasharray', '1.0 1.4');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('opacity', '0.32');
+  conn.appendChild(path);
+});
+
+/* tree-branching trunk lines:
+   a single vertical stem grows up out of the root and splits into 5 sub-branches
+   at the upper "join" point; another stem grows down and splits at the lower join point */
+const ROOT_R_MM = 25;       /* matches .atlas-root width=50mm / 2 */
+const STEM_LEN  = 14;       /* mm — stem length beyond root edge */
+const topJoinY = rootY - ROOT_R_MM - STEM_LEN;
+const botJoinY = rootY + ROOT_R_MM + STEM_LEN;
+
+function stem(x1, y1, x2, y2) {
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
+  p.setAttribute('stroke', '#a07320');
+  p.setAttribute('stroke-width', '1.4');
+  p.setAttribute('stroke-linecap', 'round');
+  p.setAttribute('fill', 'none');
+  p.setAttribute('opacity', '0.65');
+  conn.appendChild(p);
+}
+stem(rootX, rootY - ROOT_R_MM, rootX, topJoinY);
+stem(rootX, rootY + ROOT_R_MM, rootX, botJoinY);
+
+/* tiny join dots where the stem splits into branches */
+function joinDot(cx, cy) {
+  const c = document.createElementNS(NS, 'circle');
+  c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', '1.4');
+  c.setAttribute('fill', '#ffffff');
+  c.setAttribute('stroke', '#a07320');
+  c.setAttribute('stroke-width', '0.6');
+  conn.appendChild(c);
+}
+joinDot(rootX, topJoinY);
+joinDot(rootX, botJoinY);
+
+/* branch curves — from each join point to each cluster dot */
+trunks.forEach((t, i) => {
+  const color = TYPE_COLOR[t.type];
+  const isTop = i < 5;
+  const jx = rootX, jy = isTop ? topJoinY : botJoinY;
+  const cx = t._dotX, cy = t._dotY;
+  const dx = cx - jx, dy = cy - jy;
+  /* curve eases horizontally first, then bends to the cluster */
+  const c1x = jx + dx * 0.55;
+  const c1y = jy + dy * 0.02;
+  const c2x = cx - dx * 0.05;
+  const c2y = cy - dy * 0.45;
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', `M ${jx} ${jy} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${cx} ${cy}`);
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width', '0.85');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('opacity', '0.75');
+  path.setAttribute('stroke-linecap', 'round');
+  conn.appendChild(path);
 });
 
 /* ============================================================
-   MAP SVG · radial, in mm-friendly viewBox (-140 -90 280 180)
+   LEGACY MAP SVG — disabled (kept here only as placeholder)
    ============================================================ */
-function buildMap() {
+function buildMap_DISABLED() {
   const svg = document.getElementById('map-svg');
   const NS = 'http://www.w3.org/2000/svg';
   const N = trunks.length;
@@ -1221,10 +1610,10 @@ function buildMap() {
   rt3.textContent = 'EDUCATIONAL ATLAS';
   svg.appendChild(rt3);
 }
-buildMap();
+/* buildMap_DISABLED is not invoked — atlas is built inline above */
 
 /* ============================================================
-   FULL PROMPTS (pages 5 & 6) — code-style rendering
+   FULL PROMPTS (pages 3 & 4) — code-style rendering
    ============================================================ */
 const PROMPT_1 = `You are an advanced systems-thinking, educational cognition, organizational design, and AI-structure synthesis assistant.
 
