@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Educational Cognition Atlas · Print Edition · A4</title>
+<style>
+  /* ============================================================
+     PRINT PAGE SIZING
+     ============================================================ */
+  @page { size: A4; margin: 14mm; }
+  @page cover { size: A4 portrait; margin: 18mm; }
+  @page map   { size: A4 landscape; margin: 10mm; }
+  @page index { size: A4 portrait; margin: 14mm; }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #e6e1d2;
+    color: #1f1e1d;
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* ============================================================
+     ON-SCREEN PAGE PREVIEW (acts as a printed page mock-up)
+     ============================================================ */
+  .page {
+    background: #ffffff;
+    margin: 18px auto;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-cover,
+  .page-index {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm;
+  }
+  .page-map {
+    width: 297mm;
+    min-height: 210mm;
+    padding: 10mm;
+  }
+
+  @media print {
+    html, body { background: #ffffff; }
+    .page { box-shadow: none; margin: 0; }
+    .page-cover { page: cover; padding: 0; }
+    .page-map   { page: map;   padding: 0; }
+    .page-index { page: index; padding: 0; }
+    .page { page-break-after: always; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page:last-child { page-break-after: auto; }
+    .screen-hint { display: none !important; }
+  }
+
+  .screen-hint {
+    position: fixed;
+    top: 14px; right: 14px;
+    z-index: 50;
+    background: #1f1d1a;
+    color: #f3eee0;
+    font-size: 11px;
+    padding: 7px 11px;
+    border-radius: 9px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    font-family: 'Inter', sans-serif;
+  }
+  .screen-hint b { color: #f1d990; font-weight: 700; }
+
+  /* ============================================================
+     COVER PAGE
+     ============================================================ */
+  .cover-crest {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #a07320;
+    font-weight: 700;
+    margin-bottom: 16pt;
+    display: flex; align-items: center; gap: 10pt;
+  }
+  .cover-crest .line { flex: 0 0 30pt; height: 1px; background: currentColor; opacity: 0.55; }
+  .cover-title {
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-size: 48pt;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.02;
+    margin: 0;
+    color: #1c1b1a;
+  }
+  .cover-title .em { color: #a07320; font-style: italic; }
+  .cover-sub {
+    font-size: 11.5pt;
+    color: #4a4540;
+    letter-spacing: 0.02em;
+    line-height: 1.55;
+    margin-top: 18pt;
+    max-width: 380pt;
+  }
+  .cover-meta {
+    margin-top: 28pt;
+    display: flex; gap: 28pt;
+    font-size: 8.5pt;
+    color: #5a564f;
+  }
+  .cover-meta .item .k {
+    display: block;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #a07320;
+    font-weight: 700;
+    margin-bottom: 2pt;
+  }
+  .cover-meta .item .v {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    color: #1f1e1d;
+    font-weight: 600;
+  }
+
+  .cover-legend {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6pt 28pt;
+    margin-top: 24pt;
+    max-width: 380pt;
+  }
+  .cover-legend .lg {
+    display: flex; align-items: center; gap: 8pt;
+    font-size: 10pt;
+    color: #2a2620;
+  }
+  .cover-legend .lg .dot {
+    width: 10pt; height: 10pt; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cover-legend .lg .nm { font-weight: 600; }
+  .cover-legend .lg .sub {
+    color: #6b6863;
+    margin-left: auto;
+    font-size: 8pt;
+    letter-spacing: 0.04em;
+  }
+
+  .cover-howto {
+    margin-top: 30pt;
+    padding: 14pt 16pt;
+    border: 1px solid #d5cdb8;
+    border-radius: 5pt;
+    background: #fbf8ec;
+    max-width: 380pt;
+  }
+  .cover-howto .head {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    font-weight: 700;
+    margin-bottom: 8pt;
+  }
+  .cover-howto .body {
+    font-size: 9.5pt;
+    line-height: 1.6;
+    color: #2a2620;
+  }
+  .cover-howto .body b { color: #1f1e1d; }
+
+  .url-block {
+    position: absolute;
+    bottom: 18mm;
+    left: 18mm;
+    right: 18mm;
+    border-top: 1px solid #d5cdb8;
+    padding-top: 8pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 8.5pt;
+    color: #5a564f;
+  }
+  .url-block .lbl {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 7.5pt;
+    color: #a07320;
+    font-weight: 700;
+  }
+  .url-block .url {
+    color: #1f1e1d;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    font-size: 9pt;
+  }
+
+  /* ============================================================
+     MAP PAGE
+     ============================================================ */
+  .map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 4pt;
+    border-bottom: 1px solid #d5cdb8;
+    margin-bottom: 4pt;
+  }
+  .map-title {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 13pt;
+    margin: 0;
+    font-weight: 500;
+    color: #1c1b1a;
+  }
+  .map-title .sm {
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    margin-left: 12pt;
+    font-weight: 700;
+  }
+  .map-meta {
+    font-size: 8pt;
+    color: #5a564f;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .map-svg-wrap {
+    width: 100%;
+    height: calc(210mm - 32mm);
+  }
+  .map-svg-wrap svg {
+    width: 100%; height: 100%; display: block;
+  }
+  .map-footer {
+    position: absolute;
+    bottom: 6mm;
+    left: 10mm; right: 10mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5pt;
+    color: #6b6863;
+    letter-spacing: 0.04em;
+  }
+  .map-footer .url {
+    font-family: 'JetBrains Mono', monospace;
+    color: #1f1e1d;
+    font-weight: 600;
+  }
+
+  /* ============================================================
+     INDEX PAGES
+     ============================================================ */
+  .index-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 4pt;
+    border-bottom: 1px solid #d5cdb8;
+    margin-bottom: 10pt;
+  }
+  .index-title {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 13pt;
+    margin: 0;
+    font-weight: 500;
+    color: #1c1b1a;
+  }
+  .index-title .sm {
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    margin-left: 10pt;
+    font-weight: 700;
+  }
+  .index-meta {
+    font-size: 8pt;
+    color: #5a564f;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8pt 12pt;
+  }
+  .trunk-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    padding: 8pt 10pt 9pt;
+    border: 1px solid #e0d9c2;
+    border-left-width: 3pt;
+    border-radius: 4pt;
+    background: #fcfaf2;
+  }
+  .trunk-card .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4pt;
+    padding-bottom: 3pt;
+    border-bottom: 1px dashed rgba(0,0,0,0.10);
+  }
+  .trunk-card .num {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 1pt 4pt;
+    border-radius: 2pt;
+    margin-right: 5pt;
+    letter-spacing: 0.05em;
+    vertical-align: 1pt;
+  }
+  .trunk-card .name {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    margin: 0;
+    display: inline;
+  }
+  .trunk-card .meta {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    color: #998f80;
+  }
+  .trunk-card .branch {
+    font-size: 7.8pt;
+    margin-top: 3pt;
+    line-height: 1.42;
+    color: #3d3b38;
+  }
+  .trunk-card .branch .bn {
+    font-weight: 700;
+    color: #1f1e1d;
+  }
+  .trunk-card .branch .lf {
+    color: #5a564f;
+  }
+  .trunk-card .branch .lf::before {
+    content: " — ";
+    color: #b78f3a;
+  }
+
+  .index-footer {
+    margin-top: 16pt;
+    padding-top: 8pt;
+    border-top: 1px solid #d5cdb8;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5pt;
+    color: #6b6863;
+    letter-spacing: 0.04em;
+  }
+  .index-footer .url {
+    font-family: 'JetBrains Mono', monospace;
+    color: #1f1e1d;
+    font-weight: 600;
+  }
+  .index-cross {
+    margin-top: 12pt;
+    padding: 8pt 10pt;
+    border: 1px dashed #c5a36b;
+    border-radius: 4pt;
+    background: #fbf6e2;
+  }
+  .index-cross .head {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #a07320;
+    font-weight: 700;
+    margin-bottom: 4pt;
+  }
+  .index-cross .rows {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2pt 12pt;
+    font-size: 7.8pt;
+    color: #2a2620;
+  }
+  .index-cross .rows b { color: #1f1e1d; font-weight: 700; }
+
+  /* ============================================================
+     SIMPLIFIED CROSS-LINK LIST (page 4)
+     ============================================================ */
+  .cross-simple {
+    margin-top: 16pt;
+    padding-top: 10pt;
+    border-top: 1px solid #d5cdb8;
+  }
+  .cross-simple .cross-label {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    font-weight: 700;
+    margin-bottom: 8pt;
+  }
+  .cross-simple .cross-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4pt 24pt;
+    font-size: 9pt;
+    color: #1f1e1d;
+    line-height: 1.45;
+  }
+  .cross-simple .cross-rows .cr { font-weight: 500; }
+  .cross-simple .cross-rows .cr .sep { color: #b78f3a; padding: 0 6pt; font-weight: 700; }
+
+  /* ============================================================
+     PROMPT PAGES — full prompt rendered as a code block
+     ============================================================ */
+  .prompt-banner {
+    display: flex;
+    align-items: center;
+    gap: 14pt;
+    margin-bottom: 10pt;
+    padding: 8pt 14pt;
+    background: #1f1d1a;
+    border-radius: 5pt;
+  }
+  .prompt-banner .ptag {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #f1d990;
+    flex-shrink: 0;
+    font-family: 'Inter', sans-serif;
+  }
+  .prompt-banner .psub {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-style: italic;
+    font-size: 10.5pt;
+    color: #f0ead8;
+    line-height: 1.35;
+  }
+  .prompt-code-print {
+    background: #fbf6e8;
+    border: 1px solid #ead9aa;
+    border-radius: 6pt;
+    padding: 12pt 14pt;
+    margin: 0 0 8pt;
+    color: #2a2620;
+    column-count: 2;
+    column-gap: 16pt;
+    column-rule: 1px solid rgba(183, 143, 58, 0.18);
+    font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  }
+  .prompt-code-print .l {
+    font-size: 6.3pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+  }
+  .prompt-code-print .l.h {
+    color: #8a6a1f;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 4pt 0 1pt;
+    padding-top: 2pt;
+    border-top: 1px dashed rgba(183, 143, 58, 0.32);
+    break-after: avoid-column;
+  }
+  .prompt-code-print .l.d {
+    color: #c6a960;
+    opacity: 0.55;
+    font-size: 5.8pt;
+  }
+  .prompt-code-print .l.b { height: 3pt; display: block; }
+  .prompt-code-print .l.bul { padding-left: 6pt; }
+  .prompt-code-print .l.bul::before {
+    content: "·";
+    color: #b78f3a;
+    margin-right: 5pt;
+    font-weight: 700;
+  }
+
+  /* ============================================================
+     PROMPTS PAGE — creative, compact, single page (unused now)
+     ============================================================ */
+  .prompts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 5pt;
+    border-bottom: 1px solid #d5cdb8;
+    margin-bottom: 14pt;
+  }
+  .prompts-title {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 13pt;
+    margin: 0;
+    font-weight: 500;
+  }
+  .prompts-title .sm {
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    margin-left: 10pt;
+    font-weight: 700;
+  }
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18pt;
+  }
+  .prompt-card {
+    position: relative;
+    padding: 16pt 14pt 14pt 18pt;
+    background: #fcfaf2;
+    border: 1px solid #e0d9c2;
+    border-radius: 5pt;
+    border-left-width: 3pt;
+    break-inside: avoid;
+  }
+  .prompt-card.p1 { border-left-color: #2e609a; }
+  .prompt-card.p2 { border-left-color: #a07320; }
+
+  .prompt-card .num {
+    position: absolute;
+    top: -10pt;
+    left: 12pt;
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 38pt;
+    font-weight: 600;
+    line-height: 1;
+    color: #ffffff;
+    background: #1f1d1a;
+    padding: 4pt 10pt 6pt;
+    border-radius: 4pt;
+    letter-spacing: -0.02em;
+  }
+  .prompt-card.p1 .num { background: #2e609a; }
+  .prompt-card.p2 .num { background: #a07320; }
+
+  .prompt-card .kicker {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #998f80;
+    font-weight: 700;
+    margin: 26pt 0 4pt;
+  }
+  .prompt-card .name {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-size: 16pt;
+    font-weight: 500;
+    margin: 0 0 10pt;
+    line-height: 1.1;
+    color: #1c1b1a;
+  }
+  .prompt-card .quote {
+    font-family: 'Fraunces', 'Georgia', serif;
+    font-style: italic;
+    font-size: 11pt;
+    line-height: 1.45;
+    color: #4a4540;
+    margin: 0 0 12pt;
+    padding-left: 10pt;
+    border-left: 2pt solid #d5cdb8;
+  }
+  .prompt-card .quote::before {
+    content: "“";
+    font-size: 22pt;
+    color: #b78f3a;
+    line-height: 0;
+    vertical-align: -6pt;
+    margin-right: 1pt;
+  }
+  .prompt-card .quote::after { content: "”"; color: #b78f3a; }
+
+  .prompt-card .section {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    font-weight: 700;
+    margin: 8pt 0 4pt;
+  }
+  .prompt-card .directives {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8pt;
+  }
+  .prompt-card .directives li {
+    position: relative;
+    padding-left: 12pt;
+    font-size: 8.5pt;
+    line-height: 1.55;
+    color: #2a2620;
+    margin-bottom: 2pt;
+  }
+  .prompt-card .directives li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 5pt;
+    width: 4pt; height: 1pt;
+    background: #b78f3a;
+  }
+  .prompt-card .directives li b { color: #1f1e1d; font-weight: 700; }
+
+  .prompt-card .outcome {
+    margin-top: 10pt;
+    padding-top: 8pt;
+    border-top: 1px dashed #d5cdb8;
+    font-size: 8pt;
+    color: #4a4540;
+    line-height: 1.5;
+  }
+  .prompt-card .outcome b { color: #1f1e1d; font-weight: 700; }
+
+  .prompts-shift {
+    margin-top: 16pt;
+    padding: 12pt 16pt;
+    background: #fbf6e2;
+    border: 1px dashed #c5a36b;
+    border-radius: 5pt;
+  }
+  .prompts-shift .label {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #a07320;
+    font-weight: 700;
+    margin-bottom: 5pt;
+  }
+  .prompts-shift .body {
+    font-size: 9pt;
+    line-height: 1.55;
+    color: #2a2620;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12pt;
+    align-items: center;
+  }
+  .prompts-shift .arrow {
+    font-family: 'Fraunces', serif;
+    font-size: 22pt;
+    color: #b78f3a;
+    line-height: 1;
+  }
+  .prompts-shift .before, .prompts-shift .after {
+    text-align: left;
+  }
+  .prompts-shift b { color: #1f1e1d; }
+</style>
+</head>
+<body>
+
+<div class="screen-hint">
+  <b>Print preview</b> · open browser print dialog (⌘P / Ctrl-P) · paper: <b>A4</b> · margins: <b>Default</b> · enable "<b>Background graphics</b>"
+</div>
+
+<!-- =====================================================================
+     PAGE 1 · COVER
+     ===================================================================== -->
+<section class="page page-cover">
+  <div class="cover-crest"><span class="line"></span> Educational Cognition Atlas <span class="line"></span></div>
+
+  <h1 class="cover-title">Learning <span class="em">&amp;</span> Knowledge<br/>Universe</h1>
+
+  <p class="cover-sub">A printed snapshot of how teaching, thinking, AI &amp; human learning interconnect — ten educational domains, their branches, and the hidden adjacencies between them.</p>
+
+  <div class="cover-meta">
+    <div class="item"><span class="k">Edition</span><span class="v">Print · A4</span></div>
+    <div class="item"><span class="k">Pages</span><span class="v">7</span></div>
+    <div class="item"><span class="k">Trunks</span><span class="v">10</span></div>
+    <div class="item"><span class="k">Branches</span><span class="v">60</span></div>
+    <div class="item"><span class="k">Cross-links</span><span class="v">10</span></div>
+  </div>
+
+  <div class="cover-legend" id="cover-legend"></div>
+
+  <div class="url-block">
+    <span class="lbl">Interactive Version</span>
+    <a class="url" href="https://aurits.github.io/slide-desk/mindmap.html">https://aurits.github.io/slide-desk/mindmap.html</a>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PAGE 2 · MAP
+     ===================================================================== -->
+<section class="page page-map">
+  <div class="map-header">
+    <h2 class="map-title">The Map <span class="sm">10 educational domains · 60 branches · 10 hidden links</span></h2>
+    <span class="map-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+  <div class="map-svg-wrap">
+    <svg id="map-svg" viewBox="-140 -90 280 180" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+  <div class="map-footer">
+    <span>Educational Cognition Atlas · Print Edition</span>
+    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PAGE 3 · INDEX A
+     ===================================================================== -->
+<section class="page page-index">
+  <div class="index-header">
+    <h2 class="index-title">Taxonomy <span class="sm">trunks · branches · leaves · part 1</span></h2>
+    <span class="index-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+  <div class="index-grid" id="index-grid-a"></div>
+  <div class="index-footer">
+    <span>Page 3 / 7 · Educational Cognition Atlas</span>
+    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PAGE 4 · INDEX B + CROSS-LINKS
+     ===================================================================== -->
+<section class="page page-index">
+  <div class="index-header">
+    <h2 class="index-title">Taxonomy <span class="sm">trunks · branches · leaves · part 2</span></h2>
+    <span class="index-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+  <div class="index-grid" id="index-grid-b"></div>
+
+  <div class="cross-simple">
+    <div class="cross-label">Hidden cross-links — dashed gold curves on the map</div>
+    <div class="cross-rows" id="cross-rows"></div>
+  </div>
+
+  <div class="index-footer">
+    <span>Page 4 / 7 · Educational Cognition Atlas</span>
+    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PAGE 5 · PROMPT 01 — FULL TEXT
+     ===================================================================== -->
+<section class="page page-index page-prompt">
+  <div class="prompts-header">
+    <h2 class="prompts-title">Prompt 01 <span class="sm">the initial brief</span></h2>
+    <span class="map-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+  <div class="prompt-banner">
+    <span class="ptag">DISCOVERY</span>
+    <span class="psub">"Build a visual, interactive mindmap — not an essay — that reveals how concepts connect."</span>
+  </div>
+  <pre class="prompt-code-print" id="print-prompt-1"></pre>
+  <div class="index-footer">
+    <span>Prompt 01 · Educational Cognition Atlas</span>
+    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PAGE 6 · PROMPT 02 — FULL TEXT
+     ===================================================================== -->
+<section class="page page-index page-prompt">
+  <div class="prompts-header">
+    <h2 class="prompts-title">Prompt 02 <span class="sm">the education refinement</span></h2>
+    <span class="map-meta">↗ https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+  <div class="prompt-banner">
+    <span class="ptag">REFINEMENT</span>
+    <span class="psub">"Reverse the layout — education dominates; all other categories become supporting branches."</span>
+  </div>
+  <pre class="prompt-code-print" id="print-prompt-2"></pre>
+  <div class="index-footer">
+    <span>Prompt 02 · Educational Cognition Atlas</span>
+    <span class="url">https://aurits.github.io/slide-desk/mindmap.html</span>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   DATA — same education-dominant tree as the interactive
+   ============================================================ */
+const TREE = {
+  id: 'root', label: 'Learning & Knowledge', type: 'root',
+  sublabel: 'Educational Cognition Map',
+  children: [
+    { id: 'theory', label: 'Learning Theory', type: 'theory', sublabel: 'How learning happens', children: [
+      { id: 't-constructivism', label: 'Constructivism', children: [
+        { label: 'Active Learning' }, { label: 'Discovery' }, { label: 'Schemas' }, { label: 'Piaget' }, { label: 'Vygotsky' } ] },
+      { id: 't-behaviorism', label: 'Behaviorism', children: [
+        { label: 'Reinforcement' }, { label: 'Stimulus / Response' }, { label: 'Drill & Practice' }, { label: 'Skinner' } ] },
+      { id: 't-cognitivism', label: 'Cognitivism', children: [
+        { label: 'Information Processing' }, { label: 'Schema Theory' }, { label: 'Working Memory' }, { label: 'Encoding' } ] },
+      { id: 't-connectivism', label: 'Connectivism', children: [
+        { label: 'Networked Knowledge' }, { label: 'Digital Learning' }, { label: 'Distributed Cognition' }, { label: 'Pattern Recognition' } ] },
+      { id: 't-experiential', label: 'Experiential', children: [
+        { label: 'Reflection' }, { label: 'Action Learning' }, { label: 'Practice' }, { label: 'Kolb Cycle' } ] },
+      { id: 't-social', label: 'Social Learning', children: [
+        { label: 'Modelling' }, { label: 'Imitation' }, { label: 'Collaboration' }, { label: 'Bandura' } ] }
+    ]},
+    { id: 'cognitive', label: 'Cognitive Development', type: 'cognitive', sublabel: 'How the mind builds', children: [
+      { id: 'c-memory', label: 'Memory', children: [
+        { label: 'Working Memory' }, { label: 'Long-term Memory' }, { label: 'Encoding' }, { label: 'Retrieval' }, { label: 'Knowledge Retention' } ] },
+      { id: 'c-attention', label: 'Attention', children: [
+        { label: 'Focus' }, { label: 'Selective Attention' }, { label: 'Task Switching' }, { label: 'Sustained Effort' } ] },
+      { id: 'c-reasoning', label: 'Reasoning', children: [
+        { label: 'Deductive' }, { label: 'Inductive' }, { label: 'Analogical' }, { label: 'Critical Thinking' }, { label: 'Structured Logic' } ] },
+      { id: 'c-meta', label: 'Metacognition', children: [
+        { label: 'Self-Awareness' }, { label: 'Reflection' }, { label: 'Planning' }, { label: 'Monitoring' }, { label: 'Thinking about Thinking' } ] },
+      { id: 'c-problem', label: 'Problem Solving', children: [
+        { label: 'Heuristics' }, { label: 'Analysis' }, { label: 'Synthesis' }, { label: 'Application' } ] },
+      { id: 'c-creativity', label: 'Creativity', children: [
+        { label: 'Divergent Thinking' }, { label: 'Convergent Thinking' }, { label: 'Imagination' }, { label: 'Generalization' }, { label: 'Association' } ] }
+    ]},
+    { id: 'teaching', label: 'Teaching Systems', type: 'teaching', sublabel: 'How knowledge is delivered', children: [
+      { id: 'te-pedagogy', label: 'Pedagogy', children: [
+        { label: 'Methods' }, { label: 'Scaffolding' }, { label: 'Differentiation' }, { label: 'Inquiry-based' } ] },
+      { id: 'te-teacher', label: 'Teacher Development', children: [
+        { label: 'Training' }, { label: 'Mentorship' }, { label: 'Professional Practice' }, { label: 'Growth' } ] },
+      { id: 'te-class', label: 'Classroom Management', children: [
+        { label: 'Engagement' }, { label: 'Climate' }, { label: 'Pacing' }, { label: 'Discipline' }, { label: 'Attendance' } ] },
+      { id: 'te-delivery', label: 'Modes of Delivery', children: [
+        { label: 'Lectures' }, { label: 'Discussion' }, { label: 'Demonstration' }, { label: 'Workshops' }, { label: 'Teaching' } ] },
+      { id: 'te-resources', label: 'Resources', children: [
+        { label: 'Textbooks' }, { label: 'Materials' }, { label: 'Courses' }, { label: 'Digital Tools' } ] },
+      { id: 'te-relation', label: 'Teacher ↔ Student', children: [
+        { label: 'Trust' }, { label: 'Authority' }, { label: 'Care' }, { label: 'Strictness' }, { label: 'Relationships' } ] }
+    ]},
+    { id: 'curriculum', label: 'Curriculum & Content', type: 'curriculum', sublabel: 'What is learned', children: [
+      { id: 'cu-design', label: 'Curriculum Design', children: [
+        { label: 'Standards' }, { label: 'Sequencing' }, { label: 'Outcomes Mapping' }, { label: 'Goals' } ] },
+      { id: 'cu-subjects', label: 'Subjects', children: [
+        { label: 'STEM' }, { label: 'Humanities' }, { label: 'Arts' }, { label: 'Languages' } ] },
+      { id: 'cu-adaptive', label: 'Adaptive Curriculum', children: [
+        { label: 'Personalization' }, { label: 'Branching Paths' }, { label: 'Mastery Learning' }, { label: 'Pacing' } ] },
+      { id: 'cu-skill', label: 'Skill Pathways', children: [
+        { label: 'Foundational' }, { label: 'Specialized' }, { label: 'Cross-curricular' }, { label: 'Skill Development' } ] },
+      { id: 'cu-content', label: 'Content Resources', children: [
+        { label: 'Textbooks' }, { label: 'Open Resources' }, { label: 'Digital Libraries' }, { label: 'Research Papers' } ] },
+      { id: 'cu-prep', label: 'Preparation', children: [
+        { label: 'Study Habits' }, { label: 'Practice' }, { label: 'Goal Setting' }, { label: 'Continuity' } ] }
+    ]},
+    { id: 'assessment', label: 'Assessment & Feedback', type: 'assessment', sublabel: 'How learning is measured', children: [
+      { id: 'a-formative', label: 'Formative', children: [
+        { label: 'Quizzes' }, { label: 'Check-ins' }, { label: 'Observation' }, { label: 'Discussion' } ] },
+      { id: 'a-summative', label: 'Summative', children: [
+        { label: 'Exams' }, { label: 'Tests' }, { label: 'Final Projects' }, { label: 'Standardized' } ] },
+      { id: 'a-records', label: 'Records', children: [
+        { label: 'Grades' }, { label: 'Passes' }, { label: 'Retakes' }, { label: 'Attendance' }, { label: 'Transcripts' } ] },
+      { id: 'a-feedback', label: 'Feedback', children: [
+        { label: 'Reflection' }, { label: 'Coaching' }, { label: 'Adjustment' }, { label: 'Iteration' } ] },
+      { id: 'a-criteria', label: 'Criteria', children: [
+        { label: 'Output Quality' }, { label: 'Process Visibility' }, { label: 'Understanding Depth' }, { label: 'Comparison' } ] },
+      { id: 'a-gaps', label: 'Hidden Gaps', children: [
+        { label: 'Surface vs Deep' }, { label: 'Knowledge Gaps' }, { label: 'Misconceptions' }, { label: 'Visibility of Reasoning' } ] }
+    ]},
+    { id: 'ai-edu', label: 'AI in Education', type: 'ai', sublabel: 'Machine-assisted learning', children: [
+      { id: 'ai-tutor', label: 'AI Tutoring', children: [
+        { label: 'Personalized Tutors' }, { label: '24/7 Q&A' }, { label: 'Conversational Practice' }, { label: 'Worked Examples' } ] },
+      { id: 'ai-adaptive', label: 'Adaptive Learning', children: [
+        { label: 'Pathways' }, { label: 'Mastery Pacing' }, { label: 'Difficulty Tuning' }, { label: 'Personalization' } ] },
+      { id: 'ai-assess', label: 'AI Assessment', children: [
+        { label: 'Auto-grading' }, { label: 'Visibility of Reasoning' }, { label: 'Surfacing Hidden Gaps' }, { label: 'Quality Assurance' } ] },
+      { id: 'ai-prompt', label: 'Prompting as Reasoning', children: [
+        { label: 'Prompt Engineering' }, { label: 'Prompt Recording' }, { label: 'Workflow Standardization' }, { label: 'AI Synthesis' } ] },
+      { id: 'ai-categorize', label: 'AI Categorization', children: [
+        { label: 'Structure Generation' }, { label: 'AI-assisted Organization' }, { label: 'Visual Synthesis' }, { label: 'Mind Mapping' } ] },
+      { id: 'ai-ethics', label: 'Ethics & Validation', children: [
+        { label: 'Human Validation' }, { label: 'Transparency' }, { label: 'Accountability' }, { label: 'Ethical AI Use' }, { label: 'Equity' } ] }
+    ]},
+    { id: 'outcomes', label: 'Learning Outcomes', type: 'outcomes', sublabel: 'What learning produces', children: [
+      { id: 'o-knowledge', label: 'Knowledge', children: [
+        { label: 'Recall' }, { label: 'Understanding' }, { label: 'Wisdom' }, { label: 'Experience' } ] },
+      { id: 'o-skills', label: 'Skills', children: [
+        { label: 'Cognitive Skills' }, { label: 'Practical Skills' }, { label: 'Social Skills' }, { label: 'Skill Development' } ] },
+      { id: 'o-career', label: 'Career', children: [
+        { label: 'Employment' }, { label: 'Salary' }, { label: 'Specialization' }, { label: 'Projects' } ] },
+      { id: 'o-society', label: 'Society', children: [
+        { label: 'Citizenship' }, { label: 'Responsibility' }, { label: 'Contribution' }, { label: 'Value' } ] },
+      { id: 'o-continuity', label: 'Lifelong Learning', children: [
+        { label: 'Continuity' }, { label: 'Reskilling' }, { label: 'Future of Work' }, { label: 'Adaptation' } ] },
+      { id: 'o-meaning', label: 'Meaning', children: [
+        { label: 'Happiness' }, { label: 'Self-Realization' }, { label: 'Confidence' }, { label: 'Purpose' } ] }
+    ]},
+    { id: 'human', label: 'Human Factors', type: 'human', sublabel: 'The learner inside', children: [
+      { id: 'h-motivation', label: 'Motivation', children: [
+        { label: 'Curiosity' }, { label: 'Goals' }, { label: 'Drive' }, { label: 'Effort' } ] },
+      { id: 'h-emotion', label: 'Emotion', children: [
+        { label: 'Feeling' }, { label: 'Confidence' }, { label: 'Pressure' }, { label: 'Relaxation' }, { label: 'Happiness' } ] },
+      { id: 'h-safety', label: 'Psychological Safety', children: [
+        { label: 'Trust' }, { label: 'Openness' }, { label: 'Vulnerability' }, { label: 'Belonging' } ] },
+      { id: 'h-relations', label: 'Relationships', children: [
+        { label: 'Teacher ↔ Student' }, { label: 'Parent ↔ Child' }, { label: 'Peers' }, { label: 'Mentors' } ] },
+      { id: 'h-abilities', label: 'Abilities & Practice', children: [
+        { label: 'Talent' }, { label: 'Effort' }, { label: 'Practice' }, { label: 'Developing Abilities' } ] },
+      { id: 'h-discipline', label: 'Discipline', children: [
+        { label: 'Strictness' }, { label: 'Laziness' }, { label: 'Self-Regulation' }, { label: 'Procrastination' } ] }
+    ]},
+    { id: 'institutions', label: 'Educational Systems', type: 'institutions', sublabel: 'Structures around learning', children: [
+      { id: 'i-schools', label: 'Schools', children: [
+        { label: 'Primary' }, { label: 'Secondary' }, { label: 'Charter' }, { label: 'Private' } ] },
+      { id: 'i-higher', label: 'Higher Education', children: [
+        { label: 'Colleges' }, { label: 'Universities' }, { label: 'Research Labs' }, { label: 'Postgraduate' } ] },
+      { id: 'i-policy', label: 'Policy', children: [
+        { label: 'Government' }, { label: 'Ministry of Education' }, { label: 'Rules & Regulations' }, { label: 'Standards' } ] },
+      { id: 'i-leadership', label: 'Educational Leadership', children: [
+        { label: 'Principals' }, { label: 'Deans' }, { label: 'Administrators' }, { label: 'Decision Making' } ] },
+      { id: 'i-orglearn', label: 'Organizational Learning', children: [
+        { label: 'Continuity' }, { label: 'Scaling' }, { label: 'Operational Structure' }, { label: 'Team Capability' } ] },
+      { id: 'i-economics', label: 'Economics', children: [
+        { label: 'Cost' }, { label: 'Funding' }, { label: 'Value Exchange' }, { label: 'Productivity' }, { label: 'Efficiency' } ] }
+    ]},
+    { id: 'future', label: 'Future of Learning', type: 'future', sublabel: 'Where learning is going', children: [
+      { id: 'f-edtech', label: 'Educational Technology', children: [
+        { label: 'Platforms' }, { label: 'Digital Tools' }, { label: 'Online Learning' }, { label: 'Physical Learning' }, { label: 'Digital / Physical' } ] },
+      { id: 'f-research', label: 'Research', children: [
+        { label: 'Educational Research' }, { label: 'Sample Data' }, { label: 'Forecasting' }, { label: 'Evidence-based' } ] },
+      { id: 'f-meta', label: 'Meta-Cognition', children: [
+        { label: 'Structure Discovery' }, { label: 'Categorization Effects' }, { label: 'Prompting as Reasoning' }, { label: 'Self-Reflection' } ] },
+      { id: 'f-emergent', label: 'Emergent Insight', children: [
+        { label: 'Unexpected Connections' }, { label: 'Disproportionate Value' }, { label: 'Hidden Variables' }, { label: 'Color Coding' } ] },
+      { id: 'f-equity', label: 'Equity & Access', children: [
+        { label: 'Inclusion' }, { label: 'Differentiation' }, { label: 'Affordability' }, { label: 'Reach' } ] },
+      { id: 'f-lifelong', label: 'Lifelong Pathways', children: [
+        { label: 'Adaptive Lifelong' }, { label: 'Reskilling' }, { label: 'Career Pivot' }, { label: 'Self-directed' } ] }
+    ]}
+  ]
+};
+
+const CROSS_LINKS = [
+  { from: 'theory',       to: 'ai-edu',      note: 'Theory ↔ AI-assisted learning' },
+  { from: 'cognitive',    to: 'assessment',  note: 'Cognition ↔ Visibility of understanding' },
+  { from: 'teaching',     to: 'assessment',  note: 'Teaching ↔ Feedback loops' },
+  { from: 'curriculum',   to: 'outcomes',    note: 'What is taught ↔ What is learned' },
+  { from: 'human',        to: 'outcomes',    note: 'Emotion ↔ Lifelong outcomes' },
+  { from: 'ai-edu',       to: 'assessment',  note: 'AI ↔ Hidden gap detection' },
+  { from: 'institutions', to: 'curriculum',  note: 'Policy ↔ Curriculum design' },
+  { from: 'future',       to: 'theory',      note: 'Emergent ↔ Foundational' },
+  { from: 'cognitive',    to: 'human',       note: 'Mind ↔ Heart' },
+  { from: 'teaching',     to: 'human',       note: 'Pedagogy ↔ Relationships' }
+];
+
+const TYPE_COLOR = {
+  theory:       '#2e609a',
+  cognitive:    '#553ba0',
+  teaching:     '#2d7a6f',
+  curriculum:   '#946823',
+  assessment:   '#a64a43',
+  ai:           '#6841a8',
+  outcomes:     '#3f7c3d',
+  human:        '#a45620',
+  institutions: '#3f5f86',
+  future:       '#8d6a15'
+};
+
+/* ============================================================
+   COVER LEGEND
+   ============================================================ */
+const trunks = TREE.children;
+const coverLegend = document.getElementById('cover-legend');
+trunks.forEach(t => {
+  const div = document.createElement('div');
+  div.className = 'lg';
+  div.innerHTML = `
+    <span class="dot" style="background:${TYPE_COLOR[t.type]}"></span>
+    <span class="nm">${t.label}</span>
+    <span class="sub">${t.sublabel || ''}</span>
+  `;
+  coverLegend.appendChild(div);
+});
+
+/* ============================================================
+   INDEX CARDS (split into two pages: 5 per page)
+   ============================================================ */
+function buildIndex(targetId, list, startNum) {
+  const el = document.getElementById(targetId);
+  list.forEach((t, i) => {
+    const card = document.createElement('div');
+    card.className = 'trunk-card';
+    const color = TYPE_COLOR[t.type];
+    card.style.borderLeftColor = color;
+    card.style.background = '#fdfbf3';
+    const num = String(startNum + i).padStart(2, '0');
+    let html = `
+      <div class="head">
+        <div>
+          <span class="num" style="background:${color}">${num}</span>
+          <span class="name" style="color:${color}">${t.label}</span>
+        </div>
+        <span class="meta">${t.sublabel || ''}</span>
+      </div>
+    `;
+    t.children.forEach(b => {
+      const leaves = b.children.map(l => l.label).join(' · ');
+      html += `<div class="branch"><span class="bn">${b.label}</span><span class="lf">${leaves}</span></div>`;
+    });
+    card.innerHTML = html;
+    el.appendChild(card);
+  });
+}
+buildIndex('index-grid-a', trunks.slice(0, 5), 1);
+buildIndex('index-grid-b', trunks.slice(5, 10), 6);
+
+/* ============================================================
+   CROSS-LINKS LIST
+   ============================================================ */
+const crossEl = document.getElementById('cross-rows');
+const trunkById = Object.fromEntries(trunks.map(t => [t.id, t]));
+CROSS_LINKS.forEach(l => {
+  const a = trunkById[l.from], b = trunkById[l.to];
+  if (!a || !b) return;
+  const row = document.createElement('div');
+  row.className = 'cr';
+  row.innerHTML = `${a.label}<span class="sep">↔</span>${b.label}`;
+  crossEl.appendChild(row);
+});
+
+/* ============================================================
+   MAP SVG · radial, in mm-friendly viewBox (-140 -90 280 180)
+   ============================================================ */
+function buildMap() {
+  const svg = document.getElementById('map-svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const N = trunks.length;
+
+  /* layout positions (units = mm) */
+  trunks.forEach((t, i) => {
+    const ang = (i / N) * 2 * Math.PI - Math.PI / 2; // first trunk at top
+    t._ang = ang;
+    t._x = Math.cos(ang) * 40;
+    t._y = Math.sin(ang) * 40;
+    const wedge = 2 * Math.PI / N;
+    const nb = t.children.length;
+    t.children.forEach((b, j) => {
+      const ba = ang - wedge * 0.44 + (j + 0.5) * (wedge * 0.88 / nb);
+      const r = 64 + (j % 2) * 6;
+      b._ang = ba;
+      b._x = Math.cos(ba) * r;
+      b._y = Math.sin(ba) * r;
+      b._r = r;
+    });
+  });
+
+  /* background dashed orbit rings */
+  [40, 64, 70].forEach(r => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', r);
+    c.setAttribute('fill', 'none');
+    c.setAttribute('stroke', '#d8d0b8');
+    c.setAttribute('stroke-width', '0.18');
+    c.setAttribute('stroke-dasharray', '0.8 1.2');
+    c.setAttribute('opacity', '0.7');
+    svg.appendChild(c);
+  });
+
+  /* cross-links (under everything) */
+  CROSS_LINKS.forEach(link => {
+    const a = trunkById[link.from], b = trunkById[link.to];
+    if (!a || !b) return;
+    const p = document.createElementNS(NS, 'path');
+    const mx = (a._x + b._x) / 2, my = (a._y + b._y) / 2;
+    const dx = b._x - a._x, dy = b._y - a._y;
+    const nx = -dy * 0.18, ny = dx * 0.18;
+    p.setAttribute('d', `M ${a._x} ${a._y} Q ${mx + nx} ${my + ny} ${b._x} ${b._y}`);
+    p.setAttribute('stroke', '#b78f3a');
+    p.setAttribute('stroke-width', '0.35');
+    p.setAttribute('stroke-dasharray', '1.4 1.2');
+    p.setAttribute('fill', 'none');
+    p.setAttribute('opacity', '0.55');
+    svg.appendChild(p);
+  });
+
+  /* trunk lines (root → trunk) */
+  trunks.forEach(t => {
+    const ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', 0); ln.setAttribute('y1', 0);
+    ln.setAttribute('x2', t._x); ln.setAttribute('y2', t._y);
+    ln.setAttribute('stroke', TYPE_COLOR[t.type]);
+    ln.setAttribute('stroke-width', '0.5');
+    ln.setAttribute('opacity', '0.55');
+    svg.appendChild(ln);
+
+    /* branch lines (trunk → branch) */
+    t.children.forEach(b => {
+      const ln2 = document.createElementNS(NS, 'line');
+      ln2.setAttribute('x1', t._x); ln2.setAttribute('y1', t._y);
+      ln2.setAttribute('x2', b._x); ln2.setAttribute('y2', b._y);
+      ln2.setAttribute('stroke', TYPE_COLOR[t.type]);
+      ln2.setAttribute('stroke-width', '0.28');
+      ln2.setAttribute('opacity', '0.42');
+      svg.appendChild(ln2);
+    });
+  });
+
+  /* branch dots */
+  trunks.forEach(t => {
+    t.children.forEach(b => {
+      const cir = document.createElementNS(NS, 'circle');
+      cir.setAttribute('cx', b._x);
+      cir.setAttribute('cy', b._y);
+      cir.setAttribute('r', '1.05');
+      cir.setAttribute('fill', '#ffffff');
+      cir.setAttribute('stroke', TYPE_COLOR[t.type]);
+      cir.setAttribute('stroke-width', '0.45');
+      svg.appendChild(cir);
+    });
+  });
+
+  /* trunk markers + simple word labels (no badges, no subtitles) */
+  trunks.forEach((t) => {
+    const color = TYPE_COLOR[t.type];
+
+    /* clean colored trunk dot */
+    const cir = document.createElementNS(NS, 'circle');
+    cir.setAttribute('cx', t._x);
+    cir.setAttribute('cy', t._y);
+    cir.setAttribute('r', '2.6');
+    cir.setAttribute('fill', color);
+    cir.setAttribute('stroke', '#ffffff');
+    cir.setAttribute('stroke-width', '0.9');
+    svg.appendChild(cir);
+
+    /* label positioned radially outward */
+    const offset = 7;
+    const lx = Math.cos(t._ang) * (40 + offset);
+    const ly = Math.sin(t._ang) * (40 + offset);
+
+    /* 2-line label */
+    const words = t.label.split(' ');
+    let line1, line2;
+    if (words.length === 1) { line1 = words[0]; line2 = ''; }
+    else if (words.length === 2) { line1 = words[0]; line2 = words[1]; }
+    else {
+      const mid = Math.ceil(words.length / 2);
+      line1 = words.slice(0, mid).join(' ');
+      line2 = words.slice(mid).join(' ');
+    }
+
+    const t1 = document.createElementNS(NS, 'text');
+    t1.setAttribute('x', lx);
+    t1.setAttribute('y', ly - (line2 ? 0.4 : 1.4));
+    t1.setAttribute('text-anchor', 'middle');
+    t1.setAttribute('font-size', '3.5');
+    t1.setAttribute('fill', color);
+    t1.setAttribute('font-family', 'Inter, Helvetica, sans-serif');
+    t1.setAttribute('font-weight', '700');
+    t1.textContent = line1;
+    svg.appendChild(t1);
+
+    if (line2) {
+      const t2 = document.createElementNS(NS, 'text');
+      t2.setAttribute('x', lx);
+      t2.setAttribute('y', ly + 3.1);
+      t2.setAttribute('text-anchor', 'middle');
+      t2.setAttribute('font-size', '3.5');
+      t2.setAttribute('fill', color);
+      t2.setAttribute('font-family', 'Inter, Helvetica, sans-serif');
+      t2.setAttribute('font-weight', '700');
+      t2.textContent = line2;
+      svg.appendChild(t2);
+    }
+  });
+
+  /* root medallion */
+  const rootRing = document.createElementNS(NS, 'circle');
+  rootRing.setAttribute('r', '15');
+  rootRing.setAttribute('fill', 'none');
+  rootRing.setAttribute('stroke', '#c4a85a');
+  rootRing.setAttribute('stroke-width', '0.3');
+  rootRing.setAttribute('stroke-dasharray', '0.8 1.0');
+  svg.appendChild(rootRing);
+
+  const rootBg = document.createElementNS(NS, 'circle');
+  rootBg.setAttribute('r', '11');
+  rootBg.setAttribute('fill', '#ffffff');
+  rootBg.setAttribute('stroke', '#a07320');
+  rootBg.setAttribute('stroke-width', '0.6');
+  svg.appendChild(rootBg);
+
+  const dot = document.createElementNS(NS, 'circle');
+  dot.setAttribute('r', '4.5');
+  dot.setAttribute('fill', '#f1d990');
+  dot.setAttribute('stroke', '#a07320');
+  dot.setAttribute('stroke-width', '0.5');
+  svg.appendChild(dot);
+
+  const rt1 = document.createElementNS(NS, 'text');
+  rt1.setAttribute('text-anchor', 'middle');
+  rt1.setAttribute('y', -6.6);
+  rt1.setAttribute('font-size', '3.2');
+  rt1.setAttribute('font-family', 'Fraunces, Georgia, serif');
+  rt1.setAttribute('font-weight', '600');
+  rt1.setAttribute('fill', '#1f1e1d');
+  rt1.textContent = 'Learning &';
+  svg.appendChild(rt1);
+
+  const rt2 = document.createElementNS(NS, 'text');
+  rt2.setAttribute('text-anchor', 'middle');
+  rt2.setAttribute('y', -3.0);
+  rt2.setAttribute('font-size', '3.2');
+  rt2.setAttribute('font-family', 'Fraunces, Georgia, serif');
+  rt2.setAttribute('font-weight', '600');
+  rt2.setAttribute('fill', '#1f1e1d');
+  rt2.textContent = 'Knowledge';
+  svg.appendChild(rt2);
+
+  const rt3 = document.createElementNS(NS, 'text');
+  rt3.setAttribute('text-anchor', 'middle');
+  rt3.setAttribute('y', 8.5);
+  rt3.setAttribute('font-size', '1.6');
+  rt3.setAttribute('font-family', 'Inter, sans-serif');
+  rt3.setAttribute('font-weight', '700');
+  rt3.setAttribute('letter-spacing', '0.4');
+  rt3.setAttribute('fill', '#a07320');
+  rt3.textContent = 'EDUCATIONAL ATLAS';
+  svg.appendChild(rt3);
+}
+buildMap();
+
+/* ============================================================
+   FULL PROMPTS (pages 5 & 6) — code-style rendering
+   ============================================================ */
+const PROMPT_1 = `You are an advanced systems-thinking, educational cognition, organizational design, and AI-structure synthesis assistant.
+
+Your ONLY objective is to generate a highly visual, structured, interactive MINDMAP as a SINGLE self-contained HTML file.
+
+DO NOT generate:
+- essays
+- long report sections
+- academic-style explanations
+- large textual summaries
+- documentation-heavy outputs
+
+The PRIMARY OUTPUT must be:
+- a VISUAL MINDMAP
+- highly organized
+- interactive
+- expandable/collapsible
+- visually connected
+- aesthetically clean
+- easy to navigate
+- focused on relationships and structures
+
+The final deliverable must be:
+- ONE standalone HTML file
+- with embedded CSS and JavaScript
+- no external dependencies required unless absolutely necessary
+- immediately runnable in browser
+
+==================================================
+CORE OBJECTIVE
+==================================================
+
+The purpose of this exercise is NOT business implementation.
+
+The purpose is:
+- structure discovery
+- concept synthesis
+- relationship mapping
+- trunk/branch identification
+- AI-assisted categorization
+- visualization of thinking patterns
+- standardization of reasoning workflows
+
+The mindmap should visually represent:
+- how concepts connect
+- which nodes are central ("trunks")
+- which nodes are branches/leaves
+- emotional vs logical structures
+- AI vs human reasoning
+- educational structures
+- operational structures
+- relationship density
+- hidden conceptual intersections
+
+==================================================
+IMPORTANT SESSION INSIGHTS
+==================================================
+
+The following ideas are CRITICAL and should influence the structure:
+
+- AI can improve outputs while hiding understanding gaps
+- Education requires visibility of misunderstanding
+- Work environments prioritize output quality
+- Mindmaps reveal thinking structures
+- Trunk concepts are more important than isolated leaves
+- Emotional concepts are important structural signals
+- Prompting itself represents human reasoning
+- Categorization changes interpretation
+- Valuable discoveries emerge from unexpected connections
+- Human reasoning is nonlinear and associative
+- AI should assist organization, not replace interpretation
+- Structure discovery itself may become a leadership skill
+- Some concepts carry disproportionately high value
+- Relationship visualization is more important than summaries
+
+==================================================
+VISUAL STYLE REQUIREMENTS
+==================================================
+
+The visual style should be:
+- Light background (NOT dark mode)
+- Elegant, Minimalistic, Creative
+- Professional, Spacious, Modern
+- Easy to read
+
+Use:
+- soft color palettes
+- thin connectors
+- smooth animations
+- rounded nodes
+- layered hierarchy
+- floating node structures
+- subtle shadows
+- curved relationship lines
+- expandable clusters
+- hover interactions
+
+Typography:
+- use modern creative fonts
+- readable and elegant
+- avoid overly technical styling
+
+Add:
+- small artistic illustrations/icons where appropriate
+- subtle educational/AI/organizational symbolic visuals
+- lightweight conceptual illustrations
+- minimal visual clutter
+
+The visual design should feel like:
+- a creative strategic thinking board
+- an AI-assisted cognition map
+- a modern systems-thinking visualization
+- a research-lab conceptual framework
+
+==================================================
+MANDATORY STRUCTURE
+==================================================
+
+The HTML mindmap MUST contain:
+
+1. Central Root Node
+2. Primary Trunk Categories
+3. Secondary Branch Structures
+4. Leaf Concepts
+5. Relationship Connectors
+6. Emotional/Abstract Layer
+7. AI & Human Reasoning Layer
+8. Organizational Structure Layer
+9. Educational Structure Layer
+10. Hidden Variable Connections
+
+The structure should visually distinguish:
+- trunk / branch / leaf nodes
+- emotional / operational / AI / educational nodes
+
+==================================================
+INTERACTION REQUIREMENTS
+==================================================
+
+The HTML must support:
+- zooming, panning
+- node expansion/collapse
+- hover highlighting
+- smooth transitions
+- relationship tracing
+- node grouping
+- clickable category focus
+
+Optional:
+- draggable nodes
+- animated connectors
+- mini-map overview
+
+==================================================
+IMPORTANT OUTPUT CONSTRAINT
+==================================================
+
+DO NOT turn the output into a written report.
+
+The page should be:
+~80–90% VISUAL MINDMAP
+~10–20% supporting contextual labels
+
+Keep textual explanations VERY SHORT.
+
+==================================================
+BOTTOM EXPANDABLE SECTION
+==================================================
+
+At the BOTTOM of the HTML page:
+
+Create an expandable/collapsible section titled:
+"AI Prompting & Reasoning Workflow"
+
+Inside this section include:
+1. The FULL prompt used
+2. Prompt engineering logic
+3. Why certain categories were created
+4. How prompting influences structure
+5. Differences between AI organization and human reasoning
+6. Important limitations of AI-generated categorization
+7. Human validation importance
+
+This section should:
+- remain collapsed by default
+- expand smoothly
+- visually separate from the main mindmap
+
+==================================================
+COLOR STRUCTURE
+==================================================
+
+Use simple soft colors:
+Education -> Soft Blue
+Human emotions/thinking -> Soft Orange
+AI/Digital -> Soft Purple
+Organization/Business -> Soft Green
+Evaluation/Measurement -> Soft Red
+Abstract/Philosophical -> Soft Gold
+
+Trunk nodes:
+- slightly darker
+- slightly larger
+- more visually emphasized
+
+==================================================
+CONCEPTS TO INCLUDE
+==================================================
+
+EDUCATION:
+Knowledge, Learning, Understanding, Wisdom, Research, Experience,
+Teaching, Application, Evaluation, Exams, Tests, Curriculum,
+Lectures, Courses, Textbooks, Institutions, Schools, Colleges,
+Universities, Teachers, Students, Parents, Government,
+Ministry of Education, Rules & Regulations, Grades, Passes,
+Retakes, Attendance, Preparation, Goals, Process, Value, Career,
+Society, Salary, Business, Projects, Future, Responsibility,
+Curiosity, Reflection, Emotion, Happiness, Continuity
+
+HUMAN THINKING & LEARNING:
+Trunk, Branch, Structure, Connection, Categorization, Color coding,
+Association, Visualization, Self-reflection, Comparison,
+Developing abilities, Thinking ability, Talent, Effort, Practice,
+Confidence, Creativity, Generalization, Knowledge gaps,
+Psychological safety, Pressure, Relaxation, Laziness, Strictness,
+Feeling, Relationships, Teacher/Student relationship,
+Parent/Child relationship
+
+AI & DIGITAL:
+AI, Digital tools, Digital/Physical, Online learning,
+Physical learning, AI-assisted organization, Prompt engineering,
+Workflow standardization, Prompt recording, AI categorization,
+AI synthesis, AI structure generation, AI-assisted evaluation,
+Visibility of reasoning, Hidden understanding gaps,
+Human validation, Quality assurance, Ethical AI usage,
+Transparency, Accountability
+
+ORGANIZATIONAL:
+Company, Business, Projects, Cost, Cost cutting, Value exchange,
+Growth, Scaling, Hiring ability, Evaluation, Management,
+Leadership, Decision making, Operational structure, Continuity,
+Organizational learning, Team capability, Risk, Productivity,
+Efficiency, Sample data, Forecasting, Systematic thinking,
+Structured logic
+
+==================================================
+FINAL GOAL
+==================================================
+
+Generate a deeply interconnected, visually elegant HTML mindmap
+that transforms these concepts into a structured intelligence
+system showing:
+- human thinking flows
+- conceptual relationships
+- educational structures
+- AI reasoning structures
+- organizational cognition
+- emotional influence patterns
+- trunk vs branch dynamics
+- visibility vs hidden structures
+
+The result should feel like:
+- a living conceptual ecosystem
+- a strategic cognition interface
+- a next-generation AI-assisted mindmap
+- a visual reasoning architecture
+- a leadership thinking framework
+
+FINAL OUTPUT:
+ONLY return the complete HTML file.
+DO NOT add explanations outside the HTML.`;
+
+const PROMPT_2 = `You over-produced explanatory sections and under-produced the actual EDUCATION-FOCUSED MINDMAP.
+
+Revise the entire output.
+
+The PRIMARY OBJECTIVE is NOT general conceptual discussion.
+
+The PRIMARY OBJECTIVE is:
+- a LARGE-SCALE EDUCATION-CENTERED VISUAL MINDMAP
+- focused on EDUCATION SYSTEMS, LEARNING, HUMAN THINKING,
+  AI IN EDUCATION, KNOWLEDGE DEVELOPMENT, REASONING STRUCTURES
+- with the other categories only acting as SUPPORTING CONNECTION LAYERS
+- visually dominant educational hierarchy
+- extremely readable, easy to navigate
+- zoomable, scrollable, spacious, visually clean
+
+The current result still feels too much like:
+- documentation
+- essay sections
+- conceptual article formatting
+- textual reasoning panels
+
+Reduce that dramatically.
+
+The output should feel like:
+- a strategic education cognition map
+- an AI-assisted educational intelligence system
+- a next-generation learning architecture visualization
+- a visual educational ecosystem
+- a structured knowledge universe
+
+==================================================
+CRITICAL REVISION REQUIREMENTS
+==================================================
+
+1. EDUCATION MUST DOMINATE THE MAP
+   The central structure should revolve around:
+   Education, Learning, Knowledge, Understanding, Thinking,
+   Curriculum, Teaching, Students, Teachers, Educational Systems,
+   Educational Evaluation, Educational Growth, Human Learning
+   Processes, Cognitive Development, Knowledge Visibility,
+   Learning Outcomes, AI in Education.
+
+   The other categories — AI, Organization, Evaluation,
+   Human Emotion, Abstract Thinking — should mainly SUPPORT
+   and CONNECT to educational structures.
+
+   Education should occupy the largest visual territory.
+
+2. REDUCE WORDY PANELS
+   The lower explanation section is too large and too text-heavy.
+   Instead:
+   - keep ONLY a SMALL expandable prompt section at the bottom
+   - make it compact, scrollable, elegant
+   - not dominant, max height constrained
+   - visually secondary
+   The mindmap itself must dominate the page.
+
+3. MAKE THE MINDMAP MUCH CLEARER
+   Improve: node spacing, visual hierarchy, readability,
+   label visibility, connector clarity, navigation clarity.
+   Increase: node sizes, font sizes, spacing between major
+   trunks, readability at zoomed-out levels.
+   Avoid clutter.
+
+4. MAKE EDUCATIONAL HIERARCHIES CLEAR
+   The visual hierarchy should clearly separate:
+   ROOT
+   -> Educational Domains
+   -> Learning Structures
+   -> Teaching Systems
+   -> Cognitive Processes
+   -> Evaluation Structures
+   -> AI-Assisted Learning
+   -> Outcomes
+   -> Human Factors
+   Use clear trunk -> branch -> leaf progression.
+
+5. IMPROVE NAVIGATION
+   The map should feel smooth and intuitive.
+   MANDATORY: drag to move, wheel zoom, touch zoom, minimap,
+   focus mode, smooth expand/collapse, hover highlights,
+   readable connectors, centered navigation, intelligent spacing.
+
+6. MAKE IT FEEL LIKE A LIVING EDUCATIONAL SYSTEM
+   The map should visually communicate growth, learning flow,
+   knowledge movement, reasoning pathways, educational
+   relationships, educational ecosystems, conceptual development.
+   NOT just random nodes.
+
+7. VISUAL STYLE
+   Keep: light background, soft academic aesthetic, elegant
+   typography, modern educational visual language.
+   Use: subtle artistic educational illustrations, soft symbolic
+   icons, minimal cognitive visuals, elegant gradients, clean
+   academic design.
+   Avoid: dark mode, cyberpunk, overly technical UI, excessive
+   dashboards, harsh colors, dense panels.
+
+8. FONT & NODE IMPROVEMENTS
+   Increase: readability, font scaling, node width, node padding,
+   spacing consistency.
+   Major educational trunks should feel important, central,
+   visually weighted.
+
+9. STRUCTURAL INTELLIGENCE
+   The map should reveal:
+   - relationships between learning and AI
+   - relationships between teaching and evaluation
+   - relationships between thinking and understanding
+   - hidden educational gaps
+   - knowledge visibility
+   - educational feedback loops
+   - curriculum systems
+   - emotional impacts on learning
+   - organizational influence on education
+   - AI-assisted reasoning
+
+10. HTML OUTPUT REQUIREMENTS
+    Return:
+    - ONE COMPLETE HTML FILE ONLY
+    - embedded CSS, embedded JavaScript
+    - self-contained, immediately runnable
+    NO markdown explanations.
+    NO essay sections.
+    NO external commentary.
+
+11. IMPORTANT DESIGN CORRECTION
+    The current output still behaves like a webpage with a
+    mindmap attached. Reverse this.
+    It should behave like:
+    A MASSIVE INTERACTIVE EDUCATIONAL MINDMAP
+    with only a small supporting prompt section.
+
+12. MAKE THE PROMPT SECTION BETTER
+    At the bottom:
+    - create a compact expandable/collapsible section
+    - smooth animations
+    - elegant academic styling
+    - internally scrollable
+    Include:
+    - the original prompt used
+    - AI reasoning notes
+    - structural observations
+    - educational insights
+    - prompting workflow notes
+    Keep it visually lightweight, not dominant, hidden by default.
+
+13. EDUCATIONAL EXPANSION
+    Expand educational branches deeply. Examples:
+    Education
+    -> Learning Theory
+    -> Cognitive Development
+    -> Knowledge Retention
+    -> Classroom Systems
+    -> AI Tutoring
+    -> Curriculum Design
+    -> Human Motivation
+    -> Assessment Systems
+    -> Research
+    -> Educational Technology
+    -> Future of Learning
+    -> Adaptive Learning
+    -> Skill Development
+    -> Reflection
+    -> Educational Equity
+    -> Teacher Development
+    -> Knowledge Transfer
+    -> Creativity
+    -> Problem Solving
+    -> Educational Leadership
+    -> Lifelong Learning
+    Expand intelligently beyond the original words.
+
+14. FINAL EXPERIENCE TARGET
+    The final result should feel like:
+    - an educational intelligence network
+    - a visual cognition engine
+    - an AI-assisted educational architecture
+    - a strategic learning ecosystem
+    - a conceptual educational atlas
+    - a future-of-learning interface
+
+    The experience should immediately communicate:
+    THIS IS ABOUT EDUCATION, LEARNING, THINKING,
+    AND KNOWLEDGE STRUCTURES.
+    NOT generic conceptual categorization.`;
+
+function renderPromptForPrint(targetId, text) {
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  let prevBlank = true; /* suppress leading blanks */
+  text.split('\n').forEach(raw => {
+    const t = raw.trim();
+    if (/^={5,}/.test(t)) return;                  /* drop divider bars */
+    if (t === '') {
+      if (prevBlank) return;                       /* collapse blanks */
+      prevBlank = true;
+      const s = document.createElement('span');
+      s.className = 'l b';
+      el.appendChild(s);
+      return;
+    }
+    prevBlank = false;
+    const s = document.createElement('span');
+    s.className = 'l';
+    if (/^[A-Z][A-Z 0-9&/\-]{2,}\s*$/.test(t) && t.length <= 60) s.classList.add('h');
+    else if (/^\s*[-*]\s+/.test(raw) || /^\s*[0-9]+\.\s+/.test(raw)) s.classList.add('bul');
+    s.textContent = raw;
+    el.appendChild(s);
+  });
+}
+renderPromptForPrint('print-prompt-1', PROMPT_1);
+renderPromptForPrint('print-prompt-2', PROMPT_2);
+</script>
+</body>
+</html>
