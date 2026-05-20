@@ -78,7 +78,22 @@
       "Bash(pdftotext -layout -f 1 -l 6 \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief.pdf\" -)",
       "Bash(pdftotext -layout -f 5 -l 6 \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief.pdf\" -)",
       "Bash(fc-list :lang=ja)",
-      "Bash(fc-list)"
+      "Bash(fc-list)",
+      "WebSearch",
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:tribuna.com)",
+      "WebFetch(domain:spribe.co)",
+      "WebFetch(domain:aws.amazon.com)",
+      "WebFetch(domain:finance.yahoo.com)",
+      "WebFetch(domain:igamingbusiness.com)",
+      "Bash(mkdir -p strategic-brief)",
+      "Bash(cp /tmp/strategic_brief.html strategic-brief/strategic_brief.html)",
+      "Bash(cp /tmp/strategic_brief_jp.html strategic-brief/strategic_brief_jp.html)",
+      "Bash(cp /tmp/stamp_footer.ps strategic-brief/stamp_footer.ps)",
+      "Bash(chmod +x \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/strategic-brief/regenerate.sh\")",
+      "Bash(bash \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/strategic-brief/regenerate.sh\")",
+      "Bash(pdftotext -layout \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief.pdf\" -)",
+      "Bash(pdftotext -layout \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief_jp.pdf\" -)"
     ]
   }
 }
