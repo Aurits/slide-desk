@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ambrose Alanda — Curriculum Vitae</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+    color: #2b2b2b;
+    font-size: 10.3pt;
+    line-height: 1.5;
+  }
+
+  /* equal-height two columns via table layout (wkhtmltopdf-reliable) */
+  .page { display: table; width: 100%; height: 297mm; table-layout: fixed; border-collapse: collapse; }
+  .col  { display: table-cell; vertical-align: top; }
+
+  /* ---------- SIDEBAR ---------- */
+  .side {
+    width: 34%;
+    background: #173e4a;
+    color: #e9eef0;
+    padding: 20mm 10mm 16mm 12mm;
+  }
+  .sidehead { text-align: center; }
+  .photo {
+    width: 128px; height: 128px; border-radius: 50%;
+    margin: 0 auto 14px auto;
+    background-image: url('1774376456582.jpg');
+    background-size: cover; background-position: center 28%;
+    border: 3px solid rgba(255,255,255,0.30);
+  }
+  .side .name { font-size: 22pt; font-weight: 900; line-height: 1.06; color: #fff; letter-spacing: 0.2px; }
+  .side .role { font-size: 10pt; color: #9fc2cc; margin-top: 6px; font-weight: 700; letter-spacing: 0.3px; }
+  .side .divider { height: 2px; background: rgba(255,255,255,0.22); margin: 18px 0; }
+
+  .side h3 {
+    font-size: 9pt; text-transform: uppercase; letter-spacing: 2px;
+    color: #7fb0bd; margin: 22px 0 9px 0; font-weight: 700;
+  }
+  .side .first { margin-top: 0; }
+  .side .row { margin-bottom: 9px; font-size: 9.2pt; word-break: break-word; line-height: 1.4; }
+  .side .row .k { display: block; color: #9cc3cf; font-size: 7.8pt; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 1px; }
+  .side .row .v { color: #f3f7f8; }
+
+  /* contact rows with icons */
+  .crow { margin-bottom: 9px; font-size: 9.2pt; line-height: 1.35; color: #eef4f5; }
+  .crow a { color: #eef4f5; text-decoration: none; }
+  .ic  { width: 13px; height: 13px; vertical-align: -2px; margin-right: 9px; fill: none; stroke: #84b6c4; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .icf { width: 13px; height: 13px; vertical-align: -2px; margin-right: 9px; fill: #84b6c4; }
+
+  .skill { margin-bottom: 10px; }
+  .skill .k { display: block; color: #eaf3f5; font-weight: 700; font-size: 9pt; margin-bottom: 2px; }
+  .skill .v { font-size: 8.9pt; color: #ccdee3; line-height: 1.42; }
+
+  /* ---------- MAIN ---------- */
+  .main { padding: 20mm 14mm 16mm 13mm; }
+  .main .profile { font-size: 10.2pt; color: #444; line-height: 1.55; }
+
+  .main h2 {
+    font-size: 11.5pt; text-transform: uppercase; letter-spacing: 1.8px;
+    color: #173e4a; margin: 46px 0 20px 0; padding-bottom: 7px;
+    border-bottom: 2px solid #173e4a; font-weight: 900;
+  }
+  .main h2 .hmark { display: inline-block; width: 9px; height: 9px; background: #2a8aa0; margin-right: 9px; vertical-align: 1px; }
+  .main h2.first { margin-top: 10px; }
+
+  .entry { margin-bottom: 36px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry .top { display: table; width: 100%; }
+  .entry .org { display: table-cell; font-weight: 700; font-size: 10.8pt; color: #222; }
+  .entry .org .place { font-weight: 400; color: #777; font-size: 9.2pt; }
+  .entry .period { display: table-cell; text-align: right; color: #6b8b95; font-size: 9pt; white-space: nowrap; font-weight: 700; }
+  .entry .role { color: #2a6b7c; font-style: italic; font-size: 9.8pt; margin: 3px 0 6px 0; }
+  .entry ul { margin: 6px 0 0 0; padding-left: 16px; }
+  .entry li { margin-bottom: 7px; color: #3a3a3a; line-height: 1.55; }
+  .entry li b { color: #222; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <div class="col side">
+    <div class="sidehead">
+      <div class="photo"></div>
+      <div class="name">Ambrose<br>Alanda</div>
+      <div class="role">AI/ML &amp; Full Stack<br>Software Engineer</div>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="first">Contact</h3>
+    <div class="crow"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg><a href="mailto:alandaambrose@gmail.com">alandaambrose@gmail.com</a></div>
+    <div class="crow"><svg class="ic" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+256 704 758 344</div>
+    <div class="crow"><svg class="ic" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Kampala, Uganda</div>
+    <div class="crow"><svg class="icf" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg><a href="https://github.com/Aurits">github.com/Aurits</a></div>
+    <div class="crow"><svg class="icf" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-3.37-4-3.12-4 0v5.6h-3v-11h3v1.76c1.4-2.58 7-2.77 7 2.47v6.77z"/></svg><a href="https://linkedin.com/in/ambrose-alanda-b938b0243">in/ambrose-alanda-b938b0243</a></div>
+
+    <h3>Personal</h3>
+    <div class="row"><span class="k">Nationality</span><span class="v">Uganda</span></div>
+    <div class="row"><span class="k">Date of birth</span><span class="v">14 September 2001</span></div>
+    <div class="row"><span class="k">Sex</span><span class="v">Male</span></div>
+    <div class="row"><span class="k">Permanent address</span><span class="v">Kampala, Uganda</span></div>
+
+    <h3>Skills</h3>
+    <div class="skill"><span class="k">Programming</span><span class="v">Python, JavaScript, TypeScript, SQL</span></div>
+    <div class="skill"><span class="k">Web &amp; Backend</span><span class="v">Django, FastAPI, Node.js, React, Next.js, React Native, REST</span></div>
+    <div class="skill"><span class="k">AI &amp; ML</span><span class="v">Generative AI, LLM fine-tuning, Computer Vision, MLOps, TensorFlow</span></div>
+    <div class="skill"><span class="k">Cloud &amp; DevOps</span><span class="v">AWS, Azure, Docker, Kubernetes, CI/CD, Git</span></div>
+    <div class="skill"><span class="k">Data &amp; Systems</span><span class="v">PostgreSQL, WebSockets, microservices, IoT, ERP</span></div>
+
+    <h3>Languages</h3>
+    <div class="skill"><span class="v">English (fluent)</span></div>
+
+    <h3>Certifications</h3>
+    <div class="skill"><span class="v">Postman API Fundamentals (2023)</span></div>
+    <div class="skill"><span class="v">Microsoft Student Ambassador (2023–2024)</span></div>
+  </div>
+
+  <!-- ===================== MAIN ===================== -->
+  <div class="col main">
+
+    <h2 class="first"><span class="hmark"></span>Profile</h2>
+    <div class="profile">Software engineer specializing in generative AI, computer vision and full stack development. Experienced in architecting and shipping production grade platforms, from neural networks to cloud infrastructure, across the healthcare, SaaS and enterprise sectors, with a focus on scalable, measurable solutions.</div>
+
+    <h2><span class="hmark"></span>Work Experience</h2>
+
+    <div class="entry">
+      <div class="top">
+        <div class="org">AIBOS UG <span class="place">· Kampala, Uganda</span></div>
+        <div class="period">2024.12 – present</div>
+      </div>
+      <div class="role">Software Engineer</div>
+      <ul>
+        <li><b>WHOM AI:</b> architected a generative AI fashion photography platform (Stable Diffusion/ComfyUI, Next.js, Python).</li>
+        <li><b>Blueprint AI:</b> built a Python blueprint analyzer automating drawing interpretation and bill of materials generation.</li>
+        <li>Led system design &amp; testing; optimized CI/CD pipelines with Docker. Stack: Python (Django, FastAPI), TypeScript, React/Next.js, PostgreSQL, Kubernetes, AWS/Azure.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="top">
+        <div class="org">Native Innovations <span class="place">· Kampala, Uganda</span></div>
+        <div class="period">2024.01 – 2024.12</div>
+      </div>
+      <div class="role">ERP Developer</div>
+      <ul>
+        <li>Designed and deployed an SME ERP system (Django, PostgreSQL, Docker) covering inventory, financials and HR.</li>
+        <li>Built custom dashboards and led onboarding for 50+ enterprise users.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="top">
+        <div class="org">Microsoft <span class="place">· Kampala, Uganda</span></div>
+        <div class="period">2023.01 – 2025.12</div>
+      </div>
+      <div class="role">Microsoft Student Ambassador</div>
+      <ul>
+        <li>Conducted technical workshops for 100+ students on Azure and GitHub best practices; collaborated with global peers on community innovation.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="top">
+        <div class="org">DICTS, Makerere University <span class="place">· Kampala, Uganda</span></div>
+        <div class="period">2023.01 – 2024.12</div>
+      </div>
+      <div class="role">IT Intern</div>
+      <ul>
+        <li>Provided onsite IT training to department staff; implemented backend caching for the Webmail mobile app serving 5,000+ daily users.</li>
+      </ul>
+    </div>
+
+    <h2><span class="hmark"></span>Education</h2>
+
+    <div class="entry">
+      <div class="top">
+        <div class="org">Makerere University <span class="place">· Kampala, Uganda</span></div>
+        <div class="period">2022.01 – 2026.02</div>
+      </div>
+      <div class="role">Bachelor of Science in Software Engineering (graduated 2026.02)</div>
+      <ul>
+        <li>Coursework: Artificial Intelligence, Systems Architecture, Database Systems, Cybersecurity.</li>
+        <li>Honors: Finalist in Makerere AI Competitions; secured grant funding for the AI Skin Diagnosis project.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="top">
+        <div class="org">Kiira College Butiki <span class="place">· Jinja, Uganda</span></div>
+        <div class="period">2015 – 2020</div>
+      </div>
+      <div class="role">Uganda Certificate of Education (O-Level) &amp; Uganda Advanced Certificate of Education (A-Level)</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

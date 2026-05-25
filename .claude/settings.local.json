@@ -93,7 +93,18 @@
       "Bash(chmod +x \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/strategic-brief/regenerate.sh\")",
       "Bash(bash \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/strategic-brief/regenerate.sh\")",
       "Bash(pdftotext -layout \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief.pdf\" -)",
-      "Bash(pdftotext -layout \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief_jp.pdf\" -)"
+      "Bash(pdftotext -layout \"/mnt/c/Users/HP/Documents/PROJECTS/slide-desk/Strategic Research Brief_jp.pdf\" -)",
+      "Bash(pandoc --version)",
+      "Bash(wkhtmltopdf --enable-local-file-access --quiet \"Ambrose_Alanda_CV_EN.html\" \"Ambrose_Alanda_CV_EN.pdf\")",
+      "Bash(wkhtmltopdf --enable-local-file-access --background --quiet \"Ambrose_Alanda_CV_EN.html\" \"Ambrose_Alanda_CV_EN.pdf\")",
+      "Bash(fc-list : family)",
+      "Bash(mkdir -p ~/.fonts)",
+      "Read(//home/aurits/**)",
+      "Bash(curl -fsSL -o Lato-__TRACKED_VAR__.ttf https://github.com/google/fonts/raw/main/ofl/lato/Lato-__TRACKED_VAR__.ttf)",
+      "Bash(curl -fsSL -o __TRACKED_VAR__.ttf https://github.com/google/fonts/raw/main/ofl/carlito/__TRACKED_VAR__.ttf)",
+      "Bash(fc-cache -f ~/.fonts)",
+      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet \"Ambrose_Alanda_CV_EN.html\" \"Ambrose_Alanda_CV_EN.pdf\")",
+      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet \"Ambrose_Alanda_CV_JP.html\" \"Ambrose_Alanda_CV_JP.pdf\")"
     ]
   }
 }
