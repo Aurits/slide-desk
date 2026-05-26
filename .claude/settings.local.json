@@ -112,7 +112,8 @@
       "Bash(ls /home/aurits/.claude/projects/-mnt-c-Users-HP-Documents-PROJECTS-slide-desk/memory/MEMORY.md)",
       "Bash(python3 -)",
       "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_EN.html Ambrose_Alanda_CV_EN.pdf)",
-      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_JP.html Ambrose_Alanda_CV_JP.pdf)"
+      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_JP.html Ambrose_Alanda_CV_JP.pdf)",
+      "Bash(python3 -c 'import re;d=open\\('\\\\''Ambrose_Alanda_CV___TRACKED_VAR__.pdf'\\\\'','\\\\''rb'\\\\''\\).read\\(\\);print\\('\\\\''__TRACKED_VAR__ pages:'\\\\'',len\\(re.findall\\(rb'\\\\''/Type\\\\s*/Page[^s]'\\\\'',d\\)\\)\\)')"
     ]
   }
 }
