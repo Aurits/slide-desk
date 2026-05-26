@@ -104,7 +104,15 @@
       "Bash(curl -fsSL -o __TRACKED_VAR__.ttf https://github.com/google/fonts/raw/main/ofl/carlito/__TRACKED_VAR__.ttf)",
       "Bash(fc-cache -f ~/.fonts)",
       "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet \"Ambrose_Alanda_CV_EN.html\" \"Ambrose_Alanda_CV_EN.pdf\")",
-      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet \"Ambrose_Alanda_CV_JP.html\" \"Ambrose_Alanda_CV_JP.pdf\")"
+      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet \"Ambrose_Alanda_CV_JP.html\" \"Ambrose_Alanda_CV_JP.pdf\")",
+      "Bash(mkdir -p cv-resume presentations/scripts mindmaps project-reports tracker images)",
+      "Bash(git mv *)",
+      "Bash(file member-selection/*)",
+      "Bash(F=member-selection/MEMORY_INDEX 2>/dev/null)",
+      "Bash(ls /home/aurits/.claude/projects/-mnt-c-Users-HP-Documents-PROJECTS-slide-desk/memory/MEMORY.md)",
+      "Bash(python3 -)",
+      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_EN.html Ambrose_Alanda_CV_EN.pdf)",
+      "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_JP.html Ambrose_Alanda_CV_JP.pdf)"
     ]
   }
 }

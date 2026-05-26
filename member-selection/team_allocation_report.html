@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Team Allocation &amp; Organization Structure</title>
+<style>
+  @page { size: A4; margin: 25mm 22mm 25mm 22mm; }
+  html, body {
+    margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
+    font-family: "EB Garamond", "Garamond", "Hiragino Mincho ProN", "Yu Mincho", "Cambria", "Georgia", serif;
+    font-size: 11pt; line-height: 1.7; -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .sans { font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif; }
+
+  /* ============ COVER PAGE ============ */
+  .cover { page-break-after: always; height: 247mm; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 0; }
+  .cover-top { padding-top: 30mm; }
+  .cover-eyebrow {
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif;
+    font-size: 9pt; letter-spacing: 6px; text-transform: uppercase; padding: 6px 0 0 0; color: #6b6b6b; margin-bottom: 14mm;
+  }
+  .cover-rule { width: 28mm; height: 1px; background: #1a1a1a; margin-bottom: 16mm; }
+  .cover-title {
+    font-family: "EB Garamond", "Garamond", "Hiragino Mincho ProN", "Yu Mincho", "Cambria", "Georgia", serif;
+    font-size: 34pt; font-weight: 400; line-height: 1.15; letter-spacing: -0.3px; color: #1a1a1a; margin: 0; max-width: 150mm;
+  }
+  .cover-subtitle {
+    font-family: "EB Garamond", "Garamond", "Hiragino Mincho ProN", "Yu Mincho", "Cambria", "Georgia", serif;
+    font-style: italic; font-size: 14pt; color: #4a4a4a; line-height: 1.5; margin-top: 10mm; max-width: 140mm;
+  }
+  .cover-bottom { padding-bottom: 6mm; border-top: 1px solid #d4d4d4; padding-top: 8mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif; font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 14mm; vertical-align: top; }
+  .cover-meta .label { text-transform: uppercase; letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: #1a1a1a; font-size: 10.5pt; font-weight: 500; }
+
+  /* ============ DOCUMENT BODY ============ */
+  .doc { padding-top: 4mm; }
+  .doc-header { border-bottom: 1px solid #1a1a1a; padding-bottom: 6mm; margin-bottom: 8mm; }
+  .doc-header .kicker { font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 4mm; }
+  .doc-header h1 { font-family: "EB Garamond", "Garamond", "Hiragino Mincho ProN", "Yu Mincho", "Cambria", "Georgia", serif; font-weight: 400; font-size: 22pt; line-height: 1.2; margin: 0 0 3mm 0; color: #1a1a1a; }
+  .doc-header .sub { font-style: italic; font-size: 12pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif; font-size: 9pt; color: #6b6b6b; margin-top: 5mm; letter-spacing: 0.3px; }
+  .doc-header .meta-line span + span::before { content: "·"; margin: 0 8px; color: #b0b0b0; }
+
+  p.intro { margin: 0 0 7mm 0; text-align: justify; }
+
+  h2.section { font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif; font-size: 11pt; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #1a1a1a; margin: 13mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { color: #8a8a8a; font-weight: 500; margin-right: 12px; }
+  h3.sub { font-family: "EB Garamond", "Garamond", "Hiragino Mincho ProN", "Yu Mincho", "Cambria", "Georgia", serif; font-style: italic; font-weight: 400; font-size: 13pt; color: #1a1a1a; margin: 8mm 0 1mm 0; page-break-after: avoid; }
+  h3.sub .n { font-style: normal; color: #8a8a8a; font-size: 11pt; margin-right: 8px; }
+  p { margin: 0 0 5mm 0; text-align: justify; hyphens: auto; }
+  p.lead-in { page-break-after: avoid; margin-bottom: 2mm; }
+  ul { margin: 2mm 0 6mm 0; padding-left: 7mm; list-style: none; }
+  ul li { margin-bottom: 1.5mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: #8a8a8a; }
+  .group-label { font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: #8a8a8a; margin: 7mm 0 0 0; }
+
+  /* ============ STATS GRID ============ */
+  .stats-grid { display: flex; flex-wrap: wrap; margin: 5mm 0 4mm 0; page-break-inside: avoid; }
+  .stats-grid .stat { flex: 0 0 33.33%; box-sizing: border-box; padding: 3.5mm 4mm 3.5mm 0; border-bottom: 0.5px solid #ececec; }
+  .stats-grid .stat .num { font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 16pt; font-weight: 600; color: #1a1a1a; line-height: 1.1; display: block; letter-spacing: -0.3px; }
+  .stats-grid .stat .label { font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 8pt; color: #6b6b6b; display: block; margin-top: 2mm; line-height: 1.4; letter-spacing: 0.2px; }
+
+  /* ============ TABLES ============ */
+  table.alloc { width: 100%; border-collapse: collapse; margin: 3mm 0 6mm 0; font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Yu Gothic", "Arial", sans-serif; }
+  table.alloc thead th { font-size: 7.5pt; letter-spacing: 1px; text-transform: uppercase; color: #6b6b6b; text-align: left; font-weight: 600; padding: 0 8px 2.5mm 0; border-bottom: 1px solid #1a1a1a; vertical-align: bottom; }
+  table.alloc td { font-size: 9pt; padding: 2.4mm 8px 2.4mm 0; border-bottom: 0.5px solid #ececec; vertical-align: top; line-height: 1.45; color: #2a2a2a; }
+  table.alloc tr { page-break-inside: avoid; }
+  table.alloc td.name { font-weight: 600; color: #1a1a1a; }
+  table.alloc td.note { color: #4a4a4a; }
+  table.alloc td:last-child, table.alloc th:last-child { padding-right: 0; }
+  .yes { color: #2f6b4f; } .pend { color: #9a6a1f; } .na { color: #b0b0b0; }
+  .pill { display: inline-block; font-size: 7pt; letter-spacing: 0.5px; text-transform: uppercase; padding: 1px 7px; border-radius: 10px; border: 0.5px solid #c9d3dc; color: #1d3b5c; white-space: nowrap; }
+  .pill.new { color: #2f6b4f; border-color: #b6d0c1; }
+
+  /* ============ ORG DIAGRAM ============ */
+  .diagram { margin: 5mm 0 4mm 0; page-break-inside: avoid; border: 0.5px solid #ececec; padding: 4mm; }
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .diagram-cap { font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 8pt; color: #8a8a8a; margin: 3mm 0 8mm 0; }
+
+  .closing-note { margin-top: 9mm; padding-top: 5mm; border-top: 1px solid #d4d4d4; font-size: 9.5pt; color: #6b6b6b; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER PAGE ===================== -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">AIBOS &middot; Internal Report</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">Team Allocation &amp; Organization Structure</h1>
+    <p class="cover-subtitle">Member allocation following the candidate calls and team review, the proposed organization structure, and the decisions we need from you.</p>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">Prepared for</span><span class="value">Mr. Eiji Watanabe</span></div>
+      <div class="col"><span class="label">Prepared by</span><span class="value">The AIBOS Japan Team</span></div>
+      <div class="col"><span class="label">Date</span><span class="value">26 May 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DOCUMENT BODY ===================== -->
+<section class="doc">
+
+  <div class="doc-header">
+    <div class="kicker">Team Allocation &amp; Organization Structure</div>
+    <h1>Team Allocation &amp; Organization Structure</h1>
+    <p class="sub">A report for your confirmation.</p>
+    <p class="meta-line"><span>Prepared for Mr. Eiji Watanabe</span><span>Prepared by the AIBOS Japan Team</span><span>26 May 2026</span></p>
+  </div>
+
+  <p class="intro">This report sets out the allocation of AIBOS members following the candidate calls and team review, together with the underlying assumptions and the proposed organization structure, for your confirmation. It is organised in three parts &mdash; who is allocated where, the assumptions behind that allocation, and the structure we propose &mdash; followed by the decisions we need from you and the next steps already in motion.</p>
+
+  <!-- ============ 1. TEAM ALLOCATION ============ -->
+  <h2 class="section"><span class="num">1</span>Team Allocation</h2>
+
+  <div class="stats-grid">
+    <div class="stat"><span class="num">9</span><span class="label">Coming to / already in Japan (4 here &middot; 5 selected)</span></div>
+    <div class="stat"><span class="num">10&ndash;15</span><span class="label">Target headcount for Japan, per your direction</span></div>
+    <div class="stat"><span class="num">16</span><span class="label">Continuing Uganda team (working remotely)</span></div>
+    <div class="stat"><span class="num">5</span><span class="label">Resigned or stepping away</span></div>
+    <div class="stat"><span class="num">&asymp;30</span><span class="label">Total members reviewed</span></div>
+    <div class="stat"><span class="num">3</span><span class="label">Proposed teams (director &middot; students &middot; developers)</span></div>
+  </div>
+
+  <h3 class="sub"><span class="n">1.1</span>Team Coming to Japan</h3>
+  <p class="lead-in">The core team is already in Japan. Five further members have been selected to join, each willing and sponsored by an inviting member who takes direct responsibility for them.</p>
+  <table class="alloc">
+    <thead><tr><th>Member</th><th>Project</th><th>Status</th><th>Passport</th><th>Yellow&nbsp;fever</th><th>Motivation &amp; notes</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Andrew Luswata</td><td>EMS</td><td><span class="pill">In Japan</span></td><td class="na">&mdash;</td><td class="na">&mdash;</td><td class="note">Core team.</td></tr>
+      <tr><td class="name">Ambrose Alanda</td><td>Create Project</td><td><span class="pill">In Japan</span></td><td class="na">&mdash;</td><td class="na">&mdash;</td><td class="note">Core team.</td></tr>
+      <tr><td class="name">Kalema Martin</td><td>Oversees projects (EMS, Framea, Focust)</td><td><span class="pill">In Japan</span></td><td class="na">&mdash;</td><td class="na">&mdash;</td><td class="note">Core team.</td></tr>
+      <tr><td class="name">Kevin Mugarura</td><td>AI Super Agent</td><td><span class="pill">In Japan</span></td><td class="na">&mdash;</td><td class="na">&mdash;</td><td class="note">Core team.</td></tr>
+      <tr><td class="name">Timon W. Mesulam</td><td>Focust / AI Super Agent</td><td><span class="pill new">Selected</span></td><td class="yes">Yes</td><td class="pend">Pending</td><td class="note">Skilled, proactive full-time engineer; left his studies to focus on work and is ready to relocate.</td></tr>
+      <tr><td class="name">Namugga Martha</td><td>GA</td><td><span class="pill new">Selected</span></td><td class="yes">Yes</td><td class="yes">Yes</td><td class="note">Hardworking and skilled; keen to join the development team, motivated chiefly by career growth. A few questions on role and the post-visa path are being addressed.</td></tr>
+      <tr><td class="name">Joshua Muzuva</td><td>Create Project</td><td><span class="pill new">Selected</span></td><td class="yes">Yes</td><td class="yes">Yes</td><td class="note">Dependable, with a strong work ethic and leadership potential; open to relocating.</td></tr>
+      <tr><td class="name">Muwanguzi Jovic Biralo</td><td>Matsumoto-san&rsquo;s project</td><td><span class="pill new">Selected</span></td><td class="yes">Yes</td><td class="pend">Pending</td><td class="note">Solid frontend skills and continually improving; motivated to build together with the team. Ready within one to two weeks (collecting his transcript for the work-visa path).</td></tr>
+      <tr><td class="name">Kire Constantine</td><td>Focust</td><td><span class="pill new">Selected</span></td><td class="pend">Applying</td><td class="pend">Applying</td><td class="note">Talented early-career developer on a planned gap year (changing course to software engineering); sees Japan as a stronger environment to learn and grow with the team. Applying for documents (express).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub"><span class="n">1.2</span>Continuing Uganda Team &mdash; Remote</h3>
+  <p class="lead-in">These members continue with AIBOS remotely from Uganda. Individual statuses are still being confirmed as outreach continues; the list reflects our current understanding. Two points are worth drawing out: several are people we would gladly have invited to Japan but who are staying to complete their studies or meet family responsibilities, and our General Affairs members can support Uganda-side management while the structure stabilises.</p>
+
+  <p class="group-label">Wanted for Japan &mdash; staying to complete studies or family responsibilities</p>
+  <table class="alloc">
+    <thead><tr><th>Member</th><th>Project</th><th>Year</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Tusiime Mark</td><td>Urban Flooding</td><td>Year 2</td><td class="note">Talented, collaborative and self-driven; completing his degree (one year remaining). A call is scheduled to keep him close.</td></tr>
+      <tr><td class="name">Joshua Prince Aita</td><td>Create Project</td><td>Year 2</td><td class="note">Keen to join the Japan team, but continuing his studies due to family commitments.</td></tr>
+      <tr><td class="name">Wamani Joshua</td><td>Focust</td><td>Year 2</td><td class="note">Government-sponsored; must complete his studies to retain his scholarship (confirmed with his parents).</td></tr>
+      <tr><td class="name">Ogenrwoth Jim Frank</td><td>Focust</td><td>Year 3</td><td class="note">A family breadwinner with responsibilities in Uganda; continuing his studies.</td></tr>
+      <tr><td class="name">Otai Joseph</td><td>Create Project</td><td>Year 2</td><td class="note">Open to the opportunity; after consulting family, the decision was to remain and continue studying for now.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="group-label">Continuing remote team</p>
+  <table class="alloc">
+    <thead><tr><th>Member</th><th>Project</th><th>Year</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Ahwera Shifrah</td><td>GA</td><td>Graduate</td><td class="note">Reliable contributor; on General Affairs and able to support Uganda-side management and operations.</td></tr>
+      <tr><td class="name">Masaba Shamsa</td><td>GA</td><td>Graduate</td><td class="note">Runs GA operations and supports development; can help carry Uganda-side management.</td></tr>
+      <tr><td class="name">Shakiran Nannyombi</td><td>AI Super Agent</td><td>Year 3</td><td class="note">Dependable and eager to learn, gets things done. A community-based leader with strong networks &mdash; well placed to be AIBOS&rsquo;s talent-outreach point at Makerere.</td></tr>
+      <tr><td class="name">Muwanguzi Alvin Kiggundu</td><td>Focust</td><td>Year 3</td><td class="note">Adaptable and eager, with recent certifications and infrastructure work (Terraform); delivers well with AI support. The strongest of the reviewed pool &mdash; selected by all four reviewers &mdash; and a class leader who can help bring in bright candidates.</td></tr>
+      <tr><td class="name">Lauben Mpairwe</td><td>Create Project</td><td>Year 4</td><td class="note">Technically capable; working on team communication and consistency.</td></tr>
+      <tr><td class="name">Kisakye Martha Janepher</td><td>AI Video Platform</td><td>Graduate</td><td class="note">Steady contributor at a moderate level, working remotely.</td></tr>
+      <tr><td class="name">Konso Vanessa Rebecca</td><td>EMS</td><td>Graduate</td><td class="note">Long-tenured and dependable; a consistent executor on EMS.</td></tr>
+      <tr><td class="name">Aule Ian</td><td>EMS</td><td>Year 3</td><td class="note">A strong, accountable collaborator with timely communication. Relocating to Germany in June, so transitioning out of the team.</td></tr>
+      <tr><td class="name">Yapyeko Rebecca</td><td>Focust</td><td>Year 4</td><td class="note">Reliable, engaged QA on the government project with a good attitude; frontend skills still developing.</td></tr>
+      <tr><td class="name">Salimu Kabogere</td><td>AI Video Platform</td><td>Year 3</td><td class="note">Entry-level engineer (still in school); produces real output with AI support; technical breadth developing.</td></tr>
+      <tr><td class="name">Namutebi Sulaina</td><td>GA</td><td>Year 2</td><td class="note">Early in her development; skills still forming.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub"><span class="n">1.3</span>Resigned</h3>
+  <p class="lead-in">The following members have resigned or are stepping away. In every case the relationship has been kept warm, and most remain open to future collaboration.</p>
+  <table class="alloc">
+    <thead><tr><th>Member</th><th>Situation</th><th>Notes &amp; relationship plan</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Fred Sseginda</td><td>Signed with URA (government)</td><td class="note">His hesitation is about rebuilding trust after having resigned once &mdash; not pay. He values the goodwill on the Japan side, with Matsumoto-san advocating for him. Being re-approached; door kept firmly open.</td></tr>
+      <tr><td class="name">Turyasiima Crispus</td><td>Took a URA role</td><td class="note">Confirmed his resignation after reflection; declined warmly and offered to support ad hoc when available. Prefers low-pressure, one-to-one contact. To be revisited in about a month.</td></tr>
+      <tr><td class="name">Masembe Sendi Joseph</td><td>Resigned</td><td class="note">His concern is transparency and how feedback is handled, not pay. Open to staying on two conditions &mdash; remote work and removal of the non-compete clause &mdash; at current pay. His reason for not relocating is known to Yuichi-san. See decision point below.</td></tr>
+      <tr><td class="name">Nabasa Rodrick</td><td>Pursuing local ventures</td><td class="note">Declined relocation to build locally (farming and real estate), while still coding. Warm relationship; door kept open.</td></tr>
+      <tr><td class="name">Aheebwa Steven</td><td>Resigned</td><td class="note">Stepped away for family reasons. Relationship maintained.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ 2. ASSUMPTIONS & REQUIREMENTS ============ -->
+  <h2 class="section"><span class="num">2</span>Assumptions and Requirements</h2>
+  <p class="lead-in">These are kept deliberately separate: requirements are what you directed; assumptions are what the team has inferred and would like you to confirm.</p>
+
+  <h3 class="sub"><span class="n">2.1</span>Requirements &mdash; as directed</h3>
+  <ul>
+    <li>Invite the selected Uganda members to Japan as soon as possible.</li>
+    <li>Prioritise members of high trust for long-term collaboration; trust is weighted above current skill level.</li>
+    <li>Each member brought to Japan is the direct responsibility of an inviting member.</li>
+    <li>Establish three sales teams on the director / students / developers model.</li>
+    <li>Generate stable income from government contracts to cover the company&rsquo;s running costs.</li>
+  </ul>
+
+  <h3 class="sub"><span class="n">2.2</span>Assumptions &mdash; to be confirmed</h3>
+  <ul>
+    <li>An overall baseline of approximately 30 people.</li>
+    <li>10&ndash;15 members in Japan; 9&ndash;12 developers retained in Uganda; about 3&ndash;4 developers per team.</li>
+    <li>No Uganda office for roughly June&ndash;October; a university space is a possibility, but unconfirmed.</li>
+    <li>No C/D-rank developers based in Japan.</li>
+    <li>Initial entry on a tourist visa, with a work visa to follow (which may require an academic transcript).</li>
+    <li>Tier naming standardised as A / B / C / D.</li>
+  </ul>
+
+  <!-- ============ 3. PROPOSED ORGANIZATION STRUCTURE ============ -->
+  <h2 class="section"><span class="num">3</span>Proposed Organization Structure</h2>
+  <p class="lead-in">Three teams are proposed. Each team comprises:</p>
+  <ul>
+    <li>One Japanese director (Inaba-san, Matsumoto-san, or Nishinaga-san);</li>
+    <li>Two students based at the Kyoto office; and</li>
+    <li>Three to four developers (C/D-rank) based in Uganda, working remotely.</li>
+  </ul>
+
+  <div class="diagram">
+    <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+      <!-- title -->
+      <text x="450" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" letter-spacing="0.5">AIBOS &mdash; Organization &amp; Operating Structure</text>
+
+      <!-- connectors -->
+      <g stroke="#9aa1a8" stroke-width="1" fill="none">
+        <line x1="510" y1="88" x2="510" y2="108"/>
+        <line x1="120" y1="108" x2="680" y2="108"/>
+        <line x1="120" y1="108" x2="120" y2="140"/>
+        <line x1="340" y1="108" x2="340" y2="140"/>
+        <line x1="510" y1="108" x2="510" y2="140"/>
+        <line x1="680" y1="108" x2="680" y2="140"/>
+        <line x1="340" y1="182" x2="340" y2="200"/>
+        <line x1="510" y1="182" x2="510" y2="200"/>
+        <line x1="680" y1="182" x2="680" y2="200"/>
+      </g>
+      <g stroke="#b0703a" stroke-width="1" fill="none" stroke-dasharray="3,3">
+        <line x1="340" y1="236" x2="340" y2="296"/>
+        <line x1="510" y1="236" x2="510" y2="296"/>
+        <line x1="680" y1="236" x2="680" y2="296"/>
+      </g>
+
+      <!-- founder -->
+      <rect x="430" y="46" width="160" height="42" rx="5" fill="#1d3b5c"/>
+      <text x="510" y="65" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">Mr. Eiji Watanabe</text>
+      <text x="510" y="79" text-anchor="middle" font-size="8" fill="#cfd8e2" letter-spacing="1">FOUNDER</text>
+
+      <!-- A-tier -->
+      <rect x="40" y="140" width="160" height="56" rx="5" fill="#eef2f6" stroke="#1d3b5c" stroke-width="0.8"/>
+      <text x="120" y="160" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1d3b5c">A-Tier Talent</text>
+      <text x="120" y="174" text-anchor="middle" font-size="8" fill="#3a4a5c">Internal &amp; moonshot projects</text>
+      <text x="120" y="188" text-anchor="middle" font-size="7.5" font-style="italic" fill="#8a8a8a">Steps in on deadline-critical work</text>
+
+      <!-- teams -->
+      <g>
+        <rect x="265" y="140" width="150" height="42" rx="5" fill="#eef2f6" stroke="#1d3b5c" stroke-width="0.8"/>
+        <text x="340" y="157" text-anchor="middle" font-size="7.5" letter-spacing="1" fill="#8a8a8a">TEAM 1</text>
+        <text x="340" y="172" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1a1a1a">Director &middot; Inaba-san</text>
+
+        <rect x="435" y="140" width="150" height="42" rx="5" fill="#eef2f6" stroke="#1d3b5c" stroke-width="0.8"/>
+        <text x="510" y="157" text-anchor="middle" font-size="7.5" letter-spacing="1" fill="#8a8a8a">TEAM 2</text>
+        <text x="510" y="172" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1a1a1a">Director &middot; Matsumoto-san</text>
+
+        <rect x="605" y="140" width="150" height="42" rx="5" fill="#eef2f6" stroke="#1d3b5c" stroke-width="0.8"/>
+        <text x="680" y="157" text-anchor="middle" font-size="7.5" letter-spacing="1" fill="#8a8a8a">TEAM 3</text>
+        <text x="680" y="172" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1a1a1a">Director &middot; Nishinaga-san</text>
+      </g>
+
+      <!-- students -->
+      <g>
+        <rect x="265" y="200" width="150" height="36" rx="5" fill="#ffffff" stroke="#c9d3dc" stroke-width="0.8"/>
+        <text x="340" y="216" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1a1a">2 Students</text>
+        <text x="340" y="228" text-anchor="middle" font-size="7.5" fill="#6b6b6b">Kyoto Office</text>
+
+        <rect x="435" y="200" width="150" height="36" rx="5" fill="#ffffff" stroke="#c9d3dc" stroke-width="0.8"/>
+        <text x="510" y="216" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1a1a">2 Students</text>
+        <text x="510" y="228" text-anchor="middle" font-size="7.5" fill="#6b6b6b">Kyoto Office</text>
+
+        <rect x="605" y="200" width="150" height="36" rx="5" fill="#ffffff" stroke="#c9d3dc" stroke-width="0.8"/>
+        <text x="680" y="216" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1a1a">2 Students</text>
+        <text x="680" y="228" text-anchor="middle" font-size="7.5" fill="#6b6b6b">Kyoto Office</text>
+      </g>
+
+      <!-- zone divider -->
+      <line x1="30" y1="262" x2="870" y2="262" stroke="#d4d4d4" stroke-width="0.5" stroke-dasharray="2,3"/>
+      <text x="34" y="255" font-size="8" letter-spacing="2" fill="#1d3b5c">JAPAN</text>
+      <text x="34" y="278" font-size="8" letter-spacing="2" fill="#b0703a">UGANDA &middot; REMOTE</text>
+
+      <!-- dev pods -->
+      <g>
+        <rect x="265" y="296" width="150" height="48" rx="5" fill="#faf7f2" stroke="#b0703a" stroke-width="0.8"/>
+        <text x="340" y="314" text-anchor="middle" font-size="9" font-weight="600" fill="#6b4f3a">Development Pod</text>
+        <text x="340" y="327" text-anchor="middle" font-size="8" fill="#6b4f3a">3&ndash;4 Developers</text>
+        <text x="340" y="338" text-anchor="middle" font-size="7.5" fill="#9a8676">(Remote)</text>
+
+        <rect x="435" y="296" width="150" height="48" rx="5" fill="#faf7f2" stroke="#b0703a" stroke-width="0.8"/>
+        <text x="510" y="314" text-anchor="middle" font-size="9" font-weight="600" fill="#6b4f3a">Development Pod</text>
+        <text x="510" y="327" text-anchor="middle" font-size="8" fill="#6b4f3a">3&ndash;4 Developers</text>
+        <text x="510" y="338" text-anchor="middle" font-size="7.5" fill="#9a8676">(Remote)</text>
+
+        <rect x="605" y="296" width="150" height="48" rx="5" fill="#faf7f2" stroke="#b0703a" stroke-width="0.8"/>
+        <text x="680" y="314" text-anchor="middle" font-size="9" font-weight="600" fill="#6b4f3a">Development Pod</text>
+        <text x="680" y="327" text-anchor="middle" font-size="8" fill="#6b4f3a">3&ndash;4 Developers</text>
+        <text x="680" y="338" text-anchor="middle" font-size="7.5" fill="#9a8676">(Remote)</text>
+      </g>
+
+      <!-- outcome callouts -->
+      <g>
+        <rect x="788" y="140" width="98" height="26" rx="13" fill="#ffffff" stroke="#d4d4d4" stroke-width="0.8"/>
+        <text x="837" y="156" text-anchor="middle" font-size="7.5" fill="#4a4a4a">Government contracts</text>
+        <rect x="788" y="172" width="98" height="26" rx="13" fill="#ffffff" stroke="#d4d4d4" stroke-width="0.8"/>
+        <text x="837" y="188" text-anchor="middle" font-size="7.5" fill="#4a4a4a">Stable cash flow</text>
+        <rect x="788" y="204" width="98" height="26" rx="13" fill="#ffffff" stroke="#d4d4d4" stroke-width="0.8"/>
+        <text x="837" y="220" text-anchor="middle" font-size="7.5" fill="#4a4a4a">Covers running costs</text>
+      </g>
+
+      <!-- legend -->
+      <rect x="40" y="368" width="12" height="12" rx="2" fill="#eef2f6" stroke="#1d3b5c" stroke-width="0.8"/>
+      <text x="58" y="378" font-size="8" fill="#6b6b6b">Japan-based</text>
+      <rect x="170" y="368" width="12" height="12" rx="2" fill="#faf7f2" stroke="#b0703a" stroke-width="0.8"/>
+      <text x="188" y="378" font-size="8" fill="#6b6b6b">Uganda-based (Remote)</text>
+
+      <!-- footer line -->
+      <text x="600" y="378" text-anchor="middle" font-size="9" letter-spacing="0.5" fill="#1a1a1a">Sales in Japan &nbsp;&rarr;&nbsp; Execution in Uganda</text>
+    </svg>
+  </div>
+  <p class="diagram-cap">Proposed structure: one founder, three director-led teams in Japan (each with two Kyoto-based students), and Uganda-based development pods executing remotely.</p>
+
+  <p class="lead-in"><strong>How the structure operates</strong></p>
+  <ul>
+    <li>The directors and students lead sales, focusing on government contracts; the Uganda developers handle execution.</li>
+    <li>This is intended to produce stable cash flow &mdash; an indicative profit target of roughly $30,000&ndash;$40,000 &mdash; to cover the company&rsquo;s running costs.</li>
+    <li>The talented members in Japan are thereby freed to focus on internal and moonshot projects, stepping in only when a team is at risk of missing a deadline.</li>
+    <li>Initially, the Japan-based members help train the Uganda developers as the structure stabilises.</li>
+    <li>With no Uganda office assumed for June&ndash;October, the retained members work remotely during this period.</li>
+  </ul>
+
+  <!-- ============ CLOSER 1: DECISIONS ============ -->
+  <h2 class="section">Decisions We Need From You</h2>
+  <ul>
+    <li><strong>Structure.</strong> Do you confirm the three-team structure and composition &mdash; one Japanese director, two Kyoto students, and three to four Uganda developers per team?</li>
+    <li><strong>Assumptions.</strong> Do you confirm the headcount and office assumptions in Part 2 (&asymp;30 total; 10&ndash;15 in Japan; 9&ndash;12 in Uganda; no Uganda office June&ndash;October)?</li>
+    <li><strong>Japan headcount.</strong> Nine are confirmed for Japan (four already here plus five selected) &mdash; the low end of your 10&ndash;15 target. How would you like to proceed: re-approach the resignees (notably Fred), relax the target, or hold to best-of-the-best over filling every seat?</li>
+    <li><strong>Fred&rsquo;s transfer.</strong> Should the promised transfer be sent regardless of his final decision? (We have proceeded with sending it.)</li>
+    <li><strong>Remote &amp; non-compete (Masembe).</strong> Under a project-based (1099) contractor model, may a departed member work with AIBOS remotely while employed elsewhere in the same field? He would continue at current pay if the non-compete clause is removed.</li>
+    <li><strong>Sequencing.</strong> Should the government-contract income be stabilised before pursuing moonshot projects?</li>
+  </ul>
+
+  <!-- ============ CLOSER 2: NEXT STEPS ============ -->
+  <h2 class="section">Next Steps</h2>
+  <table class="alloc">
+    <thead><tr><th>#</th><th>Action</th><th>Owner</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Complete passport / yellow-fever follow-ups for Timon, Jovic and Kire (express where needed).</td><td>Outreach team</td><td class="pend">In progress</td></tr>
+      <tr><td>2</td><td>Address Martha&rsquo;s questions on role, post-visa path and growth.</td><td>Nate-san</td><td class="pend">In progress</td></tr>
+      <tr><td>3</td><td>Re-approach Fred and send the promised transfer.</td><td>Matsumoto-san</td><td class="pend">In progress</td></tr>
+      <tr><td>4</td><td>Confirm Masembe&rsquo;s terms, pending the non-compete decision.</td><td>Team</td><td>Pending</td></tr>
+      <tr><td>5</td><td>Maintain relationships with those who resigned; revisit Crispus in about a month.</td><td>Team</td><td>Ongoing</td></tr>
+      <tr><td>6</td><td>Complete status confirmation for the continuing Uganda team (availability, exam schedules).</td><td>Team</td><td class="pend">In progress</td></tr>
+      <tr><td>7</td><td>Finalise and append the organization-structure diagram.</td><td>Kevin</td><td class="pend">In progress</td></tr>
+      <tr><td>8</td><td>Keep the roster updated as confirmations arrive.</td><td>Team</td><td>Ongoing</td></tr>
+    </tbody>
+  </table>
+
+  <p class="closing-note">This report reflects the confirmed allocations as of 26 May 2026 and supersedes earlier notes where they differ.</p>
+
+</section>
+
+</body>
+</html>
