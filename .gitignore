@@ -1,0 +1,30 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Office lock files (Word, Excel, PowerPoint open-file markers)
+~$*
+~WRL*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local environment
+.env
+.env.local
+
+# Build / temporary
+/tmp/
+*.tmp
+*.log

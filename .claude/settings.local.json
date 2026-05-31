@@ -113,7 +113,26 @@
       "Bash(python3 -)",
       "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_EN.html Ambrose_Alanda_CV_EN.pdf)",
       "Bash(wkhtmltopdf --enable-local-file-access --images --background --quiet Ambrose_Alanda_CV_JP.html Ambrose_Alanda_CV_JP.pdf)",
-      "Bash(python3 -c 'import re;d=open\\('\\\\''Ambrose_Alanda_CV___TRACKED_VAR__.pdf'\\\\'','\\\\''rb'\\\\''\\).read\\(\\);print\\('\\\\''__TRACKED_VAR__ pages:'\\\\'',len\\(re.findall\\(rb'\\\\''/Type\\\\s*/Page[^s]'\\\\'',d\\)\\)\\)')"
+      "Bash(python3 -c 'import re;d=open\\('\\\\''Ambrose_Alanda_CV___TRACKED_VAR__.pdf'\\\\'','\\\\''rb'\\\\''\\).read\\(\\);print\\('\\\\''__TRACKED_VAR__ pages:'\\\\'',len\\(re.findall\\(rb'\\\\''/Type\\\\s*/Page[^s]'\\\\'',d\\)\\)\\)')",
+      "WebFetch(domain:chatgpt.com)",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://chatgpt.com/share/6a1c8611-0dc0-8321-9f46-4a9e88e0d784\" -o /tmp/chatgpt_share.html)",
+      "Bash(grep -o 'author.{0,20}role' /tmp/chatgpt_share.html)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" -H \"Accept: application/json\" \"https://chatgpt.com/backend-api/share/6a1c8611-0dc0-8321-9f46-4a9e88e0d784\" -o /tmp/share_api.json -w \"HTTP %{http_code}  size=%{size_download}\\\\n\")",
+      "Bash(curl -sL -A \"Mozilla/5.0\" -H \"Accept: application/json\" \"https://chatgpt.com/public-api/conversations/share/6a1c8611-0dc0-8321-9f46-4a9e88e0d784\" -o /tmp/share_pub.json -w \"HTTP %{http_code}  size=%{size_download}\\\\n\")",
+      "Bash(python -c ' *)",
+      "Bash(grep -o \"window.__REACT_QUERY_CACHE__[^<]\\\\{0,200\\\\}\" /tmp/chatgpt_share.html)",
+      "Bash(awk 'BEGIN{RS=\"</script>\"} {print length\\($0\\)\"\\\\t\"NR}' /tmp/chatgpt_share.html)",
+      "Bash(awk 'BEGIN{RS=\"</script>\"} NR==9 {print > \"/tmp/script9.txt\"} NR==4 {print > \"/tmp/script4.txt\"}' /tmp/chatgpt_share.html)",
+      "Bash(node *)",
+      "Bash(awk '{print $3}')",
+      "Bash(npm --version)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(unzip -qo \"Reflection Report — Executive Session 2026-05-29.docx\" -d /tmp/verify_docx)",
+      "Bash(unzip -qo \"Reflection Report — Executive Session 2026-05-29 \\(v4\\).docx\" -d verify4)",
+      "Bash(unzip -qo \"Reflection Report — Executive Session 2026-05-29 \\(v4-jp\\).docx\" -d verify_jp)",
+      "Bash(mv \"Reflection Report\"*.docx                      reflection-report-2026-05-29/)",
+      "Bash(mv \"Exective Session 2026-05-29\"*.docx            reflection-report-2026-05-29/)"
     ]
   }
 }
