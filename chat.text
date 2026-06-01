@@ -1,0 +1,354 @@
+Tokiq — Social Precision Timing Game
+Product Vision
+
+Design a modern mobile-first gaming platform called Tokiq.
+
+Tokiq is a real-time multiplayer social game where players compete by stopping a timer as close as possible to a visible target time.
+
+The game combines:
+
+Human timing skill
+Anticipation
+Competition
+Social interaction
+Jackpot rewards
+
+The experience should feel like a blend of:
+
+A live game show
+A multiplayer competition
+A social casino game
+An esports-style event
+
+without looking like a traditional gambling application.
+
+The design should be elegant, premium, modern, and highly engaging.
+
+Core Game Mechanic
+
+At the start of each round:
+
+A target time is announced.
+
+Examples:
+
+7.25 seconds
+9.80 seconds
+11.45 seconds
+
+The target is visible to everyone.
+
+Players join the round by contributing a small entry fee.
+
+A countdown begins.
+
+When the round starts:
+
+A timer begins counting upward.
+
+Players must press a large STOP button when they believe the timer has reached the target time.
+
+The player closest to the target wins.
+
+Example:
+
+Target = 10.00s
+
+Player A = 9.98s
+Player B = 10.03s
+Player C = 10.11s
+
+Player A wins.
+
+Emotional Experience
+
+The interface should communicate:
+
+Excitement
+Suspense
+Precision
+Competition
+Reward
+Social participation
+
+The user should feel:
+
+"I was so close."
+
+"I can do better next round."
+
+"I want to beat everyone."
+
+"I saw someone win, maybe next time it's me."
+
+Main Screen Layout
+Top Section
+
+Tokiq logo
+
+Modern Japanese-inspired branding.
+
+Display:
+
+TOKIQ
+
+Tagline:
+
+"Beat Time. Win Together."
+
+Jackpot Area
+
+Large animated jackpot display.
+
+Example:
+
+Current Prize Pool
+
+¥1,245,000
+
+Animated growth effect.
+
+Display:
+
+Total Players
+Current Round Number
+Prize Growth
+Target Time Display
+
+Center of screen.
+
+Large typography.
+
+TARGET
+
+10.00s
+
+Very prominent.
+
+This is the focal point before the round starts.
+
+Live Timer
+
+During gameplay:
+
+Large digital timer.
+
+Example:
+
+00.00
+
+00.01
+
+00.02
+
+...
+
+10.00
+
+Minimalistic and highly visible.
+
+STOP Button
+
+Massive circular button.
+
+Center screen.
+
+Visual style:
+
+Premium glass effect
+Pulsing animation
+Bright accent color
+
+Text:
+
+STOP
+
+This should be the most interactive element.
+
+Player Results Panel
+
+Show live player results.
+
+Example:
+
+Sarah → 10.01s
+Kenji → 9.99s
+Alex → 10.12s
+
+Updating in real time.
+
+Winners Feed
+
+Live activity feed.
+
+Examples:
+
+"David won ¥12,500"
+
+"Yuki achieved perfect timing"
+
+"Michael joined the jackpot"
+
+"Amina reached Top 10"
+
+Creates social proof.
+
+Social Features
+
+Include:
+
+Live Chat
+
+Messages flowing during rounds.
+
+Examples:
+
+"Good luck everyone"
+
+"Target looks tricky"
+
+"So close"
+
+"Nice win"
+
+Friends System
+
+Players can:
+
+Follow friends
+View rankings
+Challenge friends
+Leaderboards
+
+Daily
+
+Weekly
+
+Monthly
+
+All-Time
+
+Categories:
+
+Most Wins
+Best Accuracy
+Highest Earnings
+Longest Streak
+Monetization Model
+
+Display subtly.
+
+Entry Fee:
+
+¥100
+
+Prize Pool:
+
+¥9,000
+
+House Fee:
+
+¥1,000
+
+Do not make this dominant.
+
+Focus on entertainment first.
+
+Advanced Game Modes
+
+Display as future roadmap cards.
+
+Classic Mode
+
+Closest time wins.
+
+Last Survivor
+
+Miss target by too much and you're eliminated.
+
+Team Mode
+
+Groups compete together.
+
+Precision League
+
+Seasonal ranked competition.
+
+Lightning Mode
+
+Fast rounds every 10 seconds.
+
+Design Style
+
+Mix inspiration from:
+
+Japanese minimalism
+Modern fintech apps
+Competitive gaming interfaces
+Premium mobile games
+
+Use:
+
+Dark mode
+Neon highlights
+Glassmorphism
+Clean typography
+Smooth animations
+
+Avoid:
+
+Slot machine visuals
+Traditional casino themes
+Excessive clutter
+Brand Personality
+
+Tokiq should feel:
+
+Smart
+Competitive
+Modern
+Social
+Skill-based
+Trustworthy
+
+Not:
+
+Aggressive gambling
+Loud casino
+Cheap arcade game
+Concept Illustration
+
+Include a simple ecosystem diagram:
+
+Players Join
+      ↓
+ Prize Pool Grows
+      ↓
+ Target Time Announced
+      ↓
+ Precision Competition
+      ↓
+ Winner Selected
+      ↓
+ Rewards Distributed
+      ↓
+ Social Recognition
+      ↓
+ Players Return
+Final Deliverable
+
+Create:
+
+Mobile home screen
+Active game screen
+Winner announcement screen
+Leaderboard screen
+Social chat screen
+Premium dark-mode UI
+Realistic startup-quality product mockup
+Screens suitable for investor presentation and MVP development
+
+Product Name: TOKIQ
+Domain: Tokiq.com
+Category: Social Precision Gaming Platform
+Theme: Time, Precision, Competition, Community, Reward.
