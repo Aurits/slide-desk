@@ -137,7 +137,11 @@
       "Bash(npx playwright *)",
       "Bash(rm -rf shots shots.mjs dist)",
       "Bash(npm uninstall *)",
-      "Bash(git -C \"C:\\\\Users\\\\HP\\\\Documents\\\\PROJECTS\\\\slide-desk\" status --porcelain)"
+      "Bash(git -C \"C:\\\\Users\\\\HP\\\\Documents\\\\PROJECTS\\\\slide-desk\" status --porcelain)",
+      "Bash(curl -s -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0 Safari/537.36\" \"https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700\")",
+      "Bash(curl -s -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 Chrome/120.0 Safari/537.36\" \"https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700\")",
+      "Bash(curl -s -H \"User-Agent: Mozilla/5.0 Chrome/120.0\" \"https://fonts.gstatic.com/s/chakrapetch/v13/cIflMapbsEk7TDLdtEz1BwkeJI91R5_F.woff2\" -o cp700.woff2)",
+      "Bash(base64 -w0 cp700.woff2)"
     ]
   }
 }

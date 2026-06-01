@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tokiq logo">
+  <!-- app tile -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#0a0b14" stroke="#1b2433" stroke-width="1.5"/>
+
+  <!-- precision reticle ring -->
+  <circle cx="32" cy="32" r="17" fill="none" stroke="#22d3ee" stroke-width="2.5"/>
+
+  <!-- cardinal crosshair ticks -->
+  <g stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+    <line x1="32" y1="6.5" x2="32" y2="11"/>
+    <line x1="32" y1="53" x2="32" y2="57.5"/>
+    <line x1="6.5" y1="32" x2="11" y2="32"/>
+    <line x1="53" y1="32" x2="57.5" y2="32"/>
+  </g>
+
+  <!-- stopwatch hand stopped on the target -->
+  <line x1="32" y1="32" x2="42.5" y2="21.5" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- center pivot -->
+  <circle cx="32" cy="32" r="3.6" fill="#22d3ee"/>
+
+  <!-- the target point -->
+  <circle cx="42.5" cy="21.5" r="3.2" fill="#0a0b14" stroke="#22d3ee" stroke-width="2"/>
+</svg>

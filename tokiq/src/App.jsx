@@ -13,14 +13,9 @@ const BOT_NAMES = [
   'Kenji', 'Sarah', 'Yuki', 'Alex', 'Amina', 'David', 'Mei',
   'Liam', 'Sofia', 'Hiro', 'Noah', 'Aiko', 'Marco', 'Zara', 'Ravi',
 ]
-// disciplined palette — cool tones + a single gold, no rainbow
-const AVATAR_COLORS = [
-  'from-cyan-300 to-blue-500',
-  'from-teal-300 to-cyan-500',
-  'from-sky-400 to-indigo-500',
-  'from-amber-300 to-yellow-500',
-  'from-violet-400 to-fuchsia-500',
-]
+// disciplined cool palette — flat solids, no gradients
+const AVATAR_COLORS = ['bg-cyan-400', 'bg-teal-400', 'bg-sky-400', 'bg-indigo-400', 'bg-violet-400']
+const NAME_COLORS = ['text-cyan-300', 'text-teal-300', 'text-sky-300', 'text-indigo-300', 'text-violet-300']
 const CHAT_LINES = [
   'good luck everyone 🔥', 'target looks tricky', 'so close last round 😭',
   'nice win!', 'i feel this one', 'gonna nail it this time',
@@ -34,6 +29,7 @@ const yen = (n) => '¥' + Math.round(n).toLocaleString('en-US')
 const rand = (min, max) => Math.random() * (max - min) + min
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 const hashColor = (name) => AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length]
+const hashName = (name) => NAME_COLORS[name.charCodeAt(0) % NAME_COLORS.length]
 
 // Bell-ish noise so opponents cluster near the target (skill, not chaos)
 const noise = (spread) => ((Math.random() + Math.random() + Math.random()) / 3 - 0.5) * 2 * spread
@@ -346,7 +342,7 @@ export default function App() {
   const nextRound = () => {
     setShowWinner(false)
     setRound((r) => r + 1)
-    setTarget(Number(rand(6, 12).toFixed(2)))
+    setTarget(Number(rand(2.5, 30).toFixed(2))) // wide, varied targets up to 30s
     setTablePlayers(Math.floor(rand(8, 15)))
     setResults([])
     setWinner(null)
@@ -378,7 +374,7 @@ export default function App() {
       <div className="relative z-10 flex h-full w-full items-center justify-center lg:gap-10 lg:px-12 xl:gap-20">
         <BrandPanel jackpot={jackpot} />
 
-        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-gradient-to-b from-[#0a0b14] via-[#0b0d18] to-[#060710] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
+        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-[#0a0b14] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
           {/* atmosphere */}
           <div className="bg-grid pointer-events-none absolute inset-0" />
           <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
@@ -431,16 +427,14 @@ function BrandPanel({ jackpot }) {
   return (
     <div className="hidden max-w-md flex-col gap-7 lg:flex xl:max-w-lg xl:gap-9">
       <div>
-        <div className="font-display text-[clamp(3rem,5vw,4.5rem)] font-bold leading-none tracking-[0.16em] text-white">
-          TOK<span className="text-cyan-400">I</span>Q
-        </div>
-        <div className="mt-3 text-[clamp(1rem,1.4vw,1.4rem)] font-medium tracking-wide text-white/50">
+        <img src="/logo.svg" alt="TOKIQ" className="h-16 w-auto xl:h-[72px]" />
+        <div className="mt-4 text-[clamp(1rem,1.4vw,1.4rem)] font-medium tracking-wide text-white/50">
           Beat Time. Win Together.
         </div>
       </div>
       <p className="max-w-sm text-[clamp(0.95rem,1.1vw,1.15rem)] leading-relaxed text-white/55">
         A real-time precision game of nerve and timing. Stop the clock as close to the
-        target as you dare — the closest player takes the pool.
+        target as you dare. The closest player takes the pool.
       </p>
       <div className="max-w-sm rounded-2xl bg-white/[0.04] p-5 ring-1 ring-white/10 backdrop-blur">
         <div className="text-xs uppercase tracking-widest text-white/40">Mega Jackpot</div>
@@ -465,10 +459,8 @@ function Header({ balance, muted, onMute, onBoard }) {
   return (
     <div className="flex shrink-0 items-center justify-between gap-2">
       <div className="leading-none">
-        <div className="font-display text-[clamp(20px,6vw,26px)] font-bold tracking-[0.2em] text-white">
-          TOK<span className="text-cyan-400">I</span>Q
-        </div>
-        <div className="mt-0.5 text-[10px] font-medium tracking-wide text-white/40">Beat Time. Win Together.</div>
+        <img src="/logo.svg" alt="TOKIQ" className="h-[26px] w-auto" />
+        <div className="mt-1.5 text-[10px] font-medium tracking-wide text-white/40">Beat Time. Win Together.</div>
       </div>
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 ring-1 ring-white/10">
@@ -536,7 +528,7 @@ function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff
         )}
         {phase === 'result' && (
           <div className="text-center animate-float-up">
-            <div className="tnum text-[clamp(2.5rem,14vw,4rem)] font-black leading-none text-white">{yourTime != null ? yourTime.toFixed(2) : '—'}</div>
+            <div className="tnum text-[clamp(2.5rem,14vw,4rem)] font-black leading-none text-white">{yourTime != null ? yourTime.toFixed(2) : '·'}</div>
             <div className={`mt-1 text-sm font-semibold ${yourDiff != null && yourDiff < 0.1 ? 'text-emerald-300' : 'text-amber-300'}`}>
               {yourTime == null ? (joined === false ? 'you sat this one out' : 'missed the round') : `off by ${yourDiff.toFixed(2)}s`}
             </div>
@@ -557,12 +549,12 @@ function JoinControls({ balance, onJoin, onSkip, onAddFunds }) {
     <div className="flex w-full max-w-[300px] shrink-0 flex-col items-center gap-2.5">
       {canPlay ? (
         <button onClick={onJoin}
-          className="w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-600 py-4 font-display text-lg font-bold tracking-wide text-white shadow-[0_0_30px_-6px_rgba(34,211,238,0.6)] transition active:scale-[0.98]">
+          className="w-full rounded-2xl bg-cyan-400 py-4 font-display text-lg font-bold tracking-wide text-[#04181c] shadow-[0_0_30px_-6px_rgba(34,211,238,0.6)] transition active:scale-[0.98]">
           Join Round · {yen(ENTRY_FEE)}
         </button>
       ) : (
         <button onClick={onAddFunds}
-          className="w-full rounded-2xl bg-gradient-to-r from-amber-300 to-yellow-500 py-4 font-display text-base font-bold tracking-wide text-black transition active:scale-[0.98]">
+          className="w-full rounded-2xl bg-amber-400 py-4 font-display text-base font-bold tracking-wide text-black transition active:scale-[0.98]">
           + Add {yen(TOPUP)} (demo top-up)
         </button>
       )}
@@ -595,7 +587,7 @@ function StopButton({ phase, joined, onStop }) {
         disabled={!live}
         className={[
           'relative grid h-full w-full place-items-center rounded-full font-display text-[clamp(0.85rem,4vw,1.5rem)] font-bold tracking-widest transition-transform select-none',
-          live ? 'bg-gradient-to-br from-cyan-400 to-blue-600 text-white animate-glow active:scale-95' : 'bg-white/5 text-white/40 ring-1 ring-white/10',
+          live ? 'bg-cyan-400 text-[#04181c] animate-glow active:scale-95' : 'bg-white/5 text-white/40 ring-1 ring-white/10',
         ].join(' ')}
       >
         <span className="absolute inset-2 rounded-full ring-1 ring-white/20" />
@@ -645,7 +637,7 @@ function Chat({ chat, boxRef }) {
       <div ref={boxRef} className="no-scrollbar h-[clamp(46px,8vh,72px)] space-y-1 overflow-y-auto p-2">
         {chat.slice(-8).map((m) => (
           <div key={m.id} className="text-[11px] leading-tight">
-            <span className={`bg-gradient-to-r font-semibold ${hashColor(m.name)} bg-clip-text text-transparent`}>{m.name}</span>
+            <span className={`font-semibold ${hashName(m.name)}`}>{m.name}</span>
             <span className="ml-1.5 text-white/55">{m.text}</span>
           </div>
         ))}
@@ -690,7 +682,7 @@ function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onA
   const youInPodium = youIdx > -1 && youIdx < 3
   return (
     <div className="absolute inset-0 z-30 flex items-end justify-center bg-black/60 backdrop-blur-sm">
-      <div className="animate-slide-up relative max-h-[94%] w-full overflow-y-auto rounded-t-[36px] border-t border-white/10 bg-gradient-to-b from-[#11131f] to-[#0a0b14] px-5 pb-7 pt-6 text-center no-scrollbar">
+      <div className="animate-slide-up relative max-h-[94%] w-full overflow-y-auto rounded-t-[36px] border-t border-white/10 bg-[#11131f] px-5 pb-7 pt-6 text-center no-scrollbar">
         {youWon && (
           <>
             <span className="animate-ring-pop absolute left-1/2 top-7 h-24 w-24 -translate-x-1/2 rounded-full ring-2 ring-amber-300/60" />
@@ -724,13 +716,13 @@ function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onA
         </div>
 
         {!youWon && yourTime != null && (
-          <p className="mt-3 text-sm text-white/50">So close — off by {Math.abs(yourTime - target).toFixed(2)}s. One more round?</p>
+          <p className="mt-3 text-sm text-white/50">So close, off by {Math.abs(yourTime - target).toFixed(2)}s. One more round?</p>
         )}
         {yourTime == null && <p className="mt-3 text-sm text-white/40">You watched this round.</p>}
-        {!canPlay && <p className="mt-2 text-sm text-amber-300/80">Balance low — top up to keep playing.</p>}
+        {!canPlay && <p className="mt-2 text-sm text-amber-300/80">Balance low. Top up to keep playing.</p>}
 
         <button onClick={canPlay ? onNext : onAddFunds}
-          className="mt-4 w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-600 py-4 font-display text-base font-bold tracking-wide text-white transition active:scale-[0.98]">
+          className="mt-4 w-full rounded-2xl bg-cyan-400 py-4 font-display text-base font-bold tracking-wide text-[#04181c] transition active:scale-[0.98]">
           {canPlay ? `Next Round · ${yen(ENTRY_FEE)} to join` : `+ Add ${yen(TOPUP)} (demo)`}
         </button>
       </div>
@@ -780,17 +772,17 @@ function Leaderboard({ tab, setTab, you, onClose }) {
         {rows.map((r, i) => (
           <div key={r.name} className="flex items-center gap-3 rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/10">
             <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-bold ${i === 0 ? 'bg-amber-400 text-black' : i < 3 ? 'bg-white/15 text-white' : 'bg-white/5 text-white/50'}`}>{i + 1}</span>
-            <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br ${hashColor(r.name)} text-sm font-bold text-white`}>{r.name[0]}</span>
+            <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full ${hashColor(r.name)} text-sm font-bold text-[#04181c]`}>{r.name[0]}</span>
             <span className="flex-1 truncate font-semibold text-white/90">{r.name}</span>
             <span className="tnum shrink-0 text-sm font-bold text-cyan-300">{val(r)}</span>
           </div>
         ))}
         <div className="mt-3 flex items-center gap-3 rounded-xl bg-cyan-500/10 p-3 ring-1 ring-cyan-400/40">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white/70">—</span>
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 text-sm font-bold text-white">Y</span>
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white/70">·</span>
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-cyan-400 text-sm font-bold text-[#04181c]">Y</span>
           <span className="flex-1 font-semibold text-white">You</span>
           <span className="tnum shrink-0 text-sm font-bold text-cyan-300">
-            {cat === 'Most Wins' ? `${you.wins} wins` : cat === 'Best Accuracy' ? (you.best != null ? `±${you.best.toFixed(3)}s` : '—') : yen(you.wins * 8100)}
+            {cat === 'Most Wins' ? `${you.wins} wins` : cat === 'Best Accuracy' ? (you.best != null ? `±${you.best.toFixed(3)}s` : '·') : yen(you.wins * 8100)}
           </span>
         </div>
       </div>
