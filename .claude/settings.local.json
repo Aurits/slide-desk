@@ -133,7 +133,10 @@
       "Bash(unzip -qo \"Reflection Report — Executive Session 2026-05-29 \\(v4-jp\\).docx\" -d verify_jp)",
       "Bash(mv \"Reflection Report\"*.docx                      reflection-report-2026-05-29/)",
       "Bash(mv \"Exective Session 2026-05-29\"*.docx            reflection-report-2026-05-29/)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npx playwright *)",
+      "Bash(rm -rf shots shots.mjs dist)",
+      "Bash(npm uninstall *)"
     ]
   }
 }
