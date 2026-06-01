@@ -132,8 +132,7 @@ export default function App() {
 
   const [jackpot, setJackpot] = useState(1245000)
   const [tablePlayers, setTablePlayers] = useState(10)
-  const [feed, setFeed] = useState([])
-  const [chat, setChat] = useState([])
+  const [activity, setActivity] = useState([]) // unified live feed: wins, events + chat
   const [yourStats, setYourStats] = useState({ wins: 11, best: null, streak: 0 })
 
   // wallet + round participation + fx
@@ -218,19 +217,19 @@ export default function App() {
       else if (roll < 0.7) text = `${name} achieved perfect timing ✨`
       else if (roll < 0.85) text = `${name} reached Top 10`
       else text = `${name} joined the jackpot`
-      setFeed((f) => [{ id: Math.random(), text, win: roll < 0.5 }, ...f].slice(0, 6))
+      setActivity((a) => [...a, { id: Math.random(), type: roll < 0.5 ? 'win' : 'event', text }].slice(-16))
     }, 2600)
     return () => clearInterval(t)
   }, [])
   useEffect(() => {
     const t = setInterval(() => {
-      setChat((c) => [...c, { id: Math.random(), name: pick(BOT_NAMES), text: pick(CHAT_LINES) }].slice(-30))
+      setActivity((a) => [...a, { id: Math.random(), type: 'chat', name: pick(BOT_NAMES), text: pick(CHAT_LINES) }].slice(-16))
     }, 2200)
     return () => clearInterval(t)
   }, [])
   useEffect(() => {
     if (chatBoxRef.current) chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
-  }, [chat])
+  }, [activity])
 
   /* ---- lobby countdown — auto-skip (never auto-charge) if undecided ---- */
   useEffect(() => {
@@ -331,7 +330,7 @@ export default function App() {
           successRef.current.currentTime = 0
           successRef.current.play().catch(() => {})
         }
-        setFeed((f) => [{ id: Math.random(), text: `You ${pick(WIN_VERBS)} ${yen(prizePool)} 🏆`, win: true }, ...f].slice(0, 6))
+        setActivity((a) => [...a, { id: Math.random(), type: 'win', text: `You ${pick(WIN_VERBS)} ${yen(prizePool)} 🏆` }].slice(-16))
         setTimeout(() => setSplash(false), 1400)
         setTimeout(() => setGain(null), 1900)
       }
@@ -374,7 +373,7 @@ export default function App() {
       <div className="relative z-10 flex h-full w-full items-center justify-center lg:gap-10 lg:px-12 xl:gap-20">
         <BrandPanel jackpot={jackpot} />
 
-        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-[#0a0b14] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
+        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-[#0a0b14] [container-type:size] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
           {/* atmosphere */}
           <div className="bg-grid pointer-events-none absolute inset-0" />
           <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
@@ -398,8 +397,7 @@ export default function App() {
             </div>
 
             <ResultsStrip phase={phase} results={results} />
-            <Feed feed={feed} />
-            <Chat chat={chat} boxRef={chatBoxRef} />
+            <Activity items={activity} boxRef={chatBoxRef} />
           </div>
 
           {/* floating +¥gain rising toward the wallet */}
@@ -504,7 +502,7 @@ function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff
     <div className="flex h-full flex-col items-center justify-between">
       <div className="shrink-0 text-center">
         <div className="text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">Target</div>
-        <div className="tnum text-[clamp(2rem,8.5vw,3rem)] font-black leading-none text-white">
+        <div className="tnum text-[clamp(1.6rem,6cqh,2.6rem)] font-black leading-none text-white">
           {target.toFixed(2)}<span className="text-[0.5em] text-white/40">s</span>
         </div>
       </div>
@@ -512,23 +510,23 @@ function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff
       <div className="grid min-h-0 flex-1 place-items-center">
         {phase === 'lobby' && (
           <div className="text-center animate-float-up">
-            <div className="tnum text-[clamp(3rem,16vw,4.5rem)] font-black leading-none text-white/90">{Math.max(lobbyLeft, 0)}</div>
+            <div className="tnum text-[clamp(2.5rem,15cqh,4.5rem)] font-black leading-none text-white/90">{Math.max(lobbyLeft, 0)}</div>
             <div className="mt-1 text-xs font-medium text-white/40">join or skip…</div>
           </div>
         )}
         {phase === 'countdown' && (
-          <div key={countNum} className="animate-float-up tnum text-[clamp(3.5rem,20vw,6rem)] font-black leading-none text-cyan-300 drop-shadow-[0_0_25px_rgba(34,211,238,0.6)]">
+          <div key={countNum} className="animate-float-up tnum text-[clamp(3rem,18cqh,5.5rem)] font-black leading-none text-cyan-300 drop-shadow-[0_0_25px_rgba(34,211,238,0.6)]">
             {countNum > 0 ? countNum : 'GO'}
           </div>
         )}
         {phase === 'running' && (
-          <div className="tnum text-[clamp(3rem,17vw,5rem)] font-black leading-none text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]">
+          <div className="tnum text-[clamp(2.5rem,14cqh,4.5rem)] font-black leading-none text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]">
             {elapsed.toFixed(2)}
           </div>
         )}
         {phase === 'result' && (
           <div className="text-center animate-float-up">
-            <div className="tnum text-[clamp(2.5rem,14vw,4rem)] font-black leading-none text-white">{yourTime != null ? yourTime.toFixed(2) : '·'}</div>
+            <div className="tnum text-[clamp(2.25rem,12cqh,3.75rem)] font-black leading-none text-white">{yourTime != null ? yourTime.toFixed(2) : '·'}</div>
             <div className={`mt-1 text-sm font-semibold ${yourDiff != null && yourDiff < 0.1 ? 'text-emerald-300' : 'text-amber-300'}`}>
               {yourTime == null ? (joined === false ? 'you sat this one out' : 'missed the round') : `off by ${yourDiff.toFixed(2)}s`}
             </div>
@@ -569,16 +567,20 @@ function StopButton({ phase, joined, onStop }) {
   const live = phase === 'running' && joined === true
   const spectating = phase === 'running' && joined === false
   const label = live ? 'STOP' : spectating ? 'WATCHING' : phase === 'countdown' ? '…' : 'ROUND OVER'
+  // long labels (WATCHING / ROUND OVER) get a smaller, tighter type so they don't strain the circle
+  const labelCls = label.length > 4
+    ? 'text-[clamp(0.62rem,3.4cqw,0.95rem)] tracking-[0.12em]'
+    : 'text-[clamp(1rem,5.5cqw,1.6rem)] tracking-widest'
   const ticks = [
-    '-top-[15px] left-1/2 -translate-x-1/2 h-2.5 w-px',
-    '-bottom-[15px] left-1/2 -translate-x-1/2 h-2.5 w-px',
-    '-left-[15px] top-1/2 -translate-y-1/2 w-2.5 h-px',
-    '-right-[15px] top-1/2 -translate-y-1/2 w-2.5 h-px',
+    '-top-[12px] left-1/2 -translate-x-1/2 h-2.5 w-px',
+    '-bottom-[12px] left-1/2 -translate-x-1/2 h-2.5 w-px',
+    '-left-[12px] top-1/2 -translate-y-1/2 w-2.5 h-px',
+    '-right-[12px] top-1/2 -translate-y-1/2 w-2.5 h-px',
   ]
   return (
-    <div className="relative grid shrink-0 place-items-center" style={{ width: 'min(42vw, 26vh, 11rem)', height: 'min(42vw, 26vh, 11rem)' }}>
-      <span className={`animate-spin-slow pointer-events-none absolute inset-[-10px] rounded-full border border-dashed ${live ? 'border-cyan-400/40' : 'border-white/10'}`} />
-      <span className={`animate-spin-rev pointer-events-none absolute inset-[-20px] rounded-full border ${live ? 'border-cyan-400/15' : 'border-white/[0.06]'}`} />
+    <div className="relative mb-3 grid shrink-0 place-items-center" style={{ width: 'min(42cqw, 19cqh, 9.5rem)', height: 'min(42cqw, 19cqh, 9.5rem)' }}>
+      <span className={`animate-spin-slow pointer-events-none absolute inset-[-8px] rounded-full border border-dashed ${live ? 'border-cyan-400/40' : 'border-white/10'}`} />
+      <span className={`animate-spin-rev pointer-events-none absolute inset-[-16px] rounded-full border ${live ? 'border-cyan-400/15' : 'border-white/[0.06]'}`} />
       {ticks.map((c) => (
         <span key={c} className={`pointer-events-none absolute ${c} ${live ? 'bg-cyan-400/70' : 'bg-white/20'}`} />
       ))}
@@ -586,7 +588,7 @@ function StopButton({ phase, joined, onStop }) {
         onClick={onStop}
         disabled={!live}
         className={[
-          'relative grid h-full w-full place-items-center rounded-full font-display text-[clamp(0.85rem,4vw,1.5rem)] font-bold tracking-widest transition-transform select-none',
+          `relative grid h-full w-full place-items-center rounded-full px-2 text-center font-display font-bold leading-none transition-transform select-none ${labelCls}`,
           live ? 'bg-cyan-400 text-[#04181c] animate-glow active:scale-95' : 'bg-white/5 text-white/40 ring-1 ring-white/10',
         ].join(' ')}
       >
@@ -600,6 +602,7 @@ function StopButton({ phase, joined, onStop }) {
 
 function ResultsStrip({ phase, results }) {
   const show = phase === 'result' && results.length > 0
+  if (!show) return null // collapse (free the space) outside the results phase
   return (
     <div className="h-[clamp(48px,7.5vh,62px)] shrink-0">
       {show && (
@@ -618,29 +621,25 @@ function ResultsStrip({ phase, results }) {
   )
 }
 
-function Feed({ feed }) {
+// one unified live feed: winner/jackpot events interleaved with chat.
+// each row is a fixed 20px; the box shows exactly 3 rows (the rest scroll).
+function Activity({ items, boxRef }) {
   return (
-    <div className="h-[clamp(18px,2.6vh,26px)] shrink-0 overflow-hidden">
-      {feed[0] && (
-        <div key={feed[0].id} className="animate-float-up flex items-center gap-2 text-xs">
-          <span className={feed[0].win ? 'text-amber-300' : 'text-white/50'}>{feed[0].win ? '🏆' : '•'}</span>
-          <span className="truncate text-white/70">{feed[0].text}</span>
-        </div>
-      )}
-    </div>
-  )
-}
-
-function Chat({ chat, boxRef }) {
-  return (
-    <div className="shrink-0 rounded-xl bg-white/[0.03] ring-1 ring-white/10">
-      <div ref={boxRef} className="no-scrollbar h-[clamp(46px,8vh,72px)] space-y-1 overflow-y-auto p-2">
-        {chat.slice(-8).map((m) => (
-          <div key={m.id} className="text-[11px] leading-tight">
-            <span className={`font-semibold ${hashName(m.name)}`}>{m.name}</span>
-            <span className="ml-1.5 text-white/55">{m.text}</span>
-          </div>
-        ))}
+    <div className="shrink-0 rounded-xl bg-white/[0.03] px-2.5 py-1.5 ring-1 ring-white/10">
+      <div ref={boxRef} className="no-scrollbar h-[60px] overflow-y-auto">
+        {items.slice(-12).map((m) =>
+          m.type === 'chat' ? (
+            <div key={m.id} className="flex h-5 items-center gap-1.5 overflow-hidden text-[11px] leading-none">
+              <span className={`shrink-0 font-semibold ${hashName(m.name)}`}>{m.name}</span>
+              <span className="truncate text-white/55">{m.text}</span>
+            </div>
+          ) : (
+            <div key={m.id} className="flex h-5 items-center gap-1.5 text-[11px] leading-none">
+              <span className={m.type === 'win' ? 'text-amber-300' : 'text-white/40'}>{m.type === 'win' ? '🏆' : '•'}</span>
+              <span className={`truncate ${m.type === 'win' ? 'text-amber-200/90' : 'text-white/60'}`}>{m.text}</span>
+            </div>
+          )
+        )}
       </div>
     </div>
   )
