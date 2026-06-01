@@ -197,10 +197,20 @@ export default function App() {
   /* ================================================================ */
   return (
     // Outer is locked to the viewport and clips — the PAGE can never scroll.
-    <div className="h-[100svh] w-full overflow-hidden flex items-center justify-center bg-[#05060a] sm:p-6">
-      {/* phone frame: full height on mobile, capped + centered on desktop */}
-      <div className="relative mx-auto flex h-full w-full max-w-[430px] flex-col overflow-hidden bg-gradient-to-b from-[#0a0b14] via-[#0b0d18] to-[#060710] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
-        {/* ambient glows */}
+    <div className="relative h-[100svh] w-full overflow-hidden bg-[#05060a]">
+      {/* full-bleed ambient backdrop — fills large screens so the device never floats in a void */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-1/4 left-[15%] h-[45rem] w-[45rem] rounded-full bg-cyan-600/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[10%] h-[45rem] w-[45rem] rounded-full bg-fuchsia-600/10 blur-[120px]" />
+      </div>
+
+      {/* center row: on lg+ the brand panel sits beside the device; below lg the device is centered alone */}
+      <div className="relative z-10 flex h-full w-full items-center justify-center lg:gap-10 lg:px-12 xl:gap-20">
+        <BrandPanel jackpot={jackpot} />
+
+        {/* phone frame: full height on mobile, capped + centered on desktop */}
+        <div className="relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-gradient-to-b from-[#0a0b14] via-[#0b0d18] to-[#060710] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
+        {/* ambient glows inside the frame */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="pointer-events-none absolute top-40 -right-28 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
@@ -229,7 +239,48 @@ export default function App() {
         {showBoard && (
           <Leaderboard tab={boardTab} setTab={setBoardTab} you={yourStats} onClose={() => setShowBoard(false)} />
         )}
+        </div>
       </div>
+    </div>
+  )
+}
+
+/* Large-screen branding panel — hidden below lg, so mobile is untouched.
+   Turns the empty desktop space into an intentional product showcase. */
+function BrandPanel({ jackpot }) {
+  return (
+    <div className="hidden max-w-md flex-col gap-7 lg:flex xl:max-w-lg xl:gap-9">
+      <div>
+        <div className="text-[clamp(3rem,5vw,4.5rem)] font-black leading-none tracking-[0.14em] text-white">
+          TOK<span className="text-cyan-400">I</span>Q
+        </div>
+        <div className="mt-3 text-[clamp(1rem,1.4vw,1.4rem)] font-medium tracking-wide text-white/50">
+          Beat Time. Win Together.
+        </div>
+      </div>
+
+      <p className="max-w-sm text-[clamp(0.95rem,1.1vw,1.15rem)] leading-relaxed text-white/55">
+        A real-time precision game of nerve and timing. Stop the clock as close to the
+        target as you dare — the closest player takes the pool.
+      </p>
+
+      <div className="max-w-sm rounded-2xl bg-white/[0.04] p-5 ring-1 ring-white/10 backdrop-blur">
+        <div className="text-xs uppercase tracking-widest text-white/40">Mega Jackpot</div>
+        <div className="tnum jackpot-text mt-1 text-[clamp(2.25rem,3.2vw,3.25rem)] font-black tracking-tight">
+          {yen(jackpot)}
+        </div>
+        <div className="mt-1 flex items-center gap-2 text-sm font-medium text-emerald-300">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" /> live now
+        </div>
+      </div>
+
+      <div className="flex max-w-sm flex-wrap gap-2">
+        {['Skill-based', 'Real-time', 'Social', 'Premium'].map((t) => (
+          <span key={t} className="rounded-full bg-white/5 px-3 py-1 text-sm text-white/60 ring-1 ring-white/10">{t}</span>
+        ))}
+      </div>
+
+      <div className="text-sm text-white/30">Tap the screen or press <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-white/60">Space</kbd> to STOP</div>
     </div>
   )
 }
