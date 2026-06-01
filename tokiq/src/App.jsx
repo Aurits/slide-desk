@@ -1,8 +1,79 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, createContext, useContext } from 'react'
 import bgLoopUrl from './vairon_alexander-persecucion-game-loop-476260.mp3'
 import successUrl from './joyinsound-chasing-success-building-success-507156.mp3'
 
 const MUSIC_VOL = 0.38
+
+/* ------------------------------------------------------------------ */
+/*  i18n — English · Español · 日本語 (extend by adding a lang key)    */
+/* ------------------------------------------------------------------ */
+const LANGS = [
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
+  { code: 'ja', label: '日本語' },
+]
+const I18N = {
+  en: {
+    tagline: 'Beat Time. Win Together.', target: 'Target', megaJackpot: 'Mega Jackpot',
+    atTable: '{n} at table', round: 'Round #{n}', joinOrSkip: 'join or skip…',
+    stop: 'STOP', watching: 'WATCHING', roundOver: 'ROUND OVER',
+    joinRound: 'Join Round · {fee}', skipWatch: 'Skip & watch this round →', addFunds: '+ Add {amt} (demo top-up)',
+    youWon: 'You won the round', roundWinner: 'Round winner', victory: 'Victory!',
+    winningTime: 'Winning time', yourTime: 'Your time', roundSnapshot: 'Round snapshot', timeDelta: 'time · Δ off',
+    soClose: 'So close, off by {d}s. One more round?', watched: 'You watched this round.',
+    balanceLow: 'Balance low. Top up to keep playing.', nextRound: 'Next Round · {fee} to join', addFundsBtn: '+ Add {amt} (demo)',
+    leaderboards: 'Leaderboards', Daily: 'Daily', Weekly: 'Weekly', Monthly: 'Monthly', 'All-Time': 'All-Time',
+    mostWins: 'Most Wins', bestAccuracy: 'Best Accuracy', highestEarnings: 'Highest Earnings', winsN: '{n} wins',
+    liveFeed: 'Live feed', you: 'You', introDesc: 'A real-time precision game of nerve and timing. Stop the clock as close to the target as you dare. The closest player takes the pool.',
+    introHint: 'Tap anywhere or press {key} to enter',
+    settings: 'Settings', profile: 'Profile', language: 'Language', sound: 'Sound', on: 'On', off: 'Off',
+    balance: 'Balance', wins: 'Wins', best: 'Best', streak: 'Streak', provablyFair: 'Provably fair',
+    offBy: 'off by {d}s', satOut: 'you sat this one out', missed: 'missed the round',
+  },
+  es: {
+    tagline: 'Vence al tiempo. Gana juntos.', target: 'Objetivo', megaJackpot: 'Megabote',
+    atTable: '{n} en la mesa', round: 'Ronda #{n}', joinOrSkip: 'únete o pásala…',
+    stop: '¡PARA!', watching: 'MIRANDO', roundOver: 'FIN DE RONDA',
+    joinRound: 'Entrar · {fee}', skipWatch: 'Pásala y mira esta ronda →', addFunds: '+ Añadir {amt} (demo)',
+    youWon: 'Ganaste la ronda', roundWinner: 'Ganador de la ronda', victory: '¡Victoria!',
+    winningTime: 'Tiempo ganador', yourTime: 'Tu tiempo', roundSnapshot: 'Resumen de ronda', timeDelta: 'tiempo · Δ',
+    soClose: '¡Casi! por {d}s. ¿Otra ronda?', watched: 'Miraste esta ronda.',
+    balanceLow: 'Saldo bajo. Recarga para seguir.', nextRound: 'Siguiente · {fee}', addFundsBtn: '+ Añadir {amt} (demo)',
+    leaderboards: 'Clasificación', Daily: 'Diario', Weekly: 'Semanal', Monthly: 'Mensual', 'All-Time': 'Histórico',
+    mostWins: 'Más victorias', bestAccuracy: 'Mejor precisión', highestEarnings: 'Mayores ganancias', winsN: '{n} victorias',
+    liveFeed: 'En vivo', you: 'Tú', introDesc: 'Un juego de precisión en tiempo real, de nervio y sincronización. Detén el reloj lo más cerca posible del objetivo. El más cercano se lleva el bote.',
+    introHint: 'Toca o pulsa {key} para entrar',
+    settings: 'Ajustes', profile: 'Perfil', language: 'Idioma', sound: 'Sonido', on: 'Activado', off: 'Apagado',
+    balance: 'Saldo', wins: 'Victorias', best: 'Mejor', streak: 'Racha', provablyFair: 'Juego justo verificable',
+    offBy: 'por {d}s', satOut: 'te saltaste esta', missed: 'fallaste la ronda',
+  },
+  ja: {
+    tagline: '時を制し、共に勝て。', target: '目標', megaJackpot: 'メガジャックポット',
+    atTable: '卓に{n}人', round: 'ラウンド #{n}', joinOrSkip: '参加かパスを…',
+    stop: 'ストップ', watching: '観戦中', roundOver: 'ラウンド終了',
+    joinRound: '参加 · {fee}', skipWatch: 'パスして観戦 →', addFunds: '+ {amt} 追加（デモ）',
+    youWon: 'ラウンド勝利', roundWinner: 'ラウンド勝者', victory: '勝利！',
+    winningTime: '勝利タイム', yourTime: 'あなたのタイム', roundSnapshot: 'ラウンド結果', timeDelta: 'タイム · 誤差',
+    soClose: '惜しい！誤差 {d} 秒。もう一回？', watched: 'このラウンドは観戦しました。',
+    balanceLow: '残高が少ないです。チャージして続行。', nextRound: '次のラウンド · {fee}', addFundsBtn: '+ {amt} 追加（デモ）',
+    leaderboards: 'ランキング', Daily: 'デイリー', Weekly: 'ウィークリー', Monthly: 'マンスリー', 'All-Time': '全期間',
+    mostWins: '勝利数', bestAccuracy: '精度', highestEarnings: '獲得額', winsN: '{n}勝',
+    liveFeed: 'ライブ', you: 'あなた', introDesc: 'リアルタイムの精密タイミングゲーム。狙った時間ぴったりにクロックを止めよう。最も近いプレイヤーがプールを獲得します。',
+    introHint: 'タップまたは {key} キーで開始',
+    settings: '設定', profile: 'プロフィール', language: '言語', sound: 'サウンド', on: 'オン', off: 'オフ',
+    balance: '残高', wins: '勝利', best: 'ベスト', streak: '連勝', provablyFair: '公正性証明済み',
+    offBy: '誤差 {d} 秒', satOut: '不参加でした', missed: 'ラウンドを逃した',
+  },
+}
+const LangCtx = createContext({ t: (k) => k, lang: 'en' })
+const useT = () => useContext(LangCtx)
+function makeT(lang) {
+  return (key, vars) => {
+    let s = (I18N[lang] && I18N[lang][key]) ?? I18N.en[key] ?? key
+    if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k])
+    return s
+  }
+}
 
 /* ------------------------------------------------------------------ */
 /*  Fake data — there is NO backend. Opponents, chat, feed, jackpot    */
@@ -141,6 +212,12 @@ export default function App() {
   const [showWinner, setShowWinner] = useState(false)
   const [showBoard, setShowBoard] = useState(false)
   const [boardTab, setBoardTab] = useState('Daily')
+  const [showSettings, setShowSettings] = useState(false)
+  const [lang, setLang] = useState(() => {
+    try { return localStorage.getItem('tokiq_lang') || 'en' } catch { return 'en' }
+  })
+  const t = makeT(lang)
+  useEffect(() => { try { localStorage.setItem('tokiq_lang', lang) } catch {} }, [lang])
 
   const [jackpot, setJackpot] = useState(1245000)
   const [tablePlayers, setTablePlayers] = useState(10)
@@ -409,6 +486,7 @@ export default function App() {
 
   /* ================================================================ */
   return (
+    <LangCtx.Provider value={{ t, lang }}>
     <div className="relative h-[100svh] w-full overflow-hidden bg-[#05060a]">
       {/* full-bleed ambient backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -427,6 +505,7 @@ export default function App() {
             <Header
               balance={shownBalance} muted={muted}
               onMute={() => setMuted((m) => !m)} onBoard={() => setShowBoard(true)}
+              onSettings={() => setShowSettings(true)}
             />
 
             {/* mobile: stacked (jackpot · stage · feed). lg: live side-column + wide stage */}
@@ -465,16 +544,25 @@ export default function App() {
           {showBoard && (
             <Leaderboard tab={boardTab} setTab={setBoardTab} you={yourStats} onClose={() => setShowBoard(false)} />
           )}
+          {showSettings && (
+            <Settings
+              lang={lang} setLang={setLang} muted={muted} onMute={() => setMuted((m) => !m)}
+              stats={yourStats} balance={balance} onClose={() => setShowSettings(false)}
+            />
+          )}
         </div>
       </div>
 
       {intro !== 'done' && <Intro leaving={intro === 'out'} onSkip={skipIntro} />}
     </div>
+    </LangCtx.Provider>
   )
 }
 
 /* full-screen 3-second intro splash (responsive on all sizes); tap/space to skip */
 function Intro({ leaving, onSkip }) {
+  const { t } = useT()
+  const [hintBefore, hintAfter] = t('introHint').split('{key}')
   return (
     <div
       onClick={onSkip}
@@ -488,14 +576,13 @@ function Intro({ leaving, onSkip }) {
         <img src="/favicon.svg" alt="" className="intro-1 h-20 w-20 drop-shadow-[0_0_30px_rgba(34,211,238,0.35)] sm:h-24 sm:w-24" />
         <img src="/logo.svg" alt="TOKIQ" className="intro-2 mt-6 h-9 w-auto sm:h-12" />
         <div className="intro-3 mt-3 text-[clamp(0.9rem,3.6vw,1.3rem)] font-medium tracking-wide text-white/55">
-          Beat Time. Win Together.
+          {t('tagline')}
         </div>
         <p className="intro-4 mt-5 max-w-md text-[clamp(0.82rem,3vw,1.05rem)] leading-relaxed text-white/45">
-          A real-time precision game of nerve and timing. Stop the clock as close to the
-          target as you dare. The closest player takes the pool.
+          {t('introDesc')}
         </p>
         <div className="intro-5 mt-7 text-xs text-white/30">
-          Tap anywhere or press <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-white/55">Space</kbd> to enter
+          {hintBefore}<kbd className="rounded bg-white/10 px-1.5 py-0.5 text-white/55">Space</kbd>{hintAfter}
         </div>
       </div>
 
@@ -509,43 +596,41 @@ function Intro({ leaving, onSkip }) {
 
 /* ============================== pieces ============================= */
 
-function Header({ balance, muted, onMute, onBoard }) {
+function Header({ balance, muted, onMute, onBoard, onSettings }) {
+  const { t } = useT()
+  const iconCls = 'grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/5 text-sm text-white/80 ring-1 ring-white/10 transition active:scale-95'
   return (
     <div className="flex shrink-0 items-center justify-between gap-2">
-      <div className="leading-none">
+      <div className="min-w-0 leading-none">
         <img src="/logo.svg" alt="TOKIQ" className="h-[26px] w-auto" />
-        <div className="mt-1.5 text-[10px] font-medium tracking-wide text-white/40">Beat Time. Win Together.</div>
+        <div className="mt-1.5 truncate text-[10px] font-medium tracking-wide text-white/40">{t('tagline')}</div>
       </div>
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 ring-1 ring-white/10">
+      <div className="flex shrink-0 items-center gap-1.5">
+        <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1.5 ring-1 ring-white/10">
           <span className="text-xs">💰</span>
           <span className="tnum text-sm font-bold text-white">{yen(balance)}</span>
         </div>
-        <button onClick={onMute} aria-label="Toggle sound"
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/5 text-white/70 ring-1 ring-white/10 transition active:scale-95">
-          {muted ? '🔇' : '🔊'}
-        </button>
-        <button onClick={onBoard} aria-label="Open leaderboards"
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/5 text-white/80 ring-1 ring-white/10 transition active:scale-95">
-          🏆
-        </button>
+        <button onClick={onMute} aria-label="Toggle sound" className={iconCls}>{muted ? '🔇' : '🔊'}</button>
+        <button onClick={onSettings} aria-label="Open settings" className={iconCls}>⚙️</button>
+        <button onClick={onBoard} aria-label="Open leaderboards" className={iconCls}>🏆</button>
       </div>
     </div>
   )
 }
 
 function Jackpot({ value, players, round }) {
+  const { t } = useT()
   return (
     <div className="shrink-0 rounded-2xl bg-white/[0.04] p-3 ring-1 ring-white/10 backdrop-blur">
-      <div className="flex items-start justify-between">
-        <div>
-          <span className="text-[10px] uppercase tracking-widest text-white/40">Mega Jackpot</span>
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <span className="text-[10px] uppercase tracking-widest text-white/40">{t('megaJackpot')}</span>
           <div className="tnum jackpot-text text-[clamp(1.4rem,7vw,1.9rem)] font-black tracking-tight">{yen(value)}</div>
         </div>
-        <div className="text-right text-[10px] leading-tight">
-          <div className="font-semibold text-white/55">Round #{round}</div>
+        <div className="shrink-0 text-right text-[10px] leading-tight">
+          <div className="font-semibold text-white/55">{t('round', { n: round })}</div>
           <div className="mt-1 flex items-center justify-end gap-1 font-medium text-emerald-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> {players} at table
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> {t('atTable', { n: players })}
           </div>
         </div>
       </div>
@@ -554,10 +639,11 @@ function Jackpot({ value, players, round }) {
 }
 
 function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff, joined, balance, onStop, onJoin, onSkip, onAddFunds }) {
+  const { t } = useT()
   return (
     <div className="flex h-full flex-col items-center justify-between">
       <div className="shrink-0 text-center">
-        <div className="text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">Target</div>
+        <div className="text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">{t('target')}</div>
         <div className="tnum text-[clamp(1.6rem,6cqh,2.6rem)] font-black leading-none text-white">
           {target.toFixed(2)}<span className="text-[0.5em] text-white/40">s</span>
         </div>
@@ -567,7 +653,7 @@ function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff
         {phase === 'lobby' && (
           <div className="text-center animate-float-up">
             <div className="tnum text-[clamp(2.5rem,15cqh,4.5rem)] font-black leading-none text-white/90">{Math.max(lobbyLeft, 0)}</div>
-            <div className="mt-1 text-xs font-medium text-white/40">join or skip…</div>
+            <div className="mt-1 text-xs font-medium text-white/40">{t('joinOrSkip')}</div>
           </div>
         )}
         {phase === 'countdown' && (
@@ -584,7 +670,7 @@ function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff
           <div className="text-center animate-float-up">
             <div className="tnum text-[clamp(2.25rem,12cqh,3.75rem)] font-black leading-none text-white">{yourTime != null ? yourTime.toFixed(2) : '·'}</div>
             <div className={`mt-1 text-sm font-semibold ${yourDiff != null && yourDiff < 0.1 ? 'text-emerald-300' : 'text-amber-300'}`}>
-              {yourTime == null ? (joined === false ? 'you sat this one out' : 'missed the round') : `off by ${yourDiff.toFixed(2)}s`}
+              {yourTime == null ? (joined === false ? t('satOut') : t('missed')) : t('offBy', { d: yourDiff.toFixed(2) })}
             </div>
           </div>
         )}
@@ -598,31 +684,33 @@ function Stage({ phase, target, elapsed, countNum, lobbyLeft, yourTime, yourDiff
 }
 
 function JoinControls({ balance, onJoin, onSkip, onAddFunds }) {
+  const { t } = useT()
   const canPlay = balance >= ENTRY_FEE
   return (
     <div className="flex w-full max-w-[300px] shrink-0 flex-col items-center gap-2.5">
       {canPlay ? (
         <button onClick={onJoin}
           className="w-full rounded-2xl bg-cyan-400 py-4 font-display text-lg font-bold tracking-wide text-[#04181c] shadow-[0_0_30px_-6px_rgba(34,211,238,0.6)] transition active:scale-[0.98]">
-          Join Round · {yen(ENTRY_FEE)}
+          {t('joinRound', { fee: yen(ENTRY_FEE) })}
         </button>
       ) : (
         <button onClick={onAddFunds}
           className="w-full rounded-2xl bg-amber-400 py-4 font-display text-base font-bold tracking-wide text-black transition active:scale-[0.98]">
-          + Add {yen(TOPUP)} (demo top-up)
+          {t('addFunds', { amt: yen(TOPUP) })}
         </button>
       )}
       <button onClick={onSkip} className="text-sm font-medium text-white/40 transition hover:text-white/70">
-        Skip &amp; watch this round →
+        {t('skipWatch')}
       </button>
     </div>
   )
 }
 
 function StopButton({ phase, joined, onStop }) {
+  const { t } = useT()
   const live = phase === 'running' && joined === true
   const spectating = phase === 'running' && joined === false
-  const label = live ? 'STOP' : spectating ? 'WATCHING' : phase === 'countdown' ? '…' : 'ROUND OVER'
+  const label = live ? t('stop') : spectating ? t('watching') : phase === 'countdown' ? '…' : t('roundOver')
   // long labels (WATCHING / ROUND OVER) get a smaller, tighter type so they don't strain the circle
   const labelCls = label.length > 4
     ? 'text-[clamp(0.62rem,3.4cqw,0.95rem)] tracking-[0.12em]'
@@ -659,10 +747,11 @@ function StopButton({ phase, joined, onStop }) {
 // one unified live feed: winner/jackpot events interleaved with chat.
 // each row is a fixed 20px; the box shows exactly 3 rows (the rest scroll).
 function Activity({ items, boxRef }) {
+  const { t } = useT()
   return (
     <div className="flex shrink-0 flex-col rounded-xl bg-white/[0.03] px-2.5 py-1.5 ring-1 ring-white/10 lg:min-h-0 lg:flex-1">
       <div className="hidden items-center gap-1.5 px-0.5 pb-1.5 text-[10px] uppercase tracking-widest text-white/40 lg:flex">
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> Live feed
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> {t('liveFeed')}
       </div>
       <div ref={boxRef} className="no-scrollbar h-[60px] overflow-y-auto lg:h-auto lg:min-h-0 lg:flex-1">
         {items.slice(-16).map((m) =>
@@ -714,6 +803,7 @@ function Confetti() {
 }
 
 function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onAddFunds }) {
+  const { t } = useT()
   const youWon = winner.you
   const youIdx = results.findIndex((r) => r.you)
   const youInPodium = youIdx > -1 && youIdx < 3
@@ -727,21 +817,21 @@ function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onA
           </>
         )}
         <div className="text-[clamp(2.25rem,11vw,2.75rem)] leading-none">{youWon ? '🏆' : '🎯'}</div>
-        <div className="mt-1.5 text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">{youWon ? 'You won the round' : 'Round winner'}</div>
-        <div className="font-display mt-0.5 text-[clamp(1.4rem,6.5vw,1.75rem)] font-bold tracking-wide text-white">{youWon ? 'Victory!' : winner.name}</div>
+        <div className="mt-1.5 text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">{youWon ? t('youWon') : t('roundWinner')}</div>
+        <div className="font-display mt-0.5 text-[clamp(1.4rem,6.5vw,1.75rem)] font-bold tracking-wide text-white">{youWon ? t('victory') : winner.name}</div>
         <div className="jackpot-text text-[clamp(1.9rem,8.5vw,2.4rem)] font-black">{yen(winner.prize)}</div>
 
         {/* target chip */}
         <div className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs ring-1 ring-white/10">
-          <span className="text-white/40">Target</span>
+          <span className="text-white/40">{t('target')}</span>
           <span className="tnum font-bold text-white">{target.toFixed(2)}s</span>
         </div>
 
         {/* top-3 + your-row snapshot */}
         <div className="mt-3 overflow-hidden rounded-2xl bg-white/[0.03] text-left ring-1 ring-white/10">
           <div className="flex items-center justify-between px-3 pt-2 pb-1.5 text-[10px] uppercase tracking-wider text-white/40">
-            <span>🎯 Round snapshot</span>
-            <span>time · Δ off</span>
+            <span>🎯 {t('roundSnapshot')}</span>
+            <span>{t('timeDelta')}</span>
           </div>
           {results.slice(0, 3).map((r, i) => <SnapRow key={r.name + i} r={r} rank={i + 1} />)}
           {!youInPodium && youIdx > -1 && (
@@ -753,14 +843,14 @@ function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onA
         </div>
 
         {!youWon && yourTime != null && (
-          <p className="mt-3 text-sm text-white/50">So close, off by {Math.abs(yourTime - target).toFixed(2)}s. One more round?</p>
+          <p className="mt-3 text-sm text-white/50">{t('soClose', { d: Math.abs(yourTime - target).toFixed(2) })}</p>
         )}
-        {yourTime == null && <p className="mt-3 text-sm text-white/40">You watched this round.</p>}
-        {!canPlay && <p className="mt-2 text-sm text-amber-300/80">Balance low. Top up to keep playing.</p>}
+        {yourTime == null && <p className="mt-3 text-sm text-white/40">{t('watched')}</p>}
+        {!canPlay && <p className="mt-2 text-sm text-amber-300/80">{t('balanceLow')}</p>}
 
         <button onClick={canPlay ? onNext : onAddFunds}
           className="mt-4 w-full rounded-2xl bg-cyan-400 py-4 font-display text-base font-bold tracking-wide text-[#04181c] transition active:scale-[0.98]">
-          {canPlay ? `Next Round · ${yen(ENTRY_FEE)} to join` : `+ Add ${yen(TOPUP)} (demo)`}
+          {canPlay ? t('nextRound', { fee: yen(ENTRY_FEE) }) : t('addFundsBtn', { amt: yen(TOPUP) })}
         </button>
       </div>
     </div>
@@ -769,10 +859,11 @@ function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onA
 
 const MEDAL = ['🥇', '🥈', '🥉']
 function SnapRow({ r, rank }) {
+  const { t } = useT()
   return (
     <div className={`flex items-center gap-2.5 px-3 py-2 ${r.you ? 'bg-cyan-500/10 ring-1 ring-inset ring-cyan-400/30' : rank === 1 ? 'bg-amber-400/[0.07]' : ''}`}>
       <span className="grid w-6 shrink-0 place-items-center text-sm">{MEDAL[rank - 1] || <span className="text-xs font-bold text-white/40">#{rank}</span>}</span>
-      <span className={`flex-1 truncate text-sm font-semibold ${r.you ? 'text-cyan-300' : 'text-white/90'}`}>{r.you ? 'You' : r.name}</span>
+      <span className={`flex-1 truncate text-sm font-semibold ${r.you ? 'text-cyan-300' : 'text-white/90'}`}>{r.you ? t('you') : r.name}</span>
       <span className="tnum text-sm font-bold text-white">{r.time.toFixed(2)}s</span>
       <span className="tnum w-12 shrink-0 text-right text-xs text-white/45">±{r.diff.toFixed(2)}</span>
     </div>
@@ -780,29 +871,30 @@ function SnapRow({ r, rank }) {
 }
 
 function Leaderboard({ tab, setTab, you, onClose }) {
+  const { t } = useT()
   const tabs = ['Daily', 'Weekly', 'Monthly', 'All-Time']
-  const cats = ['Most Wins', 'Best Accuracy', 'Highest Earnings']
+  const cats = [['Most Wins', 'mostWins'], ['Best Accuracy', 'bestAccuracy'], ['Highest Earnings', 'highestEarnings']]
   const [cat, setCat] = useState('Most Wins')
   const rows = [...SEED_LEADERBOARD].sort((a, b) =>
     cat === 'Most Wins' ? b.wins - a.wins : cat === 'Best Accuracy' ? a.acc - b.acc : b.earn - a.earn
   )
-  const val = (r) => cat === 'Most Wins' ? `${r.wins} wins` : cat === 'Best Accuracy' ? `±${r.acc.toFixed(3)}s` : yen(r.earn)
+  const val = (r) => cat === 'Most Wins' ? t('winsN', { n: r.wins }) : cat === 'Best Accuracy' ? `±${r.acc.toFixed(3)}s` : yen(r.earn)
   return (
     <div className="absolute inset-0 z-40 flex flex-col bg-[#070810]/95 backdrop-blur-md animate-slide-up">
       <div className="flex shrink-0 items-center justify-between px-5 pt-5 pb-3">
-        <div className="font-display text-xl font-bold tracking-wide text-white">Leaderboards</div>
+        <div className="font-display text-xl font-bold tracking-wide text-white">{t('leaderboards')}</div>
         <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white/5 text-white/70 ring-1 ring-white/10 active:scale-95" aria-label="Close">✕</button>
       </div>
       <div className="flex shrink-0 flex-wrap gap-2 px-5">
-        {tabs.map((t) => (
-          <button key={t} onClick={() => setTab(t)}
-            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${tab === t ? 'bg-cyan-400 text-black' : 'bg-white/5 text-white/60'}`}>{t}</button>
+        {tabs.map((tb) => (
+          <button key={tb} onClick={() => setTab(tb)}
+            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${tab === tb ? 'bg-cyan-400 text-black' : 'bg-white/5 text-white/60'}`}>{t(tb)}</button>
         ))}
       </div>
       <div className="mt-3 flex shrink-0 flex-wrap gap-2 px-5">
-        {cats.map((c) => (
+        {cats.map(([c, key]) => (
           <button key={c} onClick={() => setCat(c)}
-            className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${cat === c ? 'bg-white/15 text-white ring-1 ring-white/20' : 'bg-white/[0.03] text-white/50'}`}>{c}</button>
+            className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${cat === c ? 'bg-white/15 text-white ring-1 ring-white/20' : 'bg-white/[0.03] text-white/50'}`}>{t(key)}</button>
         ))}
       </div>
       <div className="mt-4 min-h-0 flex-1 space-y-2 overflow-y-auto px-5 pb-6 no-scrollbar">
@@ -817,12 +909,81 @@ function Leaderboard({ tab, setTab, you, onClose }) {
         <div className="mt-3 flex items-center gap-3 rounded-xl bg-cyan-500/10 p-3 ring-1 ring-cyan-400/40">
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white/70">·</span>
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-cyan-400 text-sm font-bold text-[#04181c]">Y</span>
-          <span className="flex-1 font-semibold text-white">You</span>
+          <span className="flex-1 font-semibold text-white">{t('you')}</span>
           <span className="tnum shrink-0 text-sm font-bold text-cyan-300">
-            {cat === 'Most Wins' ? `${you.wins} wins` : cat === 'Best Accuracy' ? (you.best != null ? `±${you.best.toFixed(3)}s` : '·') : yen(you.wins * 8100)}
+            {cat === 'Most Wins' ? t('winsN', { n: you.wins }) : cat === 'Best Accuracy' ? (you.best != null ? `±${you.best.toFixed(3)}s` : '·') : yen(you.wins * 8100)}
           </span>
         </div>
       </div>
+    </div>
+  )
+}
+
+/* settings + profile + language — slides up like the leaderboard */
+function Settings({ lang, setLang, muted, onMute, stats, balance, onClose }) {
+  const { t } = useT()
+  return (
+    <div className="absolute inset-0 z-40 flex flex-col bg-[#070810]/95 backdrop-blur-md animate-slide-up">
+      <div className="flex shrink-0 items-center justify-between px-5 pt-5 pb-3">
+        <div className="font-display text-xl font-bold tracking-wide text-white">{t('settings')}</div>
+        <button onClick={onClose} aria-label="Close" className="grid h-9 w-9 place-items-center rounded-full bg-white/5 text-white/70 ring-1 ring-white/10 active:scale-95">✕</button>
+      </div>
+
+      <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 pb-8 no-scrollbar">
+        {/* profile */}
+        <section>
+          <div className="mb-2 text-[10px] uppercase tracking-widest text-white/40">{t('profile')}</div>
+          <div className="flex items-center gap-3 rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-cyan-400 font-display text-lg font-bold text-[#04181c]">Y</span>
+            <div className="min-w-0">
+              <div className="font-display text-base font-bold tracking-wide text-white">{t('you')}</div>
+              <div className="tnum text-sm text-white/50">{t('balance')}: <span className="font-bold text-white">{yen(balance)}</span></div>
+            </div>
+          </div>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            <Stat label={t('wins')} value={stats.wins} />
+            <Stat label={t('best')} value={stats.best != null ? `±${stats.best.toFixed(3)}s` : '·'} />
+            <Stat label={t('streak')} value={stats.streak} />
+          </div>
+        </section>
+
+        {/* language */}
+        <section>
+          <div className="mb-2 text-[10px] uppercase tracking-widest text-white/40">{t('language')}</div>
+          <div className="grid grid-cols-3 gap-2">
+            {LANGS.map((l) => (
+              <button key={l.code} onClick={() => setLang(l.code)}
+                className={`rounded-xl px-3 py-3 text-sm font-semibold transition ${lang === l.code ? 'bg-cyan-400 text-[#04181c]' : 'bg-white/5 text-white/70 ring-1 ring-white/10'}`}>
+                {l.label}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* sound */}
+        <section>
+          <div className="mb-2 text-[10px] uppercase tracking-widest text-white/40">{t('sound')}</div>
+          <button onClick={onMute} className="flex w-full items-center justify-between rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10 transition active:scale-[0.99]">
+            <span className="flex items-center gap-2 font-semibold text-white/90"><span>{muted ? '🔇' : '🔊'}</span> {t('sound')}</span>
+            <span className={`relative h-6 w-11 rounded-full transition ${muted ? 'bg-white/10' : 'bg-cyan-400'}`}>
+              <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${muted ? 'left-0.5' : 'left-[1.375rem]'}`} />
+            </span>
+          </button>
+        </section>
+
+        <div className="flex items-center justify-center gap-2 pt-1 text-xs text-white/30">
+          <span className="text-emerald-400">✔</span> {t('provablyFair')}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Stat({ label, value }) {
+  return (
+    <div className="rounded-xl bg-white/[0.04] px-2 py-2.5 text-center ring-1 ring-white/10">
+      <div className="text-[9px] uppercase tracking-wider text-white/40">{label}</div>
+      <div className="tnum mt-0.5 text-sm font-bold text-white">{value}</div>
     </div>
   )
 }
