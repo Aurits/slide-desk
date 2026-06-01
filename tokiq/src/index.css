@@ -107,6 +107,22 @@ body {
 .animate-spin-slow { animation: spinSlow 14s linear infinite; }
 .animate-spin-rev  { animation: spinSlow 22s linear infinite reverse; }
 
+/* floating "+¥" gain rising toward the wallet */
+@keyframes gainRise {
+  0%   { opacity: 0; transform: translateY(14px) scale(0.9); }
+  15%  { opacity: 1; transform: translateY(0) scale(1); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-26px) scale(1); }
+}
+.animate-gain-rise { animation: gainRise 1.8s ease-out forwards; }
+
+/* win confetti burst — uses per-piece --tx/--ty/--rot custom props */
+@keyframes confetti {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.4); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot)) scale(1); }
+}
+.animate-confetti { animation: confetti 1.3s cubic-bezier(.2,.6,.4,1) forwards; }
+
 /* hide scrollbars on feed lists but keep scroll */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
