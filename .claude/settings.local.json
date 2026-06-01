@@ -136,7 +136,8 @@
       "Bash(npm run *)",
       "Bash(npx playwright *)",
       "Bash(rm -rf shots shots.mjs dist)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(git -C \"C:\\\\Users\\\\HP\\\\Documents\\\\PROJECTS\\\\slide-desk\" status --porcelain)"
     ]
   }
 }

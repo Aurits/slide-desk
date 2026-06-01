@@ -1,4 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import bgLoopUrl from './vairon_alexander-persecucion-game-loop-476260.mp3'
+import successUrl from './joyinsound-chasing-success-building-success-507156.mp3'
+
+const MUSIC_VOL = 0.38
 
 /* ------------------------------------------------------------------ */
 /*  Fake data — there is NO backend. Opponents, chat, feed, jackpot    */
@@ -153,8 +157,43 @@ export default function App() {
   const tickNRef = useRef(0)
   const targetRef = useRef(target)
   targetRef.current = target
+  const bgRef = useRef(null)
+  const successRef = useRef(null)
+  const musicOnRef = useRef(false)
 
-  useEffect(() => { mutedRef.current = muted }, [muted])
+  /* ---- background game-loop music + win sting (real audio files) ---- */
+  useEffect(() => {
+    const bg = new Audio(bgLoopUrl)
+    bg.loop = true
+    bg.volume = MUSIC_VOL
+    bg.preload = 'auto'
+    bgRef.current = bg
+    const su = new Audio(successUrl)
+    su.volume = 0.7
+    su.preload = 'auto'
+    successRef.current = su
+    return () => { bg.pause(); su.pause() }
+  }, [])
+
+  // music plays ONLY while the timer runs: start with the timer, stop when the round ends
+  const startMusic = () => {
+    musicOnRef.current = true
+    const bg = bgRef.current
+    if (bg && !mutedRef.current) { bg.currentTime = 0; bg.play().catch(() => {}) }
+  }
+  const stopMusic = () => {
+    musicOnRef.current = false
+    if (bgRef.current) bgRef.current.pause()
+  }
+
+  // mute toggle: silence everything; resume only if a round is still mid-run
+  useEffect(() => {
+    mutedRef.current = muted
+    const bg = bgRef.current
+    if (!bg) return
+    if (muted) bg.pause()
+    else if (musicOnRef.current) bg.play().catch(() => {})
+  }, [muted])
 
   /* ---- stopwatch ticking while the timer runs ---- */
   const startTicking = () => {
@@ -238,6 +277,7 @@ export default function App() {
     setPhase('running')
     startRef.current = performance.now()
     startTicking()
+    startMusic() // music kicks in exactly when the live timer starts (guarded to run once)
     const playing = joinedRef.current === true
     const limit = playing ? target + 2.5 : target + 1.1 // spectators resolve sooner
     const loop = (now) => {
@@ -262,6 +302,7 @@ export default function App() {
   const resolveRound = (myTime) => {
     cancelAnimationFrame(rafRef.current)
     stopTicking()
+    stopMusic() // sound stops the instant the timer stops / round ends
     const n = Math.max(1, tablePlayers - 1)
     const names = [...BOT_NAMES].sort(() => Math.random() - 0.5).slice(0, n)
     const bots = names.map((name) => {
@@ -289,6 +330,11 @@ export default function App() {
         setGain(prizePool)
         setSplash(true)
         winSound()
+        // play the "chasing success" sting (the loop is already stopped at resolve)
+        if (!mutedRef.current && successRef.current) {
+          successRef.current.currentTime = 0
+          successRef.current.play().catch(() => {})
+        }
         setFeed((f) => [{ id: Math.random(), text: `You ${pick(WIN_VERBS)} ${yen(prizePool)} 🏆`, win: true }, ...f].slice(0, 6))
         setTimeout(() => setSplash(false), 1400)
         setTimeout(() => setGain(null), 1900)
@@ -369,7 +415,7 @@ export default function App() {
           {splash && <Confetti />}
 
           {showWinner && winner && (
-            <WinnerOverlay winner={winner} yourTime={yourTime} target={target} onNext={nextRound} canPlay={balance >= ENTRY_FEE} onAddFunds={addFunds} />
+            <WinnerOverlay winner={winner} results={results} yourTime={yourTime} target={target} onNext={nextRound} canPlay={balance >= ENTRY_FEE} onAddFunds={addFunds} />
           )}
           {showBoard && (
             <Leaderboard tab={boardTab} setTab={setBoardTab} you={yourStats} onClose={() => setShowBoard(false)} />
@@ -638,32 +684,50 @@ function Confetti() {
   )
 }
 
-function WinnerOverlay({ winner, yourTime, target, onNext, canPlay, onAddFunds }) {
+function WinnerOverlay({ winner, results, yourTime, target, onNext, canPlay, onAddFunds }) {
   const youWon = winner.you
+  const youIdx = results.findIndex((r) => r.you)
+  const youInPodium = youIdx > -1 && youIdx < 3
   return (
     <div className="absolute inset-0 z-30 flex items-end justify-center bg-black/60 backdrop-blur-sm">
-      <div className="animate-slide-up relative max-h-[92%] w-full overflow-y-auto rounded-t-[36px] border-t border-white/10 bg-gradient-to-b from-[#11131f] to-[#0a0b14] px-6 pb-7 pt-6 text-center no-scrollbar">
+      <div className="animate-slide-up relative max-h-[94%] w-full overflow-y-auto rounded-t-[36px] border-t border-white/10 bg-gradient-to-b from-[#11131f] to-[#0a0b14] px-5 pb-7 pt-6 text-center no-scrollbar">
         {youWon && (
           <>
             <span className="animate-ring-pop absolute left-1/2 top-7 h-24 w-24 -translate-x-1/2 rounded-full ring-2 ring-amber-300/60" />
             <span className="animate-ring-pop absolute left-1/2 top-7 h-24 w-24 -translate-x-1/2 rounded-full ring-2 ring-cyan-300/60" style={{ animationDelay: '0.15s' }} />
           </>
         )}
-        <div className="text-[clamp(2.5rem,12vw,3rem)] leading-none">{youWon ? '🏆' : '🎯'}</div>
-        <div className="mt-2 text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">{youWon ? 'You won the round' : 'Round winner'}</div>
-        <div className="font-display mt-1 text-[clamp(1.5rem,7vw,1.875rem)] font-bold tracking-wide text-white">{youWon ? 'Victory!' : winner.name}</div>
-        <div className="jackpot-text mt-1 text-[clamp(2rem,9vw,2.5rem)] font-black">{yen(winner.prize)}</div>
+        <div className="text-[clamp(2.25rem,11vw,2.75rem)] leading-none">{youWon ? '🏆' : '🎯'}</div>
+        <div className="mt-1.5 text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">{youWon ? 'You won the round' : 'Round winner'}</div>
+        <div className="font-display mt-0.5 text-[clamp(1.4rem,6.5vw,1.75rem)] font-bold tracking-wide text-white">{youWon ? 'Victory!' : winner.name}</div>
+        <div className="jackpot-text text-[clamp(1.9rem,8.5vw,2.4rem)] font-black">{yen(winner.prize)}</div>
 
-        <div className="mt-4 flex items-stretch justify-center gap-2">
-          <Mini label="Target" value={`${target.toFixed(2)}s`} />
-          <Mini label="Winning time" value={`${winner.time.toFixed(2)}s`} highlight />
-          <Mini label="Your time" value={yourTime != null ? `${yourTime.toFixed(2)}s` : '—'} />
+        {/* target chip */}
+        <div className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs ring-1 ring-white/10">
+          <span className="text-white/40">Target</span>
+          <span className="tnum font-bold text-white">{target.toFixed(2)}s</span>
+        </div>
+
+        {/* top-3 + your-row snapshot */}
+        <div className="mt-3 overflow-hidden rounded-2xl bg-white/[0.03] text-left ring-1 ring-white/10">
+          <div className="flex items-center justify-between px-3 pt-2 pb-1.5 text-[10px] uppercase tracking-wider text-white/40">
+            <span>🎯 Round snapshot</span>
+            <span>time · Δ off</span>
+          </div>
+          {results.slice(0, 3).map((r, i) => <SnapRow key={r.name + i} r={r} rank={i + 1} />)}
+          {!youInPodium && youIdx > -1 && (
+            <>
+              <div className="px-3 py-0.5 text-center text-white/20">···</div>
+              <SnapRow r={results[youIdx]} rank={youIdx + 1} />
+            </>
+          )}
         </div>
 
         {!youWon && yourTime != null && (
           <p className="mt-3 text-sm text-white/50">So close — off by {Math.abs(yourTime - target).toFixed(2)}s. One more round?</p>
         )}
-        {!canPlay && <p className="mt-3 text-sm text-amber-300/80">Balance low — top up to keep playing.</p>}
+        {yourTime == null && <p className="mt-3 text-sm text-white/40">You watched this round.</p>}
+        {!canPlay && <p className="mt-2 text-sm text-amber-300/80">Balance low — top up to keep playing.</p>}
 
         <button onClick={canPlay ? onNext : onAddFunds}
           className="mt-4 w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-600 py-4 font-display text-base font-bold tracking-wide text-white transition active:scale-[0.98]">
@@ -674,11 +738,14 @@ function WinnerOverlay({ winner, yourTime, target, onNext, canPlay, onAddFunds }
   )
 }
 
-function Mini({ label, value, highlight }) {
+const MEDAL = ['🥇', '🥈', '🥉']
+function SnapRow({ r, rank }) {
   return (
-    <div className={`flex-1 rounded-xl px-2 py-2 ${highlight ? 'bg-cyan-500/15 ring-1 ring-cyan-400/40' : 'bg-white/5'}`}>
-      <div className="text-[9px] uppercase tracking-wider text-white/40">{label}</div>
-      <div className="tnum mt-0.5 text-sm font-bold text-white">{value}</div>
+    <div className={`flex items-center gap-2.5 px-3 py-2 ${r.you ? 'bg-cyan-500/10 ring-1 ring-inset ring-cyan-400/30' : rank === 1 ? 'bg-amber-400/[0.07]' : ''}`}>
+      <span className="grid w-6 shrink-0 place-items-center text-sm">{MEDAL[rank - 1] || <span className="text-xs font-bold text-white/40">#{rank}</span>}</span>
+      <span className={`flex-1 truncate text-sm font-semibold ${r.you ? 'text-cyan-300' : 'text-white/90'}`}>{r.you ? 'You' : r.name}</span>
+      <span className="tnum text-sm font-bold text-white">{r.time.toFixed(2)}s</span>
+      <span className="tnum w-12 shrink-0 text-right text-xs text-white/45">±{r.diff.toFixed(2)}</span>
     </div>
   )
 }
