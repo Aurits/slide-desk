@@ -9,10 +9,13 @@ const BOT_NAMES = [
   'Kenji', 'Sarah', 'Yuki', 'Alex', 'Amina', 'David', 'Mei',
   'Liam', 'Sofia', 'Hiro', 'Noah', 'Aiko', 'Marco', 'Zara', 'Ravi',
 ]
+// disciplined palette — cool tones + a single gold, no rainbow
 const AVATAR_COLORS = [
-  'from-cyan-400 to-blue-500', 'from-violet-400 to-fuchsia-500',
-  'from-emerald-400 to-teal-500', 'from-amber-400 to-orange-500',
-  'from-rose-400 to-pink-500', 'from-indigo-400 to-sky-500',
+  'from-cyan-300 to-blue-500',
+  'from-teal-300 to-cyan-500',
+  'from-sky-400 to-indigo-500',
+  'from-amber-300 to-yellow-500',
+  'from-violet-400 to-fuchsia-500',
 ]
 const CHAT_LINES = [
   'good luck everyone 🔥', 'target looks tricky', 'so close last round 😭',
@@ -209,8 +212,9 @@ export default function App() {
         <BrandPanel jackpot={jackpot} />
 
         {/* phone frame: full height on mobile, capped + centered on desktop */}
-        <div className="relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-gradient-to-b from-[#0a0b14] via-[#0b0d18] to-[#060710] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
-        {/* ambient glows inside the frame */}
+        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-gradient-to-b from-[#0a0b14] via-[#0b0d18] to-[#060710] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
+        {/* atmosphere: measurement grid + ambient glows */}
+        <div className="bg-grid pointer-events-none absolute inset-0" />
         <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="pointer-events-none absolute top-40 -right-28 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
@@ -251,7 +255,7 @@ function BrandPanel({ jackpot }) {
   return (
     <div className="hidden max-w-md flex-col gap-7 lg:flex xl:max-w-lg xl:gap-9">
       <div>
-        <div className="text-[clamp(3rem,5vw,4.5rem)] font-black leading-none tracking-[0.14em] text-white">
+        <div className="font-display text-[clamp(3rem,5vw,4.5rem)] font-bold leading-none tracking-[0.16em] text-white">
           TOK<span className="text-cyan-400">I</span>Q
         </div>
         <div className="mt-3 text-[clamp(1rem,1.4vw,1.4rem)] font-medium tracking-wide text-white/50">
@@ -291,7 +295,7 @@ function Header({ round, onBoard }) {
   return (
     <div className="flex shrink-0 items-center justify-between">
       <div className="leading-none">
-        <div className="text-[clamp(20px,6vw,26px)] font-black tracking-[0.18em] text-white">
+        <div className="font-display text-[clamp(20px,6vw,26px)] font-bold tracking-[0.2em] text-white">
           TOK<span className="text-cyan-400">I</span>Q
         </div>
         <div className="mt-0.5 text-[10px] font-medium tracking-wide text-white/40">
@@ -381,22 +385,40 @@ function StopButton({ phase, onStop }) {
     : phase === 'lobby' ? 'GET READY'
     : phase === 'countdown' ? '…'
     : 'ROUND OVER'
+  const ticks = [
+    '-top-[15px] left-1/2 -translate-x-1/2 h-2.5 w-px',
+    '-bottom-[15px] left-1/2 -translate-x-1/2 h-2.5 w-px',
+    '-left-[15px] top-1/2 -translate-y-1/2 w-2.5 h-px',
+    '-right-[15px] top-1/2 -translate-y-1/2 w-2.5 h-px',
+  ]
   return (
-    <button
-      onClick={onStop}
-      disabled={!live}
-      // sized by the SMALLER of width / height / cap so it always fits
+    // wrapper carries the size; reticle decorations orbit the button (the "target")
+    <div
+      className="relative grid shrink-0 place-items-center"
       style={{ width: 'min(42vw, 26vh, 11rem)', height: 'min(42vw, 26vh, 11rem)' }}
-      className={[
-        'relative grid shrink-0 place-items-center rounded-full text-[clamp(1.1rem,4.5vw,1.5rem)] font-black tracking-widest transition-transform select-none',
-        live
-          ? 'bg-gradient-to-br from-cyan-400 to-blue-600 text-white animate-glow active:scale-95'
-          : 'bg-white/5 text-white/40 ring-1 ring-white/10',
-      ].join(' ')}
     >
-      <span className="absolute inset-2 rounded-full ring-1 ring-white/20" />
-      {label}
-    </button>
+      <span className={`animate-spin-slow pointer-events-none absolute inset-[-10px] rounded-full border border-dashed ${live ? 'border-cyan-400/40' : 'border-white/10'}`} />
+      <span className={`animate-spin-rev pointer-events-none absolute inset-[-20px] rounded-full border ${live ? 'border-cyan-400/15' : 'border-white/[0.06]'}`} />
+      {ticks.map((c) => (
+        <span key={c} className={`pointer-events-none absolute ${c} ${live ? 'bg-cyan-400/70' : 'bg-white/20'}`} />
+      ))}
+
+      <button
+        onClick={onStop}
+        disabled={!live}
+        className={[
+          'relative grid h-full w-full place-items-center rounded-full font-display text-[clamp(1.1rem,4.5vw,1.5rem)] font-bold tracking-widest transition-transform select-none',
+          live
+            ? 'bg-gradient-to-br from-cyan-400 to-blue-600 text-white animate-glow active:scale-95'
+            : 'bg-white/5 text-white/40 ring-1 ring-white/10',
+        ].join(' ')}
+      >
+        {/* concentric bullseye rings */}
+        <span className="absolute inset-2 rounded-full ring-1 ring-white/20" />
+        <span className="absolute inset-[20%] rounded-full ring-1 ring-white/10" />
+        {label}
+      </button>
+    </div>
   )
 }
 
@@ -463,7 +485,7 @@ function WinnerOverlay({ winner, yourTime, target, onNext }) {
         <div className="mt-2 text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">
           {youWon ? 'You won the round' : 'Round winner'}
         </div>
-        <div className="mt-1 text-[clamp(1.5rem,7vw,1.875rem)] font-black text-white">
+        <div className="font-display mt-1 text-[clamp(1.5rem,7vw,1.875rem)] font-bold tracking-wide text-white">
           {youWon ? 'Victory!' : winner.name}
         </div>
         <div className="jackpot-text mt-1 text-[clamp(2rem,9vw,2.5rem)] font-black">{yen(winner.prize)}</div>
@@ -515,7 +537,7 @@ function Leaderboard({ tab, setTab, you, onClose }) {
   return (
     <div className="absolute inset-0 z-40 flex flex-col bg-[#070810]/95 backdrop-blur-md animate-slide-up">
       <div className="flex shrink-0 items-center justify-between px-5 pt-5 pb-3">
-        <div className="text-xl font-black tracking-wide text-white">Leaderboards</div>
+        <div className="font-display text-xl font-bold tracking-wide text-white">Leaderboards</div>
         <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white/5 text-white/70 ring-1 ring-white/10 active:scale-95" aria-label="Close">✕</button>
       </div>
 
