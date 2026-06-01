@@ -39,6 +39,18 @@ const HOUSE_RATE = 0.1
 const START_BALANCE = 5000
 const TOPUP = 5000
 
+// ---- target generation ----
+const PHI_INV = 0.6180339887498949 // golden-ratio conjugate → R1 low-discrepancy sequence
+// weighted "bands" give each round a character: [min, max, weight]
+const TARGET_BANDS = [
+  [2.5, 4.5, 0.10],   // ⚡ lightning
+  [4.5, 8.0, 0.24],   // quick
+  [8.0, 14.0, 0.36],  // classic
+  [14.0, 22.0, 0.20], // long
+  [22.0, 30.0, 0.10], // endurance
+]
+const SIGNATURE_TARGETS = [5.55, 7.77, 9.99, 11.11, 13.13, 16.16, 21.21, 27.0]
+
 const SEED_LEADERBOARD = [
   { name: 'Yuki',  wins: 142, acc: 0.012, earn: 184500 },
   { name: 'Kenji', wins: 128, acc: 0.018, earn: 161200 },
@@ -141,6 +153,7 @@ export default function App() {
   const [muted, setMuted] = useState(false)
   const [gain, setGain] = useState(null)
   const [splash, setSplash] = useState(false)
+  const [intro, setIntro] = useState('in') // 'in' (showing) | 'out' (fading) | 'done'
   const shownBalance = useCountUp(balance)
 
   const rafRef = useRef(null)
@@ -155,6 +168,38 @@ export default function App() {
   const bgRef = useRef(null)
   const successRef = useRef(null)
   const musicOnRef = useRef(false)
+  const goldenRef = useRef(Math.random()) // seed for the low-discrepancy sequence
+  const prevTargetRef = useRef(10)
+
+  // Creative target generator: golden-ratio low-discrepancy coverage + weighted bands
+  // + occasional "signature" numbers + a recency nudge so no two rounds feel alike.
+  const nextTarget = () => {
+    if (Math.random() < 0.12) {
+      const s = SIGNATURE_TARGETS[Math.floor(Math.random() * SIGNATURE_TARGETS.length)]
+      if (Math.abs(s - prevTargetRef.current) > 0.8) { prevTargetRef.current = s; return s }
+    }
+    const u = (goldenRef.current + PHI_INV) % 1 // evenly spread over time, never clustering
+    goldenRef.current = u
+    let acc = 0, band = TARGET_BANDS[TARGET_BANDS.length - 1]
+    for (const b of TARGET_BANDS) { acc += b[2]; if (u <= acc) { band = b; break } }
+    let t = band[0] + Math.random() * (band[1] - band[0])
+    if (Math.abs(t - prevTargetRef.current) < 0.7) t += t >= prevTargetRef.current ? 0.8 : -0.8
+    t = Number(Math.min(29.99, Math.max(2.5, t)).toFixed(2))
+    prevTargetRef.current = t
+    return t
+  }
+
+  /* ---- 3s marketing intro, then fade into the game (tap/space to skip) ---- */
+  useEffect(() => {
+    const t = setTimeout(() => setIntro((s) => (s === 'in' ? 'out' : s)), 3000)
+    return () => clearTimeout(t)
+  }, [])
+  useEffect(() => {
+    if (intro !== 'out') return
+    const t = setTimeout(() => setIntro('done'), 650) // matches the fade-out
+    return () => clearTimeout(t)
+  }, [intro])
+  const skipIntro = () => setIntro((s) => (s === 'in' ? 'out' : s))
 
   /* ---- background game-loop music + win sting (real audio files) ---- */
   useEffect(() => {
@@ -301,7 +346,8 @@ export default function App() {
     const n = Math.max(1, tablePlayers - 1)
     const names = [...BOT_NAMES].sort(() => Math.random() - 0.5).slice(0, n)
     const bots = names.map((name) => {
-      const t = Math.max(0.05, target + noise(0.28))
+      // each opponent has its own skill: most sharp, some loose — lifelike, dramatic finishes
+      const t = Math.max(0.05, target + noise(0.18 + Math.random() * 0.4))
       return { name, time: t, diff: Math.abs(t - target), you: false }
     })
     const all = [...bots]
@@ -335,13 +381,13 @@ export default function App() {
         setTimeout(() => setGain(null), 1900)
       }
     }
-    setTimeout(() => setShowWinner(true), 550)
+    setTimeout(() => setShowWinner(true), 2000) // let the player read their result first
   }
 
   const nextRound = () => {
     setShowWinner(false)
     setRound((r) => r + 1)
-    setTarget(Number(rand(2.5, 30).toFixed(2))) // wide, varied targets up to 30s
+    setTarget(nextTarget())
     setTablePlayers(Math.floor(rand(8, 15)))
     setResults([])
     setWinner(null)
@@ -354,10 +400,10 @@ export default function App() {
 
   /* ---- spacebar = stop (desktop demo nicety) ---- */
   useEffect(() => {
-    const onKey = (e) => { if (e.code === 'Space') { e.preventDefault(); handleStop() } }
+    const onKey = (e) => { if (e.code === 'Space') { e.preventDefault(); if (intro !== 'done') skipIntro(); else handleStop() } }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [handleStop])
+  }, [handleStop, intro])
 
   const yourDiff = yourTime != null ? Math.abs(yourTime - target) : null
 
@@ -370,34 +416,39 @@ export default function App() {
         <div className="absolute bottom-[-20%] right-[10%] h-[45rem] w-[45rem] rounded-full bg-fuchsia-600/10 blur-[120px]" />
       </div>
 
-      <div className="relative z-10 flex h-full w-full items-center justify-center lg:gap-10 lg:px-12 xl:gap-20">
-        <BrandPanel jackpot={jackpot} />
-
-        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-[#0a0b14] [container-type:size] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)]">
+      <div className="relative z-10 flex h-full w-full items-center justify-center lg:px-8">
+        <div className="grain relative flex h-full w-full max-w-[430px] shrink-0 flex-col overflow-hidden bg-[#0a0b14] [container-type:size] sm:h-[min(100svh-3rem,880px)] sm:rounded-[42px] sm:border sm:border-white/10 sm:shadow-[0_0_80px_-10px_rgba(34,211,238,0.25)] lg:max-w-[1000px]">
           {/* atmosphere */}
           <div className="bg-grid pointer-events-none absolute inset-0" />
           <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
           <div className="pointer-events-none absolute top-40 -right-28 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
-          <div className="relative z-10 flex h-full flex-col gap-[1.5vh] px-4 pt-[2vh] pb-[1.5vh]">
+          <div className="relative z-10 flex h-full flex-col gap-[1.5vh] px-4 pt-[2vh] pb-[1.5vh] lg:gap-4 lg:px-6 lg:pt-5 lg:pb-5">
             <Header
               balance={shownBalance} muted={muted}
               onMute={() => setMuted((m) => !m)} onBoard={() => setShowBoard(true)}
             />
-            <Jackpot value={jackpot} players={tablePlayers} round={round} />
 
-            <div className="min-h-0 flex-1">
-              <Stage
-                phase={phase} target={target} elapsed={elapsed}
-                countNum={countNum} lobbyLeft={lobbyLeft}
-                yourTime={yourTime} yourDiff={yourDiff} joined={joined}
-                balance={balance} onStop={handleStop}
-                onJoin={() => decide(true)} onSkip={() => decide(false)} onAddFunds={addFunds}
-              />
+            {/* mobile: stacked (jackpot · stage · feed). lg: live side-column + wide stage */}
+            <div className="stage-grid grid min-h-0 flex-1 grid-rows-[auto_1fr_auto] gap-[1.5vh]">
+              <div className="area-jackpot">
+                <Jackpot value={jackpot} players={tablePlayers} round={round} />
+              </div>
+
+              <div className="area-stage flex min-h-0 min-w-0 flex-col lg:rounded-2xl lg:bg-white/[0.02] lg:px-4 lg:py-3 lg:ring-1 lg:ring-white/10">
+                <Stage
+                  phase={phase} target={target} elapsed={elapsed}
+                  countNum={countNum} lobbyLeft={lobbyLeft}
+                  yourTime={yourTime} yourDiff={yourDiff} joined={joined}
+                  balance={balance} onStop={handleStop}
+                  onJoin={() => decide(true)} onSkip={() => decide(false)} onAddFunds={addFunds}
+                />
+              </div>
+
+              <div className="area-activity flex min-h-0 min-w-0 flex-col">
+                <Activity items={activity} boxRef={chatBoxRef} />
+              </div>
             </div>
-
-            <ResultsStrip phase={phase} results={results} />
-            <Activity items={activity} boxRef={chatBoxRef} />
           </div>
 
           {/* floating +¥gain rising toward the wallet */}
@@ -416,37 +467,42 @@ export default function App() {
           )}
         </div>
       </div>
+
+      {intro !== 'done' && <Intro leaving={intro === 'out'} onSkip={skipIntro} />}
     </div>
   )
 }
 
-/* Large-screen branding panel — hidden below lg. */
-function BrandPanel({ jackpot }) {
+/* full-screen 3-second intro splash (responsive on all sizes); tap/space to skip */
+function Intro({ leaving, onSkip }) {
   return (
-    <div className="hidden max-w-md flex-col gap-7 lg:flex xl:max-w-lg xl:gap-9">
-      <div>
-        <img src="/logo.svg" alt="TOKIQ" className="h-16 w-auto xl:h-[72px]" />
-        <div className="mt-4 text-[clamp(1rem,1.4vw,1.4rem)] font-medium tracking-wide text-white/50">
+    <div
+      onClick={onSkip}
+      className={`absolute inset-0 z-50 flex cursor-pointer flex-col items-center justify-center overflow-hidden bg-[#05060a] px-8 text-center ${leaving ? 'animate-intro-out' : ''}`}
+    >
+      <div className="bg-grid pointer-events-none absolute inset-0 opacity-70" />
+      <div className="pointer-events-none absolute -top-1/4 left-1/4 h-[40rem] w-[40rem] rounded-full bg-cyan-600/10 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-[40rem] w-[40rem] rounded-full bg-fuchsia-600/10 blur-[120px]" />
+
+      <div className="relative flex flex-col items-center">
+        <img src="/favicon.svg" alt="" className="intro-1 h-20 w-20 drop-shadow-[0_0_30px_rgba(34,211,238,0.35)] sm:h-24 sm:w-24" />
+        <img src="/logo.svg" alt="TOKIQ" className="intro-2 mt-6 h-9 w-auto sm:h-12" />
+        <div className="intro-3 mt-3 text-[clamp(0.9rem,3.6vw,1.3rem)] font-medium tracking-wide text-white/55">
           Beat Time. Win Together.
         </div>
-      </div>
-      <p className="max-w-sm text-[clamp(0.95rem,1.1vw,1.15rem)] leading-relaxed text-white/55">
-        A real-time precision game of nerve and timing. Stop the clock as close to the
-        target as you dare. The closest player takes the pool.
-      </p>
-      <div className="max-w-sm rounded-2xl bg-white/[0.04] p-5 ring-1 ring-white/10 backdrop-blur">
-        <div className="text-xs uppercase tracking-widest text-white/40">Mega Jackpot</div>
-        <div className="tnum jackpot-text mt-1 text-[clamp(2.25rem,3.2vw,3.25rem)] font-black tracking-tight">{yen(jackpot)}</div>
-        <div className="mt-1 flex items-center gap-2 text-sm font-medium text-emerald-300">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" /> live now
+        <p className="intro-4 mt-5 max-w-md text-[clamp(0.82rem,3vw,1.05rem)] leading-relaxed text-white/45">
+          A real-time precision game of nerve and timing. Stop the clock as close to the
+          target as you dare. The closest player takes the pool.
+        </p>
+        <div className="intro-5 mt-7 text-xs text-white/30">
+          Tap anywhere or press <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-white/55">Space</kbd> to enter
         </div>
       </div>
-      <div className="flex max-w-sm flex-wrap gap-2">
-        {['Skill-based', 'Real-time', 'Social', 'Premium'].map((t) => (
-          <span key={t} className="rounded-full bg-white/5 px-3 py-1 text-sm text-white/60 ring-1 ring-white/10">{t}</span>
-        ))}
+
+      {/* 3s progress bar */}
+      <div className="absolute bottom-[8%] h-[3px] w-44 overflow-hidden rounded-full bg-white/10">
+        <div className="intro-bar h-full rounded-full bg-cyan-400" />
       </div>
-      <div className="text-sm text-white/30">Tap the screen or press <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-white/60">Space</kbd> to STOP</div>
     </div>
   )
 }
@@ -600,34 +656,16 @@ function StopButton({ phase, joined, onStop }) {
   )
 }
 
-function ResultsStrip({ phase, results }) {
-  const show = phase === 'result' && results.length > 0
-  if (!show) return null // collapse (free the space) outside the results phase
-  return (
-    <div className="h-[clamp(48px,7.5vh,62px)] shrink-0">
-      {show && (
-        <div className="flex h-full items-center gap-2 overflow-x-auto rounded-xl bg-white/[0.03] p-2 no-scrollbar ring-1 ring-white/10">
-          {results.slice(0, 6).map((r, i) => (
-            <div key={r.name + i}
-              className={`flex shrink-0 items-center gap-2 rounded-lg px-2.5 py-1.5 ${r.you ? 'bg-cyan-500/15 ring-1 ring-cyan-400/40' : 'bg-white/5'}`}>
-              <span className={`grid h-5 w-5 place-items-center rounded-full text-[10px] font-bold ${i === 0 ? 'bg-amber-400 text-black' : 'bg-white/10 text-white/60'}`}>{i + 1}</span>
-              <span className="text-xs font-semibold text-white/90">{r.you ? 'You' : r.name}</span>
-              <span className="tnum text-xs text-white/60">{r.time.toFixed(2)}s</span>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
 // one unified live feed: winner/jackpot events interleaved with chat.
 // each row is a fixed 20px; the box shows exactly 3 rows (the rest scroll).
 function Activity({ items, boxRef }) {
   return (
-    <div className="shrink-0 rounded-xl bg-white/[0.03] px-2.5 py-1.5 ring-1 ring-white/10">
-      <div ref={boxRef} className="no-scrollbar h-[60px] overflow-y-auto">
-        {items.slice(-12).map((m) =>
+    <div className="flex shrink-0 flex-col rounded-xl bg-white/[0.03] px-2.5 py-1.5 ring-1 ring-white/10 lg:min-h-0 lg:flex-1">
+      <div className="hidden items-center gap-1.5 px-0.5 pb-1.5 text-[10px] uppercase tracking-widest text-white/40 lg:flex">
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> Live feed
+      </div>
+      <div ref={boxRef} className="no-scrollbar h-[60px] overflow-y-auto lg:h-auto lg:min-h-0 lg:flex-1">
+        {items.slice(-16).map((m) =>
           m.type === 'chat' ? (
             <div key={m.id} className="flex h-5 items-center gap-1.5 overflow-hidden text-[11px] leading-none">
               <span className={`shrink-0 font-semibold ${hashName(m.name)}`}>{m.name}</span>
