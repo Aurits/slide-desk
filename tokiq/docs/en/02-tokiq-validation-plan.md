@@ -98,7 +98,8 @@ engineering effort once the cheap signals justify it. Each stage feeds a decisio
 
 ### Experiment B: Moderated prototype playtests
 - **Who:** 8 to 12 people, one at a time, watched (in person or by screen-share).
-- **How:** hand them the existing prototype with **no instructions**. Observe, do not guide.
+- **How:** hand them the existing prototype (https://slide-desk.vercel.app/) with **no
+  instructions**. Observe, do not guide.
   Do they understand the goal? Do they tap "one more round" unprompted? Where do they smile,
   groan, lean in? When do they get bored?
 - **Tests:** H1, H2, H8.
