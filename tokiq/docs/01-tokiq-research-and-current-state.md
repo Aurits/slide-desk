@@ -1,12 +1,10 @@
 # Tokiq — Product Research & Current State
 
 **Document 1 of 2** · Companion: `02-tokiq-validation-plan.md`
-**Prepared by:** Ambrose Alanda, Technical Leadership, AIBOS
-**Audience:** Tokiq team (Martin, Joshua, Crispus & technical leadership)
 **Date:** 2026-06-04
 **Status:** Working draft. A basis for team discussion, not a commitment to build.
 
-> 🎯 **Why this document exists.** Before we talk about screens, code, or servers, the team
+> **Why this document exists.** Before we talk about screens, code, or servers, the team
 > should share one picture: what Tokiq is, how to think about a product like this, what we
 > have already built, and what we still need to find out. This is the *"where we are and how
 > to think"* document. The *"what we do next"* document is Document 2 (the Validation Plan).
@@ -99,7 +97,7 @@ language, with what each step means specifically for **Tokiq**.
 |:---:|---|---|---|
 | **1** | **Understand PMF** | A product does not create a market; a **market pulls a product**. A good product in a bad market loses. The best sign of fit is not revenue, it is **organic word-of-mouth**. | Don't ask *"is the timer fun?"* Ask *"is it compelling enough that people keep returning?"* |
 | **2** | **Measure PMF** | The real test is **retention**, not downloads. The **Sean Ellis test**: if **40%+** of users say they would be *"very disappointed"* to lose it, you likely have fit. | A million installs with no returners is failure. **100 players who play daily is alive.** |
-| **3** | **Customer development** ⭐ | **Talk before you build.** Use **Jobs-To-Be-Done**: people do not buy products, they *"hire"* them for an outcome. Interview power users, casual users, and **churned users** (they teach the most). | Players are not hiring Tokiq for *"timing accuracy."* They hire it for **excitement, status, hope, competition, stress relief.** |
+| **3** | **Customer development** | **Talk before you build.** Use **Jobs-To-Be-Done**: people do not buy products, they *"hire"* them for an outcome. Interview power users, casual users, and **churned users** (they teach the most). | Players are not hiring Tokiq for *"timing accuracy."* They hire it for **excitement, status, hope, competition, stress relief.** |
 | **4** | **Iteration** | **Never build before validating.** Run the **cheapest experiment first** (mockups, landing pages). Then loop: *build, measure, learn, repeat.* Track **outcomes, not outputs** (retention, not lines of code). | v1 timer, then feedback, then add rankings, then add tournaments, always learning. |
 | **5** | **Retention & engagement** | Find the **"Aha moment."** Use the **Hook Model** (see §5). **Unpredictable** rewards build stronger habits than **big** rewards. | Aha could be the first near-perfect stop, first win, or first leaderboard spot. The variable reward is the near-miss, *"I was so close."* |
 | **6** | **Growth channels** | Don't chase 10 channels. **Find one that works first.** For games the best channel is often **not paid ads** but referrals, community, streamers, and viral clips. Design the product to **spread itself.** | **Seeing others win is a built-in growth engine** (social proof). |
@@ -226,7 +224,7 @@ These are out of scope for the prototype **on purpose**, and they are the genuin
    question but does **not** automatically make it exempt.
 4. **A real path from round wins to the Mega Jackpot** (today it is an aspirational number).
 
-> 🔑 **Why this matters for our plan.** Because opponents are simulated, the prototype can
+> **Why this matters for our plan.** Because opponents are simulated, the prototype can
 > validate the **feel of the loop** and the **near-miss hook**, but it **cannot yet** prove
 > true multiplayer retention or real-money willingness to pay. Document 2 is built around that
 > exact limitation.
@@ -279,7 +277,7 @@ For each, learn: who plays, why, how old, how much they spend, what they love, w
 | Trust mechanism | Provably fair (SHA-256) | Must be **designed in** (provably fair) |
 | Social layer | Live bets and chat | Live feed, chat, leaderboards (planned) |
 
-> ❓ **The open strategic question.** *Why would a player choose Tokiq over Aviator?* We do not
+> **The open strategic question.** *Why would a player choose Tokiq over Aviator?* We do not
 > have a validated answer yet. The likely candidates, a stronger **sense of skill** (*"I can
 > get better"*) and a **cleaner, more social, less casino-coded** feel, are **hypotheses, not
 > facts.** Document 2 is designed to test them.

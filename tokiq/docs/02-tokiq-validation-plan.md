@@ -1,8 +1,6 @@
 # Tokiq — Validation Plan
 
 **Document 2 of 2** · Companion: `01-tokiq-research-and-current-state.md`
-**Prepared by:** Ambrose Alanda, Technical Leadership, AIBOS
-**Audience:** Tokiq team (Martin, Joshua, Crispus & technical leadership)
 **Date:** 2026-06-04
 **Status:** Working draft, a basis for team discussion.
 
@@ -25,7 +23,7 @@ talked to enough real players, and the prototype's opponents are simulated, so w
 claim anything about retention or willingness to pay. **This plan is about removing that
 uncertainty cheaply.**
 
-> 📘 The *reasoning* behind this plan (the product mindset, the 5 learning phases, the 7-step
+> The *reasoning* behind this plan (the product mindset, the 5 learning phases, the 7-step
 > path to Product-Market Fit, and the "research board" questions) lives in **Document 1, §2,
 > "How to think about a product like Tokiq."** This document turns that thinking into action.
 
@@ -51,7 +49,7 @@ for "validated" or "invalidated."
 | **H7 Trust** | A provably-fair guarantee matters and is believable. | Trust and fairness come up as important, and our explanation is understood. |
 | **H8 Skill perception** | Players believe they can improve. | Players report a sense of mastery or progress over sessions. |
 
-> 🎯 The **two that matter most right now are H1 (is it fun?) and H3 (do they come back?).** If
+> The **two that matter most right now are H1 (is it fun?) and H3 (do they come back?).** If
 > those fail, nothing else matters. H4, H7, and the regulatory question matter before any
 > real-money launch.
 
