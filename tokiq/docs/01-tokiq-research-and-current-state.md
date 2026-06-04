@@ -137,7 +137,7 @@ The fuller **10-question version** for deeper sessions:
 > Aviator** · what emotion are we selling · what builds trust · what makes **winning
 > memorable** · what makes **losing tolerable** · what drives long-term retention.
 
-### 2.5 Where these ideas come from (and one honesty note)
+### 2.5 Where these ideas come from
 
 This thinking is not invented in-house. It is the mainstream of how modern products are built,
 drawn from three places:
@@ -148,19 +148,14 @@ drawn from three places:
   the 7 steps in §2.3.
 - **Constant re-application to Tokiq:** every concept above is bent back toward our game.
 
-> ⚠️ **Honesty note for the team.** When this material was first gathered (via ChatGPT), the
-> earliest module summaries were **educated guesses from the module titles**, not the real
-> page content, and the tool openly admitted this. Only the **final pass** was based on
-> actually reading the source pages. The takeaway: the framework is sound and standard, but if
-> we ever quote specific figures or claims externally, **we verify them against the primary
-> source first.** The same caution applies to the market numbers in §4.
-
 ---
 
 ## 3. What we have built so far (current state of the prototype)
 
 The prototype is a **front-end-only MVP**, built to look and feel like a live multiplayer
 product for demos and concept validation. It is **not** the real game, and that is by design.
+
+**Live prototype:** https://slide-desk.vercel.app/
 
 > Kept simple: it is a modern web app (React + Vite + Tailwind) that runs in any browser, with
 > no server behind it. The whole game flows through four screens.
@@ -192,8 +187,7 @@ Other deliberate demo choices:
 - Opponent times use **bell-curve noise near the target**, so they read as skill, not chaos.
 - Polished feel: stopwatch ticks that tighten near the target, music only while the clock
   runs, confetti and a win sound, a 3-second intro, installable as an app (PWA), fully
-  responsive, and **three languages: English, Español, 日本語** (Japanese reflects a likely
-  target market).
+  responsive, and **three languages: English, Español, 日本語**.
 
 ### 3.2 The current (prototype) money model, *illustrative only*
 
@@ -363,7 +357,7 @@ not like a developer shipping features.
 ---
 
 ### Appendix: prototype facts at a glance
-- Repo `slide-desk/tokiq`, single-file game in `src/App.jsx`, stack React 18 / Vite 6 / Tailwind v4.
+- Live prototype: https://slide-desk.vercel.app/
 - Screens: lobby, countdown, running, result. Languages: EN / ES / JA. Installable (PWA).
 - Demo numbers: entry **¥100**, house **10%**, start balance **¥5,000**, top-up **¥5,000**, table **8 to 14 players**.
 - Backend: **none.** Multiplayer, payments, anti-cheat: **not implemented yet.**
