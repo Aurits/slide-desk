@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>How to Clean Your Fishing Gear</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
+    font-family: "EB Garamond", "Garamond", "Cambria", "Georgia", "Liberation Serif", serif;
+    font-size: 11pt; line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .cover { page-break-after: always; height: 247mm; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 0; }
+  .cover-top { padding-top: 30mm; }
+  .cover-eyebrow { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; letter-spacing: 6px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 14mm; }
+  .cover-rule { width: 28mm; height: 1px; background: #1a1a1a; margin-bottom: 16mm; }
+  .cover-title { font-size: 34pt; font-weight: 400; line-height: 1.15; letter-spacing: -0.3px; margin: 0; max-width: 150mm; }
+  .cover-subtitle { font-style: italic; font-size: 14pt; color: #4a4a4a; line-height: 1.5; margin-top: 10mm; max-width: 145mm; }
+  .cover-bottom { padding-bottom: 6mm; border-top: 1px solid #d4d4d4; padding-top: 8mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 14mm; vertical-align: top; }
+  .cover-meta .label { text-transform: uppercase; letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: #1a1a1a; font-size: 10.5pt; font-weight: 500; }
+
+  .doc { padding-top: 4mm; }
+  .doc-header { border-bottom: 1px solid #1a1a1a; padding-bottom: 6mm; margin-bottom: 10mm; }
+  .doc-header .kicker { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 4mm; }
+  .doc-header h1 { font-weight: 400; font-size: 22pt; line-height: 1.2; margin: 0 0 3mm 0; }
+  .doc-header .sub { font-style: italic; font-size: 12pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; color: #6b6b6b; margin-top: 5mm; letter-spacing: 0.3px; }
+  .doc-header .meta-line span + span::before { content: "·"; margin: 0 8px; color: #b0b0b0; }
+
+  h2.section { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 11pt; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin: 13mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { color: #8a8a8a; font-weight: 500; margin-right: 10px; }
+  h3.sub { font-style: italic; font-weight: 400; font-size: 12.5pt; margin: 7mm 0 2mm 0; page-break-after: avoid; }
+  p { margin: 0 0 5mm 0; text-align: justify; hyphens: auto; }
+  p.lead-in { page-break-after: avoid; text-align: left; }
+
+  ul { margin: 2mm 0 6mm 0; padding-left: 7mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 1.8mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "·"; position: absolute; left: 0; color: #8a8a8a; font-weight: 700; }
+
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 3mm 0 6mm 0; }
+  ol.steps li { position: relative; padding-left: 12mm; margin-bottom: 3.5mm; page-break-inside: avoid; text-align: left; }
+  ol.steps li::before { counter-increment: step; content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0.4mm; font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; font-weight: 600; color: #8a8a8a; letter-spacing: 1px; }
+  ol.steps li b { font-weight: 700; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 4mm 0 7mm 0; page-break-inside: avoid; }
+  table.tbl th { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6b6b6b; text-align: left; padding: 0 6mm 2.5mm 0; border-bottom: 1px solid #1a1a1a; vertical-align: bottom; }
+  table.tbl td { font-size: 10pt; padding: 2.5mm 6mm 2.5mm 0; border-bottom: 0.5px solid #ececec; vertical-align: top; line-height: 1.45; }
+  table.tbl th:last-child, table.tbl td:last-child { padding-right: 0; }
+
+  .figs { display: flex; gap: 6mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .figs figure { margin: 0; flex: 1; }
+  .figs img { width: 100%; height: 48mm; object-fit: contain; background: #fff; border: 1px solid #d4d4d4; display: block; }
+  .figs.single { justify-content: center; }
+  .figs.single figure { flex: 0 0 70mm; }
+  .figs.single img { height: 52mm; }
+  figcaption { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.45; }
+
+  .note { margin-top: 9mm; padding-top: 5mm; border-top: 1px solid #d4d4d4; page-break-inside: avoid; }
+  .note .label { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: #8a8a8a; display: block; margin-bottom: 2mm; }
+  .sources { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; line-height: 1.5; margin-top: 8mm; text-align: left; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">Ogasawara Fishing &middot; Care Guide</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">How to Clean Your Fishing Gear</h1>
+    <p class="cover-subtitle">A simple, step by step guide to cleaning, caring for, and maintaining every piece of gear you will use in Ogasawara, from rods and reels to line, hooks, lures, tackle, tools, and safety equipment.</p>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">Prepared for</span><span class="value">Ogasawara Trip, June 2026</span></div>
+      <div class="col"><span class="label">Status</span><span class="value">Steps verified against angling sources</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY -->
+<section class="doc">
+  <div class="doc-header">
+    <div class="kicker">Ogasawara Fishing &middot; Care Guide</div>
+    <h1>How to Clean Your Fishing Gear</h1>
+    <p class="sub">Cleaning, care, and maintenance for the full Ogasawara fishing kit.</p>
+    <p class="meta-line"><span>Ogasawara Islands, Tokyo</span><span>June 2026</span></p>
+  </div>
+
+  <!-- 01 -->
+  <h2 class="section"><span class="num">01</span>The Golden Rules</h2>
+  <p>Saltwater is hard on fishing gear. Salt that is left to dry will corrode metal, stiffen moving parts, and shorten the life of everything you own. The most important habit is also the simplest one: clean your gear soon after every trip, before the salt has a chance to dry. The rules below apply to all four sets of gear, and the sections that follow add the detail for each one.</p>
+  <ul>
+    <li>Rinse with fresh water on a gentle, low pressure setting. A high pressure jet only drives salt deeper inside.</li>
+    <li>Keep the drag tight while you rinse, so water cannot work its way into the drag washers.</li>
+    <li>Dry everything with a soft cloth, then leave it to air dry fully.</li>
+    <li>Let the line dry completely before storing, so that it does not grow mould.</li>
+    <li>Loosen the reel drag once everything is dry and ready to be put away.</li>
+    <li>Store gear in a cool, dry place, out of direct sunlight.</li>
+  </ul>
+
+  <!-- 02 -->
+  <h2 class="section"><span class="num">02</span>Cleaning the Rod</h2>
+  <p>The guides and the reel seat are where salt and grit collect most, so give them the most attention.</p>
+  <div class="figs single">
+    <figure><img src="images/rod_shore_set.jpg"><figcaption>Pay close attention to the guides and the reel seat, where salt builds up.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Remove the reel.</b> Take the reel off the rod and wipe down the line.</li>
+    <li><b>Rinse the rod.</b> Rinse the whole rod gently with fresh water at low pressure.</li>
+    <li><b>Wash it.</b> Wash the rod with mild soapy water, paying special attention to the guides and the reel seat.</li>
+    <li><b>Brush the guides.</b> Brush around each guide with a soft toothbrush to lift out trapped salt and grit. Check each guide ring for cracks while you do this.</li>
+    <li><b>Clean the grip.</b> Clean the handle with mild soap. Use a toothbrush on cork, and simply wipe down EVA foam.</li>
+    <li><b>Dry and protect.</b> Dry the rod fully, especially the reel seat and guides. For extra protection, wipe the metal guides with a cloth lightly sprayed with silicone.</li>
+    <li><b>Store it.</b> Keep the rod in a cool, dry place away from sunlight, ideally in a rod holder or case.</li>
+  </ol>
+
+  <!-- 03 -->
+  <h2 class="section"><span class="num">03</span>Cleaning the Spinning Reel</h2>
+  <p>Rinse a reel gently and never blast it with water, because high pressure forces salt into the internal parts.</p>
+  <div class="figs single">
+    <figure><img src="images/spinning_reel.jpg"><figcaption>Rinse gently with the drag tight, then dry, oil lightly, and loosen the drag for storage.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Rinse it.</b> Rinse the reel gently right after the trip, with the drag still tight and the water pressure low.</li>
+    <li><b>Wash it.</b> Wash it with warm, soapy fresh water to remove salt, oils, blood, and dirt.</li>
+    <li><b>Clean under the spool.</b> Take off the spool and wipe the spindle and the area beneath it.</li>
+    <li><b>Dry it.</b> Dry the reel with a clean towel, then leave it to air dry.</li>
+    <li><b>Oil it.</b> Apply a little oil to the moving parts and the handle, with a single drop on the bearings. A small amount is plenty, since too much only attracts grit.</li>
+    <li><b>Protect the body.</b> Wipe the body with a cloth carrying a light protective coat, such as a reel protectant or a light polish.</li>
+    <li><b>Loosen and store.</b> Loosen the drag and put it away. For saltwater use, have the reel fully serviced about once a year.</li>
+  </ol>
+
+  <!-- 04 -->
+  <h2 class="section"><span class="num">04</span>Cleaning the Bait (Baitcasting) Reel</h2>
+  <p>A baitcaster comes apart into a few pieces, which makes it easy to flush out salt and sand. The one rule to remember is what <em>not</em> to oil.</p>
+  <div class="figs single">
+    <figure><img src="images/baitcaster.jpg"><figcaption>Flush each piece, oil the bearings sparingly, and never oil the brakes or the one way clutch.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Rinse and wipe.</b> Take the reel off the rod, rinse it gently with warm water, and wipe it dry at once with a soft cloth.</li>
+    <li><b>Open it up.</b> Open the side plate and remove the spool. Most baitcasters come apart into three pieces: the body, the side plate with handle, and the spool.</li>
+    <li><b>Clean each piece.</b> Wash salt and sand off each piece, and clean each bearing with a cotton swab.</li>
+    <li><b>Dry fully.</b> Dry every piece completely before putting it back together.</li>
+    <li><b>Oil the right points.</b> Put one drop of oil on each spool bearing (under the cast control cap, inside the palm side cover, and on the spool shaft), on the handle bearing, along the level wind, and on the worm gear. Oil the star drag, then work it open and closed to spread the oil.</li>
+    <li><b>Know what to avoid.</b> Do not oil the braking system or the one way clutch, because oil there causes problems.</li>
+    <li><b>Reassemble and store.</b> Put it back together, loosen the drag, and store it. With saltwater use, give it a deeper service about every six months.</li>
+  </ol>
+
+  <!-- 05 -->
+  <h2 class="section"><span class="num">05</span>Cleaning the Telescopic Landing Net</h2>
+  <p>The net and the pole need different care. The mesh must be rinsed and dried so it does not rot, and the locking joints must be kept free of salt so the pole keeps sliding smoothly.</p>
+  <div class="figs single">
+    <figure><img src="images/landing_net_pole.jpg"><figcaption>Rinse the mesh and pole, dry the net fully before collapsing it, and keep the locking joints free of salt.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Rinse it through.</b> Rinse the net and the pole with plenty of fresh water to wash out salt, slime, scales, and sand. Spreading or hanging the net helps the water reach all of the mesh.</li>
+    <li><b>Wash if needed.</b> If the net is heavily soiled, wash it with a mild detergent.</li>
+    <li><b>Wash the pole.</b> Wash the pole sections with soapy water and a sponge.</li>
+    <li><b>Dry the net fully.</b> Let the net dry completely before you collapse and store it. A damp net leads to mould, mildew, and rotting cord.</li>
+    <li><b>Care for the joints.</b> Rinse the locking joints with fresh water so salt does not seize them. Wiping each pole section with a silicone cloth helps it slide smoothly and repels water.</li>
+    <li><b>Inspect and store.</b> Check the mesh for holes and the frame and joints for corrosion. Store the net dry, and avoid leaving it in strong sun for long periods.</li>
+  </ol>
+
+  <!-- 06 -->
+  <h2 class="section"><span class="num">06</span>Fishing Line</h2>
+  <p>Line is the most overlooked part of the kit, yet it fails more often than rods or reels. Salt, sun, and abrasion all weaken it over time, so it needs a quick check after every trip.</p>
+  <ul>
+    <li>Braided line (PE): the main line for GT, amberjack, tuna, and groupers.</li>
+    <li>Fluorocarbon: tied to the braid as the leader.</li>
+    <li>Monofilament: sometimes used for bait fishing.</li>
+  </ul>
+  <h3 class="sub">After every trip</h3>
+  <ol class="steps">
+    <li><b>Rinse on the reel.</b> Leave the line on the reel and rinse the spool gently with fresh water.</li>
+    <li><b>Dry it.</b> Let the line dry completely before storing.</li>
+    <li><b>Inspect the end.</b> Check the first 5 to 10 metres for fraying, flat spots, abrasion, or discolouration.</li>
+    <li><b>Cut and retie.</b> Cut off any damaged section and retie your knots.</li>
+    <li><b>Check the knots.</b> Make sure every knot is still tight and clean.</li>
+  </ol>
+  <table class="tbl">
+    <tr><th>Line type</th><th>When to replace</th></tr>
+    <tr><td>PE braid</td><td>6 to 12 months</td></tr>
+    <tr><td>Fluorocarbon leader</td><td>Whenever it is damaged</td></tr>
+    <tr><td>Monofilament</td><td>About every 6 months</td></tr>
+  </table>
+
+  <!-- 07 -->
+  <h2 class="section"><span class="num">07</span>Hooks</h2>
+  <p>Hooks are a key consumable. They rust quickly in saltwater, and a dull or rusty point loses fish, so dry and inspect them after every trip.</p>
+  <ul>
+    <li>Circle hooks: live bait, and catch and release.</li>
+    <li>J-hooks: general bait fishing.</li>
+    <li>Assist hooks: jigging.</li>
+    <li>Treble hooks: GT lures, poppers, and stickbaits.</li>
+  </ul>
+  <div class="figs">
+    <figure><img src="images/hook_circle.jpg"><figcaption>Circle hooks, best for live bait and for catch and release.</figcaption></figure>
+    <figure><img src="images/hook_assist.jpg"><figcaption>Assist hooks, rigged on metal jigs for jigging.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Rinse.</b> Rinse hooks thoroughly in fresh water after every trip.</li>
+    <li><b>Dry.</b> Dry them completely before they go back in the box.</li>
+    <li><b>Check the point.</b> A point that will not catch on a thumbnail is blunt.</li>
+    <li><b>Sharpen or replace.</b> Touch up blunt points, and throw out any rusted hooks at once.</li>
+    <li><b>Store dry.</b> Keep hooks in a dry tackle box with a silica gel pack to hold off moisture.</li>
+  </ol>
+
+  <!-- 08 -->
+  <h2 class="section"><span class="num">08</span>Lures</h2>
+  <p>The Ogasawara guide leans heavily on jigging and casting, so lures earn their own care routine. Salt attacks the hooks, split rings, and hardware long before the body wears out.</p>
+  <ul>
+    <li>Metal jigs: amberjack, tuna, and dogtooth tuna.</li>
+    <li>Slow pitch jigs: ruby snapper and other deep water species.</li>
+    <li>Poppers and stickbaits: giant trevally and tuna.</li>
+    <li>Inchiku jigs: akahata and reef fish.</li>
+  </ul>
+  <div class="figs single">
+    <figure><img src="images/lure_stickbait.jpg"><figcaption>A stickbait for surface casting. Rinse it, then check the hooks and split rings.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Remove the hooks.</b> Take the hooks off the lure.</li>
+    <li><b>Rinse.</b> Rinse the lure in fresh water.</li>
+    <li><b>Dry.</b> Dry it completely.</li>
+    <li><b>Check split rings.</b> Replace any split ring that is bent or rusted.</li>
+    <li><b>Check the body.</b> Look over the paint and the eyes for damage.</li>
+    <li><b>Oil swivels.</b> Put a tiny drop of oil on any built in swivels so they keep turning freely.</li>
+  </ol>
+
+  <!-- 09 -->
+  <h2 class="section"><span class="num">09</span>Terminal Tackle</h2>
+  <p>Terminal tackle is small and easy to ignore, but a single rusted swivel or weak snap is enough to lose a good fish. Rinse and inspect it like everything else.</p>
+  <ul>
+    <li>Swivels: stop the line twisting.</li>
+    <li>Snaps: allow quick lure changes.</li>
+    <li>Split rings: join hooks to lures.</li>
+    <li>Sinkers: hold the bait at depth.</li>
+    <li>Beads: protect the knots.</li>
+    <li>Sabiki rigs: important for Umeiro (yellowtail blue snapper) fishing.</li>
+  </ul>
+  <div class="figs">
+    <figure><img src="images/swivel.jpg"><figcaption>Swivels and snap swivels, which stop line twist and speed up lure changes.</figcaption></figure>
+    <figure><img src="images/sinker.jpg"><figcaption>Lead sinkers in a range of weights, to hold bait at depth.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Rinse.</b> Rinse all terminal tackle in fresh water.</li>
+    <li><b>Dry.</b> Dry it completely.</li>
+    <li><b>Inspect.</b> Look for corrosion, and check that snaps and swivels still move freely.</li>
+    <li><b>Replace.</b> Swap out any rusted part before it fails on a fish.</li>
+  </ol>
+
+  <!-- 10 -->
+  <h2 class="section"><span class="num">10</span>Fish Handling Tools</h2>
+  <p>Big Ogasawara fish such as GT, amberjack, and dogtooth tuna are handled with grips, pliers, and a knife. These tools live in saltwater and slime, so they need cleaning and a light oil to keep working.</p>
+  <ul>
+    <li>Fish grips: hold large fish safely for GT, amberjack, and dogtooth tuna.</li>
+    <li>Pliers: remove hooks, change split rings, and cut leader.</li>
+    <li>Dehooking tool: free a deeply swallowed hook.</li>
+    <li>Fillet knife: process fish for the table.</li>
+  </ul>
+  <div class="figs single">
+    <figure><img src="images/fishgrip_boga.jpg"><figcaption>A fish grip for holding large fish safely. Rinse, dry, and oil the moving jaw.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Wash at once.</b> Wash grips, pliers, and knives straight after use.</li>
+    <li><b>Dry fully.</b> Dry every tool completely.</li>
+    <li><b>Oil the joints.</b> Put a light drop of oil on the moving joints of pliers and grips.</li>
+    <li><b>Care for the knife.</b> Oil the blade lightly and store the knife in its sheath.</li>
+    <li><b>Check the action.</b> Make sure spring jaws and cutters still work, and remove any rust.</li>
+  </ol>
+
+  <!-- 11 -->
+  <h2 class="section"><span class="num">11</span>Bait Storage Equipment</h2>
+  <p>The Ogasawara guide relies on squid, muroaji, shellfish, and sea urchin, so the gear that keeps bait fresh must be kept clean and free of odour.</p>
+  <ul>
+    <li>Bait bucket: holds live or cut bait.</li>
+    <li>Aerator: keeps live bait alive.</li>
+    <li>Livewell: a larger live bait tank.</li>
+    <li>Insulated cooler or ice box: keeps bait and catch cold.</li>
+  </ul>
+  <ol class="steps">
+    <li><b>Empty it.</b> Tip out all leftover bait and slime.</li>
+    <li><b>Wash.</b> Wash with soap and water.</li>
+    <li><b>Disinfect.</b> Disinfect to kill odour and bacteria.</li>
+    <li><b>Air dry.</b> Rinse and air dry fully before storing.</li>
+  </ol>
+
+  <!-- 12 -->
+  <h2 class="section"><span class="num">12</span>Safety Equipment</h2>
+  <p>Ogasawara's shore marks are high volcanic rock against open ocean, so safety gear is not optional. Salt and sun degrade it, so rinse, dry, and check it like the rest of the kit.</p>
+  <ul>
+    <li>Life jacket: mandatory.</li>
+    <li>Rock cleats (studded boots): essential on slick volcanic rock.</li>
+    <li>Polarised sunglasses: help you see fish and structure, and protect your eyes.</li>
+    <li>Gloves: protect your hands from line, leader, and fish.</li>
+    <li>First aid kit: required.</li>
+  </ul>
+  <div class="figs">
+    <figure><img src="images/safety_lifevest.jpg"><figcaption>A life jacket, worn at all times on the rocks.</figcaption></figure>
+    <figure><img src="images/safety_rockshoes.jpg"><figcaption>Rock cleats, for grip on slick volcanic rock.</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>Rinse and dry.</b> Rinse the life jacket and gloves in fresh water and dry them fully, out of direct sun.</li>
+    <li><b>Check the life jacket.</b> Check the buckles and straps, and the gas cylinder on inflatable types.</li>
+    <li><b>Care for cleats.</b> Rinse and dry rock cleats, and check the studs or felt soles for wear.</li>
+    <li><b>Clean eyewear.</b> Wipe sunglasses with a clean cloth and keep them in a case.</li>
+    <li><b>Restock first aid.</b> Refill the first aid kit and check the use by dates.</li>
+  </ol>
+
+  <!-- 13 -->
+  <h2 class="section"><span class="num">13</span>Knots Worth Knowing</h2>
+  <p>Knots fail more often than rods or reels, so they are worth practising until they are second nature. The table lists the most useful knots for Ogasawara.</p>
+  <table class="tbl">
+    <tr><th>Knot</th><th>Purpose</th></tr>
+    <tr><td>FG knot</td><td>Joining braid to the leader</td></tr>
+    <tr><td>Palomar knot</td><td>Attaching a hook</td></tr>
+    <tr><td>Uni knot</td><td>General purpose connection</td></tr>
+    <tr><td>Improved clinch knot</td><td>Attaching hooks</td></tr>
+    <tr><td>Loop knot</td><td>Giving a lure free movement</td></tr>
+  </table>
+
+  <!-- 14 -->
+  <h2 class="section"><span class="num">14</span>Tackle Storage and Transport</h2>
+  <p>Getting gear to Ogasawara in one piece matters as much as cleaning it. Pack everything clean, dry, and protected for the journey.</p>
+  <ul>
+    <li>Rod tube: protects rods in transit.</li>
+    <li>Reel covers: prevent knocks and scratches.</li>
+    <li>Waterproof tackle boxes: keep terminal tackle dry and rust free.</li>
+    <li>Dry bags: protect phones, documents, and electronics.</li>
+  </ul>
+  <ol class="steps">
+    <li><b>Pack it clean and dry.</b> Make sure everything is clean and fully dry before it goes in the bag.</li>
+    <li><b>Loosen the drags.</b> Back off all reel drags for storage and travel.</li>
+    <li><b>Store it cool.</b> Keep gear in a cool, dry place away from direct sunlight.</li>
+    <li><b>Long storage.</b> For storage longer than three months, consider stripping the old line off your reels.</li>
+  </ol>
+
+  <!-- 15 -->
+  <h2 class="section"><span class="num">15</span>How Often to Clean</h2>
+  <p>Rinsing and drying happen after every trip. Oiling and deep servicing happen far less often. Use the schedule below as a simple guide.</p>
+  <table class="tbl">
+    <tr><th>Task</th><th>How often</th></tr>
+    <tr><td>Rinse and dry all gear</td><td>After every trip</td></tr>
+    <tr><td>Loosen the drag for storage</td><td>After every trip</td></tr>
+    <tr><td>Dry the line before storing</td><td>After every trip</td></tr>
+    <tr><td>Inspect line, hooks, and lures</td><td>After every trip</td></tr>
+    <tr><td>Check safety gear (life jacket, cleats)</td><td>Before every trip</td></tr>
+    <tr><td>Oil the reel moving parts</td><td>Monthly, or after heavy saltwater use</td></tr>
+    <tr><td>Brush the guides and check the rod</td><td>Every few trips</td></tr>
+    <tr><td>Check terminal tackle and split rings</td><td>Every few trips</td></tr>
+    <tr><td>Full spinning reel service</td><td>Once a year</td></tr>
+    <tr><td>Full baitcasting reel service</td><td>About every six months in saltwater</td></tr>
+    <tr><td>Replace PE braided line</td><td>Every 6 to 12 months</td></tr>
+    <tr><td>Strip or replace old line</td><td>Before storing for three months or more</td></tr>
+  </table>
+
+  <div class="note">
+    <span class="label">A word on deep servicing</span>
+    <p>A full strip down of a reel is fiddly, with many small parts that are easy to lose. If a reel feels gritty or stiff inside, it is usually best to let a tackle shop service it rather than open it up yourself.</p>
+  </div>
+
+  <p class="sources"><strong>Verification &amp; sources.</strong> The steps in this guide were cross-checked against authoritative angling references: The Tackle Room, Battlbox, and In The Spread (rod cleaning); KastKing, Salt Strong, and Saltwater Sportsman (reel care); Abu Garcia, Lew's, and Louisiana Sportsman (baitcaster care); Rising Fishing (landing net care); Reaction Tackle and The Tackle Room (line and storage); Angling Direct and Salt Strong (hooks and terminal tackle); and general saltwater tackle care guidance for lures, tools, and safety gear. Equipment categories and images are drawn from the linked ChatGPT research session and the uploaded Ogasawara 2018 Fishing Species Guide. This guide is the companion to How to Use Your Fishing Gear.</p>
+
+</section>
+</body>
+</html>

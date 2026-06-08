@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>How to Use Your Fishing Gear</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
+    font-family: "EB Garamond", "Garamond", "Cambria", "Georgia", "Liberation Serif", serif;
+    font-size: 11pt; line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .sans { font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
+
+  /* ============ COVER PAGE ============ */
+  .cover {
+    page-break-after: always; height: 247mm; position: relative;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 0;
+  }
+  .cover-top { padding-top: 30mm; }
+  .cover-eyebrow {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 9pt; letter-spacing: 6px; text-transform: uppercase;
+    color: #6b6b6b; margin-bottom: 14mm;
+  }
+  .cover-rule { width: 28mm; height: 1px; background: #1a1a1a; margin-bottom: 16mm; }
+  .cover-title { font-size: 34pt; font-weight: 400; line-height: 1.15; letter-spacing: -0.3px; margin: 0; max-width: 150mm; }
+  .cover-subtitle { font-style: italic; font-size: 14pt; color: #4a4a4a; line-height: 1.5; margin-top: 10mm; max-width: 140mm; }
+  .cover-bottom { padding-bottom: 6mm; border-top: 1px solid #d4d4d4; padding-top: 8mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 14mm; vertical-align: top; }
+  .cover-meta .label { text-transform: uppercase; letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: #1a1a1a; font-size: 10.5pt; font-weight: 500; }
+
+  /* ============ DOCUMENT BODY ============ */
+  .doc { padding-top: 4mm; }
+  .doc-header { border-bottom: 1px solid #1a1a1a; padding-bottom: 6mm; margin-bottom: 10mm; }
+  .doc-header .kicker { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 4mm; }
+  .doc-header h1 { font-weight: 400; font-size: 22pt; line-height: 1.2; margin: 0 0 3mm 0; }
+  .doc-header .sub { font-style: italic; font-size: 12pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; color: #6b6b6b; margin-top: 5mm; letter-spacing: 0.3px; }
+  .doc-header .meta-line span + span::before { content: "·"; margin: 0 8px; color: #b0b0b0; }
+
+  h2.section { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 11pt; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin: 13mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { color: #8a8a8a; font-weight: 500; margin-right: 10px; }
+  h3.sub { font-style: italic; font-weight: 400; font-size: 12.5pt; margin: 7mm 0 2mm 0; page-break-after: avoid; }
+  p { margin: 0 0 5mm 0; text-align: justify; hyphens: auto; }
+  p.lead-in { page-break-after: avoid; text-align: left; }
+
+  ul { margin: 2mm 0 6mm 0; padding-left: 7mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 1.5mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: #8a8a8a; }
+
+  /* ============ NUMBERED STEPS ============ */
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 3mm 0 6mm 0; }
+  ol.steps li { position: relative; padding-left: 12mm; margin-bottom: 3.5mm; page-break-inside: avoid; text-align: left; }
+  ol.steps li::before {
+    counter-increment: step; content: counter(step, decimal-leading-zero);
+    position: absolute; left: 0; top: 0.4mm;
+    font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; font-weight: 600;
+    color: #8a8a8a; letter-spacing: 1px;
+  }
+  ol.steps li b { font-weight: 700; }
+
+  /* ============ TABLES ============ */
+  table.tbl { width: 100%; border-collapse: collapse; margin: 4mm 0 7mm 0; page-break-inside: avoid; }
+  table.tbl th { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6b6b6b; text-align: left; padding: 0 6mm 2.5mm 0; border-bottom: 1px solid #1a1a1a; vertical-align: bottom; }
+  table.tbl td { font-size: 10pt; padding: 2.5mm 6mm 2.5mm 0; border-bottom: 0.5px solid #ececec; vertical-align: top; line-height: 1.45; }
+  table.tbl th:last-child, table.tbl td:last-child { padding-right: 0; }
+
+  /* ============ FIGURES ============ */
+  .figs { display: flex; gap: 6mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .figs figure { margin: 0; flex: 1; }
+  .figs img { width: 100%; height: 48mm; object-fit: contain; background: #fff; border: 1px solid #d4d4d4; display: block; }
+  .figs.photo img { object-fit: cover; }
+  .figs.single { justify-content: center; }
+  .figs.single figure { flex: 0 0 72mm; }
+  .figs.single img { height: 58mm; }
+  figcaption { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.45; }
+
+  .note { margin-top: 9mm; padding-top: 5mm; border-top: 1px solid #d4d4d4; page-break-inside: avoid; }
+  .note .label { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: #8a8a8a; display: block; margin-bottom: 2mm; }
+  .sources { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; line-height: 1.5; margin-top: 8mm; text-align: left; }
+
+  .video { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 5mm 0; text-align: left; }
+  .video .tag { text-transform: uppercase; letter-spacing: 1.5px; font-size: 7.5pt; font-weight: 600; color: #8a8a8a; margin-right: 8px; }
+  .video a { color: #1a1a1a; text-decoration: none; border-bottom: 0.5px solid #b0b0b0; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">Ogasawara Fishing &mdash; Field Guide</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">How to Use Your Fishing Gear</h1>
+    <p class="cover-subtitle">A simple, step-by-step guide to rods, spinning reels, bait (baitcasting) reels, and the telescopic landing net.</p>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">Prepared for</span><span class="value">Ogasawara Trip &mdash; June 2026</span></div>
+      <div class="col"><span class="label">Status</span><span class="value">Steps verified against angling sources</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BODY ===================== -->
+<section class="doc">
+  <div class="doc-header">
+    <div class="kicker">Ogasawara Fishing &mdash; Field Guide</div>
+    <h1>How to Use Your Fishing Gear</h1>
+    <p class="sub">Rods, spinning reels, bait (baitcasting) reels, and the telescopic landing net.</p>
+    <p class="meta-line"><span>Ogasawara Islands, Tokyo</span><span>June 2026</span></p>
+  </div>
+
+  <!-- 01 OVERVIEW -->
+  <h2 class="section"><span class="num">01</span>The Four Tools</h2>
+  <p>Each tool does one main job. The rod is the frame you hold and cast with; the reel mounts on the rod and stores and releases the line; the landing net lifts a hooked fish safely out of the water. Match the right tool to the fish and you are ready to fish almost anywhere in Ogasawara &mdash; from the high rocky shore to deep offshore water.</p>
+  <table class="tbl">
+    <tr><th>Tool</th><th>Main Job</th><th>Best For (Ogasawara)</th></tr>
+    <tr><td>Fishing rod</td><td>The frame you cast with and fight the fish on; the reel attaches to it</td><td>Everything, from small reef fish to giant trevally and tuna</td></tr>
+    <tr><td>Spinning reel</td><td>Easiest reel to cast; mounts under the rod</td><td>Shore fishing: groupers, jobfish, small trevally</td></tr>
+    <tr><td>Bait (baitcasting) reel</td><td>More power and accuracy; mounts on top of the rod</td><td>Big fish and jigging: GT, amberjack, tuna</td></tr>
+    <tr><td>Telescopic landing net</td><td>Extending pole with a net on the end to scoop a hooked fish</td><td>Lifting fish up high rock ledges and from a boat</td></tr>
+  </table>
+
+  <!-- 02 RODS -->
+  <h2 class="section"><span class="num">02</span>Fishing Rods</h2>
+  <p>The rod is your main tool and the frame the whole setup is built on. The reel attaches to it, the line runs along it, and its length and bend give you the power to cast far and to fight a fish back in.</p>
+  <p class="video"><span class="tag">How-to video</span><a href="https://www.youtube.com/watch?v=yoauPIoxT5E">youtube.com/watch?v=yoauPIoxT5E</a></p>
+
+  <h3 class="sub">The main parts</h3>
+  <ul>
+    <li>Tip &mdash; the thin top end of the rod</li>
+    <li>Blank &mdash; the main body</li>
+    <li>Guides &mdash; the rings the line runs through</li>
+    <li>Reel seat &mdash; where the reel clamps on</li>
+    <li>Handle / grip &mdash; where you hold it</li>
+  </ul>
+
+  <div class="figs">
+    <figure><img src="images/rod_shore_set.jpg"><figcaption>A shore rod with a spinning reel attached &mdash; a good all-round Ogasawara setup.</figcaption></figure>
+    <figure><img src="images/rod_jigging.jpg"><figcaption>A short, strong offshore jigging rod for boat fishing in deep water.</figcaption></figure>
+  </div>
+
+  <h3 class="sub">How to set up and use a rod</h3>
+  <ol class="steps">
+    <li><b>Assemble the rod.</b> Join the sections from the tip down, and line up all the guides in one straight row.</li>
+    <li><b>Attach the reel.</b> Slide the reel foot into the reel seat and tighten the locking ring so the reel cannot move.</li>
+    <li><b>Thread the line.</b> Pass the line through every guide, starting at the largest guide near the reel and working up to the tip. Do not skip any.</li>
+    <li><b>Tie on your tackle.</b> Attach the hook, lure, jig, or sinker with a strong knot (see the knots table on the last page).</li>
+    <li><b>Cast.</b> Hold the rod firmly, release the line, and swing the rod smoothly forward toward your target.</li>
+    <li><b>Retrieve.</b> Wind the reel handle at a steady speed, faster or slower depending on the fish.</li>
+  </ol>
+
+  <h3 class="sub">Which rod for which fish</h3>
+  <table class="tbl">
+    <tr><th>Rod type</th><th>Target species</th></tr>
+    <tr><td>Light rod</td><td>Wrasse, small reef fish, rudderfish</td></tr>
+    <tr><td>Medium / medium-heavy rod</td><td>Snapper, grouper (Akahata, Barahata), jobfish, mackerel</td></tr>
+    <tr><td>Heavy rod</td><td>Giant trevally (GT), amberjack, tuna, barracuda</td></tr>
+    <tr><td>Deep jigging rod</td><td>Ruby snapper (250&ndash;300 m), large amberjack, yellowfin tuna</td></tr>
+  </table>
+
+  <!-- 03 SPINNING REELS -->
+  <h2 class="section"><span class="num">03</span>Spinning Reels</h2>
+  <p>The spinning reel mounts <em>underneath</em> the rod. It is the easiest reel to learn, casts light lures well, and rarely tangles &mdash; which makes it the best choice for shore fishing.</p>
+  <p class="video"><span class="tag">How-to video</span><a href="https://www.youtube.com/watch?v=C7CWIywYmxk">youtube.com/watch?v=C7CWIywYmxk</a></p>
+
+  <div class="figs single">
+    <figure><img src="images/spinning_reel.jpg"><figcaption>A saltwater spinning reel. The wire arm around the spool is the bail.</figcaption></figure>
+  </div>
+
+  <h3 class="sub">How to use a spinning reel</h3>
+  <ol class="steps">
+    <li><b>Open the bail.</b> Flip the metal bail arm up so the spool can release line.</li>
+    <li><b>Hold the line.</b> Trap the line against the rod with your index finger so nothing slips out yet.</li>
+    <li><b>Swing and cast.</b> Bring the rod back over your shoulder, then sweep it smoothly forward toward your target.</li>
+    <li><b>Release your finger.</b> As the rod points forward, lift your index finger so the line shoots off the spool.</li>
+    <li><b>Close the bail.</b> Once the lure lands, flip the bail down by hand and wind once to tighten the line.</li>
+    <li><b>Fight the fish.</b> Keep the rod tip up and let the reel's drag give line to a strong fish &mdash; do not force it.</li>
+  </ol>
+  <p class="lead-in"><em>Tip: always flip the bail closed by hand rather than winding it shut &mdash; this prevents line twist and tangles.</em></p>
+
+  <h3 class="sub">Best spinning-reel targets in Ogasawara</h3>
+  <table class="tbl">
+    <tr><th>From shore (rocks)</th><th>From a boat (offshore)</th></tr>
+    <tr><td>Leopard coral grouper (Sujiara), emperor fish (Fuefukidai), green jobfish (Aochibiki), black trevally (Kappore)</td><td>Amberjack, barracuda, small trevally, mahi-mahi, small tuna</td></tr>
+  </table>
+  <p>A <strong>5000&ndash;6000</strong> reel with PE 2&ndash;4 braided line and a 30&ndash;60 lb leader handles most Ogasawara fishing. Step up to 8000&ndash;14000 for giant trevally and tuna.</p>
+
+  <!-- 04 BAITCASTING REELS -->
+  <h2 class="section"><span class="num">04</span>Bait (Baitcasting) Reels</h2>
+  <p>The baitcasting reel mounts <em>on top</em> of the rod. It is more advanced than a spinning reel, but gives more power, more accuracy, and a stronger drag &mdash; which makes it ideal for the big, hard-pulling fish found around Ogasawara.</p>
+  <p class="video"><span class="tag">How-to video</span><a href="https://www.youtube.com/watch?v=sR960pvo5lc">youtube.com/watch?v=sR960pvo5lc</a></p>
+
+  <div class="figs single">
+    <figure><img src="images/casting_basics.jpg"><figcaption>Thumb control: rest your thumb on the spool to control the cast and stop tangles.</figcaption></figure>
+  </div>
+
+  <h3 class="sub">How to use a baitcaster</h3>
+  <ol class="steps">
+    <li><b>Set the spool tension.</b> Press the thumb bar and turn the tension knob until the lure drops <em>slowly</em> and the spool stops on its own when it lands.</li>
+    <li><b>Set the brakes.</b> Start with the brakes high (around 70&ndash;80%), then lower them one step at a time as you get more comfortable.</li>
+    <li><b>Press the thumb bar.</b> Hold the spool gently with your thumb so it cannot move until you cast.</li>
+    <li><b>Cast.</b> Swing the rod forward and ease your thumb off the spool to let the lure fly.</li>
+    <li><b>Feather and stop.</b> Lightly touch the spool with your thumb in flight, and press down just before the lure hits the water.</li>
+    <li><b>Retrieve.</b> Turn the handle &mdash; the reel re-engages automatically &mdash; and wind in.</li>
+  </ol>
+  <p class="lead-in"><em>Avoiding the "bird's nest" (backlash): this tangle happens when the spool spins faster than the line leaves. Prevent it with steady thumb control, higher brakes, and heavier lures while you learn. If it tangles, increase the brakes one step.</em></p>
+
+  <h3 class="sub">Best baitcaster targets in Ogasawara</h3>
+  <table class="tbl">
+    <tr><th>Species</th><th>How it is caught</th></tr>
+    <tr><td>Giant trevally (GT / Rouninaji)</td><td>Casting from shore or boat &mdash; fish over 50 kg</td></tr>
+    <tr><td>Greater amberjack (Kanpachi)</td><td>Jigging or casting from a boat</td></tr>
+    <tr><td>Dogtooth tuna (Isomaguro)</td><td>Jigging from shore or boat</td></tr>
+    <tr><td>Yellowfin tuna (Kihada)</td><td>Jigging offshore</td></tr>
+  </table>
+
+  <!-- 05 LANDING NET -->
+  <h2 class="section"><span class="num">05</span>The Telescopic Landing Net</h2>
+  <p>This is a long, <em>extendable</em> pole with a net basket on the end &mdash; not a thrown cast net. You extend the handle to reach down to the water, then scoop a hooked fish into the net. It is essential in Ogasawara, where many fishing spots sit on high rock ledges well above the sea, and it is just as useful from a boat.</p>
+  <p class="video"><span class="tag">How-to video</span><span style="color:#8a8a8a;">link pending</span></p>
+
+  <h3 class="sub">The main parts</h3>
+  <ul>
+    <li>Telescopic handle &mdash; slides out and locks to an adjustable length</li>
+    <li>Locking collars / joints &mdash; hold each section at the chosen length</li>
+    <li>Net head (hoop and mesh bag) &mdash; screws onto the tip of the handle</li>
+    <li>Shoulder strap &mdash; for carrying the collapsed pole</li>
+  </ul>
+
+  <div class="figs single">
+    <figure><img src="images/landing_net_pole.jpg"><figcaption>A telescopic landing-net handle. The pole extends to reach the water; the net head screws onto the tip (inset shows the locking joint).</figcaption></figure>
+  </div>
+
+  <h3 class="sub">How to set up and use it</h3>
+  <ol class="steps">
+    <li><b>Fit the net head.</b> Screw or clip the net hoop onto the threaded tip of the handle before you start fishing.</li>
+    <li><b>Extend to length.</b> Pull out the sections (or twist the locking collar to release it), set the length you need to reach the water, then lock each joint firmly.</li>
+    <li><b>Keep it within reach.</b> Rest the net beside you, but do not extend it fully until a fish is hooked and coming close.</li>
+    <li><b>Tire the fish first.</b> Fight the fish until it stops pulling hard &mdash; trying to net a green, fighting fish usually loses it.</li>
+    <li><b>Net it head-first.</b> Lower the hoop into the water and lead the fish in head-first. Never chase its tail with the net.</li>
+    <li><b>Lift straight up.</b> Once the fish is in the bag, lift smoothly and draw the pole up. Collapse the sections afterward for easy carrying.</li>
+  </ol>
+
+  <h3 class="sub">Practical tips</h3>
+  <ul>
+    <li>A rubberised, non-slip grip holds well even with wet hands or gloves.</li>
+    <li>Match the length to your spot &mdash; Ogasawara's rock ledges are high, so a long handle (around 5&ndash;6 m) is common.</li>
+    <li>Rinse the pole and joints with fresh water after use to stop salt seizing the locking collars.</li>
+    <li>Best for landing snapper, grouper, trevally, and barracuda &mdash; any fish too large or too high up to lift safely by the line.</li>
+  </ul>
+
+  <!-- 06 QUICK REFERENCE -->
+  <h2 class="section"><span class="num">06</span>Quick Reference</h2>
+
+  <h3 class="sub">Reliable knots</h3>
+  <table class="tbl">
+    <tr><th>Knot</th><th>Use it for</th></tr>
+    <tr><td>Arbor knot</td><td>Tying new line onto the reel spool</td></tr>
+    <tr><td>Improved clinch knot</td><td>Tying line to a hook or lure (easy and strong)</td></tr>
+    <tr><td>Palomar knot</td><td>Tying line to a hook or lure (very strong)</td></tr>
+    <tr><td>Uni knot</td><td>All-round line-to-tackle knot</td></tr>
+  </table>
+
+  <h3 class="sub">Recommended all-round Ogasawara kit</h3>
+  <table class="tbl">
+    <tr><th>Item</th><th>Recommendation</th></tr>
+    <tr><td>Rod</td><td>9 ft medium-heavy spinning rod</td></tr>
+    <tr><td>Reel</td><td>5000&ndash;6000 saltwater spinning reel</td></tr>
+    <tr><td>Line</td><td>PE 3 braided line</td></tr>
+    <tr><td>Leader</td><td>40 lb fluorocarbon</td></tr>
+    <tr><td>Lures</td><td>40&ndash;100 g metal jigs, soft-plastic worms</td></tr>
+    <tr><td>Bait</td><td>Squid, muroaji (mackerel scad), shellfish, sea urchin</td></tr>
+    <tr><td>Net</td><td>Long telescopic landing net (around 5&ndash;6 m)</td></tr>
+  </table>
+
+  <h3 class="sub">Gear-to-fish cheat sheet</h3>
+  <table class="tbl">
+    <tr><th>Fish</th><th>Rod</th><th>Reel</th><th>Net</th></tr>
+    <tr><td>Wrasse</td><td>Light</td><td>Spinning</td><td>Landing net</td></tr>
+    <tr><td>Snapper / grouper</td><td>Medium</td><td>Spinning</td><td>Landing net</td></tr>
+    <tr><td>Barracuda</td><td>Heavy</td><td>Spinning / bait</td><td>Landing net</td></tr>
+    <tr><td>Amberjack</td><td>Heavy</td><td>Baitcaster</td><td>Landing net</td></tr>
+    <tr><td>Giant trevally</td><td>Heavy</td><td>Bait / heavy spinning</td><td>Landing net</td></tr>
+    <tr><td>Tuna</td><td>Heavy offshore</td><td>Heavy spinning / bait</td><td>Large landing net</td></tr>
+  </table>
+
+  <div class="figs photo">
+    <figure><img src="images/sp_akahata.jpg"><figcaption>Blacktip grouper (Akahata) &mdash; an easy, common reef catch.</figcaption></figure>
+    <figure><img src="images/sp_muroaji.jpg"><figcaption>Muroaji (mackerel scad) &mdash; the key live bait used around Ogasawara.</figcaption></figure>
+  </div>
+
+  <div class="note">
+    <span class="label">Before you fish</span>
+    <p>Ogasawara has marine-park conservation zones and rules covering protected species and net use. Always check the current local regulations before fishing.</p>
+  </div>
+
+  <p class="sources"><strong>Verification &amp; sources.</strong> The steps in this guide were cross-checked against authoritative angling references: Wired2Fish and Outdoor Life (spinning-reel casting); Piscifun, Beyond Braid, and Cast&amp;Spear (baitcaster setup and backlash); Take Me Fishing and Calcutta Outdoors (landing technique); Daiwa, SANLIKE, and Dr.Fish (telescopic landing-net handles); and Animated Knots and Fulling Mill (rod setup and knots). Species, bait, and depth details are from the uploaded <em>Ogasawara 2018 Fishing Species Guide</em>. Images are from Daiwa, Shimano, and angling retailers as collected in <em>image_references.md</em>.</p>
+
+</section>
+</body>
+</html>

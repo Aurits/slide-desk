@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>釣り道具の使い方</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
+    font-family: "IPAPGothic", "IPAGothic", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+    font-size: 10.5pt; line-height: 1.85; -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ COVER ============ */
+  .cover { page-break-after: always; height: 247mm; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 0; }
+  .cover-top { padding-top: 30mm; }
+  .cover-eyebrow { font-size: 9pt; letter-spacing: 5px; color: #6b6b6b; margin-bottom: 14mm; }
+  .cover-rule { width: 28mm; height: 1px; background: #1a1a1a; margin-bottom: 16mm; }
+  .cover-title { font-size: 30pt; font-weight: 700; line-height: 1.3; margin: 0; max-width: 150mm; }
+  .cover-subtitle { font-size: 13pt; color: #4a4a4a; line-height: 1.7; margin-top: 10mm; max-width: 145mm; }
+  .cover-bottom { padding-bottom: 6mm; border-top: 1px solid #d4d4d4; padding-top: 8mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 14mm; vertical-align: top; }
+  .cover-meta .label { letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: #1a1a1a; font-size: 10.5pt; font-weight: 700; }
+
+  /* ============ BODY ============ */
+  .doc { padding-top: 4mm; }
+  .doc-header { border-bottom: 1px solid #1a1a1a; padding-bottom: 6mm; margin-bottom: 10mm; }
+  .doc-header .kicker { font-size: 8.5pt; letter-spacing: 3px; color: #6b6b6b; margin-bottom: 4mm; }
+  .doc-header h1 { font-weight: 700; font-size: 20pt; line-height: 1.4; margin: 0 0 3mm 0; }
+  .doc-header .sub { font-size: 11pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-size: 9pt; color: #6b6b6b; margin-top: 5mm; }
+  .doc-header .meta-line span + span::before { content: "・"; margin: 0 6px; color: #b0b0b0; }
+
+  h2.section { font-size: 12pt; font-weight: 700; letter-spacing: 0.5px; margin: 13mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { color: #8a8a8a; font-weight: 500; margin-right: 10px; }
+  h3.sub { font-weight: 700; font-size: 11.5pt; color: #1a1a1a; margin: 7mm 0 2mm 0; page-break-after: avoid; border-left: 3px solid #1a1a1a; padding-left: 3mm; }
+  p { margin: 0 0 5mm 0; }
+
+  ul { margin: 2mm 0 6mm 0; padding-left: 6mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 1.8mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: #8a8a8a; }
+
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 3mm 0 6mm 0; }
+  ol.steps li { position: relative; padding-left: 12mm; margin-bottom: 3.5mm; page-break-inside: avoid; }
+  ol.steps li::before { counter-increment: step; content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0.6mm; font-size: 9pt; font-weight: 700; color: #8a8a8a; letter-spacing: 1px; }
+  ol.steps li b { font-weight: 700; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 4mm 0 7mm 0; page-break-inside: avoid; }
+  table.tbl th { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.5px; color: #6b6b6b; text-align: left; padding: 0 6mm 2.5mm 0; border-bottom: 1px solid #1a1a1a; vertical-align: bottom; }
+  table.tbl td { font-size: 9.5pt; padding: 2.5mm 6mm 2.5mm 0; border-bottom: 0.5px solid #ececec; vertical-align: top; line-height: 1.7; }
+  table.tbl th:last-child, table.tbl td:last-child { padding-right: 0; }
+
+  .figs { display: flex; gap: 6mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .figs figure { margin: 0; flex: 1; }
+  .figs img { width: 100%; height: 48mm; object-fit: contain; background: #fff; border: 1px solid #d4d4d4; display: block; }
+  .figs.photo img { object-fit: cover; }
+  .figs.single { justify-content: center; }
+  .figs.single figure { flex: 0 0 72mm; }
+  .figs.single img { height: 58mm; }
+  figcaption { font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.6; }
+
+  .video { font-size: 9pt; color: #4a4a4a; margin: 0 0 5mm 0; }
+  .video .tag { letter-spacing: 1px; font-size: 8pt; font-weight: 700; color: #8a8a8a; margin-right: 8px; }
+  .video a { color: #1a1a1a; text-decoration: none; border-bottom: 0.5px solid #b0b0b0; }
+
+  .note { margin-top: 9mm; padding-top: 5mm; border-top: 1px solid #d4d4d4; page-break-inside: avoid; }
+  .note .label { font-size: 8.5pt; letter-spacing: 1px; color: #8a8a8a; display: block; margin-bottom: 2mm; font-weight: 700; }
+  .sources { font-size: 8pt; color: #8a8a8a; line-height: 1.7; margin-top: 8mm; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">小笠原での釣り — フィールドガイド</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">釣り道具の使い方</h1>
+    <p class="cover-subtitle">ロッド、スピニングリール、ベイトリール、そして伸縮式（テレスコピック）ランディングネットの使い方を、やさしく手順で解説します。</p>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">対象</span><span class="value">小笠原遠征 — 2026年6月</span></div>
+      <div class="col"><span class="label">状態</span><span class="value">釣りの専門情報源で手順を検証済み</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BODY ===================== -->
+<section class="doc">
+  <div class="doc-header">
+    <div class="kicker">小笠原での釣り — フィールドガイド</div>
+    <h1>釣り道具の使い方</h1>
+    <p class="sub">ロッド、スピニングリール、ベイトリール、伸縮式ランディングネット。</p>
+    <p class="meta-line"><span>東京都・小笠原諸島</span><span>2026年6月</span></p>
+  </div>
+
+  <!-- 01 -->
+  <h2 class="section"><span class="num">01</span>4つの道具</h2>
+  <p>それぞれの道具には、はっきりとした役割があります。ロッドは手に持ってキャストするための「軸」となる道具で、リールはそのロッドに取り付けて糸を巻き取ったり送り出したりします。ランディングネットは、掛けた魚を安全に水中から取り込むための網です。魚に合った道具を選べば、高い磯場から沖の深場まで、小笠原のほとんどの場所で釣りを楽しめます。</p>
+  <table class="tbl">
+    <tr><th>道具</th><th>主な役割</th><th>適した対象（小笠原）</th></tr>
+    <tr><td>ロッド（釣り竿）</td><td>キャストと魚とのやり取りの軸。リールを取り付ける</td><td>小型の根魚から、GT・マグロまで幅広く</td></tr>
+    <tr><td>スピニングリール</td><td>最も扱いやすいリール。ロッドの下側に付ける</td><td>磯・陸からの釣り：ハタ類、アオチビキ、小型のアジ科</td></tr>
+    <tr><td>ベイトリール</td><td>パワーと精度が高い。ロッドの上側に付ける</td><td>大物・ジギング：GT、カンパチ、マグロ</td></tr>
+    <tr><td>伸縮式ランディングネット</td><td>柄が伸びる玉網。掛けた魚をすくい取る</td><td>高い磯場や船からの取り込み</td></tr>
+  </table>
+
+  <!-- 02 -->
+  <h2 class="section"><span class="num">02</span>ロッド（釣り竿）</h2>
+  <p>ロッドは釣りの中心となる道具で、すべての仕掛けの土台です。リールを取り付け、糸が沿って通り、その長さとしなりが、遠くへ投げる力と魚を寄せる力を生み出します。</p>
+  <p class="video"><span class="tag">解説動画</span><a href="https://www.youtube.com/watch?v=yoauPIoxT5E">youtube.com/watch?v=yoauPIoxT5E</a></p>
+
+  <h3 class="sub">主な各部の名称</h3>
+  <ul>
+    <li>ティップ — 竿先（いちばん細い先端）</li>
+    <li>ブランク — 竿の本体</li>
+    <li>ガイド — 糸を通すリング</li>
+    <li>リールシート — リールを固定する部分</li>
+    <li>グリップ — 手で握る部分</li>
+  </ul>
+
+  <div class="figs">
+    <figure><img src="images/rod_shore_set.jpg"><figcaption>スピニングリールを付けた磯竿。小笠原での万能セットの一例。</figcaption></figure>
+    <figure><img src="images/rod_jigging.jpg"><figcaption>深場の船釣り向けの、短くて強いジギングロッド。</figcaption></figure>
+  </div>
+
+  <h3 class="sub">セッティングと使い方</h3>
+  <ol class="steps">
+    <li><b>竿を継ぐ。</b> 竿先側から順に継ぎ、すべてのガイドを一直線にそろえます。</li>
+    <li><b>リールを取り付ける。</b> リールフットをリールシートに差し込み、固定リングをしっかり締めて動かないようにします。</li>
+    <li><b>糸を通す。</b> リールに近い大きなガイドから竿先に向かって、すべてのガイドに糸を通します。飛ばさないこと。</li>
+    <li><b>仕掛けを結ぶ。</b> 針・ルアー・ジグ・オモリを、強い結びで取り付けます（結びは最終ページの表を参照）。</li>
+    <li><b>キャストする。</b> 竿をしっかり持ち、糸を放して、竿を前方へなめらかに振り出します。</li>
+    <li><b>リトリーブする。</b> 魚に合わせて速さを変えながら、一定のペースでリールを巻きます。</li>
+  </ol>
+
+  <h3 class="sub">魚に合わせたロッド選び</h3>
+  <table class="tbl">
+    <tr><th>ロッドの種類</th><th>対象魚</th></tr>
+    <tr><td>ライト</td><td>ベラ、小型の根魚、メジナ類</td></tr>
+    <tr><td>ミディアム／MH</td><td>フエダイ類、ハタ類（アカハタ・バラハタ）、アオチビキ、アジ科</td></tr>
+    <tr><td>ヘビー</td><td>GT（ロウニンアジ）、カンパチ、マグロ、バラクーダ</td></tr>
+    <tr><td>ディープジギング</td><td>オナガ（250〜300m）、大型カンパチ、キハダ</td></tr>
+  </table>
+
+  <!-- 03 -->
+  <h2 class="section"><span class="num">03</span>スピニングリール</h2>
+  <p>スピニングリールはロッドの<em>下側</em>に取り付けます。最も習得しやすく、軽いルアーもよく飛び、糸が絡みにくいため、陸・磯からの釣りに最適です。</p>
+  <p class="video"><span class="tag">解説動画</span><a href="https://www.youtube.com/watch?v=C7CWIywYmxk">youtube.com/watch?v=C7CWIywYmxk</a></p>
+
+  <div class="figs single">
+    <figure><img src="images/spinning_reel.jpg"><figcaption>ソルト用スピニングリール。スプールを囲む金属のアームが「ベール」。</figcaption></figure>
+  </div>
+
+  <h3 class="sub">使い方</h3>
+  <ol class="steps">
+    <li><b>ベールを起こす。</b> 金属のベールアームを上に返し、スプールから糸が出る状態にします。</li>
+    <li><b>糸を押さえる。</b> 人差し指で糸を竿に軽く押さえ、糸が出ていかないようにします。</li>
+    <li><b>振りかぶってキャスト。</b> 竿を肩の後ろまで引き、前方へなめらかに振り出します。</li>
+    <li><b>指を離す。</b> 竿が前を向いた瞬間に人差し指を離すと、糸がスプールから放出されます。</li>
+    <li><b>ベールを戻す。</b> ルアーが着水したら、手でベールを戻し、一巻きして糸を張ります。</li>
+    <li><b>魚とやり取りする。</b> 竿先を立て、強い魚にはドラグで糸を出させます。無理に止めないこと。</li>
+  </ol>
+  <p><em>コツ：ベールは巻いて戻さず、必ず手で戻します。糸ヨレや絡みを防げます。</em></p>
+
+  <h3 class="sub">小笠原でのおすすめ対象魚</h3>
+  <table class="tbl">
+    <tr><th>磯・陸から</th><th>船・沖から</th></tr>
+    <tr><td>スジアラ、フエフキダイ、アオチビキ、カッポレ</td><td>カンパチ、バラクーダ、小型のヒラアジ類、シイラ、小型マグロ</td></tr>
+  </table>
+  <p><strong>5000〜6000</strong>番のリールに、PE2〜4号＋リーダー30〜60lbで、小笠原のほとんどの釣りに対応できます。GTやマグロには8000〜14000番に上げます。</p>
+
+  <!-- 04 -->
+  <h2 class="section"><span class="num">04</span>ベイトリール</h2>
+  <p>ベイトリールはロッドの<em>上側</em>に取り付けます。スピニングより扱いは難しいものの、パワー・精度・ドラグの強さに優れ、小笠原の大きく引きの強い魚に最適です。</p>
+  <p class="video"><span class="tag">解説動画</span><a href="https://www.youtube.com/watch?v=sR960pvo5lc">youtube.com/watch?v=sR960pvo5lc</a></p>
+
+  <div class="figs single">
+    <figure><img src="images/casting_basics.jpg"><figcaption>サミング：親指をスプールに添えてキャストを制御し、糸の絡みを防ぐ。</figcaption></figure>
+  </div>
+
+  <h3 class="sub">使い方</h3>
+  <ol class="steps">
+    <li><b>スプールテンションを調整。</b> クラッチを切り、ルアーが<em>ゆっくり</em>落ち、着地と同時にスプールが止まるようテンションノブを調整します。</li>
+    <li><b>ブレーキを設定。</b> 最初は強め（70〜80%程度）から始め、慣れるにつれて一段ずつ弱めます。</li>
+    <li><b>クラッチを切る。</b> 親指でスプールを軽く押さえ、キャストまで動かないようにします。</li>
+    <li><b>キャストする。</b> 竿を前方へ振り、親指をスプールから離してルアーを飛ばします。</li>
+    <li><b>サミングして止める。</b> 飛行中は親指で軽くスプールに触れ、着水直前に押さえて止めます。</li>
+    <li><b>リトリーブする。</b> ハンドルを回すとクラッチが自動で戻り、巻き取れます。</li>
+  </ol>
+  <p><em>「バックラッシュ（鳥の巣）」を防ぐ：糸の放出よりスプールが速く回ると起こります。親指の制御、強めのブレーキ、慣れるまでは重めのルアーで防ぎます。絡んだらブレーキを一段強めます。</em></p>
+
+  <h3 class="sub">小笠原でのおすすめ対象魚</h3>
+  <table class="tbl">
+    <tr><th>魚種</th><th>釣り方</th></tr>
+    <tr><td>GT（ロウニンアジ）</td><td>磯・船からのキャスティング — 50kg超も</td></tr>
+    <tr><td>カンパチ</td><td>船からのジギング・キャスティング</td></tr>
+    <tr><td>イソマグロ</td><td>磯・船からのジギング</td></tr>
+    <tr><td>キハダ</td><td>沖でのジギング</td></tr>
+  </table>
+
+  <!-- 05 -->
+  <h2 class="section"><span class="num">05</span>伸縮式ランディングネット（玉網）</h2>
+  <p>これは投網ではなく、先端に網が付いた<em>伸縮する</em>長い柄の道具です。柄を伸ばして水面まで届かせ、掛けた魚をすくい上げます。海面から高い磯場が多い小笠原では必須で、船からでも役立ちます。</p>
+  <p class="video"><span class="tag">解説動画</span><span style="color:#8a8a8a;">リンクは後日追加予定</span></p>
+
+  <h3 class="sub">主な各部の名称</h3>
+  <ul>
+    <li>伸縮シャフト — 引き出して任意の長さに固定できる柄</li>
+    <li>ロック（ジョイント） — 各段を選んだ長さで固定する</li>
+    <li>ネット部（枠と網） — 柄の先端にねじ込む</li>
+    <li>ショルダーストラップ — 縮めた状態での持ち運び用</li>
+  </ul>
+
+  <div class="figs single">
+    <figure><img src="images/landing_net_pole.jpg"><figcaption>伸縮式ランディングネットの柄。柄を伸ばして水面に届かせ、先端にネット部をねじ込む（差し込み写真はロック部）。</figcaption></figure>
+  </div>
+
+  <h3 class="sub">セッティングと使い方</h3>
+  <ol class="steps">
+    <li><b>ネット部を取り付ける。</b> 釣り始める前に、柄の先端のネジ部にネットの枠をねじ込み（またはクリップで）固定します。</li>
+    <li><b>長さを伸ばす。</b> 各段を引き出し（またはロックを緩めて）、水面に届く長さに合わせ、各ジョイントをしっかり固定します。</li>
+    <li><b>手の届く所に置く。</b> すぐ取れる位置に置き、魚が掛かって近づくまでは伸ばし切らないでおきます。</li>
+    <li><b>まず魚を弱らせる。</b> 強い引きが収まるまでやり取りします。早すぎる取り込みはバラシのもとです。</li>
+    <li><b>頭から入れる。</b> 枠を水中に沈め、魚を頭から誘導します。尾を追いかけないこと。</li>
+    <li><b>まっすぐ持ち上げる。</b> 魚が網に入ったらなめらかに引き上げ、柄を手繰り寄せます。使用後は各段を縮めて持ち運びます。</li>
+  </ol>
+
+  <h3 class="sub">実用的なコツ</h3>
+  <ul>
+    <li>滑り止め加工のグリップなら、濡れた手や手袋でもしっかり握れます。</li>
+    <li>場所に合った長さを選ぶ — 小笠原の磯は高いため、長め（5〜6m程度）の柄が一般的です。</li>
+    <li>使用後は真水で柄とジョイントを洗い、塩でロックが固着するのを防ぎます。</li>
+    <li>フエダイ類・ハタ類・ヒラアジ類・バラクーダなど、糸で持ち上げるには大きすぎる・高すぎる魚の取り込みに最適です。</li>
+  </ul>
+
+  <!-- 06 -->
+  <h2 class="section"><span class="num">06</span>早見表</h2>
+
+  <h3 class="sub">よく使う結び</h3>
+  <table class="tbl">
+    <tr><th>結び</th><th>用途</th></tr>
+    <tr><td>アーバーノット</td><td>スプールへの下巻き・道糸の結束</td></tr>
+    <tr><td>改良クリンチノット</td><td>針・ルアーの結束（簡単で強い）</td></tr>
+    <tr><td>パロマーノット</td><td>針・ルアーの結束（非常に強い）</td></tr>
+    <tr><td>ユニノット</td><td>道糸〜仕掛けの万能結び</td></tr>
+  </table>
+
+  <h3 class="sub">小笠原向け 万能タックル</h3>
+  <table class="tbl">
+    <tr><th>項目</th><th>おすすめ</th></tr>
+    <tr><td>ロッド</td><td>9フィート ミディアムヘビーのスピニングロッド</td></tr>
+    <tr><td>リール</td><td>5000〜6000番 ソルト用スピニングリール</td></tr>
+    <tr><td>ライン</td><td>PE3号 編み糸</td></tr>
+    <tr><td>リーダー</td><td>40lb フロロカーボン</td></tr>
+    <tr><td>ルアー</td><td>40〜100g メタルジグ、ソフトワーム</td></tr>
+    <tr><td>エサ</td><td>イカ、ムロアジ、貝類、ウニ</td></tr>
+    <tr><td>ネット</td><td>長めの伸縮式ランディングネット（5〜6m程度）</td></tr>
+  </table>
+
+  <h3 class="sub">道具と魚の早見表</h3>
+  <table class="tbl">
+    <tr><th>魚</th><th>ロッド</th><th>リール</th><th>ネット</th></tr>
+    <tr><td>ベラ</td><td>ライト</td><td>スピニング</td><td>玉網</td></tr>
+    <tr><td>フエダイ・ハタ類</td><td>ミディアム</td><td>スピニング</td><td>玉網</td></tr>
+    <tr><td>バラクーダ</td><td>ヘビー</td><td>スピニング／ベイト</td><td>玉網</td></tr>
+    <tr><td>カンパチ</td><td>ヘビー</td><td>ベイト</td><td>玉網</td></tr>
+    <tr><td>GT</td><td>ヘビー</td><td>ベイト／強スピニング</td><td>玉網</td></tr>
+    <tr><td>マグロ</td><td>ヘビー（沖）</td><td>強スピニング／ベイト</td><td>大型玉網</td></tr>
+  </table>
+
+  <div class="figs photo">
+    <figure><img src="images/sp_akahata.jpg"><figcaption>アカハタ — 数も多く、釣りやすい根魚。</figcaption></figure>
+    <figure><img src="images/sp_muroaji.jpg"><figcaption>ムロアジ — 小笠原で主役となる生きエサ。</figcaption></figure>
+  </div>
+
+  <div class="note">
+    <span class="label">釣行の前に</span>
+    <p>小笠原には海域公園（保護区）があり、保護種や網の使用に関する規制があります。釣行前に必ず最新の現地ルールを確認してください。</p>
+  </div>
+
+  <p class="sources"><strong>検証と出典。</strong> 本ガイドの手順は、信頼できる釣り情報源と照合して確認しています。スピニングのキャスト（Wired2Fish、Outdoor Life）、ベイトの調整とバックラッシュ（Piscifun、Beyond Braid、Cast&amp;Spear）、取り込み（Take Me Fishing、Calcutta Outdoors）、伸縮式玉網（Daiwa、SANLIKE、Dr.Fish）、竿のセットと結び（Animated Knots、Fulling Mill）。魚種・エサ・水深は、アップロードされた『小笠原 2018 釣魚ガイド』に基づきます。画像はDaiwa、Shimano、各釣具販売店のもので、<em>image_references.md</em> に一覧があります。</p>
+
+</section>
+</body>
+</html>

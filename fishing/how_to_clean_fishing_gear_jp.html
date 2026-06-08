@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>釣り道具の手入れ・洗い方</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
+    font-family: "IPAPGothic", "IPAGothic", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+    font-size: 10.5pt; line-height: 1.85; -webkit-font-smoothing: antialiased;
+  }
+  .cover { page-break-after: always; height: 247mm; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 0; }
+  .cover-top { padding-top: 30mm; }
+  .cover-eyebrow { font-size: 9pt; letter-spacing: 5px; color: #6b6b6b; margin-bottom: 14mm; }
+  .cover-rule { width: 28mm; height: 1px; background: #1a1a1a; margin-bottom: 16mm; }
+  .cover-title { font-size: 30pt; font-weight: 700; line-height: 1.3; margin: 0; max-width: 150mm; }
+  .cover-subtitle { font-size: 13pt; color: #4a4a4a; line-height: 1.7; margin-top: 10mm; max-width: 145mm; }
+  .cover-bottom { padding-bottom: 6mm; border-top: 1px solid #d4d4d4; padding-top: 8mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 14mm; vertical-align: top; }
+  .cover-meta .label { letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: #1a1a1a; font-size: 10.5pt; font-weight: 700; }
+
+  .doc { padding-top: 4mm; }
+  .doc-header { border-bottom: 1px solid #1a1a1a; padding-bottom: 6mm; margin-bottom: 10mm; }
+  .doc-header .kicker { font-size: 8.5pt; letter-spacing: 3px; color: #6b6b6b; margin-bottom: 4mm; }
+  .doc-header h1 { font-weight: 700; font-size: 20pt; line-height: 1.4; margin: 0 0 3mm 0; }
+  .doc-header .sub { font-size: 11pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-size: 9pt; color: #6b6b6b; margin-top: 5mm; }
+  .doc-header .meta-line span + span::before { content: "・"; margin: 0 6px; color: #b0b0b0; }
+
+  h2.section { font-size: 12pt; font-weight: 700; letter-spacing: 0.5px; margin: 13mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { color: #8a8a8a; font-weight: 500; margin-right: 10px; }
+  h3.sub { font-weight: 700; font-size: 11.5pt; color: #1a1a1a; margin: 7mm 0 2mm 0; page-break-after: avoid; border-left: 3px solid #1a1a1a; padding-left: 3mm; }
+  p { margin: 0 0 5mm 0; }
+
+  ul { margin: 2mm 0 6mm 0; padding-left: 6mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 1.8mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "・"; position: absolute; left: 0; color: #8a8a8a; }
+
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 3mm 0 6mm 0; }
+  ol.steps li { position: relative; padding-left: 12mm; margin-bottom: 3.5mm; page-break-inside: avoid; }
+  ol.steps li::before { counter-increment: step; content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0.6mm; font-size: 9pt; font-weight: 700; color: #8a8a8a; letter-spacing: 1px; }
+  ol.steps li b { font-weight: 700; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 4mm 0 7mm 0; page-break-inside: avoid; }
+  table.tbl th { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.5px; color: #6b6b6b; text-align: left; padding: 0 6mm 2.5mm 0; border-bottom: 1px solid #1a1a1a; vertical-align: bottom; }
+  table.tbl td { font-size: 9.5pt; padding: 2.5mm 6mm 2.5mm 0; border-bottom: 0.5px solid #ececec; vertical-align: top; line-height: 1.7; }
+  table.tbl th:last-child, table.tbl td:last-child { padding-right: 0; }
+
+  .figs { display: flex; gap: 6mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .figs figure { margin: 0; flex: 1; }
+  .figs img { width: 100%; height: 48mm; object-fit: contain; background: #fff; border: 1px solid #d4d4d4; display: block; }
+  .figs.single { justify-content: center; }
+  .figs.single figure { flex: 0 0 70mm; }
+  .figs.single img { height: 52mm; }
+  figcaption { font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.6; }
+
+  .note { margin-top: 9mm; padding-top: 5mm; border-top: 1px solid #d4d4d4; page-break-inside: avoid; }
+  .note .label { font-size: 8.5pt; letter-spacing: 1px; color: #8a8a8a; display: block; margin-bottom: 2mm; font-weight: 700; }
+  .sources { font-size: 8pt; color: #8a8a8a; line-height: 1.7; margin-top: 8mm; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">小笠原での釣り ・ お手入れガイド</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">釣り道具の手入れ・洗い方</h1>
+    <p class="cover-subtitle">小笠原で使うすべての道具を、洗って手入れし、整備するためのやさしい手順ガイドです。ロッドやリールから、ライン、針、ルアー、仕掛け、道具、安全装備まで網羅します。</p>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">対象</span><span class="value">小笠原遠征、2026年6月</span></div>
+      <div class="col"><span class="label">状態</span><span class="value">釣りの専門情報源で手順を検証済み</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY -->
+<section class="doc">
+  <div class="doc-header">
+    <div class="kicker">小笠原での釣り ・ お手入れガイド</div>
+    <h1>釣り道具の手入れ・洗い方</h1>
+    <p class="sub">小笠原の釣り道具一式の洗浄・手入れ・整備。</p>
+    <p class="meta-line"><span>東京都・小笠原諸島</span><span>2026年6月</span></p>
+  </div>
+
+  <!-- 01 -->
+  <h2 class="section"><span class="num">01</span>基本の心得</h2>
+  <p>海水は釣り道具にとても厳しいものです。塩分をそのまま乾かすと金属がさび、可動部が固くなり、道具全体の寿命を縮めます。いちばん大切な習慣は、いちばん簡単なことでもあります。毎回の釣行のあと、塩が乾く前に、なるべく早く道具を洗うことです。次に挙げる心得は4種類すべての道具に共通し、その後の各章で道具ごとの詳しい手順を説明します。</p>
+  <ul>
+    <li>真水でやさしく、弱い水流ですすぐ。強い水流は塩を内部に押し込んでしまいます。</li>
+    <li>すすぐ間はドラグを締めたままにし、ドラグワッシャーに水が入らないようにする。</li>
+    <li>柔らかい布で全体を拭き、そのあと完全に自然乾燥させる。</li>
+    <li>ラインは、しまう前に完全に乾かす（カビ防止のため）。</li>
+    <li>すべて乾いてしまう準備が整ったら、リールのドラグをゆるめる。</li>
+    <li>直射日光を避け、涼しく乾いた場所で保管する。</li>
+  </ul>
+
+  <!-- 02 -->
+  <h2 class="section"><span class="num">02</span>ロッドの手入れ</h2>
+  <p>ガイドとリールシートは、塩やゴミが最もたまりやすい部分です。ここを重点的に手入れします。</p>
+  <div class="figs single">
+    <figure><img src="images/rod_shore_set.jpg"><figcaption>塩がたまりやすいガイドとリールシートを重点的に。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>リールを外す。</b> ロッドからリールを外し、ラインを拭き取ります。</li>
+    <li><b>ロッドをすすぐ。</b> 竿全体を、弱い水流の真水でやさしくすすぎます。</li>
+    <li><b>洗う。</b> 薄めた中性洗剤で洗い、ガイドとリールシートを特に丁寧にします。</li>
+    <li><b>ガイドを磨く。</b> 柔らかい歯ブラシで各ガイドの周りをこすり、たまった塩やゴミをかき出します。あわせてガイドリングのひび割れも確認します。</li>
+    <li><b>グリップを洗う。</b> 薄めた洗剤でグリップを洗います。コルクは歯ブラシで、EVAフォームは拭くだけで十分です。</li>
+    <li><b>乾かして保護する。</b> 竿を完全に乾かし、特にリールシートとガイドを念入りに。さらに保護したい場合は、シリコンを軽く吹いた布で金属ガイドを拭きます。</li>
+    <li><b>保管する。</b> 直射日光を避け、涼しく乾いた場所に、できればロッドホルダーやケースに入れて保管します。</li>
+  </ol>
+
+  <!-- 03 -->
+  <h2 class="section"><span class="num">03</span>スピニングリールの手入れ</h2>
+  <p>リールはやさしくすすぎ、決して強い水で洗わないこと。高い水圧は塩を内部に押し込んでしまいます。</p>
+  <div class="figs single">
+    <figure><img src="images/spinning_reel.jpg"><figcaption>ドラグを締めたままやさしくすすぎ、乾かし、薄く注油し、保管時にドラグをゆるめる。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>すすぐ。</b> 釣行直後に、ドラグを締めたまま、弱い水流でやさしくすすぎます。</li>
+    <li><b>洗う。</b> ぬるめの薄い洗剤水で、塩、皮脂、血、汚れを洗い落とします。</li>
+    <li><b>スプール下を清掃。</b> スプールを外し、芯（スピンドル）とその下を拭きます。</li>
+    <li><b>乾かす。</b> きれいなタオルで拭き、そのあと自然乾燥させます。</li>
+    <li><b>注油する。</b> 可動部とハンドルに少量、ベアリングには一滴だけ注油します。ごく少量で十分で、つけすぎはゴミを呼び込みます。</li>
+    <li><b>本体を保護。</b> リール用の防錆剤や軽いつや出し剤を含ませた布で本体を拭きます。</li>
+    <li><b>ゆるめて保管。</b> ドラグをゆるめてしまいます。海水使用なら、年に一度を目安に分解整備に出します。</li>
+  </ol>
+
+  <!-- 04 -->
+  <h2 class="section"><span class="num">04</span>ベイトリールの手入れ</h2>
+  <p>ベイトリールはいくつかの部品に分かれるので、塩や砂を洗い流しやすいのが利点です。覚えておくべき唯一のルールは、<em>注油してはいけない</em>場所です。</p>
+  <div class="figs single">
+    <figure><img src="images/baitcaster.jpg"><figcaption>各部品を洗い流し、ベアリングは少量注油。ブレーキとワンウェイクラッチには注油しない。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>すすいで拭く。</b> ロッドから外し、ぬるま湯でやさしくすすぎ、すぐに柔らかい布で拭きます。</li>
+    <li><b>分解する。</b> サイドプレートを開けてスプールを外します。多くのベイトリールは、本体・ハンドル側のサイドプレート・スプールの3つに分かれます。</li>
+    <li><b>各部品を洗う。</b> 各部品から塩と砂を洗い落とし、各ベアリングを綿棒で清掃します。</li>
+    <li><b>完全に乾かす。</b> 組み立て直す前に、すべての部品を完全に乾かします。</li>
+    <li><b>適切な箇所に注油。</b> 各スプールベアリング（キャストコントロールキャップの下、パームサイドカバーの内側、スプールシャフト）、ハンドルベアリング、レベルワインド、ウォームギアに一滴ずつ注油します。スタードラグにも注油し、開け閉めしてなじませます。</li>
+    <li><b>避ける箇所を知る。</b> ブレーキ機構とワンウェイクラッチには注油しないこと。ここに油がつくと不具合の原因になります。</li>
+    <li><b>組み立てて保管。</b> 組み直し、ドラグをゆるめて保管します。海水使用なら、半年に一度を目安にしっかり整備します。</li>
+  </ol>
+
+  <!-- 05 -->
+  <h2 class="section"><span class="num">05</span>伸縮式ランディングネットの手入れ</h2>
+  <p>網と柄では手入れが異なります。網は腐らないようにすすいで乾かし、柄はスムーズに伸縮するようロック部に塩を残さないことが大切です。</p>
+  <div class="figs single">
+    <figure><img src="images/landing_net_pole.jpg"><figcaption>網と柄をすすぎ、たたむ前に網を完全に乾かし、ロック部に塩を残さない。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>よくすすぐ。</b> たっぷりの真水で網と柄をすすぎ、塩、ぬめり、うろこ、砂を洗い流します。網を広げる、または吊るすと、水が網全体に行き渡ります。</li>
+    <li><b>必要なら洗う。</b> 汚れがひどいときは、薄めた中性洗剤で洗います。</li>
+    <li><b>柄を洗う。</b> 柄の各段を、薄めた洗剤水とスポンジで洗います。</li>
+    <li><b>網を完全に乾かす。</b> たたんで保管する前に、網を完全に乾かします。濡れたままだとカビや臭い、コードの腐食につながります。</li>
+    <li><b>ロック部の手入れ。</b> ロック部を真水ですすぎ、塩で固着しないようにします。各段をシリコン布で拭くと、滑りが良くなり水もはじきます。</li>
+    <li><b>点検して保管。</b> 網の破れ、枠やロック部のさびを確認します。乾いた状態で保管し、長時間の直射日光を避けます。</li>
+  </ol>
+
+  <!-- 06 -->
+  <h2 class="section"><span class="num">06</span>ライン（釣り糸）</h2>
+  <p>ラインは見落とされがちですが、ロッドやリールよりも切れることが多い部分です。塩、紫外線、擦れで少しずつ弱るため、毎回の釣行後に手早く点検します。</p>
+  <ul>
+    <li>PE（編み糸）：GT、カンパチ、マグロ、ハタ類を狙う道糸。</li>
+    <li>フロロカーボン：道糸に結ぶリーダー。</li>
+    <li>ナイロン：エサ釣りで使うことがある。</li>
+  </ul>
+  <h3 class="sub">毎回の釣行後</h3>
+  <ol class="steps">
+    <li><b>巻いたまますすぐ。</b> ラインをリールに巻いたまま、スプールを真水でやさしくすすぎます。</li>
+    <li><b>乾かす。</b> しまう前にラインを完全に乾かします。</li>
+    <li><b>先端を点検。</b> 先端から5〜10mを、ほつれ、つぶれ、擦れ、変色がないか確認します。</li>
+    <li><b>切って結び直す。</b> 傷んだ部分を切り、結び直します。</li>
+    <li><b>結びを確認。</b> すべての結び目がしっかり締まっているか確かめます。</li>
+  </ol>
+  <table class="tbl">
+    <tr><th>ライン</th><th>交換の目安</th></tr>
+    <tr><td>PE（編み糸）</td><td>6〜12か月</td></tr>
+    <tr><td>フロロのリーダー</td><td>傷んだら交換</td></tr>
+    <tr><td>ナイロン</td><td>約6か月</td></tr>
+  </table>
+
+  <!-- 07 -->
+  <h2 class="section"><span class="num">07</span>フック（針）</h2>
+  <p>針は重要な消耗品です。海水ですぐにさび、先が鈍ったりさびたりすると魚を逃すため、毎回乾かして点検します。</p>
+  <ul>
+    <li>サークルフック：生きエサ、リリース向き。</li>
+    <li>Jフック：一般的なエサ釣り。</li>
+    <li>アシストフック：ジギング。</li>
+    <li>トレブルフック：GTルアー、ポッパー、スティックベイト。</li>
+  </ul>
+  <div class="figs">
+    <figure><img src="images/hook_circle.jpg"><figcaption>サークルフック。生きエサやリリースに向く。</figcaption></figure>
+    <figure><img src="images/hook_assist.jpg"><figcaption>アシストフック。メタルジグに付けてジギングに使う。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>すすぐ。</b> 毎回、真水でしっかりすすぎます。</li>
+    <li><b>乾かす。</b> 箱に戻す前に完全に乾かします。</li>
+    <li><b>先を確認。</b> 爪に引っかからない先は鈍っています。</li>
+    <li><b>研ぐか交換。</b> 鈍った先は軽く研ぎ、さびた針はすぐ捨てます。</li>
+    <li><b>乾燥保管。</b> 乾いたタックルボックスに、乾燥剤（シリカゲル）と一緒に保管します。</li>
+  </ol>
+
+  <!-- 08 -->
+  <h2 class="section"><span class="num">08</span>ルアー</h2>
+  <p>小笠原の釣りはジギングとキャスティングが中心なので、ルアーにも専用の手入れが必要です。塩は本体よりも先に、針・スプリットリング・金具をいためます。</p>
+  <ul>
+    <li>メタルジグ：カンパチ、マグロ、イソマグロ。</li>
+    <li>スロー系ジグ：オナガなど深場の魚。</li>
+    <li>ポッパー／スティックベイト：GT、マグロ。</li>
+    <li>インチクジグ：アカハタや根魚。</li>
+  </ul>
+  <div class="figs single">
+    <figure><img src="images/lure_stickbait.jpg"><figcaption>表層を引くスティックベイト。すすいだら針とスプリットリングを確認。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>針を外す。</b> ルアーから針を外します。</li>
+    <li><b>すすぐ。</b> 真水ですすぎます。</li>
+    <li><b>乾かす。</b> 完全に乾かします。</li>
+    <li><b>リングを確認。</b> 曲がったりさびたスプリットリングは交換します。</li>
+    <li><b>本体を確認。</b> 塗装と目の傷みを確認します。</li>
+    <li><b>スイベルに注油。</b> 内蔵スイベルに一滴だけ注油し、回転を保ちます。</li>
+  </ol>
+
+  <!-- 09 -->
+  <h2 class="section"><span class="num">09</span>仕掛け（ターミナルタックル）</h2>
+  <p>仕掛け類は小さく見落としがちですが、さびたスイベルやひ弱なスナップ一つで良い魚を逃します。ほかと同じようにすすいで点検します。</p>
+  <ul>
+    <li>スイベル（サルカン）：糸ヨレを防ぐ。</li>
+    <li>スナップ：ルアー交換を素早く。</li>
+    <li>スプリットリング：針とルアーをつなぐ。</li>
+    <li>オモリ：エサを狙いの深さに保つ。</li>
+    <li>ビーズ：結び目を保護する。</li>
+    <li>サビキ仕掛け：ウメイロ釣りに重要。</li>
+  </ul>
+  <div class="figs">
+    <figure><img src="images/swivel.jpg"><figcaption>スイベルとスナップ。糸ヨレを防ぎ、ルアー交換を素早くする。</figcaption></figure>
+    <figure><img src="images/sinker.jpg"><figcaption>各号数の鉛オモリ。エサを狙いの深さに保つ。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>すすぐ。</b> すべての仕掛けを真水ですすぎます。</li>
+    <li><b>乾かす。</b> 完全に乾かします。</li>
+    <li><b>点検。</b> さびを確認し、スナップやスイベルが滑らかに動くか確かめます。</li>
+    <li><b>交換。</b> さびた部品は、本番で壊れる前に交換します。</li>
+  </ol>
+
+  <!-- 10 -->
+  <h2 class="section"><span class="num">10</span>魚を扱う道具</h2>
+  <p>GT、カンパチ、イソマグロなど小笠原の大物は、フィッシュグリップ、プライヤー、ナイフで扱います。海水とぬめりにさらされるので、洗浄と軽い注油が欠かせません。</p>
+  <ul>
+    <li>フィッシュグリップ：大物を安全に保持（GT、カンパチ、イソマグロ）。</li>
+    <li>プライヤー：針外し、スプリットリング交換、リーダー切り。</li>
+    <li>ディフッカー（針外し器）：深く飲まれた針を外す。</li>
+    <li>ナイフ：魚をさばく。</li>
+  </ul>
+  <div class="figs single">
+    <figure><img src="images/fishgrip_boga.jpg"><figcaption>大物を安全に保持するフィッシュグリップ。すすぎ、乾かし、可動部に注油。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>すぐ洗う。</b> 使用後すぐにグリップ、プライヤー、ナイフを洗います。</li>
+    <li><b>しっかり乾かす。</b> すべての道具を完全に乾かします。</li>
+    <li><b>関節に注油。</b> プライヤーやグリップの可動部に一滴注油します。</li>
+    <li><b>ナイフの手入れ。</b> 刃に薄く油をぬり、鞘に収めて保管します。</li>
+    <li><b>動作を確認。</b> バネ式のアゴやカッターが効くか確認し、さびを落とします。</li>
+  </ol>
+
+  <!-- 11 -->
+  <h2 class="section"><span class="num">11</span>エサの保存用具</h2>
+  <p>小笠原の釣りはイカ、ムロアジ、貝類、ウニに頼るため、エサを新鮮に保つ用具は清潔で臭わない状態に保ちます。</p>
+  <ul>
+    <li>バッカン（エサバケツ）：生きエサや切りエサを入れる。</li>
+    <li>エアポンプ：生きエサを生かす。</li>
+    <li>ライブウェル：大きめの活かし水槽。</li>
+    <li>保冷クーラー／氷箱：エサと釣果を冷やす。</li>
+  </ul>
+  <ol class="steps">
+    <li><b>空にする。</b> 残ったエサやぬめりを出します。</li>
+    <li><b>洗う。</b> 洗剤と水で洗います。</li>
+    <li><b>除菌する。</b> 臭いと雑菌を抑えるため除菌します。</li>
+    <li><b>乾燥。</b> すすいで完全に自然乾燥させてから保管します。</li>
+  </ol>
+
+  <!-- 12 -->
+  <h2 class="section"><span class="num">12</span>安全装備</h2>
+  <p>小笠原の磯は外洋に面した高い火山岩で、安全装備は必須です。塩と紫外線で劣化するので、ほかの道具と同じようにすすぎ、乾かし、点検します。</p>
+  <ul>
+    <li>ライフジャケット：必須。</li>
+    <li>磯靴（スパイク／フェルト）：滑りやすい火山岩で必須。</li>
+    <li>偏光サングラス：魚や地形を見やすく、目を守る。</li>
+    <li>グローブ：糸・リーダー・魚から手を守る。</li>
+    <li>救急セット：必須。</li>
+  </ul>
+  <div class="figs">
+    <figure><img src="images/safety_lifevest.jpg"><figcaption>ライフジャケット。磯では常に着用する。</figcaption></figure>
+    <figure><img src="images/safety_rockshoes.jpg"><figcaption>磯靴。滑りやすい火山岩での足元を確保する。</figcaption></figure>
+  </div>
+  <ol class="steps">
+    <li><b>すすいで乾かす。</b> ライフジャケットとグローブを真水ですすぎ、直射日光を避けて完全に乾かします。</li>
+    <li><b>ライフジャケットを点検。</b> バックルとベルト、膨張式ならガスボンベを確認します。</li>
+    <li><b>磯靴の手入れ。</b> すすいで乾かし、スパイクやフェルト底の摩耗を確認します。</li>
+    <li><b>サングラスを拭く。</b> きれいな布で拭き、ケースに入れて保管します。</li>
+    <li><b>救急セットを補充。</b> 中身を補充し、使用期限を確認します。</li>
+  </ol>
+
+  <!-- 13 -->
+  <h2 class="section"><span class="num">13</span>覚えておきたい結び</h2>
+  <p>結びはロッドやリールよりも切れやすいので、体で覚えるまで練習する価値があります。表は小笠原で役立つ代表的な結びです。</p>
+  <table class="tbl">
+    <tr><th>結び</th><th>用途</th></tr>
+    <tr><td>FGノット</td><td>道糸（PE）とリーダーの接続</td></tr>
+    <tr><td>パロマーノット</td><td>針の結束</td></tr>
+    <tr><td>ユニノット</td><td>万能の接続</td></tr>
+    <tr><td>改良クリンチノット</td><td>針の結束</td></tr>
+    <tr><td>ループノット</td><td>ルアーを自由に動かす</td></tr>
+  </table>
+
+  <!-- 14 -->
+  <h2 class="section"><span class="num">14</span>タックルの保管と持ち運び</h2>
+  <p>小笠原へ道具を無事に運ぶことは、洗うのと同じくらい大切です。清潔で乾いた、保護された状態で運びます。</p>
+  <ul>
+    <li>ロッドケース（チューブ）：移動中のロッドを守る。</li>
+    <li>リールカバー：傷やぶつけを防ぐ。</li>
+    <li>防水タックルボックス：仕掛けを乾いた状態で守る。</li>
+    <li>ドライバッグ：スマホ、書類、電子機器を守る。</li>
+  </ul>
+  <ol class="steps">
+    <li><b>清潔・乾燥で詰める。</b> すべて清潔で完全に乾いた状態にしてから収納します。</li>
+    <li><b>ドラグをゆるめる。</b> 保管・移動の前にすべてのドラグをゆるめます。</li>
+    <li><b>涼しく保管。</b> 直射日光を避け、涼しく乾いた場所で保管します。</li>
+    <li><b>長期保管。</b> 3か月以上保管するなら、リールから古いラインを外すことを検討します。</li>
+  </ol>
+
+  <!-- 15 -->
+  <h2 class="section"><span class="num">15</span>手入れの頻度</h2>
+  <p>すすぎと乾燥は毎回の釣行ごと、注油やしっかりした整備はもっと低い頻度で行います。下の表を目安にしてください。</p>
+  <table class="tbl">
+    <tr><th>作業</th><th>頻度</th></tr>
+    <tr><td>全道具のすすぎと乾燥</td><td>毎回の釣行ごと</td></tr>
+    <tr><td>保管時にドラグをゆるめる</td><td>毎回の釣行ごと</td></tr>
+    <tr><td>しまう前にラインを乾かす</td><td>毎回の釣行ごと</td></tr>
+    <tr><td>ライン・針・ルアーの点検</td><td>毎回の釣行ごと</td></tr>
+    <tr><td>安全装備の点検（ライフジャケット、磯靴）</td><td>毎回の釣行前</td></tr>
+    <tr><td>リール可動部への注油</td><td>月に一度、または海水で多用したあと</td></tr>
+    <tr><td>ガイドの清掃とロッドの点検</td><td>数回の釣行ごと</td></tr>
+    <tr><td>仕掛けとスプリットリングの点検</td><td>数回の釣行ごと</td></tr>
+    <tr><td>スピニングリールの分解整備</td><td>年に一度</td></tr>
+    <tr><td>ベイトリールの分解整備</td><td>海水使用なら半年に一度を目安</td></tr>
+    <tr><td>PEラインの交換</td><td>6〜12か月ごと</td></tr>
+    <tr><td>古いラインの巻き替え・除去</td><td>3か月以上保管する前</td></tr>
+  </table>
+
+  <div class="note">
+    <span class="label">分解整備について</span>
+    <p>リールの完全な分解整備は細かく、小さな部品をなくしやすい作業です。内部がジャリジャリしたり動きが渋いと感じたら、自分で開けるよりも釣具店に整備を任せるのが安心です。</p>
+  </div>
+
+  <p class="sources"><strong>検証と出典。</strong> 本ガイドの手順は、信頼できる釣り情報源と照合しています。ロッドの洗浄（The Tackle Room、Battlbox、In The Spread）、リールの手入れ（KastKing、Salt Strong、Saltwater Sportsman）、ベイトリールの手入れ（Abu Garcia、Lew's、Louisiana Sportsman）、玉網の手入れ（Rising Fishing）、ラインと保管（Reaction Tackle、The Tackle Room）、針と仕掛け（Angling Direct、Salt Strong）、ルアー・道具・安全装備の一般的なソルト向け手入れ。装備カテゴリと画像は、リンク先のChatGPTリサーチおよびアップロードされた『小笠原 2018 釣魚ガイド』に基づきます。本書は『釣り道具の使い方』の姉妹編です。</p>
+
+</section>
+</body>
+</html>
