@@ -1,0 +1,149 @@
+/* ==================================================================
+   TOKIQ flyer design system — pulled 1:1 from the live app
+   (src/index.css + src/App.jsx): tokens, atmosphere, the STOP button,
+   readout, jackpot, chips, QR card. Shared by all flyer variants.
+   ================================================================== */
+:root{
+  /* surfaces (app --ink-*) */
+  --ink-900:#05060a; --ink-800:#0a0b14; --ink-700:#0b0d18; --ink-600:#11131f;
+  /* brand (app tokens) */
+  --cyan:#22d3ee; --blue:#2563eb; --fuchsia:#d946ef;
+  --gold-1:#fde68a; --gold-2:#fbbf24; --good:#34d399;
+  --on-cyan:#04181c;          /* signature text color on cyan fills */
+  --ink:#f4f7fa; --muted:#8a94a6; --muted-2:#5b6473;
+  --line:rgba(34,211,238,0.16); --glass:rgba(255,255,255,0.04);
+  --font-display:'Chakra Petch',ui-sans-serif,system-ui,sans-serif;
+  --font-num:'Geist Mono',ui-monospace,monospace;
+  --font-body:'Sora',ui-sans-serif,system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:var(--font-body);
+  background:var(--ink-900);
+  color:var(--ink);
+  overflow:hidden;position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- atmosphere (app .bg-grid + .grain + ambient blobs) ---------- */
+.atmos{position:absolute;inset:0;z-index:0;pointer-events:none}
+.atmos .blob{position:absolute;border-radius:50%;filter:blur(120px)}
+.atmos .b-cyan{background:rgba(34,211,238,.16)}
+.atmos .b-fuchsia{background:rgba(217,70,239,.13)}
+.atmos .b-blue{background:rgba(37,99,235,.10)}
+.atmos .grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size:58px 58px;
+  -webkit-mask-image:radial-gradient(circle at var(--grid-x,50%) var(--grid-y,40%), #000 4%, transparent 76%);
+  mask-image:radial-gradient(circle at var(--grid-x,50%) var(--grid-y,40%), #000 4%, transparent 76%);
+}
+.atmos .grain{
+  position:absolute;inset:0;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.atmos .vignette{position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 30%, transparent 55%, rgba(0,0,0,.55) 100%)}
+
+/* ---------- brand wordmark ---------- */
+.brand{font-family:var(--font-display);font-weight:700;letter-spacing:.16em;line-height:1;color:var(--ink)}
+.brand .i{color:var(--cyan)}
+
+/* ---------- instrument primitives (etched labels — no pills) ---------- */
+.meta{font-family:var(--font-num);text-transform:uppercase;letter-spacing:.28em;color:var(--muted);
+  display:inline-flex;align-items:center;gap:1em;white-space:nowrap}
+.meta .sep{color:var(--muted-2);font-weight:400}
+.meta .c{color:var(--cyan)}
+.meta .g{color:var(--gold-2)}
+.livedot{width:.5em;height:.5em;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good);display:inline-block;flex:none}
+
+/* hairline rules — the instrument's panel lines */
+.rule{height:1px;width:100%;background:linear-gradient(90deg,transparent,rgba(34,211,238,.30),transparent)}
+.rule.l{background:linear-gradient(90deg,rgba(34,211,238,.42),rgba(34,211,238,.04) 70%,transparent)}
+
+/* corner registration marks (viewfinder framing) */
+.reg{position:absolute;z-index:4;pointer-events:none;border-color:rgba(34,211,238,.55)}
+.reg.tl{border-top:2px solid;border-left:2px solid}
+.reg.tr{border-top:2px solid;border-right:2px solid}
+.reg.bl{border-bottom:2px solid;border-left:2px solid}
+.reg.br{border-bottom:2px solid;border-right:2px solid}
+
+/* ---------- measurement ruler — the near-miss as an instrument scale ----------
+   scale window ~9.85–10.05s. target tick (cyan, label above) vs your tick
+   (white, label below); the gap between them glows. Positions are % of width. */
+.ruler{position:relative;width:100%;height:158px}
+.ruler .ticks{position:absolute;left:0;right:0;top:64px;height:30px;
+  background:repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 1px, transparent 1px 30px);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ruler .ticks.major{background:repeating-linear-gradient(90deg, rgba(34,211,238,.34) 0 2px, transparent 2px 150px)}
+.ruler .axis{position:absolute;left:0;right:0;top:78px;height:2px;background:rgba(255,255,255,.16)}
+.ruler .seg{position:absolute;top:64px;height:30px;
+  background:linear-gradient(rgba(34,211,238,.30),rgba(34,211,238,.04));
+  box-shadow:0 0 30px rgba(34,211,238,.45);border-left:1px dashed rgba(34,211,238,.5);border-right:1px dashed rgba(34,211,238,.5)}
+.ruler .mark{position:absolute;top:0;height:100%;width:0}
+.ruler .mark .stem{position:absolute;left:-1px;width:2px}
+.ruler .mark.tgt .stem{top:40px;height:39px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.ruler .mark.you .stem{top:79px;height:39px;background:#fff}
+.ruler .mark .lab{position:absolute;left:0;transform:translateX(-50%);font-family:var(--font-num);white-space:nowrap;line-height:1.1}
+.ruler .mark .lab .k{display:block;font-size:15px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.ruler .mark .lab .v{display:block;font-weight:700;margin-top:4px}
+.ruler .mark.tgt .lab{top:-6px;text-align:center}
+.ruler .mark.tgt .lab .v{font-size:34px;color:var(--ink)}
+.ruler .mark.you .lab{top:118px;text-align:center}
+.ruler .mark.you .lab .v{font-size:34px;color:var(--cyan);text-shadow:0 0 22px rgba(34,211,238,.5)}
+/* the gap readout, centered over the glowing segment */
+.ruler .gap{position:absolute;top:30px;transform:translateX(-50%);text-align:center;font-family:var(--font-num);white-space:nowrap}
+.ruler .gap .k{display:block;font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.ruler .gap .v{display:block;font-weight:700;font-size:22px;color:var(--cyan);text-shadow:0 0 20px rgba(34,211,238,.5);margin-top:2px}
+
+/* ---------- jackpot (app .jackpot-text, gold + glow) ---------- */
+.jackpot .lbl{font-family:var(--font-num);text-transform:uppercase;letter-spacing:.24em;color:var(--muted)}
+.jackpot .val{font-family:var(--font-num);font-weight:800;color:var(--gold-2);letter-spacing:-.02em;
+  text-shadow:0 0 26px rgba(251,191,36,.42)}
+
+/* ---------- THE STOP BUTTON (app StopButton, faithfully) ---------- */
+/* size via --d. cyan disc + glow + reticle dashed ring + solid ring + 4 ticks
+   + two concentric inner rings, "STOP" in display type. */
+.stopbtn{position:relative;width:var(--d);height:var(--d);display:grid;place-items:center;flex:none}
+.stopbtn .reticle-dash{position:absolute;inset:calc(var(--d) * -0.05);border:2px dashed rgba(34,211,238,.42);border-radius:50%}
+.stopbtn .reticle-solid{position:absolute;inset:calc(var(--d) * -0.105);border:2px solid rgba(34,211,238,.16);border-radius:50%}
+.stopbtn .tick{position:absolute;background:rgba(34,211,238,.75)}
+.stopbtn .tick.t{top:calc(var(--d) * -0.075);left:50%;transform:translateX(-50%);width:2px;height:calc(var(--d) * 0.045)}
+.stopbtn .tick.b{bottom:calc(var(--d) * -0.075);left:50%;transform:translateX(-50%);width:2px;height:calc(var(--d) * 0.045)}
+.stopbtn .tick.l{left:calc(var(--d) * -0.075);top:50%;transform:translateY(-50%);height:2px;width:calc(var(--d) * 0.045)}
+.stopbtn .tick.r{right:calc(var(--d) * -0.075);top:50%;transform:translateY(-50%);height:2px;width:calc(var(--d) * 0.045)}
+.stopbtn .disc{
+  position:relative;width:100%;height:100%;border-radius:50%;background:var(--cyan);
+  display:grid;place-items:center;
+  box-shadow:0 0 0 1px rgba(255,255,255,.18), 0 0 90px 16px rgba(34,211,238,.5),
+             0 0 140px 30px rgba(34,211,238,.22), inset 0 6px 40px rgba(255,255,255,.3);
+}
+.stopbtn .disc::before{content:"";position:absolute;inset:8%;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.24)}
+.stopbtn .disc::after{content:"";position:absolute;inset:21%;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.12)}
+.stopbtn .disc b{font-family:var(--font-display);font-weight:700;color:var(--on-cyan);
+  letter-spacing:.16em;font-size:calc(var(--d) * 0.2);line-height:1}
+
+/* ---------- readout: TARGET vs YOU (app Stage timer) ---------- */
+.readout{position:relative;border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(34,211,238,0.06), rgba(255,255,255,0.02));
+  backdrop-filter:blur(8px);overflow:hidden}
+.readout .lbl{font-family:var(--font-num);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.readout .num{font-family:var(--font-num);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.readout .num .s{color:var(--muted)}
+.readout .you .num{font-weight:800;color:var(--cyan);text-shadow:0 0 26px rgba(34,211,238,.45)}
+.readout .you .num .s{color:rgba(34,211,238,.55)}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.06);position:relative;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),rgba(34,211,238,.2))}
+.off{font-family:var(--font-num);color:var(--cyan);font-weight:700;white-space:nowrap}
+
+/* ---------- QR card ---------- */
+.qrcard{border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;
+  box-shadow:0 0 0 1px rgba(34,211,238,.4), 0 18px 46px rgba(0,0,0,.5)}
+.qrcard img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.url{font-family:var(--font-num);font-weight:700;color:var(--cyan)}
+
+/* ---------- emphasis ---------- */
+.accent{color:var(--cyan)}
+.gold{color:var(--gold-2)}

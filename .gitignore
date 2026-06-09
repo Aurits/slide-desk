@@ -20,6 +20,9 @@ desktop.ini
 *.swo
 *~
 
+# Python virtual environment (shared across sub-projects)
+.venv/
+
 # Local environment
 .env
 .env.local
@@ -28,3 +31,4 @@ desktop.ini
 /tmp/
 *.tmp
 *.log
+*.rendered.html

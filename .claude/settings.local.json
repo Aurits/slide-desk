@@ -149,7 +149,28 @@
       "Bash(wkhtmltopdf --quiet --enable-local-file-access --page-size A4 --margin-top 0 --margin-bottom 0 --margin-left 0 --margin-right 0 warning_response.html \"Ambrose_Alanda_Warning_Response.pdf\")",
       "Bash(pdfinfo Ambrose_Alanda_Warning_Response.pdf)",
       "Bash(pdftoppm -png -r 90 Ambrose_Alanda_Warning_Response.pdf preview)",
-      "Bash(pdftoppm -png -r 95 Ambrose_Alanda_Warning_Response.pdf preview)"
+      "Bash(pdftoppm -png -r 95 Ambrose_Alanda_Warning_Response.pdf preview)",
+      "Bash(node -v)",
+      "Bash(ls node_modules/qrcode)",
+      "Bash(ls node_modules/puppeteer)",
+      "Bash(which chromium *)",
+      "Bash(ls node_modules/sharp)",
+      "Bash(command -v node)",
+      "Bash(command -v npx)",
+      "Bash(\"/mnt/c/Program Files/nodejs/node.exe\" -v)",
+      "Bash(command -v python3)",
+      "Bash(command -v python)",
+      "Bash(command -v pip3)",
+      "Bash(python3 -m venv .venv)",
+      "Bash(./.venv/bin/pip install *)",
+      "Bash(./.venv/bin/python -c \"import qrcode, playwright; print\\('qrcode + playwright OK'\\)\")",
+      "Bash(./.venv/bin/python -m playwright install chromium)",
+      "Bash(rm -rf tokiq/.venv)",
+      "Bash(ls ~/.cache/ms-playwright)",
+      "Bash(./.venv/bin/python -c \"import qrcode, playwright; print\\('root venv: qrcode + playwright OK'\\)\")",
+      "Bash(../../.venv/bin/python render.py)",
+      "Bash(rm -f .*.rendered.html)",
+      "Bash(../../.venv/bin/python -c \"from PIL import Image; import glob; [print\\(f, Image.open\\(f\\).size\\) for f in sorted\\(glob.glob\\('*.png'\\)\\)]\")"
     ]
   }
 }

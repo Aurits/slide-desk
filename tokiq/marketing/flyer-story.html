@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Geist+Mono:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="flyer-base.css" />
+<style>
+  html,body{width:1080px;height:1920px}
+  .wrap{position:relative;z-index:2;height:100%;padding:84px 84px 76px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .wrap > *{flex:none}
+
+  .top{width:100%;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-size:60px}
+  .top .meta{font-size:16px}
+  .rule{margin:26px 0}
+
+  .eyebrow{margin-top:30px;font-family:var(--font-num);font-size:22px;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan)}
+  .headline{margin-top:30px;font-family:var(--font-display);font-weight:700;font-size:116px;line-height:.92;letter-spacing:-.01em}
+  .headline .accent{text-shadow:0 0 44px rgba(34,211,238,.35)}
+  .sub{margin-top:28px;font-size:33px;color:var(--muted);max-width:800px;line-height:1.4}
+  .sub b{color:var(--ink);font-weight:600}
+
+  .stopwrap{margin-top:64px;margin-bottom:60px;position:relative;display:grid;place-items:center}
+  .stopbtn{--d:392px !important}
+  .stopcap{position:absolute;bottom:-58px;left:50%;transform:translateX(-50%);
+    font-family:var(--font-num);font-size:20px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+  .scale{width:100%;margin-top:46px}
+  .soclose{margin-top:30px;font-family:var(--font-display);font-weight:700;font-size:50px;letter-spacing:-.01em}
+
+  .botrule{margin-top:auto}
+  .bottom{margin-top:44px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:30px}
+  .cta-l{display:flex;align-items:center;gap:28px;text-align:left}
+  .qrcard{width:188px;height:188px;padding:12px;border-radius:18px}
+  .scan{font-family:var(--font-num);font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .play{margin-top:8px;font-weight:700;font-size:38px;line-height:1.08}
+  .url{margin-top:6px;font-size:27px}
+  .jp{text-align:right}
+  .jp .meta{font-size:16px;justify-content:flex-end}
+  .jpval{font-family:var(--font-num);font-weight:800;font-size:46px;color:var(--gold-2);text-shadow:0 0 26px rgba(251,191,36,.42);margin-top:7px;letter-spacing:-.02em}
+</style>
+</head>
+<body>
+  <div class="atmos">
+    <div class="grid" style="--grid-x:50%;--grid-y:44%"></div>
+    <div class="blob b-cyan" style="width:880px;height:880px;left:50%;top:540px;transform:translateX(-50%)"></div>
+    <div class="blob b-fuchsia" style="width:680px;height:680px;right:-220px;top:80px"></div>
+    <div class="blob b-blue" style="width:720px;height:720px;left:-240px;bottom:160px"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <span class="reg tl" style="top:44px;left:44px;width:34px;height:34px"></span>
+  <span class="reg tr" style="top:44px;right:44px;width:34px;height:34px"></span>
+  <span class="reg bl" style="bottom:44px;left:44px;width:34px;height:34px"></span>
+  <span class="reg br" style="bottom:44px;right:44px;width:34px;height:34px"></span>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">TOK<span class="i">I</span>Q</div>
+      <div class="meta">
+        <span>Round <span class="c">1042</span></span><span class="sep">/</span>
+        <span><span class="livedot"></span> 12 at table</span><span class="sep">/</span>
+        <span>Provably fair</span>
+      </div>
+    </div>
+    <div class="rule"></div>
+
+    <div class="eyebrow">Social precision timing</div>
+    <div class="headline">Beat Time.<br><span class="accent">Win Together.</span></div>
+    <div class="sub">A real-time game of nerve and timing. Stop the clock as close to the target as you dare — the closest player takes the pool.</div>
+
+    <div class="stopwrap">
+      <div class="stopbtn">
+        <span class="reticle-dash"></span>
+        <span class="reticle-solid"></span>
+        <span class="tick t"></span><span class="tick b"></span><span class="tick l"></span><span class="tick r"></span>
+        <div class="disc"><b>STOP</b></div>
+      </div>
+      <div class="stopcap">precision · nerve · timing</div>
+    </div>
+
+    <div class="scale">
+      <div class="ruler">
+        <div class="ticks"></div>
+        <div class="axis"></div>
+        <div class="seg" style="left:41%;width:30%"></div>
+        <div class="gap" style="left:56%"><span class="k">off by</span><span class="v">0.03s</span></div>
+        <div class="mark tgt" style="left:71%"><span class="stem"></span><span class="lab"><span class="k">Target</span><span class="v">10.00s</span></span></div>
+        <div class="mark you" style="left:41%"><span class="stem"></span><span class="lab"><span class="k">Your stop</span><span class="v">09.97s</span></span></div>
+      </div>
+    </div>
+    <div class="soclose">I was <span class="accent">SO</span> close.</div>
+
+    <div class="botrule"></div>
+    <div class="rule"></div>
+    <div class="bottom">
+      <div class="cta-l">
+        <div class="qrcard"><img src="__QR_DATA_URI__" alt="Scan to play" /></div>
+        <div>
+          <div class="scan">Scan / tap to play</div>
+          <div class="play"><span class="accent">Free</span> in your browser<br>no signup</div>
+          <div class="url">__URL_TEXT__</div>
+        </div>
+      </div>
+      <div class="jp">
+        <div class="meta">Mega Jackpot</div>
+        <div class="jpval">¥1,245,000</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
