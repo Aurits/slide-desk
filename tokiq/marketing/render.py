@@ -30,6 +30,10 @@ JOBS = [
     ("flyer.html", "tokiq-flyer-square-1080.png", 1080, 1080),
     ("flyer-story.html", "tokiq-flyer-story-1080x1920.png", 1080, 1920),
     ("flyer-winner.html", "tokiq-flyer-winner-1080.png", 1080, 1080),
+    # Japanese edition
+    ("flyer-ja.html", "tokiq-flyer-ja-square-1080.png", 1080, 1080),
+    ("flyer-ja-story.html", "tokiq-flyer-ja-story-1080x1920.png", 1080, 1920),
+    ("flyer-ja-winner.html", "tokiq-flyer-ja-winner-1080.png", 1080, 1080),
 ]
 
 
@@ -71,7 +75,7 @@ def render_all() -> None:
             )
             page.goto(html_path.as_uri(), wait_until="networkidle")
             page.evaluate("document.fonts.ready")
-            page.wait_for_timeout(500)
+            page.wait_for_timeout(800)
             png = page.screenshot(clip={"x": 0, "y": 0, "width": w, "height": h})
             page.close()
 

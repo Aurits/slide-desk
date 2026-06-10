@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Geist+Mono:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho+B1:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="flyer-base.css" />
+<link rel="stylesheet" href="flyer-ja.css" />
+<style>
+  html,body{width:1080px;height:1080px}
+  .wrap{position:relative;z-index:2;height:100%;padding:64px 72px 60px;display:flex;flex-direction:column}
+
+  .top{flex:none;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-size:54px}
+  .top .meta{font-size:17px}
+  .rule{flex:none;margin:22px 0}
+
+  .hero{flex:1;min-height:0;display:flex;align-items:stretch;gap:20px}
+  .col-l{flex:1;min-width:0;display:flex;flex-direction:column}
+  .eyebrow{font-family:var(--jp-gothic);font-weight:700;font-size:21px;letter-spacing:.28em;color:var(--cyan)}
+  .subhead{margin-top:22px;font-family:var(--jp-gothic);font-weight:500;font-size:30px;line-height:1.6;color:var(--muted)}
+  .subhead b{color:var(--ink);font-weight:700}
+  .stopslot{flex:1;display:grid;place-items:center}
+
+  /* vertical catchphrase — the Japanese hero */
+  .vhero{flex:none;font-family:var(--jp-mincho);font-weight:800;font-size:78px;line-height:1.5;
+    letter-spacing:.06em;color:var(--ink);text-align:start;padding-top:4px}
+  .vhero .ac{color:var(--cyan);text-shadow:0 0 38px rgba(34,211,238,.4)}
+  .vhero .small{font-size:.5em;color:var(--muted)}
+
+  .scale{flex:none;position:relative;margin-top:4px}
+
+  .bottom{flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+  .cta-l{display:flex;align-items:center;gap:22px}
+  .qrcard{width:128px;height:128px;padding:9px;border-radius:14px}
+  .scan{font-family:var(--jp-gothic);font-weight:700;font-size:18px;letter-spacing:.06em;color:var(--cyan)}
+  .play{margin-top:7px;font-family:var(--jp-gothic);font-weight:700;font-size:27px}
+  .play .m{color:var(--muted);font-weight:500}
+  .url{margin-top:5px;font-family:var(--font-num);font-weight:700;font-size:23px;color:var(--cyan)}
+  .jp{text-align:right}
+  .jp .meta{font-size:15px;justify-content:flex-end}
+  .jpval{font-weight:800;font-size:42px;color:var(--gold-2);text-shadow:0 0 26px rgba(251,191,36,.42);margin-top:6px;letter-spacing:-.02em}
+</style>
+</head>
+<body class="ja">
+  <div class="atmos">
+    <div class="grid" style="--grid-x:28%;--grid-y:48%"></div>
+    <div class="blob b-cyan" style="width:720px;height:720px;left:-180px;top:60px"></div>
+    <div class="blob b-fuchsia" style="width:640px;height:640px;right:-200px;bottom:-160px"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <span class="reg tl" style="top:40px;left:40px;width:32px;height:32px"></span>
+  <span class="reg tr" style="top:40px;right:40px;width:32px;height:32px"></span>
+  <span class="reg bl" style="bottom:40px;left:40px;width:32px;height:32px"></span>
+  <span class="reg br" style="bottom:40px;right:40px;width:32px;height:32px"></span>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">TOK<span class="i">I</span>Q</div>
+      <div class="meta">
+        <span>ラウンド <span class="c">1042</span></span><span class="sep">/</span>
+        <span><span class="livedot"></span> 卓に12人</span><span class="sep">/</span>
+        <span>公正性証明済み</span>
+      </div>
+    </div>
+    <div class="rule"></div>
+
+    <div class="hero">
+      <div class="col-l">
+        <div class="eyebrow">精密タイミング・バトル</div>
+        <div class="subhead">目標タイムへ、<b>一番近く</b>で<b>STOP</b>。<br>最も近い一人が、<b>プールを総取り</b>。</div>
+        <div class="stopslot">
+          <div class="stopbtn" style="--d:236px">
+            <span class="reticle-dash"></span>
+            <span class="reticle-solid"></span>
+            <span class="tick t"></span><span class="tick b"></span><span class="tick l"></span><span class="tick r"></span>
+            <div class="disc"><b>STOP</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vhero vtext"><span class="ac">惜しい。</span><br>もう一回。</div>
+    </div>
+
+    <div class="scale">
+      <div class="ruler">
+        <div class="ticks"></div>
+        <div class="axis"></div>
+        <div class="seg" style="left:41%;width:30%"></div>
+        <div class="gap" style="left:56%"><span class="k">誤差</span><span class="v">0.03秒</span></div>
+        <div class="mark tgt" style="left:71%"><span class="stem"></span><span class="lab"><span class="k">目標</span><span class="v">10.00s</span></span></div>
+        <div class="mark you" style="left:41%"><span class="stem"></span><span class="lab"><span class="k">あなた</span><span class="v">09.97s</span></span></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="bottom">
+      <div class="cta-l">
+        <div class="qrcard"><img src="__QR_DATA_URI__" alt="今すぐプレイ" /></div>
+        <div>
+          <div class="scan">【無料】今すぐプレイ</div>
+          <div class="play">登録不要・<span class="m">ブラウザですぐ遊べる</span></div>
+          <div class="url">__URL_TEXT__</div>
+        </div>
+      </div>
+      <div class="jp">
+        <div class="meta">メガジャックポット</div>
+        <div class="jpval">¥1,245,000</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

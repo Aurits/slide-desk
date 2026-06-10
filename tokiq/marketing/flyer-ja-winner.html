@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Geist+Mono:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho+B1:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="flyer-base.css" />
+<link rel="stylesheet" href="flyer-ja.css" />
+<style>
+  html,body{width:1080px;height:1080px}
+  .wrap{position:relative;z-index:2;height:100%;padding:60px 72px 56px;display:flex;flex-direction:column}
+
+  .top{flex:none;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-size:54px}
+  .top .meta{font-size:16px}
+  .rule{flex:none;margin:22px 0}
+
+  .hero{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
+  .trophy{font-size:74px;line-height:1;filter:drop-shadow(0 0 34px rgba(251,191,36,.5))}
+  .eyebrow{margin-top:12px;font-family:var(--jp-gothic);font-weight:700;font-size:21px;letter-spacing:.4em;color:var(--cyan)}
+  .victory{margin-top:6px;font-family:var(--jp-gothic);font-weight:900;font-size:108px;letter-spacing:.06em;line-height:1}
+  .victory .ex{color:var(--cyan)}
+  /* vertical accent */
+  .vacc{position:absolute;right:6px;top:50%;transform:translateY(-58%);font-family:var(--jp-mincho);font-weight:800;
+    font-size:46px;letter-spacing:.1em;color:rgba(255,255,255,.82)}
+  .vacc .ac{color:var(--cyan)}
+
+  .prize{margin-top:18px;font-family:var(--font-num);font-weight:800;font-size:150px;line-height:.86;color:var(--gold-2);
+    text-shadow:0 0 50px rgba(251,191,36,.5);display:flex;align-items:baseline;justify-content:center;gap:4px}
+  .prize .yen{font-size:90px;color:var(--gold-1)}
+  .poolnote{margin-top:14px;font-family:var(--jp-gothic);font-weight:500;font-size:23px;color:var(--muted)}
+  .poolnote b{color:var(--ink);font-weight:700}
+
+  .snap{margin-top:26px;width:620px}
+  .snap .hd{display:flex;align-items:center;justify-content:space-between;padding:0 8px 12px;
+    font-family:var(--jp-gothic);font-weight:500;font-size:16px;letter-spacing:.06em;color:var(--muted);
+    border-bottom:1px solid rgba(34,211,238,.28)}
+  .row{display:flex;align-items:center;gap:16px;padding:14px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left}
+  .row.you{background:linear-gradient(90deg,rgba(34,211,238,.10),transparent)}
+  .row .medal{width:32px;text-align:center;font-size:24px}
+  .row .nm{flex:1;font-family:var(--jp-gothic);font-weight:700;font-size:26px}
+  .row.you .nm{color:var(--cyan)}
+  .row .tm{font-family:var(--font-num);font-weight:700;font-size:26px}
+  .row.you .tm{color:var(--cyan);text-shadow:0 0 18px rgba(34,211,238,.45)}
+  .row .dl{font-family:var(--font-num);font-size:20px;color:var(--muted);width:84px;text-align:right}
+
+  .bottom{flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+  .cta-l{display:flex;align-items:center;gap:22px}
+  .qrcard{width:128px;height:128px;padding:9px;border-radius:14px}
+  .scan{font-family:var(--jp-gothic);font-weight:700;font-size:18px;letter-spacing:.04em;color:var(--cyan)}
+  .play{margin-top:7px;font-family:var(--jp-gothic);font-weight:700;font-size:28px}
+  .play .m{color:var(--muted);font-weight:500}
+  .url{margin-top:5px;font-family:var(--font-num);font-weight:700;font-size:23px;color:var(--cyan)}
+  .jp{text-align:right}
+  .jp .meta{font-size:15px;justify-content:flex-end}
+  .jpval{font-weight:800;font-size:42px;color:var(--gold-2);text-shadow:0 0 26px rgba(251,191,36,.42);margin-top:6px;letter-spacing:-.02em}
+
+  .confetti{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+  .confetti i{position:absolute;display:block}
+</style>
+</head>
+<body class="ja">
+  <div class="atmos">
+    <div class="grid" style="--grid-x:50%;--grid-y:40%"></div>
+    <div class="blob b-cyan" style="width:740px;height:740px;left:50%;top:120px;transform:translateX(-50%)"></div>
+    <div class="blob b-fuchsia" style="width:620px;height:620px;right:-180px;bottom:-150px"></div>
+    <div class="blob" style="width:500px;height:500px;left:-160px;top:-80px;background:rgba(251,191,36,.07)"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <div class="confetti">
+    <i style="left:9%;top:13%;width:16px;height:16px;border-radius:99px;background:#22d3ee;transform:rotate(20deg)"></i>
+    <i style="left:18%;top:25%;width:14px;height:14px;border-radius:3px;background:#fbbf24;transform:rotate(-24deg)"></i>
+    <i style="left:13%;top:45%;width:12px;height:12px;border-radius:99px;background:#34d399;transform:rotate(40deg)"></i>
+    <i style="left:26%;top:9%;width:12px;height:12px;border-radius:3px;background:#fde68a;transform:rotate(-12deg)"></i>
+    <i style="left:38%;top:17%;width:15px;height:15px;border-radius:99px;background:#ffffff;transform:rotate(30deg)"></i>
+    <i style="left:62%;top:11%;width:13px;height:13px;border-radius:3px;background:#22d3ee;transform:rotate(-18deg)"></i>
+    <i style="left:74%;top:19%;width:16px;height:16px;border-radius:99px;background:#fbbf24;transform:rotate(26deg)"></i>
+    <i style="left:84%;top:14%;width:12px;height:12px;border-radius:3px;background:#34d399;transform:rotate(-34deg)"></i>
+    <i style="left:90%;top:33%;width:14px;height:14px;border-radius:99px;background:#fde68a;transform:rotate(14deg)"></i>
+    <i style="left:87%;top:53%;width:13px;height:13px;border-radius:3px;background:#22d3ee;transform:rotate(44deg)"></i>
+    <i style="left:7%;top:61%;width:13px;height:13px;border-radius:99px;background:#fbbf24;transform:rotate(-20deg)"></i>
+    <i style="left:93%;top:69%;width:12px;height:12px;border-radius:3px;background:#ffffff;transform:rotate(34deg)"></i>
+  </div>
+
+  <span class="reg tl" style="top:40px;left:40px;width:32px;height:32px"></span>
+  <span class="reg tr" style="top:40px;right:40px;width:32px;height:32px"></span>
+  <span class="reg bl" style="bottom:40px;left:40px;width:32px;height:32px"></span>
+  <span class="reg br" style="bottom:40px;right:40px;width:32px;height:32px"></span>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">TOK<span class="i">I</span>Q</div>
+      <div class="meta">
+        <span>ラウンド <span class="c">1042</span></span><span class="sep">/</span>
+        <span>卓に10人</span><span class="sep">/</span>
+        <span>公正性証明済み</span>
+      </div>
+    </div>
+    <div class="rule"></div>
+
+    <div class="hero">
+      <div class="vacc vtext"><span class="ac">総取り</span>。</div>
+      <div class="trophy">🏆</div>
+      <div class="eyebrow">ラウンド勝利</div>
+      <div class="victory">勝利<span class="ex">！</span></div>
+      <div class="prize"><span class="yen">¥</span>900</div>
+      <div class="poolnote"><b>10人</b> × ¥100 ・ 勝者が賞金の <b>90%</b> を獲得</div>
+
+      <div class="snap">
+        <div class="hd"><span>ラウンド結果 ・ 目標 10.00s</span><span>タイム ・ 誤差</span></div>
+        <div class="row you">
+          <span class="medal">🥇</span><span class="nm">あなた</span>
+          <span class="tm">10.00s</span><span class="dl">±0.01</span>
+        </div>
+        <div class="row">
+          <span class="medal">🥈</span><span class="nm">Yuki</span>
+          <span class="tm">10.04s</span><span class="dl">±0.04</span>
+        </div>
+        <div class="row">
+          <span class="medal">🥉</span><span class="nm">Kenji</span>
+          <span class="tm">09.93s</span><span class="dl">±0.07</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <div class="bottom">
+      <div class="cta-l">
+        <div class="qrcard"><img src="__QR_DATA_URI__" alt="今すぐプレイ" /></div>
+        <div>
+          <div class="scan">その腕、見せてみろ。</div>
+          <div class="play">無料・<span class="m">ブラウザですぐ</span></div>
+          <div class="url">__URL_TEXT__</div>
+        </div>
+      </div>
+      <div class="jp">
+        <div class="meta">メガジャックポット</div>
+        <div class="jpval">¥1,245,000</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

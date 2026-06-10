@@ -170,7 +170,19 @@
       "Bash(./.venv/bin/python -c \"import qrcode, playwright; print\\('root venv: qrcode + playwright OK'\\)\")",
       "Bash(../../.venv/bin/python render.py)",
       "Bash(rm -f .*.rendered.html)",
-      "Bash(../../.venv/bin/python -c \"from PIL import Image; import glob; [print\\(f, Image.open\\(f\\).size\\) for f in sorted\\(glob.glob\\('*.png'\\)\\)]\")"
+      "Bash(../../.venv/bin/python -c \"from PIL import Image; import glob; [print\\(f, Image.open\\(f\\).size\\) for f in sorted\\(glob.glob\\('*.png'\\)\\)]\")",
+      "Bash(command -v ffmpeg)",
+      "Bash(ffmpeg -version)",
+      "Bash(./.venv/bin/python -c \"import imageio_ffmpeg, subprocess; b=imageio_ffmpeg.get_ffmpeg_exe\\(\\); print\\('ffmpeg:', b\\); print\\(subprocess.run\\([b,'-hide_banner','-encoders'],capture_output=True,text=True\\).stdout.count\\('libx264'\\) and 'libx264 OK' or 'no libx264'\\)\")",
+      "Bash(cd *)",
+      "Bash(pkill -f render_video.py)",
+      "Bash(pkill -f chrome-headless)",
+      "Bash(pkill -f headless_shell)",
+      "Bash(rm -rf /tmp/tt)",
+      "Bash(../../.venv/bin/python render_video.py)",
+      "Bash(../../.venv/bin/python -)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }

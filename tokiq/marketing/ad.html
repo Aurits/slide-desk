@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Geist+Mono:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="flyer-base.css" />
+<style>
+  /* unit scales to the SMALLER viewport dimension → one scene fits 9:16, 1:1, 16:9 */
+  :root{ --u: min(1vw, 1vh); }
+  html,body{width:100%;height:100%}
+  body{overflow:hidden;
+    /* cheap radial-gradient atmosphere (no per-frame blur filter — fast to rasterize) */
+    background:
+      radial-gradient(62vmin 62vmin at 50% 42%, rgba(34,211,238,.18), transparent 62%),
+      radial-gradient(56vmin 56vmin at 88% 9%, rgba(217,70,239,.14), transparent 60%),
+      radial-gradient(56vmin 56vmin at 9% 90%, rgba(37,99,235,.12), transparent 60%),
+      #05060a;
+  }
+  /* the blurred blobs + grain are the slow parts in headless — drop them for video
+     (the radial-gradient atmosphere above replaces them at a fraction of the cost) */
+  .atmos .blob{display:none !important}
+  .atmos .grain{display:none !important}
+
+  .stage{position:absolute;inset:0;z-index:2;display:grid;place-items:center}
+  .scene{position:absolute;width:min(100vw,100vh);max-width:none;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;will-change:opacity,transform}
+
+  /* A — brand */
+  .favmark{width:calc(var(--u)*16);height:calc(var(--u)*16);filter:drop-shadow(0 0 calc(var(--u)*3) rgba(34,211,238,.4))}
+  .brand{font-family:var(--font-display);font-weight:700;letter-spacing:.16em;line-height:1;color:var(--ink)}
+  .brand .i{color:var(--cyan)}
+  .brand.big{margin-top:calc(var(--u)*4);font-size:calc(var(--u)*10)}
+  .tagline{margin-top:calc(var(--u)*3);font-family:var(--font-body);font-weight:500;
+    font-size:calc(var(--u)*3.3);letter-spacing:.04em;color:rgba(255,255,255,.62)}
+
+  /* B — play */
+  .tlabel{font-family:var(--font-num);font-size:calc(var(--u)*2.6);letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
+  .tlabel b{color:var(--ink);font-weight:700;margin-left:.5em}
+  .centerblk{position:relative;height:calc(var(--u)*22);display:grid;place-items:center;margin:calc(var(--u)*3) 0}
+  .bignum{font-family:var(--font-num);font-weight:800;font-size:calc(var(--u)*17);line-height:.9;color:var(--ink);
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em;text-shadow:0 0 calc(var(--u)*4) rgba(255,255,255,.2)}
+  .bignum .s{font-size:.42em;color:var(--muted)}
+  .countdown{position:absolute;font-family:var(--font-num);font-weight:800;font-size:calc(var(--u)*20);line-height:1;
+    color:var(--cyan);text-shadow:0 0 calc(var(--u)*5) rgba(34,211,238,.6)}
+  .stopwrap{margin-top:calc(var(--u)*2)}
+
+  /* C — win */
+  .veyebrow{font-family:var(--font-num);font-weight:700;font-size:calc(var(--u)*2.4);letter-spacing:.42em;text-transform:uppercase;color:var(--cyan)}
+  .victory{margin-top:calc(var(--u)*1.5);font-family:var(--font-display);font-weight:700;font-size:calc(var(--u)*10);letter-spacing:.04em;line-height:1}
+  .prize{margin-top:calc(var(--u)*2.5);font-family:var(--font-num);font-weight:800;font-size:calc(var(--u)*16);line-height:.85;
+    color:var(--gold-2);text-shadow:0 0 calc(var(--u)*6) rgba(251,191,36,.5);display:flex;align-items:baseline;gap:.04em}
+  .prize .yen{font-size:.6em;color:var(--gold-1)}
+  .vnote{margin-top:calc(var(--u)*2.5);font-family:var(--font-num);font-size:calc(var(--u)*2.5);color:var(--muted)}
+  .vnote b{color:var(--ink);font-weight:600}
+
+  /* D — cta */
+  .jlabel{font-family:var(--font-num);font-size:calc(var(--u)*2);letter-spacing:.28em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.7em}
+  .jval{margin-top:calc(var(--u)*1.5);font-family:var(--font-num);font-weight:800;font-size:calc(var(--u)*9);
+    color:var(--gold-2);text-shadow:0 0 calc(var(--u)*5) rgba(251,191,36,.42);letter-spacing:-.02em}
+  .ctarow{margin-top:calc(var(--u)*5);display:flex;align-items:center;gap:calc(var(--u)*3.5)}
+  .qrcard{width:calc(var(--u)*16);height:calc(var(--u)*16);padding:calc(var(--u)*1);border-radius:calc(var(--u)*1.6)}
+  .ctatext{text-align:left}
+  .ctatext .play{font-family:var(--font-body);font-weight:700;font-size:calc(var(--u)*3.6)}
+  .ctatext .play .accent{color:var(--cyan)}
+  .ctatext .url{margin-top:calc(var(--u)*1);font-family:var(--font-num);font-weight:700;font-size:calc(var(--u)*2.8);color:var(--cyan)}
+  .brand.mid{margin-top:calc(var(--u)*5);font-size:calc(var(--u)*5)}
+
+  /* confetti + flash overlays */
+  .confetti{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+  .confetti i{position:absolute;display:block;top:-6%}
+  .flash{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;
+    background:radial-gradient(circle at 50% 46%, rgba(190,244,251,.9), rgba(34,211,238,.25) 40%, transparent 70%)}
+  .stopbtn{will-change:transform,opacity}
+</style>
+</head>
+<body>
+  <div class="atmos">
+    <div class="grid" style="--grid-x:50%;--grid-y:46%"></div>
+    <div class="blob b-cyan" style="width:60vmin;height:60vmin;left:50%;top:40%;transform:translate(-50%,-50%)"></div>
+    <div class="blob b-fuchsia" style="width:54vmin;height:54vmin;right:6%;top:8%"></div>
+    <div class="blob b-blue" style="width:54vmin;height:54vmin;left:6%;bottom:8%"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <span class="reg tl" style="top:3.2%;left:3.2%;width:calc(var(--u)*3.2);height:calc(var(--u)*3.2)"></span>
+  <span class="reg tr" style="top:3.2%;right:3.2%;width:calc(var(--u)*3.2);height:calc(var(--u)*3.2)"></span>
+  <span class="reg bl" style="bottom:3.2%;left:3.2%;width:calc(var(--u)*3.2);height:calc(var(--u)*3.2)"></span>
+  <span class="reg br" style="bottom:3.2%;right:3.2%;width:calc(var(--u)*3.2);height:calc(var(--u)*3.2)"></span>
+
+  <div class="confetti" id="cf"></div>
+
+  <div class="stage">
+    <!-- A — brand -->
+    <div class="scene" id="sA">
+      <svg class="favmark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="60" height="60" rx="16" fill="#0a0b14" stroke="#1b2433" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="17" fill="none" stroke="#22d3ee" stroke-width="2.5"/>
+        <g stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+          <line x1="32" y1="6.5" x2="32" y2="11"/><line x1="32" y1="53" x2="32" y2="57.5"/>
+          <line x1="6.5" y1="32" x2="11" y2="32"/><line x1="53" y1="32" x2="57.5" y2="32"/>
+        </g>
+        <line x1="32" y1="32" x2="42.5" y2="21.5" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="32" cy="32" r="3.6" fill="#22d3ee"/>
+        <circle cx="42.5" cy="21.5" r="3.2" fill="#0a0b14" stroke="#22d3ee" stroke-width="2"/>
+      </svg>
+      <div class="brand big">TOK<span class="i">I</span>Q</div>
+      <div class="tagline">Beat&nbsp;Time. &nbsp;Win&nbsp;Together.</div>
+    </div>
+
+    <!-- B — play -->
+    <div class="scene" id="sB">
+      <div class="tlabel">Target <b>10.00s</b></div>
+      <div class="centerblk">
+        <div class="bignum" id="num">00.00<span class="s">s</span></div>
+        <div class="countdown" id="cd"></div>
+      </div>
+      <div class="stopwrap">
+        <div class="stopbtn" id="stop" style="--d:calc(var(--u)*30)">
+          <span class="reticle-dash"></span>
+          <span class="reticle-solid"></span>
+          <span class="tick t"></span><span class="tick b"></span><span class="tick l"></span><span class="tick r"></span>
+          <div class="disc"><b>STOP</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C — win -->
+    <div class="scene" id="sC">
+      <div class="veyebrow">You won the round</div>
+      <div class="victory">VICTORY!</div>
+      <div class="prize"><span class="yen">¥</span><span id="prize">0</span></div>
+      <div class="vnote">Stopped at <b>10.00s</b> · closest to the target wins the pool</div>
+    </div>
+
+    <!-- D — cta -->
+    <div class="scene" id="sD">
+      <div class="jlabel"><span class="livedot"></span> Mega Jackpot · growing</div>
+      <div class="jval" id="jval">¥1,245,000</div>
+      <div class="ctarow">
+        <div class="qrcard"><img src="__QR_DATA_URI__" alt="Scan to play" /></div>
+        <div class="ctatext">
+          <div class="play"><span class="accent">Play free</span> — no signup</div>
+          <div class="url">__URL_TEXT__</div>
+        </div>
+      </div>
+      <div class="brand mid">TOK<span class="i">I</span>Q</div>
+    </div>
+  </div>
+
+  <div class="flash" id="flash"></div>
+
+<script>
+/* ---- deterministic timeline: seek(t) sets the whole scene at time t (seconds) ---- */
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const inv=(t,a,b)=>clamp((t-a)/(b-a));
+const easeOut=x=>1-Math.pow(1-x,3);
+const easeIn=x=>x*x*x;
+
+// scene opacity + gentle rise; returns visibility
+function scn(el, inA,inB, outA,outB, t, rise=2.2){
+  let o;
+  if(t<inA) o=0;
+  else if(t<inB) o=easeOut(inv(t,inA,inB));
+  else if(t<outA) o=1;
+  else if(t<outB) o=1-easeOut(inv(t,outA,outB));
+  else o=0;
+  el.style.opacity=o.toFixed(4);
+  const y = (t<inB) ? (1-easeOut(inv(t,inA,inB)))*rise : (t>outA? easeOut(inv(t,outA,outB))*-rise : 0);
+  el.style.transform = 'translateY(calc(var(--u)*'+y.toFixed(3)+'))';
+  return o;
+}
+
+// timeline marks (s)
+const RUN_A=3.85, RUN_B=6.55, STOP_T=6.55, WIN_T=6.7;
+const fmt=(v)=>(v<10?'0':'')+v.toFixed(2);
+
+const cd=document.getElementById('cd'), num=document.getElementById('num'),
+      stop=document.getElementById('stop'), flash=document.getElementById('flash'),
+      prize=document.getElementById('prize'), jval=document.getElementById('jval');
+
+// confetti pieces (random once at init → deterministic vs t thereafter)
+const CF=[];
+(function initConfetti(){
+  const cfEl=document.getElementById('cf');
+  const colors=['#fbbf24','#fde68a','#22d3ee','#ffffff','#34d399'];
+  for(let i=0;i<34;i++){
+    const s=document.createElement('i');
+    const p={x:Math.random()*100, delay:Math.random()*0.6, dur:1.7+Math.random()*1.3,
+      drift:(Math.random()*2-1)*14, rot:(Math.random()*2-1)*760,
+      size:0.9+Math.random()*1.3, round:Math.random()>0.5, color:colors[i%colors.length]};
+    s.style.left=p.x+'%';
+    s.style.width='calc(var(--u)*'+p.size.toFixed(2)+')';
+    s.style.height='calc(var(--u)*'+p.size.toFixed(2)+')';
+    s.style.background=p.color;
+    s.style.borderRadius=p.round?'50%':'2px';
+    s.style.opacity='0';
+    cfEl.appendChild(s); CF.push(Object.assign({el:s},p));
+  }
+})();
+
+function seek(t){
+  // --- scenes ---
+  scn(document.getElementById('sA'), 0.10,0.85, 1.45,1.95, t, 2.6);
+  const vB = scn(document.getElementById('sB'), 1.65,2.10, 6.70,6.98, t, 1.6);
+  scn(document.getElementById('sC'), WIN_T+0.15,WIN_T+0.55, 8.55,8.9, t, 2.4);
+  scn(document.getElementById('sD'), 8.70,9.20, 99,99, t, 2.4);
+
+  // --- B internals: countdown, timer, stop button ---
+  // countdown 3·2·1·GO
+  let cdtxt='';
+  if(t>=2.15&&t<2.55) cdtxt='3'; else if(t>=2.55&&t<2.95) cdtxt='2';
+  else if(t>=2.95&&t<3.35) cdtxt='1'; else if(t>=3.35&&t<3.78) cdtxt='GO';
+  cd.textContent=cdtxt;
+  // per-number pop
+  if(cdtxt){ const seg=(t-2.15)%0.4; const s=0.6+easeOut(clamp(seg/0.18))*0.5; cd.style.opacity=(1-clamp((seg-0.22)/0.18)*0.85).toFixed(3); cd.style.transform='scale('+s.toFixed(3)+')'; }
+  else cd.style.opacity='0';
+  // timer number: hidden during countdown, races 0→10 (easeOut) then frozen
+  const showNum = t>=3.72;
+  num.style.opacity = showNum ? '1':'0';
+  let val;
+  if(t<RUN_A) val=0; else if(t<RUN_B) val=easeOut(inv(t,RUN_A,RUN_B))*10.0; else val=10.0;
+  num.firstChild.textContent = fmt(val);
+  // stop button: dim idle → live glow → press dip → hidden as win takes over
+  let sc=1, op=1, fil='none';
+  if(t<3.72){ op=0.55; fil='brightness(.6) saturate(.8)'; }
+  else if(t<6.40){ sc=1+Math.sin((t-3.72)*7)*0.012; }     // alive breathing
+  else if(t<STOP_T+0.18){ sc=0.9; }                        // slam
+  stop.style.opacity=(vB*op).toFixed(3);
+  stop.style.filter=fil;
+  stop.style.transform='scale('+sc.toFixed(3)+')';
+
+  // --- flash at the stop ---
+  flash.style.opacity = (t>=STOP_T-0.05 && t<STOP_T+0.45) ? (1-inv(t,STOP_T-0.05,STOP_T+0.45)).toFixed(3) : '0';
+
+  // --- C: prize count-up ---
+  prize.textContent = Math.round(easeOut(inv(t,WIN_T+0.25,7.7))*900).toLocaleString('en-US');
+
+  // --- D: jackpot ticking up ---
+  jval.textContent = '¥'+(1245000+Math.floor(inv(t,8.7,12)*4200)).toLocaleString('en-US');
+
+  // --- confetti (win burst) ---
+  for(const p of CF){
+    const local=(t-(WIN_T-0.05))-p.delay;
+    if(local<0){ p.el.style.opacity='0'; continue; }
+    const prog=local/p.dur;
+    if(prog>1){ p.el.style.opacity='0'; continue; }
+    const ty=-6+prog*120, tx=p.drift*prog;
+    p.el.style.transform='translate(calc(var(--u)*'+tx.toFixed(2)+'),'+ty.toFixed(2)+'vh) rotate('+(p.rot*prog).toFixed(1)+'deg)';
+    p.el.style.opacity=(easeOut(clamp(prog/0.12))*(1-clamp((prog-0.8)/0.2))).toFixed(3);
+  }
+}
+window.seek=seek;
+seek(0);
+document.documentElement.dataset.ready='1';
+</script>
+</body>
+</html>

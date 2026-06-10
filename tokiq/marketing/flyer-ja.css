@@ -1,0 +1,27 @@
+/* ==================================================================
+   TOKIQ — Japanese type system (loads after flyer-base.css)
+   Premium editorial: vertical 明朝 catchphrase + ゴシック impact/labels.
+   Latin mono numerals are kept from the base for the timer/prices.
+   ================================================================== */
+:root{
+  --jp-mincho:'Shippori Mincho B1', serif;          /* 縦書きキャッチコピー */
+  --jp-gothic:'Noto Sans JP', sans-serif;           /* 見出し・本文・ラベル */
+}
+
+/* Japanese text defaults to gothic; numerals/latin stay mono/display where set */
+.ja{font-family:var(--jp-gothic)}
+.mincho{font-family:var(--jp-mincho)}
+.gothic{font-family:var(--jp-gothic)}
+
+/* vertical writing (縦書き) — reads top→bottom, columns right→left */
+.vtext{writing-mode:vertical-rl;text-orientation:mixed;font-feature-settings:"vpal" 1,"vkrn" 1}
+
+/* Japanese reads better with tighter tracking than the Latin etched labels;
+   undo the uppercase letter-spacing the base applies to mono labels. */
+.ja .meta{letter-spacing:.14em;text-transform:none}
+.ja .ruler .mark .lab .k{letter-spacing:.10em;text-transform:none;font-family:var(--jp-gothic)}
+.ja .ruler .gap .k{letter-spacing:.10em;text-transform:none;font-family:var(--jp-gothic)}
+.ja .eyebrow{letter-spacing:.28em}
+
+/* gold figure helper reused */
+.ja .jpval{font-family:var(--font-num)}
