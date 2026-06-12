@@ -1,0 +1,31 @@
+/PageCount 0 def
+/TotalContent #TOTAL# def
+/NumStr 8 string def
+/TotalStr 8 string def
+
+<< /EndPage {
+  exch pop 0 eq dup {
+    /PageCount PageCount 1 add def
+    PageCount 1 ne {
+      gsave
+      0.58 setgray
+      /Helvetica findfont 8 scalefont setfont
+
+      68 36 moveto
+      (T O K I Q   -   G A M E   B R I E F) show
+
+      462 36 moveto
+      PageCount 1 sub NumStr cvs show
+      (  /  ) show
+      TotalContent TotalStr cvs show
+
+      0.80 setgray
+      0.4 setlinewidth
+      68 50 moveto
+      527 50 lineto
+      stroke
+
+      grestore
+    } if
+  } if
+} bind >> setpagedevice

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tokiq — Game Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    color: #1a1a1a; background: #ffffff;
+    font-family: "EB Garamond", "Hiragino Mincho ProN", "Georgia", serif;
+    font-size: 11pt; line-height: 1.68;
+    -webkit-font-smoothing: antialiased;
+  }
+  :root{ --accent:#0e7c86; --accent-soft:#e8f2f2; --ink:#1a1a1a; --muted:#6b6b6b; --hair:#d4d4d4; --faint:#ededed; }
+  .sans { font-family: "Inter", "Helvetica Neue", "Arial", sans-serif; }
+
+  /* ============ COVER ============ */
+  .cover { page-break-after: always; height: 247mm; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-top { padding-top: 24mm; }
+  .cover-eyebrow { font-family:"Inter",sans-serif; font-size: 9pt; letter-spacing: 6px; text-transform: uppercase; color: var(--muted); margin-bottom: 12mm; }
+  .cover-wordmark { font-family:"Inter",sans-serif; font-weight:700; font-size: 30pt; letter-spacing: 6px; color: var(--ink); margin-bottom: 8mm; }
+  .cover-wordmark .i { color: var(--accent); }
+  .cover-rule { width: 28mm; height: 2px; background: var(--accent); margin-bottom: 14mm; }
+  .cover-title { font-weight: 400; font-size: 31pt; line-height: 1.18; letter-spacing: -0.3px; margin: 0; max-width: 150mm; }
+  .cover-subtitle { font-style: italic; font-size: 13.5pt; color: #4a4a4a; line-height: 1.5; margin-top: 8mm; max-width: 142mm; }
+  .cover-tagline { font-family:"Inter",sans-serif; font-size: 9.5pt; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-top: 9mm; }
+  .cover-bottom { padding-bottom: 2mm; border-top: 1px solid var(--hair); padding-top: 7mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-family:"Inter",sans-serif; font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 12mm; vertical-align: top; }
+  .cover-meta .label { text-transform: uppercase; letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: var(--ink); font-size: 10.5pt; font-weight: 500; }
+
+  /* ============ TYPE ============ */
+  .doc-header { border-bottom: 1px solid var(--ink); padding-bottom: 6mm; margin-bottom: 8mm; }
+  .doc-header .kicker { font-family:"Inter",sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 4mm; }
+  .doc-header h1 { font-weight: 400; font-size: 21pt; line-height: 1.2; margin: 0 0 3mm 0; }
+  .doc-header .sub { font-style: italic; font-size: 12pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-family:"Inter",sans-serif; font-size: 9pt; color: var(--muted); margin-top: 5mm; }
+  .doc-header .meta-line span + span::before { content: "·"; margin: 0 8px; color: #b0b0b0; }
+
+  h2.section { font-family:"Inter",sans-serif; font-size: 11pt; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin: 12mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { color: var(--accent); font-weight: 600; margin-right: 10px; }
+  h3.sub { font-style: italic; font-weight: 400; font-size: 12.5pt; margin: 6mm 0 2mm 0; page-break-after: avoid; }
+  p { margin: 0 0 4.5mm 0; text-align: justify; hyphens: auto; }
+  p.lead-in { page-break-after: avoid; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  ul { margin: 2mm 0 5mm 0; padding-left: 7mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 1.8mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: #8a8a8a; }
+  .conclusion-block { margin-top: 9mm; padding-top: 6mm; border-top: 1px solid var(--hair); page-break-inside: avoid; }
+
+  /* key takeaway — one line per section */
+  .key { font-family:"Inter",sans-serif; font-size: 9.5pt; line-height: 1.5; color: var(--ink); background: var(--accent-soft); border-left: 2.5px solid var(--accent); padding: 3.5mm 5mm; margin: 4mm 0 5mm 0; page-break-inside: avoid; }
+  .key b { color: var(--accent); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-size: 8pt; display: block; margin-bottom: 1mm; }
+
+  /* pull quote */
+  .pull { font-style: italic; font-size: 13.5pt; color: var(--accent); line-height: 1.45; margin: 7mm 0; padding-left: 6mm; border-left: 2px solid var(--accent); page-break-inside: avoid; }
+
+  /* executive summary */
+  .exec { page-break-after: always; }
+  .exec .ribbon { font-family:"Inter",sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 3mm; }
+  .exec h1 { font-weight: 400; font-size: 23pt; margin: 0 0 6mm 0; line-height: 1.15; }
+  .exec .frame { border: 1px solid var(--hair); padding: 7mm 8mm 4mm 8mm; margin-top: 2mm; }
+  .exec ul { margin: 0; }
+  .exec ul li { margin-bottom: 3mm; padding-left: 7mm; line-height: 1.5; }
+  .exec ul li::before { content: ""; }
+  .exec ul li .h { font-family:"Inter",sans-serif; font-weight:700; font-size: 9.5pt; letter-spacing: 0.3px; color: var(--accent); display:block; }
+  .exec ul li .b { font-size: 10.5pt; }
+  .exec ul li .n { position:absolute; left:0; font-family:"Inter",sans-serif; font-weight:700; font-size:9pt; color:var(--accent); }
+
+  /* fact grid (at a glance) */
+  .facts { display: table; width: 100%; border-collapse: collapse; margin: 6mm 0 0 0; }
+  .facts .frow { display: table-row; }
+  .facts .fc { display: table-cell; width: 33.33%; border-top: 0.5px solid var(--faint); padding: 3.5mm 5mm 3.5mm 0; vertical-align: top; }
+  .facts .fk { font-family:"Inter",sans-serif; font-size: 7.5pt; letter-spacing: 1.5px; text-transform: uppercase; color: #8a8a8a; display: block; margin-bottom: 1.5mm; }
+  .facts .fv { font-family:"Inter",sans-serif; font-size: 10.5pt; font-weight: 600; color: var(--ink); line-height: 1.35; }
+  .glance-title { font-family:"Inter",sans-serif; font-size: 8.5pt; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-top: 9mm; }
+
+  /* stat grid */
+  .stats-grid { display: flex; flex-wrap: wrap; margin: 5mm 0; page-break-inside: avoid; }
+  .stats-grid .stat { flex: 0 0 50%; box-sizing: border-box; padding: 4mm 4mm 4mm 0; border-bottom: 0.5px solid var(--faint); }
+  .stats-grid .stat:nth-child(2n) { padding-left: 6mm; padding-right: 0; }
+  .stats-grid .stat .num { font-family:"Inter",sans-serif; font-size: 17pt; font-weight: 600; line-height: 1.15; display: block; letter-spacing: -0.3px; color: var(--accent); }
+  .stats-grid .stat .label { font-family:"Inter",sans-serif; font-size: 8.5pt; color: var(--muted); display: block; margin-top: 2mm; line-height: 1.45; }
+  .src { font-family:"Inter",sans-serif; font-size: 8pt; color: #8a8a8a; margin: 0 0 7mm 0; line-height: 1.45; }
+
+  /* diagrams */
+  .loop, .hookloop { margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .loop svg, .hookloop svg { width: 100%; height: auto; display: block; }
+  .cap { font-family:"Inter",sans-serif; font-size: 8pt; color: #8a8a8a; text-align:center; margin: 1mm 0 6mm 0; }
+
+  /* example round box */
+  .example { border: 1px solid var(--hair); border-top: 2.5px solid var(--accent); padding: 5mm 6mm; margin: 5mm 0 6mm 0; page-break-inside: avoid; }
+  .example .et { font-family:"Inter",sans-serif; font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 3mm; }
+  .example p { margin: 0 0 2.5mm 0; font-size: 10.5pt; }
+  .example p:last-child { margin-bottom: 0; }
+  .example .t { font-family:"Inter",sans-serif; font-weight: 600; color: var(--accent); }
+
+  /* comparison + simple tables */
+  table.cmp { width: 100%; border-collapse: collapse; margin: 3mm 0 6mm 0; font-size: 10pt; page-break-inside: avoid; }
+  table.cmp th, table.cmp td { text-align: left; vertical-align: top; padding: 3mm 4mm 3mm 0; border-bottom: 0.5px solid var(--faint); }
+  table.cmp th { font-family:"Inter",sans-serif; font-size: 8pt; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  table.cmp td.row-h { font-family:"Inter",sans-serif; font-size: 9pt; color: var(--muted); width: 28%; }
+  table.cmp td .t { color: var(--accent); font-weight: 600; }
+
+  /* money model */
+  .money { border: 1px solid var(--hair); padding: 4mm 6mm; margin: 4mm 0 5mm 0; page-break-inside: avoid; font-family:"Inter",sans-serif; font-size: 10pt; }
+  .money .row { display: flex; justify-content: space-between; padding: 2mm 0; border-bottom: 0.5px solid var(--faint); }
+  .money .row:last-child { border-bottom: 0; }
+  .money .row .k { color: var(--muted); }
+  .money .row .v { font-weight: 600; }
+  .money .tot .k, .money .tot .v { color: var(--accent); font-weight: 700; }
+  .note { font-family:"Inter",sans-serif; font-size: 8.5pt; color: #8a8a8a; margin-top: 2mm; }
+
+  /* gates / plan */
+  .gates { margin: 4mm 0 5mm 0; page-break-inside: avoid; }
+  .gate { display: table; width: 100%; border-top: 0.5px solid var(--faint); padding: 3.5mm 0; }
+  .gate .g-n { display: table-cell; width: 20mm; vertical-align: top; font-family:"Inter",sans-serif; font-weight: 700; font-size: 9pt; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); }
+  .gate .g-b { display: table-cell; vertical-align: top; }
+  .gate .g-h { font-weight: 600; }
+  .gate .g-d { font-family:"Inter",sans-serif; font-size: 9pt; color: var(--muted); margin-top: 0.5mm; }
+
+  /* links */
+  a { color: var(--accent); text-decoration: none; border-bottom: 0.5px solid rgba(14,124,134,0.45); }
+
+  /* risk table */
+  table.risk { width: 100%; border-collapse: collapse; margin: 5mm 0 4mm 0; font-size: 9.5pt; page-break-inside: avoid; }
+  table.risk th, table.risk td { text-align: left; vertical-align: top; padding: 2.6mm 4mm 2.6mm 0; border-bottom: 0.5px solid var(--faint); }
+  table.risk th { font-family:"Inter",sans-serif; font-size: 7.5pt; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  table.risk td.area { font-weight: 600; width: 28%; }
+  table.risk td.stat { font-family:"Inter",sans-serif; font-size: 8.5pt; color: var(--accent); width: 26%; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">Game Brief · Confidential</div>
+    <div class="cover-wordmark">TOK<span class="i">I</span>Q</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">A social precision-timing game built around a single, irresistible moment.</h1>
+    <p class="cover-subtitle">What Tokiq is, how it is played, why it holds attention, and where it can go. Prepared as a clear introduction to the concept and its current state.</p>
+    <div class="cover-tagline">Beat Time. Win Together.</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">Prepared for</span><span class="value">Mr. Watanabe</span></div>
+      <div class="col"><span class="label">Prepared by</span><span class="value">Ambrose Alanda</span></div>
+      <div class="col"><span class="label">Date</span><span class="value">June 2026</span></div>
+      <div class="col"><span class="label">Live prototype</span><span class="value"><a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXECUTIVE SUMMARY ===================== -->
+<section class="exec">
+  <div class="ribbon">Executive Summary</div>
+  <h1>The one-minute version</h1>
+  <p>Tokiq is a fast, social, <strong>skill-based</strong> game. A target time is shown, a clock counts up, and the player who taps <strong>STOP</strong> closest to the target wins a shared prize pool. It is easy to grasp in seconds and built around one universal feeling: the held breath before you act, and the ache of being <em>so close</em>.</p>
+
+  <div class="frame">
+    <ul>
+      <li><span class="n">01</span><span class="h">A simple, universal hook</span><span class="b">Stop the clock closest to the target. No rules to learn; a round lasts seconds. The “near-miss” is what makes players try again.</span></li>
+      <li><span class="n">02</span><span class="h">A proven category, a fresh angle</span><span class="b">It borrows the behavioural design of “crash” games like Aviator (77M+ monthly players) but shifts the feel from luck toward skill, and from a private bet toward a shared, social moment.</span></li>
+      <li><span class="n">03</span><span class="h">It already exists and can be played today</span><span class="b">A polished, browser-based prototype is live, installable, and in three languages (EN / ES / 日本語). The core timer and tap are real; the multiplayer around them is, for now, simulated.</span></li>
+      <li><span class="n">04</span><span class="h">A disciplined, low-cost path</span><span class="b">We validate the cheapest questions first (“is it fun?” and “do people come back?”) before spending on the hard engineering (real multiplayer, fairness, payments, regulation).</span></li>
+      <li><span class="n">05</span><span class="h">The real question</span><span class="b">Not “can we build it?” but “will players return, trust it, spend, and invite friends?” Everything we do now is designed to answer that, cheaply and honestly.</span></li>
+    </ul>
+  </div>
+
+  <div class="glance-title">Tokiq at a glance</div>
+  <div class="facts">
+    <div class="frow">
+      <div class="fc"><span class="fk">Genre</span><span class="fv">Real-time, multiplayer, skill-based timing game</span></div>
+      <div class="fc"><span class="fk">Core action</span><span class="fv">Tap STOP closest to a target time</span></div>
+      <div class="fc"><span class="fk">Players per round</span><span class="fv">8–14 at a table</span></div>
+    </div>
+    <div class="frow">
+      <div class="fc"><span class="fk">Round economics</span><span class="fv">¥100 entry · 10% house · winner takes the pool</span></div>
+      <div class="fc"><span class="fk">Platform</span><span class="fv">Browser &amp; installable app (PWA), mobile-first</span></div>
+      <div class="fc"><span class="fk">Languages</span><span class="fv">English · Español · 日本語</span></div>
+    </div>
+    <div class="frow">
+      <div class="fc"><span class="fk">Status</span><span class="fv">Front-end prototype, in validation</span></div>
+      <div class="fc"><span class="fk">Try it now</span><span class="fv"><a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a></span></div>
+      <div class="fc"><span class="fk">Tagline</span><span class="fv">Beat Time. Win Together.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BODY ===================== -->
+<section class="doc">
+  <div class="doc-header">
+    <div class="kicker">Tokiq · Game Brief</div>
+    <h1>Tokiq · Beat Time. Win Together.</h1>
+    <p class="sub">A real-time game of nerve and timing, and the thinking behind it.</p>
+    <p class="meta-line"><span>Prepared for Mr. Watanabe</span><span>Prepared by Ambrose Alanda</span><span>June 2026</span></p>
+  </div>
+
+  <h2 class="section"><span class="num">01</span>The concept</h2>
+  <p>Tokiq is a real-time, multiplayer, <strong>skill-based</strong> timing game. A target time is shown, for example <strong>10.00 seconds</strong>. A clock counts up, and every player taps <strong>STOP</strong> when they believe it has reached the target. The player who stops <strong>closest to the target wins the round's prize pool</strong>. Players pay a small entry fee; the platform keeps a modest house fee.</p>
+  <p>It belongs to the same family as “crash” games such as Aviator, but its hook is different. Where Aviator runs on a rising multiplier and the tension of greed, Tokiq runs on <strong>precision and nerve</strong>: the held breath before the tap, and the small, addictive ache of a near miss.</p>
+  <div class="pull">Tokiq does not sell a timer. It sells a feeling: anticipation, tension, hope, the near-miss, and the moment of winning in front of others.</div>
+  <div class="key"><b>In one line</b>A game anyone understands in five seconds, built on an emotion everyone has felt: being a fraction of a second too early, or too late.</div>
+  <p>This brief is written to be candid rather than promotional. It presents the promise of Tokiq together with the genuine weaknesses and open questions that remain, which are set out in full in Section 08. You are also warmly welcome to try the prototype yourself, whenever it is convenient, at <a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a>. A few minutes with it will tell you more than any description can.</p>
+
+  <h2 class="section"><span class="num">02</span>How a round works</h2>
+  <p>The entire experience lives on a single screen that changes with the phase of the round. There are no menus to learn, and a round takes only seconds.</p>
+
+  <div class="loop">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 132" preserveAspectRatio="xMidYMid meet">
+      <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8a8a"/></marker></defs>
+      <g font-family="Inter, Arial, sans-serif">
+        <rect x="6" y="34" width="126" height="58" rx="6" fill="none" stroke="#d4d4d4"/>
+        <rect x="166" y="34" width="126" height="58" rx="6" fill="none" stroke="#d4d4d4"/>
+        <rect x="326" y="34" width="126" height="58" rx="6" fill="none" stroke="#0e7c86" stroke-width="1.5"/>
+        <rect x="486" y="34" width="126" height="58" rx="6" fill="none" stroke="#d4d4d4"/>
+        <text x="69" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">LOBBY</text>
+        <text x="229" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">COUNTDOWN</text>
+        <text x="389" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#0e7c86">RUNNING</text>
+        <text x="549" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">RESULT</text>
+        <text x="69" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">join or skip</text>
+        <text x="229" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">3 · 2 · 1 · GO</text>
+        <text x="389" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">tap STOP</text>
+        <text x="549" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">closest wins</text>
+        <line x1="134" y1="63" x2="162" y2="63" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar)"/>
+        <line x1="294" y1="63" x2="322" y2="63" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar)"/>
+        <line x1="454" y1="63" x2="482" y2="63" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar)"/>
+        <path d="M549,92 L549,116 L69,116 L69,94" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="2,3" marker-end="url(#ar)"/>
+        <text x="309" y="113" text-anchor="middle" font-size="8.5" fill="#8a8a8a">play next round</text>
+        <text x="309" y="20" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1a1a1a" letter-spacing="0.5">THE ROUND LOOP</text>
+      </g>
+    </svg>
+  </div>
+
+  <p>A round moves through four short phases:</p>
+  <ul>
+    <li><strong>Lobby.</strong> A target time is set and the table fills. The player chooses to join for the entry fee, or to sit out and watch.</li>
+    <li><strong>Countdown.</strong> A brief <strong>3 · 2 · 1 · GO</strong> builds tension and synchronises the start.</li>
+    <li><strong>Running.</strong> The clock counts up from <strong>00.00</strong>. The player hits the large <strong>STOP</strong> button (or, on desktop, the spacebar) at the instant they believe the target has been reached.</li>
+    <li><strong>Result.</strong> Every player's stop time is compared to the target. The closest wins the pool; a winner card rises, and the next round begins.</li>
+  </ul>
+
+  <div class="example">
+    <div class="et">One round, step by step</div>
+    <p>The target is <span class="t">10.00s</span>. Ten players join; ¥100 each makes a <span class="t">¥900</span> pool for the winner. The countdown hits GO and the clock starts climbing. <span class="t">3 … 6 … 8 …</span> The ticks tighten as it nears ten.</p>
+    <p>You tap. The clock freezes at <span class="t">09.97s</span>. Around the table, others land at 10.06, 9.91, 10.21. You were off by just <strong>0.03</strong>, and someone else, off by 0.02, takes the pool.</p>
+    <p>The sting is exact and personal: <em>so close.</em> Your thumb is already reaching for “play next round.”</p>
+  </div>
+  <div class="key"><b>Why it matters</b>The skill is entirely in the tap: no luck in <em>when</em> you choose to stop, only in how precisely your sense of time matches the clock. That is the quiet promise that earns “one more round.”</div>
+
+  <h2 class="section"><span class="num">03</span>Why it holds attention</h2>
+  <p>People do not return to games like this because the rewards are large. They return because the rewards are <strong>unpredictable</strong>, and because each round leaves an emotional residue that asks to be resolved. Several forces work at once:</p>
+  <ul>
+    <li><strong>Anticipation &amp; tension</strong>: the rising clock and the narrowing window before the target.</li>
+    <li><strong>The near-miss</strong>: “off by 0.03 seconds” motivates far more than a clean loss. It whispers <em>next time</em>.</li>
+    <li><strong>Variable reward</strong>: uncertain outcomes form stronger habits than fixed ones.</li>
+    <li><strong>Social proof</strong>: seeing others win makes a player want to play, and to share.</li>
+    <li><strong>Hope &amp; status</strong>: leaderboards, streaks, and recognition.</li>
+    <li><strong>Skill perception</strong>: the belief that one can improve, which sustains repeat play.</li>
+  </ul>
+  <p>Together these form a self-reinforcing loop. Each round's outcome becomes the reason to start the next:</p>
+
+  <div class="hookloop">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 96" preserveAspectRatio="xMidYMid meet">
+      <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8a8a"/></marker></defs>
+      <g font-family="Inter, Arial, sans-serif">
+        <text x="64"  y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#0e7c86">TRIGGER</text>
+        <text x="64"  y="56" text-anchor="middle" font-size="8.5" fill="#6b6b6b">round starting</text>
+        <text x="232" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">ACTION</text>
+        <text x="232" y="56" text-anchor="middle" font-size="8.5" fill="#6b6b6b">the tap</text>
+        <text x="392" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">VARIABLE REWARD</text>
+        <text x="392" y="56" text-anchor="middle" font-size="8.5" fill="#6b6b6b">how close was I?</text>
+        <text x="552" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">INVESTMENT</text>
+        <text x="552" y="56" text-anchor="middle" font-size="8.5" fill="#6b6b6b">balance · streak · rank</text>
+        <line x1="118" y1="36" x2="170" y2="36" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar2)"/>
+        <line x1="290" y1="36" x2="318" y2="36" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar2)"/>
+        <line x1="470" y1="36" x2="492" y2="36" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar2)"/>
+        <path d="M552,64 L552,82 L64,82 L64,48" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="2,3" marker-end="url(#ar2)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="cap">The Hook loop: the investment from one round becomes the trigger for the next.</div>
+  <div class="key"><b>Design principle</b>Make losing tolerable, and make winning memorable. The near-miss must invite a retry, never a quit.</div>
+
+  <h2 class="section"><span class="num">04</span>The market, and why now</h2>
+  <p>Tokiq is not entering an empty space. It draws on the behavioural design of the “crash game” category, whose defining product, Aviator by Spribe, operates at a scale very few digital products reach. The figures below indicate the size of the appetite this format has already proven.</p>
+
+  <div class="stats-grid">
+    <div class="stat"><span class="num">77M+</span><span class="label">Monthly active players of Aviator (reported, early 2026)</span></div>
+    <div class="stat"><span class="num">~90%</span><span class="label">Estimated share within the crash-game category</span></div>
+    <div class="stat"><span class="num">100+</span><span class="label">Countries served, across 4,500+ casino operators</span></div>
+    <div class="stat"><span class="num">~97%</span><span class="label">Return-to-player; lightweight and mobile-first</span></div>
+    <div class="stat"><span class="num">$100B+</span><span class="label">Size of the wider iGaming ecosystem it sits within</span></div>
+    <div class="stat"><span class="num">2018</span><span class="label">Year Aviator's maker was founded; recent and bootstrapped</span></div>
+  </div>
+  <p class="src">Figures are publicly reported by Spribe and industry trade press (2022–2026) and are indicative; they should be independently re-verified before any external use.</p>
+  <p><strong>Why now.</strong> Two facts make the timing favourable. First, the value in this category comes from <strong>maths and social design, not heavy graphics</strong>, which keeps build cost low and the ceiling high. Second, the category's growth has been strongest among <strong>young, mobile-first audiences</strong> who prefer fast, social sessions to traditional slots. Tokiq is designed for exactly that player.</p>
+
+  <h2 class="section"><span class="num">05</span>How Tokiq is different</h2>
+  <p>Sharing a category is not the same as being a copy. Tokiq deliberately shifts the centre of gravity from luck toward skill, and from a solitary bet toward a social moment.</p>
+  <table class="cmp">
+    <tr><th></th><th>Aviator (crash)</th><th>Tokiq (timing)</th></tr>
+    <tr><td class="row-h">Core action</td><td>Cash out before the plane crashes</td><td class="t">Tap STOP closest to a target time</td></tr>
+    <tr><td class="row-h">Source of tension</td><td>A rising multiplier; greed versus fear</td><td class="t">Precision under pressure; the near-miss</td></tr>
+    <tr><td class="row-h">How it feels</td><td>Luck-led, with cash-out skill</td><td class="t">Skill-forward: closest wins the pool</td></tr>
+    <tr><td class="row-h">Social layer</td><td>Live bets and chat</td><td class="t">Live feed, chat, leaderboards, shared wins</td></tr>
+    <tr><td class="row-h">Brand feel</td><td>Casino-coded</td><td class="t">Cleaner, calmer, Japanese-minimal</td></tr>
+  </table>
+  <div class="key"><b>The strategic wager</b>That a stronger sense of mastery (“I can get better at this”) and a cleaner, more social, less casino-coded feel give players a reason to choose Tokiq. These are hypotheses, not claims; we set out the open questions in Section 08 and the plan to test them in Section 09.</div>
+
+  <h2 class="section"><span class="num">06</span>The economics</h2>
+  <p>The money model is the familiar, transparent “pool and rake” structure. Each round, players pay an entry fee into a shared pool; the winner takes the pool minus a small house fee that funds operations and growth.</p>
+  <div class="money sans">
+    <div class="row"><span class="k">Entry fee (per player)</span><span class="v">¥100</span></div>
+    <div class="row"><span class="k">House fee</span><span class="v">10%</span></div>
+    <div class="row"><span class="k">Players in the round</span><span class="v">10</span></div>
+    <div class="row tot"><span class="k">Prize pool to the winner&nbsp;&nbsp;(10 × ¥100 × 90%)</span><span class="v">¥900</span></div>
+    <div class="row"><span class="k">To the platform</span><span class="v">¥100</span></div>
+  </div>
+  <p class="note">Illustrative only. The exact fee, pool size, and house rate are placeholders to be validated with real players.</p>
+  <p>Because each round is short, a healthy table generates <strong>frequent, low-stakes transactions</strong> rather than rare large ones, the same dynamic that drives turnover across the wider category. The system is built to feed itself: the house share funds operations and the acquisition of new players, who in turn grow the pools.</p>
+
+  <h2 class="section"><span class="num">07</span>What we have built today</h2>
+  <p>We have a <strong>convincing, front-end-only prototype</strong>, designed to look and feel like a live multiplayer product for demonstrations and concept validation. It runs in any browser, installs as an app (PWA), and speaks <strong>three languages: English, Español, and 日本語</strong>. It can be played right now at <strong><a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a></strong>.</p>
+  <p>We are deliberately honest about what is real and what is theatre, because that distinction shapes the entire plan:</p>
+  <table class="cmp">
+    <tr><th>Real: actual working code</th><th>Simulated: to make the screen feel alive</th></tr>
+    <tr><td>The timer and your STOP tap</td><td>Other players' stop times</td></tr>
+    <tr><td>Your accuracy and the winner calculation</td><td>Live chat and the winners feed</td></tr>
+    <tr><td>Round prize maths and your wallet</td><td>The growing Mega Jackpot</td></tr>
+    <tr><td>Your stats, streak, and best accuracy</td><td>Leaderboard standings</td></tr>
+  </table>
+  <div class="key"><b>The honest core</b>The one genuinely interactive element, the timer and your tap, is exactly the part that needs proving. It is enough to make a person feel the “I was so close” hook, which is the entire point of the prototype.</div>
+
+  <h2 class="section"><span class="num">08</span>An honest assessment</h2>
+  <p>A brief that argued only for Tokiq would not serve you well. This section sets out, as plainly as we can, what we do not yet know and where the real difficulties lie. Several of them are significant. We would far rather state them clearly now than discover them late.</p>
+
+  <h3 class="sub">The concept may not hold attention over time.</h3>
+  <p>The loop is simple by design, but simplicity can tip into monotony. Where Aviator offers a continuous decision (when to cash out), Tokiq asks for a single, well-timed tap, and whether that stays compelling across dozens or hundreds of sessions is unproven. There is also a <strong>skill-domination risk</strong>: as players improve, the most precise few may win consistently, which could discourage newcomers. One open design question is whether the closest player should always take the entire pool, or whether sharing it among the top few would keep more players engaged.</p>
+
+  <h3 class="sub">The fairness model is not yet real, and the algorithm has limits.</h3>
+  <p>Today the stop time is measured on the player's own device. That is acceptable for a prototype but <strong>exploitable in a real product</strong>: a determined player could manipulate their own timing, and players on slower connections would be at a genuine disadvantage. Truly fair play needs server-controlled timing, latency compensation, and a verifiable provably-fair guarantee. None of these exists yet, and together they form the core engineering challenge. The opponents in the prototype are also <strong>simulated</strong>: their times are generated with gentle statistical noise clustered around the target so that they read as skilful. Real players will show far more variance, and a round may feel quite different as a result. We also keep each table small on purpose (8&ndash;14 players) so that a person can plausibly win during a demonstration; with hundreds of real players, winning becomes much harder, which would change the experience in ways we have not yet tested.</p>
+
+  <h3 class="sub">We have not shown that players return, or that they will pay.</h3>
+  <p>Retention is the make-or-break question, and because the multiplayer is simulated, the prototype cannot answer it. The near-miss may prove a strong enough hook to bring a player back after repeated losses, or it may not. Willingness to pay is equally untested: the &yen;100 entry and 10% house fee are placeholders, with no real price discovery yet.</p>
+
+  <h3 class="sub">The advantage over Aviator is a hypothesis, not a result.</h3>
+  <p>Our case rests on a stronger sense of skill and a cleaner, more social feel. Both are reasonable, and both are unproven. Under real conditions, with human reaction variance and network latency, Tokiq could feel less skill-driven than intended, and closer to the luck-led experience it hopes to improve upon.</p>
+
+  <h3 class="sub">Trust and regulation are unresolved, especially in Japan.</h3>
+  <p>Pay-to-enter with a prize pool calls for careful legal review, and the skill-based framing helps the gambling question without guaranteeing exemption. This review could reshape, delay, or stop the model, so we treat it as a first-order risk rather than a footnote, to be examined early and in parallel with everything else.</p>
+
+  <h3 class="sub">The economics are not yet modelled.</h3>
+  <p>Whether the house fee can cover operations and the cost of acquiring players at scale is unknown, as is which acquisition channel would work best. These are questions for later, once demand and retention are established, but they remain genuinely open.</p>
+
+  <table class="risk">
+    <tr><th>Area</th><th>The concern, in short</th><th>Where it stands</th></tr>
+    <tr><td class="area">Retention</td><td>Will a player who lost yesterday come back today?</td><td class="stat">Unproven</td></tr>
+    <tr><td class="area">Skill domination</td><td>Precise players may consistently lock out newcomers.</td><td class="stat">Open design question</td></tr>
+    <tr><td class="area">Fairness &amp; cheating</td><td>Device-side timing is exploitable; needs server authority.</td><td class="stat">Core challenge, unbuilt</td></tr>
+    <tr><td class="area">Willingness to pay</td><td>Fee, pool, and house rate are untested placeholders.</td><td class="stat">Untested</td></tr>
+    <tr><td class="area">Differentiation</td><td>A clear reason to choose Tokiq over Aviator.</td><td class="stat">Hypothesis only</td></tr>
+    <tr><td class="area">Regulation (Japan)</td><td>Skill-versus-gambling classification is unresolved.</td><td class="stat">First-order risk</td></tr>
+    <tr><td class="area">Economics</td><td>Can the house cut sustain operations and acquisition?</td><td class="stat">Not yet modelled</td></tr>
+  </table>
+  <p>None of these is a reason to stop. They are the reason to proceed carefully, and in the order set out next.</p>
+
+  <h2 class="section"><span class="num">09</span>The plan ahead</h2>
+  <p>The plan exists to answer the questions above in the cheapest and safest order. Our guiding rule is simple: <strong>never build the expensive parts before validating that players want them.</strong> We run the cheapest experiments first and spend on hard engineering only once the signals justify it. The path is a series of decision gates:</p>
+
+  <div class="gates">
+    <div class="gate"><div class="g-n">Gate 1</div><div class="g-b"><div class="g-h">Is it fun? Does the near-miss work?</div><div class="g-d">Player interviews and watched playtests of the prototype. The two questions that matter most right now.</div></div></div>
+    <div class="gate"><div class="g-n">Gate 2</div><div class="g-b"><div class="g-h">Is there demand, and any willingness to pay?</div><div class="g-d">A simple landing page and a play-money price test. A cheap read on whether people outside the room care.</div></div></div>
+    <div class="gate"><div class="g-n">Gate 3</div><div class="g-b"><div class="g-h">Do real players return and invite others?</div><div class="g-d">A minimal real-multiplayer pilot: the first experiment that needs engineering, and the gate before any serious build.</div></div></div>
+  </div>
+
+  <p class="lead-in">Beyond the gates, the genuinely hard parts are known, and intentionally placed last:</p>
+  <ul>
+    <li><strong>Real multiplayer</strong>: networking, matchmaking, and starting every player's round at the same instant.</li>
+    <li><strong>Anti-cheat &amp; fairness</strong>: today the stop time is measured on the player's device; a real build needs server-controlled timing and latency compensation. This is the core engineering challenge.</li>
+    <li><strong>Provably fair</strong>: a credible, verifiable guarantee (as Aviator built with cryptographic commit-reveal) so players trust that no round is rigged.</li>
+    <li><strong>Payments &amp; regulation</strong>: entry fees plus a prize pool require careful legal review per market, <strong>especially in Japan</strong>. The skill-based framing helps the gambling question but does not automatically exempt it.</li>
+  </ul>
+  <div class="key"><b>The discipline</b>Cheap experiments first; the costly build follows the evidence. We spend serious money only after real players show they return and bring friends.</div>
+
+  <div class="conclusion-block">
+    <h2 class="section">In closing</h2>
+    <p>Tokiq takes a single, universal moment: the held breath before you act, and the ache of being <em>so close</em>. It turns that into a fast, social, skill-based loop. The category it draws on has already proven a very large appetite; the opportunity is to offer that appetite a cleaner, more skilful, and more shareable form.</p>
+    <p>We have tried to present the promise and the open questions with equal candour. The hardest question is not whether we can build Tokiq, but whether players will return, trust it, spend, and share it. The plan in Section 09 is designed to answer that cheaply, in the right order, and before any large commitment is made.</p>
+    <p>You are warmly welcome to try the prototype at your convenience, at <a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a>. We would be glad to walk you through it and the thinking behind it, and we would genuinely value your perspective, including any doubts or concerns you may have. Thank you for taking the time to consider it.</p>
+  </div>
+</section>
+
+</body>
+</html>

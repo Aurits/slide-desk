@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Tokiq — ゲーム概要</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    color: #1a1a1a; background: #ffffff;
+    font-family: "Noto Serif CJK JP", "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 10.5pt; line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  :root{ --accent:#0e7c86; --accent-soft:#e8f2f2; --ink:#1a1a1a; --muted:#6b6b6b; --hair:#d4d4d4; --faint:#ededed;
+         --jsans:"Noto Sans CJK JP","Inter","Helvetica Neue",sans-serif; --latin:"Inter",sans-serif; }
+  .sans { font-family: var(--jsans); }
+
+  .cover { page-break-after: always; height: 247mm; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-top { padding-top: 24mm; }
+  .cover-eyebrow { font-family:var(--jsans); font-size: 9pt; letter-spacing: 5px; color: var(--muted); margin-bottom: 12mm; }
+  .cover-wordmark { font-family:var(--latin); font-weight:700; font-size: 30pt; letter-spacing: 6px; color: var(--ink); margin-bottom: 8mm; }
+  .cover-wordmark .i { color: var(--accent); }
+  .cover-rule { width: 28mm; height: 2px; background: var(--accent); margin-bottom: 14mm; }
+  .cover-title { font-weight: 600; font-size: 26pt; line-height: 1.45; letter-spacing: 0.5px; margin: 0; max-width: 156mm; }
+  .cover-subtitle { font-size: 12.5pt; color: #4a4a4a; line-height: 1.9; margin-top: 9mm; max-width: 150mm; }
+  .cover-tagline { font-family:var(--jsans); font-size: 10pt; letter-spacing: 4px; color: var(--accent); margin-top: 9mm; }
+  .cover-bottom { padding-bottom: 2mm; border-top: 1px solid var(--hair); padding-top: 7mm; display: table; width: 100%; }
+  .cover-meta { display: table-row; font-family:var(--jsans); font-size: 9.5pt; }
+  .cover-meta .col { display: table-cell; padding-right: 11mm; vertical-align: top; }
+  .cover-meta .label { letter-spacing: 1px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
+  .cover-meta .value { color: var(--ink); font-size: 10pt; font-weight: 500; }
+  .cover-meta .value.latin { font-family: var(--latin); }
+
+  .doc-header { border-bottom: 1px solid var(--ink); padding-bottom: 6mm; margin-bottom: 8mm; }
+  .doc-header .kicker { font-family:var(--jsans); font-size: 8.5pt; letter-spacing: 3px; color: var(--muted); margin-bottom: 4mm; }
+  .doc-header h1 { font-weight: 600; font-size: 19pt; line-height: 1.45; margin: 0 0 3mm 0; }
+  .doc-header .sub { font-size: 11.5pt; color: #4a4a4a; margin: 0; }
+  .doc-header .meta-line { font-family:var(--jsans); font-size: 9pt; color: var(--muted); margin-top: 5mm; }
+  .doc-header .meta-line span + span::before { content: "・"; margin: 0 6px; color: #b0b0b0; }
+
+  h2.section { font-family:var(--jsans); font-size: 12pt; font-weight: 700; letter-spacing: 1px; margin: 12mm 0 4mm 0; page-break-after: avoid; }
+  h2.section .num { font-family:var(--latin); color: var(--accent); font-weight: 700; margin-right: 9px; }
+  h3.sub { font-weight: 600; font-size: 12pt; margin: 6mm 0 2mm 0; page-break-after: avoid; }
+  p { margin: 0 0 4.5mm 0; text-align: justify; }
+  p.lead-in { page-break-after: avoid; }
+  strong { font-weight: 700; }
+  ul { margin: 2mm 0 5mm 0; padding-left: 6mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 2mm; position: relative; padding-left: 6mm; line-height: 1.75; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: #8a8a8a; }
+  .conclusion-block { margin-top: 9mm; padding-top: 6mm; border-top: 1px solid var(--hair); page-break-inside: avoid; }
+
+  .key { font-family:var(--jsans); font-size: 9.5pt; line-height: 1.65; color: var(--ink); background: var(--accent-soft); border-left: 2.5px solid var(--accent); padding: 3.5mm 5mm; margin: 4mm 0 5mm 0; page-break-inside: avoid; }
+  .key b { color: var(--accent); font-weight: 700; letter-spacing: 0.5px; font-size: 8pt; display: block; margin-bottom: 1mm; }
+
+  .pull { font-size: 13pt; color: var(--accent); line-height: 1.7; margin: 7mm 0; padding-left: 6mm; border-left: 2px solid var(--accent); page-break-inside: avoid; }
+
+  .exec { page-break-after: always; }
+  .exec .ribbon { font-family:var(--jsans); font-size: 8.5pt; letter-spacing: 4px; color: var(--accent); margin-bottom: 3mm; }
+  .exec h1 { font-weight: 600; font-size: 21pt; margin: 0 0 6mm 0; line-height: 1.3; }
+  .exec .frame { border: 1px solid var(--hair); padding: 7mm 8mm 4mm 8mm; margin-top: 2mm; }
+  .exec ul { margin: 0; }
+  .exec ul li { margin-bottom: 3.5mm; padding-left: 8mm; line-height: 1.7; }
+  .exec ul li::before { content: ""; }
+  .exec ul li .h { font-family:var(--jsans); font-weight:700; font-size: 10pt; color: var(--accent); display:block; }
+  .exec ul li .b { font-size: 10pt; }
+  .exec ul li .n { position:absolute; left:0; font-family:var(--latin); font-weight:700; font-size:9pt; color:var(--accent); }
+
+  .facts { display: table; width: 100%; border-collapse: collapse; margin: 6mm 0 0 0; }
+  .facts .frow { display: table-row; }
+  .facts .fc { display: table-cell; width: 33.33%; border-top: 0.5px solid var(--faint); padding: 3.5mm 5mm 3.5mm 0; vertical-align: top; }
+  .facts .fk { font-family:var(--jsans); font-size: 7.5pt; letter-spacing: 1px; color: #8a8a8a; display: block; margin-bottom: 1.5mm; }
+  .facts .fv { font-family:var(--jsans); font-size: 10pt; font-weight: 700; color: var(--ink); line-height: 1.5; }
+  .glance-title { font-family:var(--jsans); font-size: 8.5pt; letter-spacing: 3px; color: var(--muted); margin-top: 9mm; }
+
+  .stats-grid { display: flex; flex-wrap: wrap; margin: 5mm 0; page-break-inside: avoid; }
+  .stats-grid .stat { flex: 0 0 50%; box-sizing: border-box; padding: 4mm 4mm 4mm 0; border-bottom: 0.5px solid var(--faint); }
+  .stats-grid .stat:nth-child(2n) { padding-left: 6mm; padding-right: 0; }
+  .stats-grid .stat .num { font-family:var(--latin); font-size: 17pt; font-weight: 600; line-height: 1.15; display: block; letter-spacing: -0.3px; color: var(--accent); }
+  .stats-grid .stat .label { font-family:var(--jsans); font-size: 8.5pt; color: var(--muted); display: block; margin-top: 2mm; line-height: 1.5; }
+  .src { font-family:var(--jsans); font-size: 8pt; color: #8a8a8a; margin: 0 0 7mm 0; line-height: 1.6; }
+
+  .loop, .hookloop { margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .loop svg, .hookloop svg { width: 100%; height: auto; display: block; }
+  .cap { font-family:var(--jsans); font-size: 8pt; color: #8a8a8a; text-align:center; margin: 1mm 0 6mm 0; }
+
+  .example { border: 1px solid var(--hair); border-top: 2.5px solid var(--accent); padding: 5mm 6mm; margin: 5mm 0 6mm 0; page-break-inside: avoid; }
+  .example .et { font-family:var(--jsans); font-size: 8pt; letter-spacing: 2px; color: var(--accent); margin-bottom: 3mm; }
+  .example p { margin: 0 0 2.5mm 0; font-size: 10pt; line-height: 1.8; }
+  .example p:last-child { margin-bottom: 0; }
+  .example .t { font-family:var(--latin); font-weight: 600; color: var(--accent); }
+
+  table.cmp { width: 100%; border-collapse: collapse; margin: 3mm 0 6mm 0; font-size: 9.5pt; page-break-inside: avoid; }
+  table.cmp th, table.cmp td { text-align: left; vertical-align: top; padding: 3mm 4mm 3mm 0; border-bottom: 0.5px solid var(--faint); line-height: 1.6; }
+  table.cmp th { font-family:var(--jsans); font-size: 8pt; letter-spacing: 0.5px; color: var(--muted); font-weight: 700; }
+  table.cmp td.row-h { font-family:var(--jsans); font-size: 9pt; color: var(--muted); width: 26%; }
+  table.cmp td .t { color: var(--accent); font-weight: 700; }
+
+  .money { border: 1px solid var(--hair); padding: 4mm 6mm; margin: 4mm 0 5mm 0; page-break-inside: avoid; font-family:var(--jsans); font-size: 10pt; }
+  .money .row { display: flex; justify-content: space-between; padding: 2mm 0; border-bottom: 0.5px solid var(--faint); }
+  .money .row:last-child { border-bottom: 0; }
+  .money .row .k { color: var(--muted); }
+  .money .row .v { font-weight: 700; font-family:var(--latin); }
+  .money .tot .k { color: var(--accent); font-weight: 700; }
+  .money .tot .v { color: var(--accent); font-weight: 700; }
+  .note { font-family:var(--jsans); font-size: 8.5pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.6; }
+
+  .gates { margin: 4mm 0 5mm 0; page-break-inside: avoid; }
+  .gate { display: table; width: 100%; border-top: 0.5px solid var(--faint); padding: 3.5mm 0; }
+  .gate .g-n { display: table-cell; width: 22mm; vertical-align: top; font-family:var(--jsans); font-weight: 700; font-size: 9pt; letter-spacing: 0.5px; color: var(--accent); }
+  .gate .g-b { display: table-cell; vertical-align: top; }
+  .gate .g-h { font-weight: 700; }
+  .gate .g-d { font-family:var(--jsans); font-size: 9pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.6; }
+
+  a { color: var(--accent); text-decoration: none; border-bottom: 0.5px solid rgba(14,124,134,0.45); }
+
+  table.risk { width: 100%; border-collapse: collapse; margin: 5mm 0 4mm 0; font-size: 9.5pt; page-break-inside: avoid; }
+  table.risk th, table.risk td { text-align: left; vertical-align: top; padding: 2.6mm 4mm 2.6mm 0; border-bottom: 0.5px solid var(--faint); line-height: 1.6; }
+  table.risk th { font-family:var(--jsans); font-size: 7.5pt; letter-spacing: 0.5px; color: var(--muted); font-weight: 700; }
+  table.risk td.area { font-family:var(--jsans); font-weight: 700; width: 24%; }
+  table.risk td.stat { font-family:var(--jsans); font-size: 8.5pt; color: var(--accent); width: 22%; }
+</style>
+</head>
+<body>
+
+<!-- ===================== 表紙 ===================== -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-eyebrow">ゲーム概要 ・ 社外秘</div>
+    <div class="cover-wordmark">TOK<span class="i">I</span>Q</div>
+    <div class="cover-rule"></div>
+    <h1 class="cover-title">たった一度の「止める」瞬間に賭ける、<br>ソーシャル精密タイミングゲーム。</h1>
+    <p class="cover-subtitle">Tokiqとは何か、どう遊ぶのか、なぜ人を惹きつけるのか、そしてどこへ向かうのか。本書は、そのコンセプトと現状を分かりやすくご紹介するために用意しました。</p>
+    <div class="cover-tagline">時を制し、共に勝て。</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div class="col"><span class="label">提出先</span><span class="value">ワタナベ 様</span></div>
+      <div class="col"><span class="label">作成者</span><span class="value">アンブローズ・アランダ</span></div>
+      <div class="col"><span class="label">日付</span><span class="value">2026年6月</span></div>
+      <div class="col"><span class="label">体験版</span><span class="value latin"><a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== エグゼクティブ・サマリー ===================== -->
+<section class="exec">
+  <div class="ribbon">エグゼクティブ・サマリー</div>
+  <h1>1分でわかるTokiq</h1>
+  <p>Tokiqは、速く、社交的で、<strong>スキル型</strong>のゲームです。目標タイムが表示され、クロックがカウントアップし、最も目標に近く<strong>STOP</strong>を押したプレイヤーが、共有の賞金プールを獲得します。数秒で理解でき、誰もが知る一つの感覚（行動の前に息を呑む一瞬と、「あと少し」の悔しさ）を核にしています。</p>
+
+  <div class="frame">
+    <ul>
+      <li><span class="n">01</span><span class="h">シンプルで普遍的なフック</span><span class="b">目標に最も近くクロックを止める。覚えるルールはなく、1ラウンドは数秒。「惜しい一瞬（ニアミス）」が、もう一度を誘います。</span></li>
+      <li><span class="n">02</span><span class="h">実証済みの市場、新しい切り口</span><span class="b">Aviatorのような「クラッシュ系」の行動設計（月間7,700万人超）を土台にしつつ、体感を運からスキルへ、個人の賭けから共有の社交的な瞬間へと移します。</span></li>
+      <li><span class="n">03</span><span class="h">すでに存在し、今日プレイできる</span><span class="b">洗練されたブラウザ版の試作が公開中。インストール可能で、3言語（英・西・日本語）対応。中核のタイマーとタップは本物で、その周囲のマルチプレイは現時点では擬似的です。</span></li>
+      <li><span class="n">04</span><span class="h">規律ある低コストの道筋</span><span class="b">まず最も安い問い（「面白いか」「人は戻ってくるか」）を検証し、その後で初めて難しい開発（本物のマルチプレイ、公正性、決済、規制）に投資します。</span></li>
+      <li><span class="n">05</span><span class="h">本当の問い</span><span class="b">「作れるか」ではなく、「プレイヤーが戻り、信頼し、お金を使い、友人を誘うか」。いま行うすべては、それを安く、率直に確かめるためのものです。</span></li>
+    </ul>
+  </div>
+
+  <div class="glance-title">Tokiq 早わかり</div>
+  <div class="facts">
+    <div class="frow">
+      <div class="fc"><span class="fk">ジャンル</span><span class="fv">リアルタイム・マルチプレイのスキル型タイミングゲーム</span></div>
+      <div class="fc"><span class="fk">中心となる操作</span><span class="fv">目標タイムに最も近くSTOP</span></div>
+      <div class="fc"><span class="fk">1ラウンドの人数</span><span class="fv">卓に8〜14人</span></div>
+    </div>
+    <div class="frow">
+      <div class="fc"><span class="fk">ラウンド経済</span><span class="fv">¥100参加 ・ ハウス10% ・ 勝者がプール総取り</span></div>
+      <div class="fc"><span class="fk">プラットフォーム</span><span class="fv">ブラウザ＆インストール可能アプリ（PWA）、モバイル中心</span></div>
+      <div class="fc"><span class="fk">対応言語</span><span class="fv">英語 ・ スペイン語 ・ 日本語</span></div>
+    </div>
+    <div class="frow">
+      <div class="fc"><span class="fk">ステータス</span><span class="fv">フロントエンド試作（検証段階）</span></div>
+      <div class="fc"><span class="fk">今すぐ体験</span><span class="fv latin"><a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a></span></div>
+      <div class="fc"><span class="fk">タグライン</span><span class="fv">時を制し、共に勝て。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 本文 ===================== -->
+<section class="doc">
+  <div class="doc-header">
+    <div class="kicker">Tokiq ・ ゲーム概要</div>
+    <h1>Tokiq · 時を制し、共に勝て。</h1>
+    <p class="sub">リアルタイムの、度胸とタイミングのゲーム。そして、その背景にある考え方。</p>
+    <p class="meta-line"><span>提出先：ワタナベ 様</span><span>作成者：アンブローズ・アランダ</span><span>2026年6月</span></p>
+  </div>
+
+  <h2 class="section"><span class="num">01</span>コンセプト</h2>
+  <p>Tokiqは、リアルタイム・マルチプレイの<strong>スキル型</strong>タイミングゲームです。目標タイム（たとえば<strong>10.00秒</strong>）が表示され、クロックがカウントアップしていきます。各プレイヤーは「ちょうど目標に達した」と思った瞬間に<strong>STOP</strong>をタップします。最も<strong>目標に近く止めたプレイヤーが、そのラウンドの賞金プールを獲得</strong>します。プレイヤーはわずかな参加費を支払い、プラットフォームは少額のハウス手数料を受け取ります。</p>
+  <p>Aviatorのような「クラッシュ系」ゲームと同じ系譜にありますが、核心となる魅力は異なります。Aviatorが上昇する倍率と「欲」の緊張に支えられているのに対し、Tokiqが拠って立つのは<strong>精密さと度胸</strong>、すなわちタップ直前の息を呑む一瞬と、わずかに及ばなかったときの、後を引く悔しさです。</p>
+  <div class="pull">Tokiqが売っているのはタイマーではありません。売っているのは「感情」です。期待、緊張、希望、惜しい一瞬、そして人前で勝つ瞬間。</div>
+  <div class="key"><b>ひとことで</b>5秒で誰もが理解でき、誰もが感じたことのある感情（コンマ数秒、早すぎたか、遅すぎたか）の上に成り立つゲームです。</div>
+  <p>本書は、宣伝ではなく率直であることを旨としています。Tokiqの可能性とともに、残された本当の弱点や未解決の問いも、第08節にあわせて示します。ご都合のよいときに、ぜひ <a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a> で試作版をお試しください。数分触れていただくほうが、どんな説明よりも多くを伝えます。</p>
+
+  <h2 class="section"><span class="num">02</span>1ラウンドの流れ</h2>
+  <p>体験のすべては、ラウンドの局面に応じて姿を変える一枚の画面の上で完結します。覚えるべきメニューはなく、1ラウンドは数秒で終わります。</p>
+
+  <div class="loop">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 132" preserveAspectRatio="xMidYMid meet">
+      <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8a8a"/></marker></defs>
+      <g font-family="'Noto Sans CJK JP', sans-serif">
+        <rect x="6" y="34" width="126" height="58" rx="6" fill="none" stroke="#d4d4d4"/>
+        <rect x="166" y="34" width="126" height="58" rx="6" fill="none" stroke="#d4d4d4"/>
+        <rect x="326" y="34" width="126" height="58" rx="6" fill="none" stroke="#0e7c86" stroke-width="1.5"/>
+        <rect x="486" y="34" width="126" height="58" rx="6" fill="none" stroke="#d4d4d4"/>
+        <text x="69" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">ロビー</text>
+        <text x="229" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">カウントダウン</text>
+        <text x="389" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#0e7c86">進行中</text>
+        <text x="549" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a">結果</text>
+        <text x="69" y="78" text-anchor="middle" font-size="8.5" fill="#6b6b6b">参加か見送り</text>
+        <text x="229" y="78" text-anchor="middle" font-size="8.5" fill="#6b6b6b">3・2・1・GO</text>
+        <text x="389" y="78" text-anchor="middle" font-size="8.5" fill="#6b6b6b">STOPを押す</text>
+        <text x="549" y="78" text-anchor="middle" font-size="8.5" fill="#6b6b6b">最も近い人が勝ち</text>
+        <line x1="134" y1="63" x2="162" y2="63" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar)"/>
+        <line x1="294" y1="63" x2="322" y2="63" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar)"/>
+        <line x1="454" y1="63" x2="482" y2="63" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar)"/>
+        <path d="M549,92 L549,116 L69,116 L69,94" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="2,3" marker-end="url(#ar)"/>
+        <text x="309" y="113" text-anchor="middle" font-size="8.5" fill="#8a8a8a">次のラウンドへ</text>
+        <text x="309" y="20" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1a1a1a">ラウンドの流れ</text>
+      </g>
+    </svg>
+  </div>
+
+  <p>1ラウンドは、4つの短い局面を通って進みます。</p>
+  <ul>
+    <li><strong>ロビー。</strong>目標タイムが設定され、卓に人が集まります。参加費を払って参加するか、見送って観戦するかを選びます。</li>
+    <li><strong>カウントダウン。</strong>短い<strong>3・2・1・GO</strong>が緊張を高め、スタートの瞬間を揃えます。</li>
+    <li><strong>進行中。</strong>クロックが<strong>00.00</strong>からカウントアップします。目標に達したと思った瞬間に、大きな<strong>STOP</strong>ボタン（PCではスペースキー）を押します。</li>
+    <li><strong>結果。</strong>全員の停止タイムが目標と比較されます。最も近いプレイヤーがプールを獲得し、勝者カードがせり上がって、次のラウンドが始まります。</li>
+  </ul>
+
+  <div class="example">
+    <div class="et">1ラウンドの流れ（具体例）</div>
+    <p>目標は <span class="t">10.00秒</span>。10人が参加し、1人 ¥100 で勝者へ <span class="t">¥900</span> のプール。カウントダウンがGOになり、クロックが上がっていきます。<span class="t">3 … 6 … 8 …</span> 10に近づくにつれ、刻む音は速く、鋭くなります。</p>
+    <p>あなたはタップする。クロックは <span class="t">09.97秒</span> で止まる。卓の他の面々は 10.06、9.91、10.21。あなたの誤差はわずか <strong>0.03</strong>。そして誤差 0.02 の誰かが、プールを攫っていきます。</p>
+    <p>その痛みは、正確で、個人的です。<em>惜しい。</em> あなたの親指は、もう「次のラウンドへ」に伸びています。</p>
+  </div>
+  <div class="key"><b>なぜ重要か</b>スキルは、すべてその一押しに宿ります。「いつ止めるか」に運はなく、あるのは体内時計とクロックがどれだけ正確に重なるか、それだけ。それが「もう一回」を生む静かな約束です。</div>
+
+  <h2 class="section"><span class="num">03</span>なぜ惹きつけるのか</h2>
+  <p>人がこの種のゲームに戻ってくるのは、報酬が大きいからではありません。報酬が<strong>予測できない</strong>からであり、1ラウンドごとに、決着をつけたくなる感情の余韻が残るからです。そこにはいくつかの力が同時に働いています。</p>
+  <ul>
+    <li><strong>期待と緊張</strong>：上がっていくクロックと、目標までの狭まる窓。</li>
+    <li><strong>惜しい一瞬（ニアミス）</strong>：「誤差0.03秒」は、完敗よりもはるかに人を駆り立てます。それは「次こそは」とささやきます。</li>
+    <li><strong>変動報酬</strong>：不確実な結果は、一定の報酬よりも強い習慣を形づくります。</li>
+    <li><strong>社会的証明</strong>：他人が勝つのを見ると、自分も遊びたくなり、共有したくなります。</li>
+    <li><strong>希望と承認</strong>：リーダーボード、連勝、そして認められること。</li>
+    <li><strong>上達の実感</strong>：「自分は上手くなれる」という感覚が、繰り返しのプレイを支えます。</li>
+  </ul>
+  <p>これらが合わさって、自己強化のループが生まれます。各ラウンドの結果が、次を始める理由になります。</p>
+
+  <div class="hookloop">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 96" preserveAspectRatio="xMidYMid meet">
+      <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8a8a"/></marker></defs>
+      <g font-family="'Noto Sans CJK JP', sans-serif">
+        <text x="64"  y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#0e7c86">きっかけ</text>
+        <text x="64"  y="56" text-anchor="middle" font-size="8" fill="#6b6b6b">ラウンド開始</text>
+        <text x="232" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">行動</text>
+        <text x="232" y="56" text-anchor="middle" font-size="8" fill="#6b6b6b">タップ</text>
+        <text x="392" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">変動報酬</text>
+        <text x="392" y="56" text-anchor="middle" font-size="8" fill="#6b6b6b">どれだけ近い？</text>
+        <text x="552" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">投資</text>
+        <text x="552" y="56" text-anchor="middle" font-size="8" fill="#6b6b6b">残高・連勝・順位</text>
+        <line x1="120" y1="36" x2="172" y2="36" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar2)"/>
+        <line x1="288" y1="36" x2="320" y2="36" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar2)"/>
+        <line x1="470" y1="36" x2="494" y2="36" stroke="#8a8a8a" stroke-width="1" marker-end="url(#ar2)"/>
+        <path d="M552,64 L552,82 L64,82 L64,48" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="2,3" marker-end="url(#ar2)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="cap">フック・ループ：あるラウンドの「投資」が、次の「きっかけ」になります。</div>
+  <div class="key"><b>設計の原則</b>負けを受け入れられるものに、勝ちを忘れられないものに。ニアミスは、離脱ではなく再挑戦を誘わなければなりません。</div>
+
+  <h2 class="section"><span class="num">04</span>市場と、「いま」である理由</h2>
+  <p>Tokiqは、何もない空間に乗り込むわけではありません。「クラッシュ系」と呼ばれるカテゴリーの行動設計を土台にしています。その代表格であるSpribe社のAviatorは、ごく一部のデジタル製品しか到達しない規模で稼働しています。以下の数字は、このフォーマットがすでに証明してきた需要の大きさを示すものです。</p>
+
+  <div class="stats-grid">
+    <div class="stat"><span class="num">77M+</span><span class="label">Aviatorの月間アクティブプレイヤー（2026年初・報告値）</span></div>
+    <div class="stat"><span class="num">約90%</span><span class="label">クラッシュ系カテゴリー内での推定シェア</span></div>
+    <div class="stat"><span class="num">100+</span><span class="label">展開国数（4,500以上のカジノ運営事業者を通じて）</span></div>
+    <div class="stat"><span class="num">約97%</span><span class="label">還元率（RTP）。軽量でモバイル中心の設計</span></div>
+    <div class="stat"><span class="num">$100B+</span><span class="label">その背景にあるiGaming市場全体の規模</span></div>
+    <div class="stat"><span class="num">2018</span><span class="label">Aviator開発元の設立年（新しく、かつ無借金で成長）</span></div>
+  </div>
+  <p class="src">数字はSpribe社および業界専門メディアによる公表値（2022〜2026年）に基づく目安です。対外利用の前に、別途検証する必要があります。</p>
+  <p><strong>「いま」である理由。</strong>追い風となる事実が二つあります。第一に、このカテゴリーの価値は<strong>重厚なグラフィックスではなく、数理とソーシャル設計</strong>から生まれること。ゆえに、開発コストは低く、上限は高い。第二に、その成長は、従来のスロットよりも速く社交的なセッションを好む<strong>若く、モバイル中心の層</strong>で最も顕著だったこと。Tokiqは、まさにそうしたプレイヤーのために設計されています。</p>
+
+  <h2 class="section"><span class="num">05</span>Tokiqの違い</h2>
+  <p>同じカテゴリーに属することと、模倣であることは違います。Tokiqは重心を、運からスキルへ、そして孤独な賭けから社交的な瞬間へと、意図的に移しています。</p>
+  <table class="cmp">
+    <tr><th></th><th>Aviator（クラッシュ）</th><th>Tokiq（タイミング）</th></tr>
+    <tr><td class="row-h">中心となる操作</td><td>墜落の前にキャッシュアウトする</td><td class="t">目標タイムに最も近くSTOPを押す</td></tr>
+    <tr><td class="row-h">緊張の源</td><td>上昇する倍率。欲と恐れ</td><td class="t">重圧下の精密さ。惜しい一瞬</td></tr>
+    <tr><td class="row-h">体感</td><td>運が主役（キャッシュアウトの技量あり）</td><td class="t">スキルが主役。最も近い者がプールを獲得</td></tr>
+    <tr><td class="row-h">ソーシャル要素</td><td>ライブの賭けとチャット</td><td class="t">ライブフィード・チャット・順位・共有される勝利</td></tr>
+    <tr><td class="row-h">ブランドの印象</td><td>カジノ色が強い</td><td class="t">より清潔で、静かで、和の引き算の美学</td></tr>
+  </table>
+  <div class="key"><b>戦略的な賭け</b>より強い「上達の手応え」（自分はもっと上手くなれる）と、より清潔で社交的・カジノ色の薄い佇まいが、プレイヤーにTokiqを選ぶ理由を与える、という賭けです。これらは主張する事実ではなく、検証すべき仮説です。第08節で未解決の問いを、第09節でそれを検証する計画を示します。</div>
+
+  <h2 class="section"><span class="num">06</span>経済の仕組み</h2>
+  <p>収益モデルは、馴染みのある透明な「プール＆レーキ（手数料）」構造です。各ラウンドで、プレイヤーは参加費を共有プールに支払い、勝者がそのプールから少額のハウス手数料を引いた額を受け取ります。手数料は運営と成長の原資になります。</p>
+  <div class="money">
+    <div class="row"><span class="k">参加費（1人あたり）</span><span class="v">¥100</span></div>
+    <div class="row"><span class="k">ハウス手数料</span><span class="v">10%</span></div>
+    <div class="row"><span class="k">ラウンドの参加人数</span><span class="v">10</span></div>
+    <div class="row tot"><span class="k">勝者への賞金プール&nbsp;&nbsp;（10 × ¥100 × 90%）</span><span class="v">¥900</span></div>
+    <div class="row"><span class="k">プラットフォームへ</span><span class="v">¥100</span></div>
+  </div>
+  <p class="note">あくまで例示です。実際の参加費・プール規模・ハウス率は、実プレイヤーによる検証を要する暫定値です。</p>
+  <p>1ラウンドが短いため、活気ある卓は、まれな大きい取引ではなく<strong>低額で頻繁な取引</strong>を生み出します。これはカテゴリー全体の回転を支えるのと同じ力学です。仕組みは自らを養うように設計されています。ハウスの取り分が運営と新規プレイヤーの獲得を支え、その新規プレイヤーがプールを大きくしていきます。</p>
+
+  <h2 class="section"><span class="num">07</span>現在あるもの</h2>
+  <p>私たちは、デモとコンセプト検証のために、ライブのマルチプレイ製品のように見え、そう感じられるよう作られた<strong>説得力のあるフロントエンドのみの試作版</strong>を持っています。あらゆるブラウザで動作し、アプリとしてインストールでき（PWA）、<strong>3言語：英語・スペイン語・日本語</strong>に対応します。いますぐ <strong><a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a></strong> で遊べます。</p>
+  <p>何が本物で、何が演出なのか。その区別が計画全体を形づくるため、私たちはそこを意図的に率直にしています。</p>
+  <table class="cmp">
+    <tr><th>実装済み：実際に動作するコード</th><th>演出：画面に活気を与えるための擬似要素</th></tr>
+    <tr><td>タイマーと、あなたのSTOP操作</td><td>他プレイヤーの停止タイム</td></tr>
+    <tr><td>あなたの精度と、勝者判定</td><td>ライブチャットと勝者フィード</td></tr>
+    <tr><td>ラウンドの賞金計算と、ウォレット</td><td>増え続けるメガジャックポット</td></tr>
+    <tr><td>あなたの成績・連勝・ベスト精度</td><td>リーダーボードの順位</td></tr>
+  </table>
+  <div class="key"><b>正直な核心</b>唯一、本当にインタラクティブな要素（タイマーと、あなたのタップ）こそ、まさに検証すべき部分です。それだけで「あと少し」の手応えを生むのに十分であり、それがこの試作版の存在意義そのものです。</div>
+
+  <h2 class="section"><span class="num">08</span>正直な評価</h2>
+  <p>Tokiqの長所だけを述べる資料は、ご判断のお役には立ちません。本節では、まだ分かっていないこと、そして本当の難しさがどこにあるかを、できるだけ率直に述べます。そのいくつかは小さくありません。後になって気づくよりも、いま明確にお伝えしたいと考えています。</p>
+
+  <h3 class="sub">体験が長く飽きずに続く保証はありません。</h3>
+  <p>ループは意図的にシンプルですが、シンプルさは単調さに転じることもあります。Aviatorが「いつ降りるか」という継続的な判断を提供するのに対し、Tokiqが求めるのは一度の正確なタップであり、それが何十・何百セッションにわたって魅力を保つかは未検証です。さらに<strong>スキル独占のリスク</strong>もあります。プレイヤーが上達するにつれ、最も正確な一部が勝ち続け、新規プレイヤーの意欲を削ぐおそれがあります。「最も近い一人が全プールを取る」べきか、それとも上位数名で分け合うほうが多くのプレイヤーを留められるかは、未解決の設計上の問いです。</p>
+
+  <h3 class="sub">公正性の仕組みはまだ本物ではなく、アルゴリズムにも限界があります。</h3>
+  <p>現在、停止タイムはプレイヤー自身の端末で計測しています。試作版としては許容できますが、<strong>実製品では悪用が可能</strong>です。本気のプレイヤーは自分の計時を操作でき、回線の遅いプレイヤーは実際に不利になります。真に公正なプレイには、サーバー主導の計時、遅延補正、そして検証可能な公正性証明が必要であり、いずれもまだ存在せず、それらが中核のエンジニアリング課題を成します。試作版の対戦相手も<strong>擬似的</strong>です。彼らのタイムは、巧みに見えるよう目標付近に寄せた緩やかな統計的ノイズで生成しています。実際のプレイヤーのばらつきははるかに大きく、その結果、ラウンドの体感は大きく変わり得ます。また、デモで人が現実的に勝てるよう、各卓は意図的に少人数（8〜14人）に保っています。数百人規模の実プレイヤーでは勝つことははるかに難しくなり、体験は私たちがまだ検証していない形で変化します。</p>
+
+  <h3 class="sub">プレイヤーが戻ること、支払うことは、まだ示せていません。</h3>
+  <p>リテンションは成否を分ける問いですが、マルチプレイが擬似的であるため、試作版では答えられません。ニアミスが、度重なる敗北の後でもプレイヤーを呼び戻すだけの十分なフックになるかは、まだ分かりません。支払い意思も同様に未検証で、¥100の参加費と10%のハウス手数料は暫定値にすぎず、本当の価格調査はこれからです。</p>
+
+  <h3 class="sub">Aviatorに対する優位は、結果ではなく仮説です。</h3>
+  <p>私たちの論拠は、より強いスキルの感覚と、より清潔で社交的な体感に拠っています。どちらも妥当ですが、どちらも未証明です。人間の反応のばらつきや回線遅延といった実条件のもとでは、Tokiqは意図したほどスキル主導に感じられず、改善しようとしている運主導の体験に近づいてしまう可能性もあります。</p>
+
+  <h3 class="sub">信頼と規制が、とりわけ日本において未解決です。</h3>
+  <p>参加費と賞金プールを伴う仕組みは、慎重な法的検討を要します。スキル型という位置づけは賭博性の論点を助けますが、適用除外を保証するものではありません。この検討はモデルを作り変え、遅らせ、あるいは止める可能性があるため、私たちはこれを脚注ではなく最優先のリスクとして扱い、他のすべてと並行して早期に検討します。</p>
+
+  <h3 class="sub">経済性はまだモデル化していません。</h3>
+  <p>ハウス手数料が運営費と、規模化に伴うプレイヤー獲得コストを賄えるかは未知数で、どの獲得チャネルが最も有効かも同様です。これらは需要とリテンションが確立した後の問いですが、依然として本当に未解決のままです。</p>
+
+  <table class="risk">
+    <tr><th>領域</th><th>懸念（要約）</th><th>現状</th></tr>
+    <tr><td class="area">リテンション</td><td>昨日負けたプレイヤーは今日も戻るか。</td><td class="stat">未証明</td></tr>
+    <tr><td class="area">スキル独占</td><td>正確な一部が新規プレイヤーを締め出しうる。</td><td class="stat">未解決の設計課題</td></tr>
+    <tr><td class="area">公正性・不正</td><td>端末側の計時は悪用可能。サーバー権限が必要。</td><td class="stat">中核課題・未構築</td></tr>
+    <tr><td class="area">支払い意思</td><td>参加費・プール・ハウス率は未検証の暫定値。</td><td class="stat">未検証</td></tr>
+    <tr><td class="area">差別化</td><td>AviatorではなくTokiqを選ぶ明確な理由。</td><td class="stat">仮説のみ</td></tr>
+    <tr><td class="area">規制（日本）</td><td>スキルか賭博かの分類が未解決。</td><td class="stat">最優先リスク</td></tr>
+    <tr><td class="area">経済性</td><td>ハウス手数料で運営と獲得を賄えるか。</td><td class="stat">未モデル化</td></tr>
+  </table>
+  <p>これらは中止の理由ではありません。むしろ、次に示す順序で慎重に進めるべき理由です。</p>
+
+  <h2 class="section"><span class="num">09</span>これからの計画</h2>
+  <p>計画は、上記の問いに、最も安く、最も安全な順序で答えるために存在します。私たちの指針はシンプルです。<strong>プレイヤーが本当に望んでいると検証できるまで、高コストな部分を作らない。</strong>まず最も安い実験を行い、兆候が正当化して初めて難しい開発に投資します。道筋は、いくつかの「判断の関門（ゲート）」で構成されます。</p>
+
+  <div class="gates">
+    <div class="gate"><div class="g-n">ゲート 1</div><div class="g-b"><div class="g-h">面白いか？ ニアミスは効くか？</div><div class="g-d">試作版を使ったプレイヤーインタビューと、観察プレイ。いま最も重要な二つの問い。</div></div></div>
+    <div class="gate"><div class="g-n">ゲート 2</div><div class="g-b"><div class="g-h">需要はあるか？ 支払い意思はあるか？</div><div class="g-d">シンプルなランディングページと、プレイマネーでの価格テスト。室外の人が関心を持つかの安価な確認。</div></div></div>
+    <div class="gate"><div class="g-n">ゲート 3</div><div class="g-b"><div class="g-h">実プレイヤーは戻り、人を誘うか？</div><div class="g-d">最小限の「本物のマルチプレイ」試験。初めて開発を要する実験であり、本格構築前の関門です。</div></div></div>
+  </div>
+
+  <p class="lead-in">ゲートの先にある「難しい部分」は分かっており、意図的に最後に置いています。</p>
+  <ul>
+    <li><strong>本物のマルチプレイ</strong>：ネットワーク、マッチメイキング、そして全員のラウンドを同じ瞬間に開始させる仕組み。</li>
+    <li><strong>不正対策と公正性</strong>：現在、停止タイムはプレイヤーの端末上で計測しています。本番版にはサーバー主導の計時と遅延補正が必要です。これが中核のエンジニアリング課題です。</li>
+    <li><strong>公正性証明（Provably Fair）</strong>：どのラウンドも操作されていないとプレイヤーが信頼できる、検証可能で信頼に足る保証（Aviatorが暗号的なコミット＆リビールで実現したように）。</li>
+    <li><strong>決済と規制</strong>：参加費と賞金プールは、市場ごとに、<strong>とりわけ日本において</strong>、慎重な法的検討を要します。スキル型という位置づけは賭博性の論点を助けますが、自動的に適用除外になるわけではありません。</li>
+  </ul>
+  <div class="key"><b>規律</b>まず安い実験。高コストの開発は、証拠に従います。実プレイヤーが「戻ってきて、友人を連れてくる」と示して初めて、本格的に投資します。</div>
+
+  <div class="conclusion-block">
+    <h2 class="section">結びに</h2>
+    <p>Tokiqは、誰もが知るたった一つの瞬間（行動の前に息を呑むあの一瞬と、「あと少し」の悔しさ）を、速く、社交的で、スキル型のループへと変えます。土台とするカテゴリーは、すでに非常に大きな需要を証明しています。機会は、その需要に対して、より清潔で、より技量を活かせ、より共有したくなる形を届けることにあります。</p>
+    <p>本書では、可能性と未解決の問いを、同じだけの率直さで示すよう努めました。最も難しい問いは、Tokiqを作れるかどうかではなく、プレイヤーが戻り、信頼し、お金を使い、共有してくれるかどうかです。第09節の計画は、それを安く、正しい順序で、そして大きな投資をする前に確かめるために設計されています。</p>
+    <p>ご都合のよいときに、ぜひ <a href="https://slide-desk.vercel.app/">slide-desk.vercel.app</a> で試作版をお試しください。喜んで、製品とその背景にある考え方をご案内いたします。ご懸念やご批判も含め、忌憚のないご意見をいただけましたら幸いです。ご検討のお時間をいただき、誠にありがとうございます。</p>
+  </div>
+</section>
+
+</body>
+</html>

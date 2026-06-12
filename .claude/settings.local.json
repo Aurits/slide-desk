@@ -183,7 +183,19 @@
       "Bash(../../.venv/bin/python -)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(mkdir -p tokiq/docs/game-brief)",
+      "Bash(command -v wkhtmltopdf)",
+      "Bash(../../../.venv/bin/python render_pdf.py)",
+      "Bash(wkhtmltopdf --version)",
+      "Bash(pdfinfo \"Tokiq Game Brief.pdf\")",
+      "Bash(command -v pandoc)",
+      "Bash(./.venv/bin/python -c \"import fitz; print\\('pymupdf', fitz.__doc__[:30] if fitz.__doc__ else 'ok'\\)\")",
+      "Bash(wkhtmltopdf --enable-local-file-access --page-size A4 --margin-top 20mm --margin-bottom 22mm --margin-left 24mm --margin-right 24mm --encoding UTF-8 --javascript-delay 2500 --footer-html footer.html --footer-spacing 6 --title 'Tokiq — Game Brief' tokiq_game_brief_en.html /tmp/en_v2.pdf)",
+      "Bash(../../../.venv/bin/python -)",
+      "Bash(chmod +x regenerate.sh)",
+      "Bash(bash regenerate.sh)",
+      "Bash(grep -q \"^ok$\\\\|Error\\\\|Traceback\" /tmp/claude-1000/-mnt-c-Users-HP-Documents-PROJECTS-slide-desk/99228dbd-60f7-430f-9d9a-d8977db82fd2/tasks/bufklxrej.output)"
     ]
   }
 }
