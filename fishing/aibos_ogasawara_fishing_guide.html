@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <title>AIBOS Ogasawara Fishing Guide</title>
 <style>
+  /* ============ DESIGN SYSTEM ============
+     Type:  EB Garamond (serif body) + Helvetica (sans labels) — consistent with the AIBOS doc family.
+     Color: ocean palette carried over from the cover.
+       ink #1a1a1a · muted #6b6b6b · deep teal #0d4a63 · teal #11607a · bright #1aa39a
+       danger #9a3b3b · caution #9a6a16 · tints for callouts/cards
+  */
   html, body {
     margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
     font-family: "EB Garamond", "Garamond", "Cambria", "Georgia", "Liberation Serif", serif;
@@ -11,131 +17,106 @@
   }
   .sans { font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
 
-  /* ============ COVER PAGE ============ */
-  .cover {
-    page-break-after: always; height: 247mm; position: relative;
-    display: flex; flex-direction: column; justify-content: space-between; padding: 0;
-  }
-  .cover-top { padding-top: 30mm; }
-  .cover-eyebrow {
-    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-size: 9pt; letter-spacing: 6px; text-transform: uppercase;
-    color: #6b6b6b; margin-bottom: 14mm;
-  }
-  .cover-rule { width: 28mm; height: 1px; background: #1a1a1a; margin-bottom: 16mm; }
-  .cover-title { font-size: 34pt; font-weight: 400; line-height: 1.15; letter-spacing: -0.3px; margin: 0; max-width: 150mm; }
-  .cover-subtitle { font-style: italic; font-size: 14pt; color: #4a4a4a; line-height: 1.5; margin-top: 10mm; max-width: 140mm; }
-  .cover-confidential { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; letter-spacing: 3px; text-transform: uppercase; color: #9a3b3b; margin-top: 12mm; }
-  .cover-bottom { padding-bottom: 6mm; border-top: 1px solid #d4d4d4; padding-top: 8mm; display: table; width: 100%; }
-  .cover-meta { display: table-row; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-size: 9.5pt; }
-  .cover-meta .col { display: table-cell; padding-right: 14mm; vertical-align: top; }
-  .cover-meta .label { text-transform: uppercase; letter-spacing: 2px; font-size: 8pt; color: #8a8a8a; margin-bottom: 3mm; display: block; }
-  .cover-meta .value { color: #1a1a1a; font-size: 10.5pt; font-weight: 500; }
+  /* ---------- TABLE OF CONTENTS ---------- */
+  .toc { page-break-after: always; }
+  .toc-head { border-bottom: 2px solid #0d4a63; padding-bottom: 6mm; margin-bottom: 9mm; }
+  .toc-head .kicker { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: #11607a; margin-bottom: 4mm; }
+  .toc-head h1 { font-weight: 400; font-size: 24pt; margin: 0; }
+  .toc-head .meta-line { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; color: #6b6b6b; margin-top: 4mm; letter-spacing: 0.3px; }
+  .toc-head .meta-line span + span::before { content: "·"; margin: 0 8px; color: #b0b0b0; }
+  .toc-grid { display: flex; flex-wrap: wrap; gap: 0 14mm; }
+  .toc-col { flex: 1; min-width: 70mm; }
+  .toc-part { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9.5pt; font-weight: 600; letter-spacing: 0.5px; color: #0d4a63; margin: 5mm 0 1mm 0; }
+  .toc-items { font-size: 10pt; color: #4a4a4a; margin: 0 0 2mm 0; }
 
-  /* ============ DOCUMENT BODY ============ */
-  .doc { padding-top: 4mm; }
-  .doc-header { border-bottom: 1px solid #1a1a1a; padding-bottom: 6mm; margin-bottom: 10mm; }
-  .doc-header .kicker { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; letter-spacing: 4px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 4mm; }
-  .doc-header h1 { font-weight: 400; font-size: 22pt; line-height: 1.2; margin: 0 0 3mm 0; }
-  .doc-header .sub { font-style: italic; font-size: 12pt; color: #4a4a4a; margin: 0; }
-  .doc-header .meta-line { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; color: #6b6b6b; margin-top: 5mm; letter-spacing: 0.3px; }
-  .doc-header .meta-line span + span::before { content: "·"; margin: 0 8px; color: #b0b0b0; }
+  /* ---------- PART OPENER ---------- */
+  .part { page-break-before: always; }
+  .part-bar { height: 3mm; background: linear-gradient(90deg, #0d4a63 0%, #11607a 45%, #1aa39a 100%); margin: 0 0 5mm 0; }
+  .part-label { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #11607a; margin-bottom: 2mm; }
+  .part-title { font-weight: 400; font-size: 22pt; line-height: 1.15; margin: 0 0 1mm 0; page-break-after: avoid; }
+  .romaji { font-style: italic; font-size: 12pt; color: #8a8a8a; margin: 0 0 7mm 0; page-break-after: avoid; }
 
-  /* Part dividers */
-  .part { page-break-before: always; margin-top: 2mm; }
-  .part:first-of-type { page-break-before: avoid; }
-  h2.section { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 11pt; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin: 13mm 0 1mm 0; page-break-after: avoid; }
-  h2.section .num { color: #8a8a8a; font-weight: 500; margin-right: 10px; }
-  .part-title { font-weight: 400; font-size: 19pt; line-height: 1.2; margin: 0 0 1mm 0; page-break-after: avoid; }
-  .romaji { font-style: italic; font-size: 11.5pt; color: #8a8a8a; margin: 0 0 6mm 0; page-break-after: avoid; }
-  h3.sub { font-style: italic; font-weight: 400; font-size: 12.5pt; margin: 7mm 0 2mm 0; page-break-after: avoid; }
-  h4.mini { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9.5pt; font-weight: 600; letter-spacing: 0.5px; margin: 4mm 0 1mm 0; page-break-after: avoid; }
-  h4.mini .jp { color: #8a8a8a; font-weight: 400; font-style: italic; font-family: "EB Garamond", serif; margin-left: 8px; }
+  h3.sub { font-style: italic; font-weight: 400; font-size: 13pt; color: #0d4a63; margin: 8mm 0 2mm 0; page-break-after: avoid; }
+  h4.mini { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9.5pt; font-weight: 600; letter-spacing: 0.5px; color: #1a1a1a; margin: 5mm 0 1mm 0; page-break-after: avoid; }
+  h4.mini .jp { color: #1aa39a; font-weight: 400; font-style: italic; font-family: "EB Garamond", serif; margin-left: 8px; }
   p { margin: 0 0 5mm 0; text-align: justify; hyphens: auto; }
   p.lead-in { page-break-after: avoid; text-align: left; }
 
   ul { margin: 2mm 0 6mm 0; padding-left: 7mm; list-style: none; page-break-inside: avoid; }
   ul li { margin-bottom: 1.5mm; position: relative; padding-left: 5mm; }
-  ul li::before { content: "—"; position: absolute; left: 0; color: #8a8a8a; }
-  ul.checklist li::before { content: "☐"; color: #6b6b6b; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: #1aa39a; }
+  ul.checklist li::before { content: "\2610"; color: #11607a; font-size: 11pt; }
 
-  /* ============ NUMBERED STEPS ============ */
   ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 3mm 0 6mm 0; }
   ol.steps li { position: relative; padding-left: 12mm; margin-bottom: 3.5mm; page-break-inside: avoid; text-align: left; }
   ol.steps li::before {
     counter-increment: step; content: counter(step, decimal-leading-zero);
     position: absolute; left: 0; top: 0.4mm;
-    font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; font-weight: 600;
-    color: #8a8a8a; letter-spacing: 1px;
+    font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9pt; font-weight: 700;
+    color: #11607a; letter-spacing: 1px;
   }
   ol.steps li b { font-weight: 700; }
 
-  /* ============ TABLES ============ */
+  /* ---------- TABLES ---------- */
   table.tbl { width: 100%; border-collapse: collapse; margin: 4mm 0 7mm 0; page-break-inside: avoid; }
-  table.tbl th { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6b6b6b; text-align: left; padding: 0 6mm 2.5mm 0; border-bottom: 1px solid #1a1a1a; vertical-align: bottom; }
-  table.tbl td { font-size: 10pt; padding: 2.5mm 6mm 2.5mm 0; border-bottom: 0.5px solid #ececec; vertical-align: top; line-height: 1.45; }
+  table.tbl th { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #11607a; text-align: left; padding: 0 6mm 2.5mm 0; border-bottom: 1.5px solid #0d4a63; vertical-align: bottom; }
+  table.tbl td { font-size: 10pt; padding: 2.5mm 6mm 2.5mm 0; border-bottom: 0.5px solid #e4ecef; vertical-align: top; line-height: 1.45; }
   table.tbl th:last-child, table.tbl td:last-child { padding-right: 0; }
+  table.tbl.break { page-break-inside: auto; }
+  table.tbl.break tr { page-break-inside: avoid; }
 
-  /* ============ FIGURES ============ */
-  .figs { display: flex; gap: 6mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; justify-content: center; }
-  .figs figure { margin: 0; }
-  .figs.tall figure { flex: 0 0 auto; text-align: center; }
-  .figs.tall img { height: 150mm; width: auto; max-width: 100%; border: 1px solid #d4d4d4; display: block; margin: 0 auto; background: #fff; }
-  figcaption { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.45; text-align: center; }
-
-  /* ============ CALLOUTS ============ */
-  .callout { border-left: 2px solid #9a3b3b; padding: 1mm 0 1mm 6mm; margin: 4mm 0 6mm 0; page-break-inside: avoid; }
-  .callout .label { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: #9a3b3b; display: block; margin-bottom: 1.5mm; }
+  /* ---------- CALLOUTS ---------- */
+  .callout { padding: 3mm 5mm; margin: 4mm 0 6mm 0; page-break-inside: avoid; border-left: 3px solid #11607a; background: #f1f7f9; }
+  .callout.danger { border-left-color: #9a3b3b; background: #fbf2f1; }
+  .callout.caution { border-left-color: #9a6a16; background: #fbf6ea; }
+  .callout .label { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: #11607a; display: block; margin-bottom: 1.5mm; font-weight: 600; }
+  .callout.danger .label { color: #9a3b3b; }
+  .callout.caution .label { color: #9a6a16; }
   .callout p { margin: 0; text-align: left; }
-  .note { margin-top: 9mm; padding-top: 5mm; border-top: 1px solid #d4d4d4; page-break-inside: avoid; }
-  .note .label { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: #8a8a8a; display: block; margin-bottom: 2mm; }
 
-  /* ============ TABLE OF CONTENTS ============ */
-  .toc { page-break-after: always; }
-  .toc-grid { display: flex; flex-wrap: wrap; gap: 0 12mm; }
-  .toc-col { flex: 1; min-width: 70mm; }
-  .toc-part { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 9.5pt; font-weight: 600; letter-spacing: 0.5px; margin: 5mm 0 1mm 0; }
-  .toc-items { font-size: 10pt; color: #4a4a4a; margin: 0 0 2mm 0; }
+  /* ---------- FIGURES (real photos) ---------- */
+  .photos { display: flex; gap: 5mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .photos figure { margin: 0; flex: 1; }
+  .photos img { width: 100%; height: 46mm; object-fit: cover; display: block; border: 1px solid #d9e2e6; }
+  .photos.diagram img { object-fit: contain; background: #fff; height: 62mm; }
+  .photos.tall img { height: 58mm; }
+  /* full-page instructional diagrams (portrait) */
+  .figfull { text-align: center; margin: 5mm 0 3mm 0; page-break-inside: avoid; }
+  .figfull img { height: 150mm; width: auto; max-width: 100%; border: 1px solid #d9e2e6; display: block; margin: 0 auto; background: #fff; }
+  .figfull figcaption { text-align: center; }
+  figcaption { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.4; }
 
-  /* ============ APPENDIX / CARD GRID ============ */
+  /* ---------- CARDS / CHECKLISTS ---------- */
   .cards { display: flex; flex-wrap: wrap; gap: 5mm; margin: 4mm 0 6mm 0; }
-  .card { flex: 1 1 46%; border: 1px solid #d4d4d4; padding: 4mm 5mm; page-break-inside: avoid; }
-  .card .ctitle { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 2mm; }
+  .card { flex: 1 1 44%; border: 1px solid #d9e2e6; border-top: 3px solid #11607a; padding: 4mm 5mm; page-break-inside: avoid; }
+  .card .ctitle { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #0d4a63; margin-bottom: 2mm; }
   .card ul { margin: 0; }
 
-  .closing { margin-top: 12mm; padding-top: 6mm; border-top: 1px solid #1a1a1a; }
-  .closing .ganbatte { font-style: italic; font-size: 14pt; color: #1a1a1a; }
+  /* ---------- SPECIES REFERENCE ---------- */
+  .stars { color: #c8941f; letter-spacing: 1px; white-space: nowrap; font-size: 10pt; }
+  .stars .off { color: #dcdcdc; }
+  .tag { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 7pt; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 0.6mm 2mm; border-radius: 2px; white-space: nowrap; }
+  .tag.keep { background: #e1f0ea; color: #1f7a5a; }
+  .tag.caution { background: #f7ebd2; color: #9a6a16; }
+  .tag.cig { background: #fbe3df; color: #9a3b3b; }
+  .tag.local { background: #eceff1; color: #6b6b6b; }
+  .legend { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8.5pt; color: #6b6b6b; margin: 2mm 0 6mm 0; line-height: 1.8; }
+  .legend .tag { margin-right: 2mm; }
+
+  .closing { margin-top: 11mm; padding-top: 6mm; border-top: 2px solid #0d4a63; page-break-inside: avoid; }
+  .closing .ganbatte { font-style: italic; font-size: 14pt; color: #0d4a63; }
   .colophon { font-family: "Helvetica Neue","Helvetica","Arial",sans-serif; font-size: 8pt; color: #8a8a8a; letter-spacing: 0.5px; margin-top: 6mm; }
 </style>
 </head>
 <body>
 
-<!-- ===================== COVER ===================== -->
-<section class="cover">
-  <div class="cover-top">
-    <div class="cover-eyebrow">AIBOS &mdash; VIP Fishing Hospitality</div>
-    <div class="cover-rule"></div>
-    <h1 class="cover-title">Ogasawara Fishing Guide</h1>
-    <p class="cover-subtitle">VIP Fishing Hospitality Operations Manual.</p>
-    <div class="cover-confidential">Confidential &mdash; AIBOS Team Use Only</div>
-  </div>
-  <div class="cover-bottom">
-    <div class="cover-meta">
-      <div class="col"><span class="label">Location</span><span class="value">Hahajima, Ogasawara Islands</span></div>
-      <div class="col"><span class="label">Date</span><span class="value">June 2026</span></div>
-      <div class="col"><span class="label">Standard</span><span class="value">AIBOS / AEGIS</span></div>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== TABLE OF CONTENTS ===================== -->
-<section class="doc toc">
-  <div class="doc-header">
+<section class="toc">
+  <div class="toc-head">
     <div class="kicker">AIBOS Ogasawara Fishing Guide &mdash; Confidential</div>
     <h1>Table of Contents</h1>
     <p class="meta-line"><span>Hahajima, Ogasawara Islands</span><span>June 2026</span></p>
   </div>
-
   <div class="toc-grid">
     <div class="toc-col">
       <div class="toc-part">Part 1 &mdash; Welcome to the Water</div>
@@ -147,7 +128,7 @@
       <div class="toc-part">Part 4 &mdash; Essential Skills</div>
       <div class="toc-items">4.1 Casting &middot; 4.2 Jigging &middot; 4.3 Sabiki &middot; 4.4 Baiting &middot; 4.5 Fighting &amp; Landing &middot; 4.6 Hook Removal &middot; 4.7 Quick Retying</div>
       <div class="toc-part">Part 5 &mdash; Fishing Scenarios</div>
-      <div class="toc-items">5.1 Port / Sanbashi &middot; 5.2 Iso / Rock Fishing &middot; 5.3 Jigging / Offshore</div>
+      <div class="toc-items">Where-the-fish-are reference &middot; 5.1 Port / Sanbashi &middot; 5.2 Iso / Rock &middot; 5.3 Jigging / Offshore</div>
     </div>
     <div class="toc-col">
       <div class="toc-part">Part 6 &mdash; VIP Care</div>
@@ -161,601 +142,720 @@
       <div class="toc-part">Part 10 &mdash; Pre-Trip Training</div>
       <div class="toc-items">10.1 Timeline &middot; 10.2 Assignments &middot; 10.3 Briefing</div>
       <div class="toc-part">Appendices</div>
-      <div class="toc-items">A. Gear Checklist &middot; B. Knots &middot; C. Hand Signals &middot; D. Emergency Card &middot; E. Cleaning Checklist</div>
+      <div class="toc-items">A. Gear Checklist &middot; B. Knots &middot; C. Hand Signals &middot; D. Emergency Card &middot; E. Cleaning Checklist &middot; F. Species &amp; Edibility Guide &middot; G. Illustrated Reference</div>
     </div>
   </div>
 </section>
 
-<!-- ===================== BODY ===================== -->
-<section class="doc">
-
-  <!-- ========== PART 1 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 1</span></h2>
-    <div class="part-title">Welcome to the Water</div>
-    <p class="romaji">Umi e Youkoso</p>
-
-    <h3 class="sub">1.1 You Are an Angler</h3>
-    <p>You are not a spectator. You are not a passenger. From the moment you step onto that boat or walk across those rocks, you are an angler &mdash; and that word carries weight. An angler reads the water, respects the ocean, anticipates what comes next, and moves with purpose. On this trip, you are also something more: you are a hospitality professional who happens to be holding a fishing rod.</p>
-    <p>This guide will teach you everything you need to know. When you are standing on volcanic rock in 30-degree heat with a rod in one hand and a net in the other, you will not have time to look things up. Your preparation is your lifeline.</p>
-
-    <h3 class="sub">1.2 Ogasawara: Your Fishing Ground</h3>
-    <p>The Ogasawara Islands sit roughly 1,000 km south of Tokyo &mdash; a UNESCO World Heritage site of volcanic islands surrounded by some of the most productive fishing waters in Japan. You will be based on Hahajima.</p>
-    <table class="tbl">
-      <tr><th>Ogasawara in June</th><th>Condition</th></tr>
-      <tr><td>Air</td><td>26&ndash;30&deg;C, extreme humidity</td></tr>
-      <tr><td>Ocean</td><td>25&ndash;27&deg;C</td></tr>
-      <tr><td>UV</td><td>Extreme</td></tr>
-      <tr><td>Currents</td><td>Strong near reefs</td></tr>
-      <tr><td>Resupply</td><td>ZERO &mdash; ferry 1&ndash;2&times;/week</td></tr>
-      <tr><td>Medical evacuation</td><td>Near-impossible. Nearest hospital: 24-hour boat ride</td></tr>
-    </table>
-
-    <h3 class="sub">1.3 Your Mission: VIP Fishing Hospitality</h3>
-    <p>You work for AIBOS under AEGIS standards. Perfection is the baseline. Nobody stands idle. Your mission: ensure Watanabe-san, Nagatani-san, and guests have an extraordinary fishing experience &mdash; lines baited, drinks full, gear maintained, safety constant.</p>
-
-    <h3 class="sub">1.4 How to Use This Guide</h3>
-    <p>Ten parts plus appendices. Parts 1&ndash;2: mindset. Parts 3&ndash;4: tackle and skills. Part 5: fishing scenarios. Parts 6&ndash;7: VIP care and gear maintenance. Parts 8&ndash;9: safety and rules. Part 10: training. Appendices: laminate-ready reference cards. Read front to back, then keep it close.</p>
-  </div>
-
-  <!-- ========== PART 2 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 2</span></h2>
-    <div class="part-title">Your Mindset &mdash; 6 Principles</div>
-    <p class="romaji">Kodo Gensoku</p>
-    <p>Memorize these six principles. They apply everywhere &mdash; fishing, serving, packing, standing on the dock.</p>
-
-    <h4 class="mini">#1 Act Ahead, Never Stand Idle<span class="jp">Sakimawari Suru</span></h4>
-    <p>Never wait for instructions. Bait the hook, refill the drink, ready the net, check the drag &mdash; before anyone asks. No idle time. Ever.</p>
-
-    <h4 class="mini">#2 Keep VIPs First<span class="jp">VIP Saiyusen</span></h4>
-    <p>Strict hierarchy: Watanabe &gt; Nagatani &gt; guests &gt; AEGIS. Service order, line attention, shade, first drink. Track their state at all times.</p>
-
-    <h4 class="mini">#3 Don't Be the Bottleneck<span class="jp">Nagare wo Tomenai</span></h4>
-    <p>Retie fast. Net instantly. Reel in when someone nearby hooks up. Respond to the captain immediately. Never make everyone wait.</p>
-
-    <h4 class="mini">#4 Safety Overrides Everything<span class="jp">Anzen ga Subete ni Yusen</span></h4>
-    <p>Dangerous environments everywhere. If unsafe, stop. No fish is worth an injury. Overrides all other principles.</p>
-
-    <h4 class="mini">#5 Protect Your Gear<span class="jp">Dougu wo Mamore</span></h4>
-    <p>No tackle shop on Hahajima. Break it = done. Retie before it frays, rinse after sessions, avoid snags, protect from impacts.</p>
-
-    <h4 class="mini">#6 Show Energy and Fun<span class="jp">Genki to Tanoshisa</span></h4>
-    <p>Hospitality atmosphere = your behavior. Be visibly positive and energetic. Enthusiasm for every catch.</p>
-  </div>
-
-  <!-- ========== PART 3 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 3</span></h2>
-    <div class="part-title">Know Your Tackle</div>
-    <p class="romaji">Tsuri Dougu wo Shiru</p>
-    <p>Everything here is for subtropical saltwater on volcanic island terrain.</p>
-
-    <div class="figs tall">
-      <figure>
-        <img src="images/fig_rod_outfits.png">
-        <figcaption>Fig 3.1 &mdash; Rod-reel outfits: spincast (top), spinning (middle), baitcasting (bottom). You will primarily use spinning and conventional.</figcaption>
-      </figure>
-    </div>
-
-    <h3 class="sub">3.1 Rods</h3>
-    <table class="tbl">
-      <tr><th>Type</th><th>Use</th><th>Feature</th></tr>
-      <tr><td>Iso (II)</td><td>Rock fishing</td><td>Long 4&ndash;5 m, flexible tip, strong butt</td></tr>
-      <tr><td>Jigging</td><td>Offshore</td><td>Short 1.5&ndash;1.8 m, stiff, for heavy jigs</td></tr>
-      <tr><td>Light</td><td>Port / sanbashi</td><td>Medium, versatile</td></tr>
-    </table>
-
-    <h3 class="sub">3.2 Reels</h3>
-    <ul>
-      <li><b>Spinning</b> &mdash; Fixed spool, bail arm. Mounts below the rod. Easy to cast. For iso, sanbashi, sabiki.</li>
-      <li><b>Conventional</b> &mdash; Rotating spool. More power. Mounts on top. For jigging at depth. Always set the drag before you drop.</li>
-    </ul>
-    <div class="callout">
-      <span class="label">Protect Your Gear</span>
-      <p>Never let a reel touch the gunwale, ground, or sand. No replacements on Hahajima.</p>
-    </div>
-
-    <h3 class="sub">3.3 Hooks, Weights &amp; Terminal Tackle</h3>
-    <div class="figs tall">
-      <figure>
-        <img src="images/fig_hooks_sinkers.png">
-        <figcaption>Fig 3.2 &mdash; Hooks, sinkers (bullet, split shot, barrel / swivel), and tools.</figcaption>
-      </figure>
-    </div>
-    <ul>
-      <li><b>Hooks</b> &mdash; Various sizes, barbed. Handle with care.</li>
-      <li><b>Sinkers</b> &mdash; Take bait down. Heavier for depth.</li>
-      <li><b>Swivels / split rings</b> &mdash; Prevent line twist. Essential for jigging.</li>
-      <li><b>Sabiki rigs</b> &mdash; Multi-hook rigs for catching baitfish at port.</li>
-    </ul>
-
-    <h3 class="sub">3.4 Lines</h3>
-    <table class="tbl">
-      <tr><th>Type</th><th>Properties</th><th>Use</th></tr>
-      <tr><td>Mono (Nylon)</td><td>Stretchy, forgiving</td><td>Leader, light rigs</td></tr>
-      <tr><td>Braided (PE)</td><td>Zero stretch, thin, strong</td><td>Main line for jigging</td></tr>
-      <tr><td>Fluorocarbon</td><td>Invisible, abrasion-resistant</td><td>Leader to hook / lure</td></tr>
-    </table>
-    <div class="callout">
-      <span class="label">PE #3 at Depth</span>
-      <p>At 250+ meters for Onaga, thinner PE cuts the current better. Less margin for error &mdash; knots must be perfect.</p>
-    </div>
-
-    <h3 class="sub">3.5 Knots You Must Know</h3>
-    <div class="figs tall">
-      <figure>
-        <img src="images/fig_knot_clinch.png">
-        <figcaption>Fig 3.3 &mdash; The Improved Clinch Knot. Practice until under 30 seconds.</figcaption>
-      </figure>
-    </div>
-    <ul>
-      <li><b>FG Knot</b> &mdash; Braid to leader. ~100% strength. Passes through the guides.</li>
-      <li><b>Improved Clinch</b> &mdash; Hook / sinker attachment. Thread, wrap 5&ndash;6&times;, moisten, pull.</li>
-      <li><b>Train Knot</b> &mdash; Line-to-line. Each wraps the other 5&times;, slide together.</li>
-    </ul>
-
-    <h3 class="sub">3.6 Saltwater Baits</h3>
-    <p>No bait shop. Securing bait is one of your most important skills.</p>
-    <table class="tbl">
-      <tr><th>Bait</th><th>Source</th><th>Catches</th></tr>
-      <tr><td>Black crab</td><td>Net at port</td><td>Reef fish</td></tr>
-      <tr><td>Small aji</td><td>Sabiki rig</td><td>Live bait for predators</td></tr>
-      <tr><td>Muroaji</td><td>Pre-supplied</td><td>Groupers, trevally, snappers</td></tr>
-      <tr><td>Sea urchin</td><td>From rocks</td><td>Ishigakidai</td></tr>
-      <tr><td>Squid</td><td>Pre-supplied</td><td>General reef</td></tr>
-    </table>
-
-    <h3 class="sub">3.7 Lures and Jigs</h3>
-    <div class="figs tall">
-      <figure>
-        <img src="images/fig_lures.png">
-        <figcaption>Fig 3.4 &mdash; Artificial lures. On Ogasawara: metal jigs, inchiku jigs, soft plastics.</figcaption>
-      </figure>
-    </div>
-    <ul>
-      <li><b>Metal jigs (300 g+)</b> &mdash; Deep water. Expensive. Snag = major loss.</li>
-      <li><b>Inchiku jigs</b> &mdash; Octopus-skirt hybrid. Groupers on shallow reefs.</li>
-      <li><b>Soft plastic worms</b> &mdash; Akahata and Kappore near reef structure.</li>
-    </ul>
-
-    <h3 class="sub">3.8 Clothing and Protective Gear</h3>
-    <ul>
-      <li><b>UV long-sleeve</b> &mdash; You burn in minutes.</li>
-      <li><b>Hat + polarized sunglasses</b></li>
-      <li><b>Iso boots (II)</b> &mdash; Spiked / felt sole. Regular shoes = fatal.</li>
-      <li><b>Life jacket</b> &mdash; Mandatory.</li>
-      <li><b>Gloves</b> &mdash; PE line cuts to bone.</li>
-      <li><b>Eye protection</b> &mdash; Mandatory for jigging.</li>
-    </ul>
-  </div>
-
-  <!-- ========== PART 4 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 4</span></h2>
-    <div class="part-title">Essential Skills</div>
-    <p class="romaji">Kihon Sukiru</p>
-
-    <h3 class="sub">4.1 Casting</h3>
-    <h4 class="mini">Overhead Cast</h4>
-    <p>Primary cast. Rod at 2 o'clock, smooth forward to 10, release. Practice until fluid.</p>
-    <h4 class="mini">Roll Cast</h4>
-    <p>No room behind you. Sweep the rod up and forward; the line rolls out. Less distance, safer.</p>
-    <h4 class="mini">Underhand Pitch</h4>
-    <p>Short, precise. Hold the lure, open the bail, swing forward. Quiet and accurate for iso bait.</p>
-
-    <h3 class="sub">4.2 Jigging &mdash; Drop, Bail, Reel, Pitch</h3>
-    <ul>
-      <li><b>DROP</b> &mdash; Open the bail. Watch the line. Stops early = bottom or fish.</li>
-      <li><b>BAIL</b> &mdash; Line slack = close the bail IMMEDIATELY.</li>
-      <li><b>REEL 8&ndash;10</b> &mdash; Aggressive turns off the bottom. Non-negotiable. Saves your jig.</li>
-      <li><b>PITCH</b> &mdash; Pump the rod up, reel down. The jig darts like wounded prey.</li>
-      <li><b>REPEAT</b> &mdash; Captain says up = reel fast. Don't wait.</li>
-    </ul>
-    <div class="callout">
-      <span class="label">The 8&ndash;10 Reel Rule</span>
-      <p>Snag = lost jig + everyone stops. The 8&ndash;10 reel rule is insurance. Every time.</p>
-    </div>
-
-    <h3 class="sub">4.3 Sabiki Rig Fishing</h3>
-    <p>Drop to mid-water, jig gently. Multiple fish hook at once. Transfer to a bucket with fresh seawater.</p>
-
-    <h3 class="sub">4.4 Baiting</h3>
-    <ul>
-      <li><b>Crab</b> &mdash; Large: split, hook through the body. Small: hook through the rear shell.</li>
-      <li><b>Live aji</b> &mdash; Hook through the back or nose. Keep alive.</li>
-      <li><b>Cut muroaji</b> &mdash; Strips, thread the hook through twice.</li>
-      <li><b>Sea urchin</b> &mdash; Crush, scoop the flesh, mold on the hook. Scatter shells first.</li>
-    </ul>
-
-    <h3 class="sub">4.5 Fighting and Landing</h3>
-    <p>Fish bites: set the hook &mdash; firm upward sweep. Fight: rod at 45 degrees, pump and reel. Never reel against a running drag.</p>
-    <p>Groupers dive for the reef immediately. You have 2 seconds to force them up or the line breaks.</p>
-    <p>Netting: always head-first. On iso, position securely. On a boat, step back from the rail.</p>
-
-    <h3 class="sub">4.6 Hook Removal</h3>
-    <p>Pliers. Always. Barbed hooks go through skin easily. Isomaguro has razor teeth. Aochibiki is slimy &mdash; use a glove.</p>
-
-    <h3 class="sub">4.7 Quick Retying</h3>
-    <p>Lost hooks, snapped lines &mdash; every second a VIP waits with bare line is a failure. 60 seconds max. Practice wet, standing, in wind.</p>
-  </div>
-
-  <!-- ========== PART 5 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 5</span></h2>
-    <div class="part-title">Fishing Scenarios</div>
-    <p class="romaji">Tsuri no Bamen</p>
-    <p>Every session = one of three scenarios. Know them cold.</p>
-
-    <h3 class="sub">5.1 Port / Sanbashi (II)</h3>
-    <p>Dock / seawall fishing. Bait-gathering operation + relaxed VIP fishing.</p>
-    <h4 class="mini">Gear</h4>
-    <ul>
-      <li>Cigarettes + drinks</li>
-      <li>Rain cover</li>
-      <li>Scissors / clippers</li>
-      <li>Small rods + reels + sabiki + sinkers</li>
-      <li>Long net + bucket + fish bag + headlight</li>
-    </ul>
-    <h4 class="mini">Tasks</h4>
-    <p>Primary: secure bait. Crabs by net, aji by sabiki. Manage the bait bucket.</p>
-    <h4 class="mini">Behaviors</h4>
-    <ul>
-      <li>Check Watanabe-san. Offer drinks proactively.</li>
-      <li>Net ready on hookup. Assist hook removal.</li>
-      <li>Retie lost rigs fast.</li>
-      <li>Stay together. Energy. Tidy area.</li>
-    </ul>
-
-    <h3 class="sub">5.2 Iso / Rock Fishing (I)</h3>
-    <div class="callout">
-      <span class="label">Most Dangerous Scenario</span>
-      <p>Read every word. The boat drops you on a volcanic reef for 5&ndash;6 hours. No return. Bait + lure fishing.</p>
-    </div>
-    <h4 class="mini">Rock Transfer</h4>
-    <ol class="steps">
-      <li>Life jackets ON before reaching the rock.</li>
-      <li>One person at a time. Captain's signal.</li>
-      <li>STEP &mdash; don't jump &mdash; at the top of the swell.</li>
-      <li>Hands free. Gear passed by relay.</li>
-      <li>Check footing before putting weight down.</li>
-      <li>Return is MORE dangerous. Same discipline.</li>
-    </ol>
-    <h4 class="mini">Safety</h4>
-    <ul>
-      <li>Watch your feet. Don't walk backward or look at your phone.</li>
-      <li>Never turn your back to the sea. Waves come in sets. Know your retreat spot.</li>
-      <li>Gear in spray-free spots. Nothing loose near the edges.</li>
-    </ul>
-    <h4 class="mini">Long Haul</h4>
-    <p>6 hours, 30&deg;C, no shade, no escape. Drink constantly. Electrolytes. Watch Watanabe-san for heat exhaustion. Everything you need = brought with you.</p>
-    <h4 class="mini">VIP Care</h4>
-    <ul>
-      <li>Secure bait. Retie fast. Drinks + cigarettes.</li>
-      <li>Net on hookup &mdash; critical on bad footing.</li>
-      <li>Net head-first. Bait your own hook. Show energy.</li>
-    </ul>
-
-    <h3 class="sub">5.3 Jigging / Offshore (IIII)</h3>
-    <p>Deep-water from a boat. 100&ndash;200 m depth. Big fish: Kanpachi, tuna, deep snappers.</p>
-    <h4 class="mini">Gear</h4>
-    <ul>
-      <li>Jigging rods + reels</li>
-      <li>Tackle + pliers + GLOVES</li>
-      <li>Cooler with drinks</li>
-      <li>EYE PROTECTION</li>
-    </ul>
-    <h4 class="mini">Rules</h4>
-    <ul>
-      <li><b>Set drag</b> &mdash; Before every drop.</li>
-      <li><b>Watch line</b> &mdash; Stops = bottom or fish.</li>
-      <li><b>8&ndash;10 reels</b> &mdash; Off the bottom. Saves the jig.</li>
-      <li><b>Space out</b> &mdash; Don't crowd. Ready to move.</li>
-      <li><b>Slow retrieve</b> &mdash; When the jig is visible. Flying jig = danger.</li>
-      <li><b>Reel up fast</b> &mdash; When someone nearby hooks up.</li>
-      <li><b>Hold jigs</b> &mdash; Never let them swing free.</li>
-      <li><b>Step back</b> &mdash; From the rail when a fish surfaces.</li>
-      <li><b>Obey the captain</b> &mdash; Instantly. No delays.</li>
-      <li><b>Call out</b> &mdash; "Coming through!" Always.</li>
-      <li><b>BE READY</b> &mdash; At all times.</li>
-    </ul>
-    <div class="callout">
-      <span class="label">Non-Negotiable</span>
-      <p>No bare hands on PE under tension. Gloves. No reel on the gunwale.</p>
-    </div>
-  </div>
-
-  <!-- ========== PART 6 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 6</span></h2>
-    <div class="part-title">Taking Care of Your VIPs</div>
-    <p class="romaji">VIP no Kea</p>
-
-    <h3 class="sub">6.1 The Hierarchy</h3>
-    <table class="tbl">
-      <tr><th>Priority</th><th>Person</th><th>Responsibility</th></tr>
-      <tr><td>1st</td><td>Watanabe-san</td><td>Everything first.</td></tr>
-      <tr><td>2nd</td><td>Nagatani-san</td><td>Immediately after.</td></tr>
-      <tr><td>3rd</td><td>Guests</td><td>Any invited.</td></tr>
-      <tr><td>4th</td><td>Other AEGIS</td><td>You eat / drink / sit last.</td></tr>
-    </table>
-
-    <h3 class="sub">6.2 Watanabe-san</h3>
-    <ul>
-      <li>Forks prongs-down at meals.</li>
-      <li>Beach chair at all locations.</li>
-      <li>Heat exhaustion: #1 monitoring priority.</li>
-      <li>Seasickness: private cabin + meds + cup ramen + snacks.</li>
-      <li>Cigarettes + drinks: never let them run out.</li>
-    </ul>
-
-    <h3 class="sub">6.3 Nagatani-san</h3>
-    <ul>
-      <li>Likes sweets. Reserved bar seat on the ship.</li>
-    </ul>
-
-    <h3 class="sub">6.4 On-Water Comfort</h3>
-    <p>Read body language. Focused = nearby but don't hover. Resting = offer a drink. Fish on = net ready before they look.</p>
-  </div>
-
-  <!-- ========== PART 7 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 7</span></h2>
-    <div class="part-title">Tackle Care and Cleaning</div>
-    <p class="romaji">Dougu no Teire</p>
-
-    <h3 class="sub">7.1 Why Saltwater Destroys Gear</h3>
-    <p>Salt corrodes metal in hours. Sand grinds bearings. UV weakens mono. Your gear must last 10 days. Cleaning = survival.</p>
-
-    <h3 class="sub">7.2 Post-Session Rinse</h3>
-    <ol class="steps">
-      <li>Rinse rods &mdash; focus on the guides.</li>
-      <li>Rinse reels gently. No submersion, no pressure.</li>
-      <li>Back off all drags.</li>
-      <li>Rinse hooks / lures / jigs. Dry before storing.</li>
-      <li>Wipe handles and reel seats.</li>
-      <li>Stand rods upright or flat.</li>
-    </ol>
-
-    <h3 class="sub">7.3 Reel Maintenance</h3>
-    <ul>
-      <li><b>Bail</b> &mdash; Clean snap open / close.</li>
-      <li><b>Drag</b> &mdash; Smooth turning. Gritty = salt inside.</li>
-      <li><b>Spool</b> &mdash; Check the line for nicks.</li>
-      <li><b>Handle</b> &mdash; Smooth. Grinding = alert the leader.</li>
-    </ul>
-
-    <h3 class="sub">7.4 Hook &amp; Lure Care</h3>
-    <ul>
-      <li>Rinse, dry, dry container.</li>
-      <li>Thumbnail sharpness test.</li>
-      <li>Check split rings and assist hooks.</li>
-    </ul>
-
-    <h3 class="sub">7.5 Line Inspection</h3>
-    <p>Run your fingers along the first 10 m. Cut back past damage. Cloudy mono = replace. Fuzzy braid = re-spool.</p>
-
-    <h3 class="sub">7.6 Storage</h3>
-    <ul>
-      <li>Out of sunlight.</li>
-      <li>Bails open, drags off.</li>
-      <li>Air-dry tackle boxes.</li>
-      <li>Never store wet gear in closed bags overnight.</li>
-    </ul>
-  </div>
-
-  <!-- ========== PART 8 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 8</span></h2>
-    <div class="part-title">Safety and Emergency</div>
-    <p class="romaji">Anzen to Kinkyu Taio</p>
-
-    <h3 class="sub">8.1 The Hahajima Reality</h3>
-    <div class="callout">
-      <span class="label">Prevention Is the Only Strategy</span>
-      <p>No hospital. Ferry 1&ndash;2&times;/week. No cell signal. YOU are the first responder.</p>
-    </div>
-
-    <h3 class="sub">8.2 Emergency Roles</h3>
-    <table class="tbl">
-      <tr><th>Role</th><th>Responsibility</th></tr>
-      <tr><td>1. Scene Leader</td><td>Takes command.</td></tr>
-      <tr><td>2. Captain Contact</td><td>Comms with Nobu / Hara.</td></tr>
-      <tr><td>3. Recorder / Interpreter</td><td>Documents. Bridges EN / JP.</td></tr>
-      <tr><td>4. VIP Attendant</td><td>Stays with the VIPs.</td></tr>
-    </table>
-
-    <h3 class="sub">8.3 Man Overboard</h3>
-    <p><b>DO NOT JUMP IN.</b></p>
-    <ol class="steps">
-      <li>Throw a buoyant object / rope.</li>
-      <li>Contact the captain.</li>
-      <li>Point continuously.</li>
-    </ol>
-
-    <h3 class="sub">8.4 Injuries</h3>
-    <ul>
-      <li><b>Fracture</b> &mdash; Don't move. Warm. Stop bleeding. Share severity.</li>
-      <li><b>Hook</b> &mdash; Don't force out. Stabilize. Medical judgment.</li>
-      <li><b>Laceration</b> &mdash; Direct pressure.</li>
-    </ul>
-
-    <h3 class="sub">8.5 Heat Exhaustion</h3>
-    <p>#1 iso risk. Heavy sweating, nausea, dizziness. Sweating STOPS = heat stroke = emergency. Shade + cool water on neck / armpits + rehydrate. Watch Watanabe-san.</p>
-
-    <h3 class="sub">8.6 Dangerous Marine Life</h3>
-    <p>No bare hands. Gonzui (venomous spines), Utsubo (moray), Gangaze (sea urchin), Isomaguro (razor teeth).</p>
-    <div class="callout">
-      <span class="label">Ciguatera &mdash; Barafuedai</span>
-      <p>Some carry toxin. Odorless, tasteless, heat-stable. Tingling + temperature reversal hours later. If in doubt, don't eat.</p>
-    </div>
-
-    <h3 class="sub">8.7 Communication</h3>
-    <p>Hand signs finalized in training Block 3: Fish on / Reel up / Coming through / Stop / Emergency. Don't carry it alone. Share immediately. VIP safety &gt; catch.</p>
-  </div>
-
-  <!-- ========== PART 9 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 9</span></h2>
-    <div class="part-title">Dos and Don'ts</div>
-    <p class="romaji">Yarubeki / Yatte wa Ikenai</p>
-
-    <h3 class="sub">9.1 Universal Dos</h3>
-    <ul>
-      <li>Life jacket on the boat + rocks.</li>
-      <li>Set the drag before dropping.</li>
-      <li>Rinse gear after every session.</li>
-      <li>Carry Watanabe-san's items.</li>
-      <li>Know the first-aid location.</li>
-      <li>Retie worn line.</li>
-      <li>Call out when passing behind.</li>
-      <li>Net head-first.</li>
-      <li>Respond to the captain instantly.</li>
-      <li>Share problems &mdash; never alone.</li>
-    </ul>
-
-    <h3 class="sub">9.2 Universal Don'ts</h3>
-    <ul>
-      <li>Turn your back to the sea.</li>
-      <li>Jump during the transfer.</li>
-      <li>Carry gear during the transfer.</li>
-      <li>Let a jig swing free.</li>
-      <li>Handle PE without gloves.</li>
-      <li>Touch creatures bare-handed.</li>
-      <li>Force barbed hooks out.</li>
-      <li>Hit the reel on the gunwale.</li>
-      <li>Stand idle.</li>
-      <li>Let VIP supplies run out.</li>
-      <li>Walk backward on the rocks.</li>
-      <li>Use your phone while walking terrain.</li>
-    </ul>
-  </div>
-
-  <!-- ========== PART 10 ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Part 10</span></h2>
-    <div class="part-title">Pre-Trip Training</div>
-    <p class="romaji">Shuppatsu Mae Kunren</p>
-
-    <h3 class="sub">10.1 Timeline (June 9&ndash;18)</h3>
-    <table class="tbl">
-      <tr><th>Dates</th><th>Block</th><th>Content</th></tr>
-      <tr><td>Jun 9&ndash;11</td><td>Fundamentals</td><td>Knots, baiting, rigging. Knots first.</td></tr>
-      <tr><td>Jun 12&ndash;15</td><td>Behaviors</td><td>Sanbashi / Jigging / Iso drills + Serving</td></tr>
-      <tr><td>Jun 16&ndash;17</td><td>Rehearsal</td><td>Hand signs + Emergency scenarios</td></tr>
-      <tr><td>Jun 18</td><td>Pre-Departure</td><td>Safety briefing + dry run + packing</td></tr>
-      <tr><td>Jun 19</td><td>DEPARTURE</td><td>&mdash;</td></tr>
-    </table>
-
-    <h3 class="sub">10.2 Skill Assignments</h3>
-    <p>Each person masters one skill, then teaches the team. Assignments by Matsumoto + Nate.</p>
-
-    <h3 class="sub">10.3 Final Briefing (June 18)</h3>
-    <p>Full safety briefing + physical rock-transfer practice on land + final packing check against the inventory.</p>
-  </div>
-
-  <!-- ========== APPENDICES ========== -->
-  <div class="part">
-    <h2 class="section"><span class="num">Appendices</span></h2>
-    <div class="part-title">Reference Cards</div>
-    <p class="romaji">Laminate-ready</p>
-
-    <h3 class="sub">A. Master Gear Checklist</h3>
-    <div class="cards">
-      <div class="card">
-        <div class="ctitle">Port</div>
-        <ul class="checklist">
-          <li>Cigarettes + lighter</li>
-          <li>Drinks</li>
-          <li>Rain cover</li>
-          <li>Scissors</li>
-          <li>Small rods + reels</li>
-          <li>Sabiki + sinkers</li>
-          <li>Long net</li>
-          <li>Bucket w/ rope</li>
-          <li>Fish bag</li>
-          <li>Headlight</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="ctitle">Iso</div>
-        <ul class="checklist">
-          <li>Cigarettes + lighter</li>
-          <li>Drinks (6+ hrs)</li>
-          <li>Chair / pad</li>
-          <li>Iso rod + reel + tackle + bait</li>
-          <li>LIFE JACKET</li>
-          <li>Lunch + electrolytes</li>
-          <li>Sunscreen + hat + UV</li>
-          <li>Net</li>
-          <li>First-aid kit</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="ctitle">Jigging</div>
-        <ul class="checklist">
-          <li>Jigging rods + reels</li>
-          <li>Tackle + pliers</li>
-          <li>GLOVES</li>
-          <li>Cooler + drinks</li>
-          <li>EYE PROTECTION</li>
-          <li>LIFE JACKET</li>
-          <li>First-aid kit</li>
-        </ul>
-      </div>
-    </div>
-
-    <h3 class="sub">B. Knot Quick Reference</h3>
-    <table class="tbl">
-      <tr><th>Knot</th><th>Steps</th></tr>
-      <tr><td>FG Knot</td><td>Loop leader, weave braid 15&ndash;20&times;. Half-hitch 6&times; alternating. Trim. Must pass the guides.</td></tr>
-      <tr><td>Improved Clinch</td><td>Thread eye 6 in. Wrap 5&ndash;6&times;. Through the small loop then the big loop. Moisten, pull, trim.</td></tr>
-      <tr><td>Train Knot</td><td>Overlap 15 cm. A wraps B 5&times;, thread. B wraps A 5&times;, thread. Moisten, slide together, trim.</td></tr>
-    </table>
-
-    <h3 class="sub">C. Hand Signals</h3>
-    <table class="tbl">
-      <tr><th>Signal</th><th>Meaning</th></tr>
-      <tr><td>Fist pump up</td><td>Fish on!</td></tr>
-      <tr><td>Circular wind</td><td>Reel up</td></tr>
-      <tr><td>Palm forward</td><td>Stop / Hold</td></tr>
-      <tr><td>Arm wave</td><td>Emergency</td></tr>
-      <tr><td>Point + tap shoulder</td><td>Coming through</td></tr>
-    </table>
-
-    <h3 class="sub">D. Emergency Card (Laminate)</h3>
-    <table class="tbl">
-      <tr><th>Situation</th><th>Action</th></tr>
-      <tr><td>Man Overboard</td><td>Don't jump. Throw float. Contact captain. Point.</td></tr>
-      <tr><td>Fracture</td><td>Don't move. Warm. Stop bleeding. Share.</td></tr>
-      <tr><td>Hook</td><td>Don't force. Stabilize. Medical.</td></tr>
-      <tr><td>Heat</td><td>Shade. Cool. Rehydrate. Stroke if no sweat.</td></tr>
-      <tr><td>Creature</td><td>No bare hands. Clean. Pressure. Medical.</td></tr>
-    </table>
-
-    <h3 class="sub">E. Tackle Cleaning Checklist</h3>
-    <div class="cards">
-      <div class="card">
-        <div class="ctitle">Daily</div>
-        <ul class="checklist">
-          <li>Rods rinsed</li>
-          <li>Guides inspected</li>
-          <li>Reels rinsed gently</li>
-          <li>Drags backed off</li>
-          <li>Hooks / lures dried</li>
-          <li>Line inspected 10 m</li>
-          <li>Handles wiped</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="closing">
-      <p>You have read the guide. You know the principles, tackle, skills, scenarios, and rules. Now train, practice, prepare. When you step onto Hahajima, you will be ready.</p>
-      <p class="ganbatte">Good luck, angler. Ganbatte.</p>
-      <p class="colophon">AIBOS &nbsp;|&nbsp; Ogasawara Fishing Guide &nbsp;|&nbsp; June 2026 &nbsp;|&nbsp; CONFIDENTIAL</p>
-    </div>
-  </div>
-
+<!-- ===================== PART 1 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 1</div>
+  <h2 class="part-title">Welcome to the Water</h2>
+  <p class="romaji">Umi e Youkoso</p>
+
+  <h3 class="sub">1.1 You Are an Angler</h3>
+  <p>You are not a spectator. You are not a passenger. From the moment you step onto that boat or walk across those rocks, you are an angler &mdash; and that word carries weight. An angler reads the water, respects the ocean, anticipates what comes next, and moves with purpose. On this trip, you are also something more: you are a hospitality professional who happens to be holding a fishing rod.</p>
+  <p>This guide will teach you everything you need to know. When you are standing on volcanic rock in 30-degree heat with a rod in one hand and a net in the other, you will not have time to look things up. Your preparation is your lifeline.</p>
+
+  <h3 class="sub">1.2 Ogasawara: Your Fishing Ground</h3>
+  <p>The Ogasawara Islands sit roughly 1,000 km south of Tokyo &mdash; a UNESCO World Heritage site of volcanic islands surrounded by some of the most productive fishing waters in Japan. You will be based on Hahajima.</p>
+  <table class="tbl">
+    <tr><th>Ogasawara in June</th><th>Condition</th></tr>
+    <tr><td>Air</td><td>26&ndash;30&deg;C, extreme humidity</td></tr>
+    <tr><td>Ocean</td><td>25&ndash;27&deg;C</td></tr>
+    <tr><td>UV</td><td>Extreme</td></tr>
+    <tr><td>Currents</td><td>Strong near reefs</td></tr>
+    <tr><td>Resupply</td><td>ZERO &mdash; ferry 1&ndash;2&times;/week</td></tr>
+    <tr><td>Medical evacuation</td><td>Near-impossible. Nearest hospital: 24-hour boat ride</td></tr>
+  </table>
+
+  <h3 class="sub">1.3 Your Mission: VIP Fishing Hospitality</h3>
+  <p>You work for AIBOS under AEGIS standards. Perfection is the baseline. Nobody stands idle. Your mission: ensure Watanabe-san, Nagatani-san, and guests have an extraordinary fishing experience &mdash; lines baited, drinks full, gear maintained, safety constant.</p>
+
+  <h3 class="sub">1.4 How to Use This Guide</h3>
+  <p>Ten parts plus appendices. Parts 1&ndash;2: mindset. Parts 3&ndash;4: tackle and skills. Part 5: fishing scenarios. Parts 6&ndash;7: VIP care and gear maintenance. Parts 8&ndash;9: safety and rules. Part 10: training. Appendices: laminate-ready reference cards, including a full species &amp; edibility guide. Read front to back, then keep it close.</p>
 </section>
+
+<!-- ===================== PART 2 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 2</div>
+  <h2 class="part-title">Your Mindset &mdash; 6 Principles</h2>
+  <p class="romaji">Kodo Gensoku</p>
+  <p>Memorize these six principles. They apply everywhere &mdash; fishing, serving, packing, standing on the dock.</p>
+
+  <h4 class="mini">#1 Act Ahead, Never Stand Idle<span class="jp">Sakimawari Suru</span></h4>
+  <p>Never wait for instructions. Bait the hook, refill the drink, ready the net, check the drag &mdash; before anyone asks. No idle time. Ever.</p>
+
+  <h4 class="mini">#2 Keep VIPs First<span class="jp">VIP Saiyusen</span></h4>
+  <p>Strict hierarchy: Watanabe &gt; Nagatani &gt; guests &gt; AEGIS. Service order, line attention, shade, first drink. Track their state at all times.</p>
+
+  <h4 class="mini">#3 Don't Be the Bottleneck<span class="jp">Nagare wo Tomenai</span></h4>
+  <p>Retie fast. Net instantly. Reel in when someone nearby hooks up. Respond to the captain immediately. Never make everyone wait.</p>
+
+  <h4 class="mini">#4 Safety Overrides Everything<span class="jp">Anzen ga Subete ni Yusen</span></h4>
+  <p>Dangerous environments everywhere. If unsafe, stop. No fish is worth an injury. Overrides all other principles.</p>
+
+  <h4 class="mini">#5 Protect Your Gear<span class="jp">Dougu wo Mamore</span></h4>
+  <p>No tackle shop on Hahajima. Break it = done. Retie before it frays, rinse after sessions, avoid snags, protect from impacts.</p>
+
+  <h4 class="mini">#6 Show Energy and Fun<span class="jp">Genki to Tanoshisa</span></h4>
+  <p>Hospitality atmosphere = your behavior. Be visibly positive and energetic. Enthusiasm for every catch.</p>
+</section>
+
+<!-- ===================== PART 3 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 3</div>
+  <h2 class="part-title">Know Your Tackle</h2>
+  <p class="romaji">Tsuri Dougu wo Shiru</p>
+  <p>Everything here is for subtropical saltwater on volcanic island terrain.</p>
+
+  <h3 class="sub">3.1 Rods</h3>
+  <div class="photos">
+    <figure><img src="images/rod_shore_set.jpg"><figcaption>A shore (iso) outfit: a long rod with a spinning reel mounted below &mdash; your main rock-fishing setup.</figcaption></figure>
+    <figure><img src="images/rod_jigging.jpg"><figcaption>A short, stiff offshore jigging rod, loaded under the pull of a deep fish.</figcaption></figure>
+  </div>
+  <table class="tbl">
+    <tr><th>Type</th><th>Use</th><th>Feature</th></tr>
+    <tr><td>Iso (II)</td><td>Rock fishing</td><td>Long 4&ndash;5 m, flexible tip, strong butt</td></tr>
+    <tr><td>Jigging</td><td>Offshore</td><td>Short 1.5&ndash;1.8 m, stiff, for heavy jigs</td></tr>
+    <tr><td>Light</td><td>Port / sanbashi</td><td>Medium, versatile</td></tr>
+  </table>
+
+  <h3 class="sub">3.2 Reels</h3>
+  <div class="photos">
+    <figure><img src="images/spinning_reel.jpg"><figcaption>A saltwater spinning reel (fixed spool, bail arm) &mdash; mounts below the rod.</figcaption></figure>
+    <figure><img src="images/baitcaster.jpg"><figcaption>A conventional / baitcasting outfit &mdash; rotating spool, more power, mounts on top.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>Spinning</b> &mdash; Fixed spool, bail arm. Mounts below the rod. Easy to cast. For iso, sanbashi, sabiki.</li>
+    <li><b>Conventional</b> &mdash; Rotating spool. More power. Mounts on top. For jigging at depth. Always set the drag before you drop.</li>
+  </ul>
+  <div class="callout">
+    <span class="label">Protect Your Gear</span>
+    <p>Never let a reel touch the gunwale, ground, or sand. No replacements on Hahajima.</p>
+  </div>
+
+  <h3 class="sub">3.3 Hooks, Weights &amp; Terminal Tackle</h3>
+  <div class="photos">
+    <figure><img src="images/hook_circle.jpg"><figcaption>Hooks &mdash; various sizes, barbed. Handle with care.</figcaption></figure>
+    <figure><img src="images/sinker.jpg"><figcaption>Sinkers take the bait down; go heavier for depth and current.</figcaption></figure>
+    <figure><img src="images/swivel.jpg"><figcaption>Swivels and snaps prevent line twist &mdash; essential for jigging.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>Hooks</b> &mdash; Various sizes, barbed. Handle with care.</li>
+    <li><b>Sinkers</b> &mdash; Take bait down. Heavier for depth.</li>
+    <li><b>Swivels / split rings</b> &mdash; Prevent line twist. Essential for jigging.</li>
+    <li><b>Sabiki rigs</b> &mdash; Multi-hook rigs for catching baitfish at port.</li>
+  </ul>
+
+  <h3 class="sub">3.4 Lines</h3>
+  <table class="tbl">
+    <tr><th>Type</th><th>Properties</th><th>Use</th></tr>
+    <tr><td>Mono (Nylon)</td><td>Stretchy, forgiving</td><td>Leader, light rigs</td></tr>
+    <tr><td>Braided (PE)</td><td>Zero stretch, thin, strong</td><td>Main line for jigging</td></tr>
+    <tr><td>Fluorocarbon</td><td>Invisible, abrasion-resistant</td><td>Leader to hook / lure</td></tr>
+  </table>
+  <div class="callout">
+    <span class="label">PE #3 at Depth</span>
+    <p>At 250+ meters for Onaga, thinner PE cuts the current better. Less margin for error &mdash; knots must be perfect.</p>
+  </div>
+
+  <h3 class="sub">3.5 Knots You Must Know</h3>
+  <p>There is no knot photo to copy on the rocks &mdash; you must know these by feel. Practice each one wet, standing, and in wind. The detailed step-by-step is in <strong>Appendix B</strong>.</p>
+  <table class="tbl">
+    <tr><th>Knot</th><th>Joins</th><th>In one line</th></tr>
+    <tr><td>FG Knot</td><td>Braid to leader</td><td>~100% strength; thin enough to pass through the guides</td></tr>
+    <tr><td>Improved Clinch</td><td>Line to hook / sinker</td><td>Thread, wrap 5&ndash;6&times;, moisten, pull &mdash; under 30 seconds</td></tr>
+    <tr><td>Train Knot</td><td>Line to line</td><td>Each end wraps the other 5&times;, then slide together</td></tr>
+  </table>
+
+  <h3 class="sub">3.6 Saltwater Baits</h3>
+  <p>No bait shop. Securing bait is one of your most important skills.</p>
+  <div class="photos tall">
+    <figure><img src="images/sp_muroaji.jpg"><figcaption>Muroaji (mackerel scad) &mdash; the key bait around Ogasawara for groupers, trevally, and snappers.</figcaption></figure>
+    <figure><img src="images/terminal_tackle.jpg"><figcaption>A bait-and-tackle tray kept ready &mdash; rigs organized before the VIPs need them.</figcaption></figure>
+  </div>
+  <table class="tbl">
+    <tr><th>Bait</th><th>Source</th><th>Catches</th></tr>
+    <tr><td>Black crab</td><td>Net at port</td><td>Reef fish</td></tr>
+    <tr><td>Small aji</td><td>Sabiki rig</td><td>Live bait for predators</td></tr>
+    <tr><td>Muroaji</td><td>Pre-supplied</td><td>Groupers, trevally, snappers</td></tr>
+    <tr><td>Sea urchin</td><td>From rocks</td><td>Ishigakidai</td></tr>
+    <tr><td>Squid</td><td>Pre-supplied</td><td>General reef</td></tr>
+  </table>
+
+  <h3 class="sub">3.7 Lures and Jigs</h3>
+  <div class="photos">
+    <figure><img src="images/lure_stickbait.jpg"><figcaption>A topwater stickbait for casting at surface predators such as GT.</figcaption></figure>
+    <figure><img src="images/hook_treble.jpg"><figcaption>Treble hooks as fitted to plugs and stickbaits.</figcaption></figure>
+    <figure><img src="images/hook_assist.jpg"><figcaption>Assist hooks &mdash; rigged to the head of a metal jig for deep work.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>Metal jigs (300 g+)</b> &mdash; Deep water. Expensive. Snag = major loss.</li>
+    <li><b>Inchiku jigs</b> &mdash; Octopus-skirt hybrid. Groupers on shallow reefs.</li>
+    <li><b>Soft plastic worms</b> &mdash; Akahata and Kappore near reef structure.</li>
+  </ul>
+
+  <h3 class="sub">3.8 Clothing and Protective Gear</h3>
+  <div class="photos">
+    <figure><img src="images/safety_rockshoes.jpg"><figcaption>Iso boots with spiked / felt soles &mdash; grip on wet volcanic rock. Regular shoes = fatal.</figcaption></figure>
+    <figure><img src="images/safety_lifevest.jpg"><figcaption>Life jacket worn on the rocks. Mandatory the moment you approach the water.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>UV long-sleeve</b> &mdash; You burn in minutes.</li>
+    <li><b>Hat + polarized sunglasses</b></li>
+    <li><b>Iso boots (II)</b> &mdash; Spiked / felt sole. Regular shoes = fatal.</li>
+    <li><b>Life jacket</b> &mdash; Mandatory.</li>
+    <li><b>Gloves</b> &mdash; PE line cuts to bone.</li>
+    <li><b>Eye protection</b> &mdash; Mandatory for jigging.</li>
+  </ul>
+</section>
+
+<!-- ===================== PART 4 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 4</div>
+  <h2 class="part-title">Essential Skills</h2>
+  <p class="romaji">Kihon Sukiru</p>
+
+  <h3 class="sub">4.1 Casting</h3>
+  <div class="photos diagram">
+    <figure><img src="images/casting_basics.jpg"><figcaption>The casting motion: load the rod behind, sweep smoothly forward, and release toward your target.</figcaption></figure>
+  </div>
+  <h4 class="mini">Overhead Cast</h4>
+  <p>Primary cast. Rod at 2 o'clock, smooth forward to 10, release. Practice until fluid.</p>
+  <h4 class="mini">Roll Cast</h4>
+  <p>No room behind you. Sweep the rod up and forward; the line rolls out. Less distance, safer.</p>
+  <h4 class="mini">Underhand Pitch</h4>
+  <p>Short, precise. Hold the lure, open the bail, swing forward. Quiet and accurate for iso bait.</p>
+
+  <h3 class="sub">4.2 Jigging &mdash; Drop, Bail, Reel, Pitch</h3>
+  <ul>
+    <li><b>DROP</b> &mdash; Open the bail. Watch the line. Stops early = bottom or fish.</li>
+    <li><b>BAIL</b> &mdash; Line slack = close the bail IMMEDIATELY.</li>
+    <li><b>REEL 8&ndash;10</b> &mdash; Aggressive turns off the bottom. Non-negotiable. Saves your jig.</li>
+    <li><b>PITCH</b> &mdash; Pump the rod up, reel down. The jig darts like wounded prey.</li>
+    <li><b>REPEAT</b> &mdash; Captain says up = reel fast. Don't wait.</li>
+  </ul>
+  <div class="callout">
+    <span class="label">The 8&ndash;10 Reel Rule</span>
+    <p>Snag = lost jig + everyone stops. The 8&ndash;10 reel rule is insurance. Every time.</p>
+  </div>
+
+  <h3 class="sub">4.3 Sabiki Rig Fishing</h3>
+  <p>Drop to mid-water, jig gently. Multiple fish hook at once. Transfer to a bucket with fresh seawater.</p>
+
+  <h3 class="sub">4.4 Baiting</h3>
+  <div class="photos tall">
+    <figure><img src="images/hook_livebait.jpg"><figcaption>Hooking a live baitfish so it stays alive and swims naturally for predators.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>Crab</b> &mdash; Large: split, hook through the body. Small: hook through the rear shell.</li>
+    <li><b>Live aji</b> &mdash; Hook through the back or nose. Keep alive.</li>
+    <li><b>Cut muroaji</b> &mdash; Strips, thread the hook through twice.</li>
+    <li><b>Sea urchin</b> &mdash; Crush, scoop the flesh, mold on the hook. Scatter shells first.</li>
+  </ul>
+
+  <h3 class="sub">4.5 Fighting and Landing</h3>
+  <div class="photos">
+    <figure><img src="images/landing_net_pole.jpg"><figcaption>A telescopic landing-net pole &mdash; extends to reach the water from high rock ledges.</figcaption></figure>
+    <figure><img src="images/fishgrip_boga.jpg"><figcaption>A fish gripper for controlling a landed fish safely while removing the hook.</figcaption></figure>
+  </div>
+  <p>Fish bites: set the hook &mdash; firm upward sweep. Fight: rod at 45 degrees, pump and reel. Never reel against a running drag.</p>
+  <p>Groupers dive for the reef immediately. You have 2 seconds to force them up or the line breaks.</p>
+  <p>Netting: always head-first. On iso, position securely. On a boat, step back from the rail.</p>
+
+  <h3 class="sub">4.6 Hook Removal</h3>
+  <p>Pliers. Always. Barbed hooks go through skin easily. Isomaguro has razor teeth. Aochibiki is slimy &mdash; use a glove.</p>
+
+  <h3 class="sub">4.7 Quick Retying</h3>
+  <p>Lost hooks, snapped lines &mdash; every second a VIP waits with bare line is a failure. 60 seconds max. Practice wet, standing, in wind.</p>
+</section>
+
+<!-- ===================== PART 5 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 5</div>
+  <h2 class="part-title">Fishing Scenarios</h2>
+  <p class="romaji">Tsuri no Bamen</p>
+  <p>Every session = one of three scenarios. Know them cold. The table below maps each scenario to where the fish hold and how you target them &mdash; the full species detail is in <strong>Appendix F</strong>.</p>
+
+  <table class="tbl break">
+    <tr><th>Scenario</th><th>Depth / where</th><th>Primary targets</th><th>Bait &amp; method</th></tr>
+    <tr><td>Port / Sanbashi</td><td>Surface to shallow, off the dock</td><td>Aji (for live bait), small reef fish</td><td>Sabiki rigs, crab</td></tr>
+    <tr><td>Iso / Rock</td><td>Shore down to ~100 m reef</td><td>Sujiara, Akahata, Barahata, Ishigakidai, Fuefukidai, Aochibiki, GT, Kappore</td><td>Muroaji, sea urchin, crab; soft plastics; jigging</td></tr>
+    <tr><td>Jigging / Offshore</td><td>100&ndash;300 m</td><td>Kanpachi, Shimaaji, Isomaguro, Kihada &amp; Sma tuna, Onaga (250&ndash;300 m), Umeiro</td><td>Metal &amp; inchiku jigs; sabiki for Umeiro</td></tr>
+  </table>
+
+  <h3 class="sub">5.1 Port / Sanbashi (II)</h3>
+  <p>Dock / seawall fishing. Bait-gathering operation + relaxed VIP fishing.</p>
+  <h4 class="mini">Gear</h4>
+  <ul>
+    <li>Cigarettes + drinks</li>
+    <li>Rain cover</li>
+    <li>Scissors / clippers</li>
+    <li>Small rods + reels + sabiki + sinkers</li>
+    <li>Long net + bucket + fish bag + headlight</li>
+  </ul>
+  <h4 class="mini">Tasks</h4>
+  <p>Primary: secure bait. Crabs by net, aji by sabiki. Manage the bait bucket.</p>
+  <h4 class="mini">Behaviors</h4>
+  <ul>
+    <li>Check Watanabe-san. Offer drinks proactively.</li>
+    <li>Net ready on hookup. Assist hook removal.</li>
+    <li>Retie lost rigs fast.</li>
+    <li>Stay together. Energy. Tidy area.</li>
+  </ul>
+
+  <h3 class="sub">5.2 Iso / Rock Fishing (I)</h3>
+  <div class="callout danger">
+    <span class="label">Most Dangerous Scenario</span>
+    <p>Read every word. The boat drops you on a volcanic reef for 5&ndash;6 hours. No return. Bait + lure fishing.</p>
+  </div>
+  <div class="photos tall">
+    <figure><img src="images/safety_lifevest.jpg"><figcaption>Iso fishing: life jacket on, footing checked, back never fully turned to the sea.</figcaption></figure>
+  </div>
+  <h4 class="mini">Rock Transfer</h4>
+  <ol class="steps">
+    <li>Life jackets ON before reaching the rock.</li>
+    <li>One person at a time. Captain's signal.</li>
+    <li>STEP &mdash; don't jump &mdash; at the top of the swell.</li>
+    <li>Hands free. Gear passed by relay.</li>
+    <li>Check footing before putting weight down.</li>
+    <li>Return is MORE dangerous. Same discipline.</li>
+  </ol>
+  <h4 class="mini">Safety</h4>
+  <ul>
+    <li>Watch your feet. Don't walk backward or look at your phone.</li>
+    <li>Never turn your back to the sea. Waves come in sets. Know your retreat spot.</li>
+    <li>Gear in spray-free spots. Nothing loose near the edges.</li>
+  </ul>
+  <h4 class="mini">Long Haul</h4>
+  <p>6 hours, 30&deg;C, no shade, no escape. Drink constantly. Electrolytes. Watch Watanabe-san for heat exhaustion. Everything you need = brought with you.</p>
+  <h4 class="mini">VIP Care</h4>
+  <ul>
+    <li>Secure bait. Retie fast. Drinks + cigarettes.</li>
+    <li>Net on hookup &mdash; critical on bad footing.</li>
+    <li>Net head-first. Bait your own hook. Show energy.</li>
+  </ul>
+
+  <h3 class="sub">5.3 Jigging / Offshore (IIII)</h3>
+  <p>Deep-water from a boat. 100&ndash;200 m depth. Big fish: Kanpachi, tuna, deep snappers.</p>
+  <h4 class="mini">Gear</h4>
+  <ul>
+    <li>Jigging rods + reels</li>
+    <li>Tackle + pliers + GLOVES</li>
+    <li>Cooler with drinks</li>
+    <li>EYE PROTECTION</li>
+  </ul>
+  <h4 class="mini">Rules</h4>
+  <ul>
+    <li><b>Set drag</b> &mdash; Before every drop.</li>
+    <li><b>Watch line</b> &mdash; Stops = bottom or fish.</li>
+    <li><b>8&ndash;10 reels</b> &mdash; Off the bottom. Saves the jig.</li>
+    <li><b>Space out</b> &mdash; Don't crowd. Ready to move.</li>
+    <li><b>Slow retrieve</b> &mdash; When the jig is visible. Flying jig = danger.</li>
+    <li><b>Reel up fast</b> &mdash; When someone nearby hooks up.</li>
+    <li><b>Hold jigs</b> &mdash; Never let them swing free.</li>
+    <li><b>Step back</b> &mdash; From the rail when a fish surfaces.</li>
+    <li><b>Obey the captain</b> &mdash; Instantly. No delays.</li>
+    <li><b>Call out</b> &mdash; "Coming through!" Always.</li>
+    <li><b>BE READY</b> &mdash; At all times.</li>
+  </ul>
+  <div class="callout danger">
+    <span class="label">Non-Negotiable</span>
+    <p>No bare hands on PE under tension. Gloves. No reel on the gunwale.</p>
+  </div>
+</section>
+
+<!-- ===================== PART 6 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 6</div>
+  <h2 class="part-title">Taking Care of Your VIPs</h2>
+  <p class="romaji">VIP no Kea</p>
+
+  <h3 class="sub">6.1 The Hierarchy</h3>
+  <table class="tbl">
+    <tr><th>Priority</th><th>Person</th><th>Responsibility</th></tr>
+    <tr><td>1st</td><td>Watanabe-san</td><td>Everything first.</td></tr>
+    <tr><td>2nd</td><td>Nagatani-san</td><td>Immediately after.</td></tr>
+    <tr><td>3rd</td><td>Guests</td><td>Any invited.</td></tr>
+    <tr><td>4th</td><td>Other AEGIS</td><td>You eat / drink / sit last.</td></tr>
+  </table>
+
+  <h3 class="sub">6.2 Watanabe-san</h3>
+  <ul>
+    <li>Forks prongs-down at meals.</li>
+    <li>Beach chair at all locations.</li>
+    <li>Heat exhaustion: #1 monitoring priority.</li>
+    <li>Seasickness: private cabin + meds + cup ramen + snacks.</li>
+    <li>Cigarettes + drinks: never let them run out.</li>
+  </ul>
+
+  <h3 class="sub">6.3 Nagatani-san</h3>
+  <ul>
+    <li>Likes sweets. Reserved bar seat on the ship.</li>
+  </ul>
+
+  <h3 class="sub">6.4 On-Water Comfort</h3>
+  <p>Read body language. Focused = nearby but don't hover. Resting = offer a drink. Fish on = net ready before they look.</p>
+</section>
+
+<!-- ===================== PART 7 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 7</div>
+  <h2 class="part-title">Tackle Care and Cleaning</h2>
+  <p class="romaji">Dougu no Teire</p>
+
+  <h3 class="sub">7.1 Why Saltwater Destroys Gear</h3>
+  <p>Salt corrodes metal in hours. Sand grinds bearings. UV weakens mono. Your gear must last 10 days. Cleaning = survival.</p>
+
+  <h3 class="sub">7.2 Post-Session Rinse</h3>
+  <ol class="steps">
+    <li>Rinse rods &mdash; focus on the guides.</li>
+    <li>Rinse reels gently. No submersion, no pressure.</li>
+    <li>Back off all drags.</li>
+    <li>Rinse hooks / lures / jigs. Dry before storing.</li>
+    <li>Wipe handles and reel seats.</li>
+    <li>Stand rods upright or flat.</li>
+  </ol>
+
+  <h3 class="sub">7.3 Reel Maintenance</h3>
+  <ul>
+    <li><b>Bail</b> &mdash; Clean snap open / close.</li>
+    <li><b>Drag</b> &mdash; Smooth turning. Gritty = salt inside.</li>
+    <li><b>Spool</b> &mdash; Check the line for nicks.</li>
+    <li><b>Handle</b> &mdash; Smooth. Grinding = alert the leader.</li>
+  </ul>
+
+  <h3 class="sub">7.4 Hook &amp; Lure Care</h3>
+  <ul>
+    <li>Rinse, dry, dry container.</li>
+    <li>Thumbnail sharpness test.</li>
+    <li>Check split rings and assist hooks.</li>
+  </ul>
+
+  <h3 class="sub">7.5 Line Inspection</h3>
+  <p>Run your fingers along the first 10 m. Cut back past damage. Cloudy mono = replace. Fuzzy braid = re-spool.</p>
+
+  <h3 class="sub">7.6 Storage</h3>
+  <ul>
+    <li>Out of sunlight.</li>
+    <li>Bails open, drags off.</li>
+    <li>Air-dry tackle boxes.</li>
+    <li>Never store wet gear in closed bags overnight.</li>
+  </ul>
+</section>
+
+<!-- ===================== PART 8 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 8</div>
+  <h2 class="part-title">Safety and Emergency</h2>
+  <p class="romaji">Anzen to Kinkyu Taio</p>
+
+  <h3 class="sub">8.1 The Hahajima Reality</h3>
+  <div class="callout danger">
+    <span class="label">Prevention Is the Only Strategy</span>
+    <p>No hospital. Ferry 1&ndash;2&times;/week. No cell signal. YOU are the first responder.</p>
+  </div>
+
+  <h3 class="sub">8.2 Emergency Roles</h3>
+  <table class="tbl">
+    <tr><th>Role</th><th>Responsibility</th></tr>
+    <tr><td>1. Scene Leader</td><td>Takes command.</td></tr>
+    <tr><td>2. Captain Contact</td><td>Comms with Nobu / Hara.</td></tr>
+    <tr><td>3. Recorder / Interpreter</td><td>Documents. Bridges EN / JP.</td></tr>
+    <tr><td>4. VIP Attendant</td><td>Stays with the VIPs.</td></tr>
+  </table>
+
+  <h3 class="sub">8.3 Man Overboard</h3>
+  <div class="callout danger">
+    <span class="label">Do Not Jump In</span>
+    <p>Your job is to keep them in sight and get the boat to them.</p>
+  </div>
+  <ol class="steps">
+    <li>Throw a buoyant object / rope.</li>
+    <li>Contact the captain.</li>
+    <li>Point continuously.</li>
+  </ol>
+
+  <h3 class="sub">8.4 Injuries</h3>
+  <ul>
+    <li><b>Fracture</b> &mdash; Don't move. Warm. Stop bleeding. Share severity.</li>
+    <li><b>Hook</b> &mdash; Don't force out. Stabilize. Medical judgment.</li>
+    <li><b>Laceration</b> &mdash; Direct pressure.</li>
+  </ul>
+
+  <h3 class="sub">8.5 Heat Exhaustion</h3>
+  <p>#1 iso risk. Heavy sweating, nausea, dizziness. Sweating STOPS = heat stroke = emergency. Shade + cool water on neck / armpits + rehydrate. Watch Watanabe-san.</p>
+
+  <h3 class="sub">8.6 Dangerous Marine Life</h3>
+  <p>No bare hands. Gonzui (venomous spines), Utsubo (moray), Gangaze (sea urchin), Isomaguro (razor teeth).</p>
+  <div class="callout caution">
+    <span class="label">Ciguatera &mdash; Barafuedai</span>
+    <p>Some individuals carry the toxin. Odorless, tasteless, heat-stable &mdash; cooking does not remove it. Tingling + a hot/cold temperature reversal can appear hours later. If in doubt, don't eat. See Appendix F for which catch to flag.</p>
+  </div>
+
+  <h3 class="sub">8.7 Communication</h3>
+  <p>Hand signs finalized in training Block 3: Fish on / Reel up / Coming through / Stop / Emergency. Don't carry it alone. Share immediately. VIP safety &gt; catch.</p>
+</section>
+
+<!-- ===================== PART 9 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 9</div>
+  <h2 class="part-title">Dos and Don'ts</h2>
+  <p class="romaji">Yarubeki / Yatte wa Ikenai</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="ctitle">9.1 Universal Dos</div>
+      <ul>
+        <li>Life jacket on the boat + rocks.</li>
+        <li>Set the drag before dropping.</li>
+        <li>Rinse gear after every session.</li>
+        <li>Carry Watanabe-san's items.</li>
+        <li>Know the first-aid location.</li>
+        <li>Retie worn line.</li>
+        <li>Call out when passing behind.</li>
+        <li>Net head-first.</li>
+        <li>Respond to the captain instantly.</li>
+        <li>Share problems &mdash; never alone.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ctitle">9.2 Universal Don'ts</div>
+      <ul>
+        <li>Turn your back to the sea.</li>
+        <li>Jump during the transfer.</li>
+        <li>Carry gear during the transfer.</li>
+        <li>Let a jig swing free.</li>
+        <li>Handle PE without gloves.</li>
+        <li>Touch creatures bare-handed.</li>
+        <li>Force barbed hooks out.</li>
+        <li>Hit the reel on the gunwale.</li>
+        <li>Stand idle.</li>
+        <li>Let VIP supplies run out.</li>
+        <li>Walk backward on the rocks.</li>
+        <li>Use your phone while walking terrain.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PART 10 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Part 10</div>
+  <h2 class="part-title">Pre-Trip Training</h2>
+  <p class="romaji">Shuppatsu Mae Kunren</p>
+
+  <h3 class="sub">10.1 Timeline (June 9&ndash;18)</h3>
+  <table class="tbl">
+    <tr><th>Dates</th><th>Block</th><th>Content</th></tr>
+    <tr><td>Jun 9&ndash;11</td><td>Fundamentals</td><td>Knots, baiting, rigging. Knots first.</td></tr>
+    <tr><td>Jun 12&ndash;15</td><td>Behaviors</td><td>Sanbashi / Jigging / Iso drills + Serving</td></tr>
+    <tr><td>Jun 16&ndash;17</td><td>Rehearsal</td><td>Hand signs + Emergency scenarios</td></tr>
+    <tr><td>Jun 18</td><td>Pre-Departure</td><td>Safety briefing + dry run + packing</td></tr>
+    <tr><td>Jun 19</td><td>DEPARTURE</td><td>&mdash;</td></tr>
+  </table>
+
+  <h3 class="sub">10.2 Skill Assignments</h3>
+  <p>Each person masters one skill, then teaches the team. Assignments by Matsumoto + Nate.</p>
+
+  <h3 class="sub">10.3 Final Briefing (June 18)</h3>
+  <p>Full safety briefing + physical rock-transfer practice on land + final packing check against the inventory.</p>
+</section>
+
+<!-- ===================== APPENDICES ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Appendices</div>
+  <h2 class="part-title">Reference Cards</h2>
+  <p class="romaji">Laminate-ready</p>
+
+  <h3 class="sub">A. Master Gear Checklist</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="ctitle">Port</div>
+      <ul class="checklist">
+        <li>Cigarettes + lighter</li><li>Drinks</li><li>Rain cover</li><li>Scissors</li>
+        <li>Small rods + reels</li><li>Sabiki + sinkers</li><li>Long net</li>
+        <li>Bucket w/ rope</li><li>Fish bag</li><li>Headlight</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ctitle">Iso</div>
+      <ul class="checklist">
+        <li>Cigarettes + lighter</li><li>Drinks (6+ hrs)</li><li>Chair / pad</li>
+        <li>Iso rod + reel + tackle + bait</li><li>LIFE JACKET</li><li>Lunch + electrolytes</li>
+        <li>Sunscreen + hat + UV</li><li>Net</li><li>First-aid kit</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ctitle">Jigging</div>
+      <ul class="checklist">
+        <li>Jigging rods + reels</li><li>Tackle + pliers</li><li>GLOVES</li>
+        <li>Cooler + drinks</li><li>EYE PROTECTION</li><li>LIFE JACKET</li><li>First-aid kit</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub">B. Knot Quick Reference</h3>
+  <table class="tbl">
+    <tr><th>Knot</th><th>Steps</th></tr>
+    <tr><td>FG Knot</td><td>Loop leader, weave braid 15&ndash;20&times;. Half-hitch 6&times; alternating. Trim. Must pass the guides.</td></tr>
+    <tr><td>Improved Clinch</td><td>Thread eye 6 in. Wrap 5&ndash;6&times;. Through the small loop then the big loop. Moisten, pull, trim.</td></tr>
+    <tr><td>Train Knot</td><td>Overlap 15 cm. A wraps B 5&times;, thread. B wraps A 5&times;, thread. Moisten, slide together, trim.</td></tr>
+  </table>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_knot_clinch.png">
+      <figcaption>The Improved Clinch Knot, step by step &mdash; your go-to for tying line to a hook or sinker. Practice until under 30 seconds.</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub">C. Hand Signals</h3>
+  <table class="tbl">
+    <tr><th>Signal</th><th>Meaning</th></tr>
+    <tr><td>Fist pump up</td><td>Fish on!</td></tr>
+    <tr><td>Circular wind</td><td>Reel up</td></tr>
+    <tr><td>Palm forward</td><td>Stop / Hold</td></tr>
+    <tr><td>Arm wave</td><td>Emergency</td></tr>
+    <tr><td>Point + tap shoulder</td><td>Coming through</td></tr>
+  </table>
+
+  <h3 class="sub">D. Emergency Card</h3>
+  <table class="tbl">
+    <tr><th>Situation</th><th>Action</th></tr>
+    <tr><td>Man Overboard</td><td>Don't jump. Throw float. Contact captain. Point.</td></tr>
+    <tr><td>Fracture</td><td>Don't move. Warm. Stop bleeding. Share.</td></tr>
+    <tr><td>Hook</td><td>Don't force. Stabilize. Medical.</td></tr>
+    <tr><td>Heat</td><td>Shade. Cool. Rehydrate. Stroke if no sweat.</td></tr>
+    <tr><td>Creature</td><td>No bare hands. Clean. Pressure. Medical.</td></tr>
+  </table>
+
+  <h3 class="sub">E. Tackle Cleaning Checklist</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="ctitle">Daily</div>
+      <ul class="checklist">
+        <li>Rods rinsed</li><li>Guides inspected</li><li>Reels rinsed gently</li>
+        <li>Drags backed off</li><li>Hooks / lures dried</li><li>Line inspected 10 m</li><li>Handles wiped</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APPENDIX F — SPECIES ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Appendix F</div>
+  <h2 class="part-title">Species &amp; Edibility Guide</h2>
+  <p class="romaji">Ogasawara no Sakana</p>
+  <p>Know what you are catching, where it holds, what it takes, and what to do with it. Taste rating is from the local Ogasawara species guide. For hospitality, the <span class="tag keep">Keep</span> fish &mdash; the four- and five-star species &mdash; are what you present to the VIPs.</p>
+
+  <div class="photos">
+    <figure><img src="images/sp_akahata.jpg"><figcaption>Akahata (Blacktip Grouper) &mdash; an easy, common, very tasty reef catch.</figcaption></figure>
+    <figure><img src="images/sp_muroaji.jpg"><figcaption>Muroaji (mackerel scad) &mdash; bait, not target; the key to most reef species here.</figcaption></figure>
+  </div>
+
+  <p class="legend">
+    <span class="tag keep">Keep</span> premium for the VIP table &nbsp;
+    <span class="tag cig">Ciguatera</span> toxin risk &mdash; if in doubt, don't eat &nbsp;
+    <span class="tag caution">Handle</span> teeth / spines / slime &nbsp;
+    <span class="tag local">Rarely eaten</span> not commonly eaten in Ogasawara
+  </p>
+
+  <table class="tbl break">
+    <tr><th>Species (EN / JP)</th><th>Where &amp; how</th><th>Depth</th><th>Bait / lure</th><th>Taste</th><th>Notes</th></tr>
+
+    <tr><td><b>Leopard Coral Grouper</b><br>Sujiara</td><td>Rocky shore; also jigging</td><td>&lt; 100 m</td><td>Sea urchin, muroaji, shellfish</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">Keep</span> Premium delicacy.</td></tr>
+
+    <tr><td><b>Ruby Snapper</b><br>Onaga</td><td>Slow jigging from boat</td><td>250&ndash;300 m</td><td>Jigs 300 g+, PE #3</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">Keep</span> Deep; affected by current.</td></tr>
+
+    <tr><td><b>White Trevally</b><br>Shimaaji</td><td>Jigging from boat (with Kanpachi)</td><td>Shallows to 200 m+</td><td>Metal jigs &mdash; don't over-work</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">Keep</span> Hard to land off Hahajima.</td></tr>
+
+    <tr><td><b>Green Jobfish</b><br>Aochibiki</td><td>Rocky shore; jigging</td><td>Reef</td><td>Jigs, single-hook muroaji</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">Keep</span> <span class="tag caution">Handle</span> Slimy &mdash; use a glove. To 80 cm+.</td></tr>
+
+    <tr><td><b>Mackerel Tuna</b><br>Sma</td><td>Jigging from boat (midwater)</td><td>Midwater</td><td>Metal jigs</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">Keep</span> Always keep it &mdash; maybe one a day.</td></tr>
+
+    <tr><td><b>Blacktip Grouper</b><br>Akahata (&ldquo;Akaba&rdquo;)</td><td>Shallow reefs; easy</td><td>Shallow reef</td><td>Jigs, inchiku, soft plastics</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> Common, reliable.</td></tr>
+
+    <tr><td><b>Yellow-edged Lyretail</b><br>Barahata (&ldquo;Chigi&rdquo;)</td><td>Shallow reefs; jigging &amp; shore</td><td>Shallow reef</td><td>Muroaji; jigs</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> Karaage is superb.</td></tr>
+
+    <tr><td><b>Greater Amberjack</b><br>Kanpachi</td><td>Jigging from boat; casting</td><td>Shallows to 200 m+</td><td>Metal jigs</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> 3&ndash;5 kg taste best. Watch line breaks.</td></tr>
+
+    <tr><td><b>Yellowfin Tuna</b><br>Kihada</td><td>Jigging from boat (midwater)</td><td>Midwater</td><td>Metal jigs</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> Hit a school = plenty.</td></tr>
+
+    <tr><td><b>Yellowtail Blue Snapper</b><br>Umeiro</td><td>Sabiki from boat</td><td>20&ndash;30 m</td><td>Sabiki baited with squid</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> Reel up off the bottom or you hook others.</td></tr>
+
+    <tr><td><b>Areolate Grouper</b><br>Oomonhata</td><td>While targeting Akahata</td><td>Reef</td><td>Inchiku jig</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> About 35 cm.</td></tr>
+
+    <tr><td><b>Speckled Blue Grouper</b><br>Tsuchihozeri</td><td>Rocky shore; very rare</td><td>Shallow sandy reef</td><td>Single-hook muroaji</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> To ~1 m. Digs a den.</td></tr>
+
+    <tr><td><b>Spotted Knifejaw</b><br>Ishigakidai (&ldquo;Kuchijiro&rdquo;)</td><td>Rocky shore; chum urchin shells</td><td>Reef</td><td>Sea urchin, crab, shellfish</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">Keep</span> ~30 cm taste best. To 80 cm.</td></tr>
+
+    <tr><td><b>Dogtooth Tuna</b><br>Isomaguro</td><td>Jigging from boat or shore</td><td>Reef / midwater</td><td>Metal jigs</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag caution">Handle</span> Razor teeth. To ~2 m.</td></tr>
+
+    <tr><td><b>Black Trevally</b><br>Kappore</td><td>Rocky shore; abundant</td><td>Surface / reef</td><td>Muroaji, lures, soft plastics</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag keep">Keep</span> Fights hard even small.</td></tr>
+
+    <tr><td><b>Emperor Fish</b><br>Fuefukidai</td><td>Rocky shore, near bottom</td><td>Reef</td><td>Muroaji</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag local">Rarely eaten</span> Dives to reef &mdash; force it up fast.</td></tr>
+
+    <tr><td><b>Giant Trevally (GT)</b><br>Rouninaji</td><td>Casting, boat or shore</td><td>Surface / reef</td><td>Stickbaits; muroaji</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag local">Rarely eaten</span> Over 50 kg. Hard to catch.</td></tr>
+
+    <tr><td><b>Two-spot Red Snapper</b><br>Barafuedai</td><td>Casting around rocky shore</td><td>Reef</td><td>Lures, bait</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag cig">Ciguatera</span> <span class="tag local">Rarely eaten</span> To ~10 kg.</td></tr>
+
+    <tr><td><b>Rough Triggerfish</b><br>Isomongara</td><td>While targeting Ishigakidai</td><td>Reef</td><td>Crustacean baits</td><td><span class="stars"><span class="off">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td><span class="tag local">Rarely eaten</span> Tastiness unknown; large liver.</td></tr>
+
+    <tr><td><b>Rudderfish</b><br>Isuzumi</td><td>Rocky shore; abundant</td><td>Surface</td><td>Muroaji, soft plastics</td><td><span class="stars">&#9733;&#9733;<span class="off">&#9733;&#9733;&#9733;</span></span></td><td><span class="tag local">Rarely eaten</span> Often seen near the surface.</td></tr>
+  </table>
+</section>
+
+<!-- ===================== APPENDIX G — ILLUSTRATED REFERENCE ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">Appendix G</div>
+  <h2 class="part-title">Illustrated Reference</h2>
+  <p class="romaji">Zukai &mdash; Tackle &amp; Technique at a Glance</p>
+  <p>General technique diagrams for quick visual reference during training. These illustrate the universal mechanics &mdash; outfit types, terminal tackle, and lure families. Species names and line ratings shown are generic examples; for Ogasawara-specific species, depths, and baits, always defer to <strong>Part 3</strong> and <strong>Appendix F</strong>.</p>
+
+  <h3 class="sub">G.1 Rod &amp; Reel Outfits</h3>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_rod_outfits.png">
+      <figcaption>Spincast (top), spinning (middle), and baitcasting (bottom) outfits. On Ogasawara you will primarily use spinning and conventional.</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub">G.2 Line, Sinkers, Hooks &amp; Tools</h3>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_hooks_sinkers.png">
+      <figcaption>Terminal-tackle reference: line, float and sinker types, hook sizes, and the basic tools. Line/size ratings are generic &mdash; use the rigs in Part 3 for Ogasawara.</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub">G.3 Lures &amp; Jigs</h3>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_lures.png">
+      <figcaption>Common artificial-lure families. On Ogasawara the workhorses are metal jigs, inchiku jigs, and soft plastics (see 3.7).</figcaption>
+    </figure>
+  </div>
+
+  <div class="closing">
+    <p>You have read the guide. You know the principles, tackle, skills, scenarios, and rules. Now train, practice, prepare. When you step onto Hahajima, you will be ready.</p>
+    <p class="ganbatte">Good luck, angler. Ganbatte.</p>
+    <p class="colophon">AIBOS &nbsp;|&nbsp; Ogasawara Fishing Guide &nbsp;|&nbsp; June 2026 &nbsp;|&nbsp; CONFIDENTIAL &nbsp;|&nbsp; Species data: <em>Ogasawara 2018 Fishing Species Guide</em></p>
+  </div>
+</section>
+
 </body>
 </html>

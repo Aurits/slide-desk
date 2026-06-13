@@ -1,0 +1,33 @@
+% Footer stamp that numbers EVERY page 1..N (no cover skip).
+% Used for the AIBOS guide, whose cover is a separate full-bleed PDF
+% prepended afterwards (so the body is stamped on its own).
+/PageCount 0 def
+/TotalContent #TOTAL# def
+/NumStr 8 string def
+/TotalStr 8 string def
+
+<< /EndPage {
+  exch pop 0 eq dup {
+    /PageCount PageCount 1 add def
+    gsave
+    0.55 setgray
+    /Helvetica findfont 8.5 scalefont setfont
+
+    70 38 moveto
+    (O G A S A W A R A   F I S H I N G   G U I D E) show
+
+    460 38 moveto
+    (Page ) show
+    PageCount NumStr cvs show
+    ( of ) show
+    TotalContent TotalStr cvs show
+
+    0.5 setgray
+    0.4 setlinewidth
+    70 55 moveto
+    525 55 lineto
+    stroke
+
+    grestore
+  } if
+} bind >> setpagedevice

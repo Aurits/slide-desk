@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+  .cover {
+    position: relative; width: 100%; height: 100%; overflow: hidden;
+    background: linear-gradient(160deg, #06243f 0%, #0a3a5a 30%, #11607a 62%, #1aa39a 100%);
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color: #ffffff; box-sizing: border-box;
+  }
+  /* layered ocean waves, drawn in SVG (no image) */
+  .wave { position: absolute; left: 0; width: 100%; height: 62mm; }
+  .w1 { top: 33%; opacity: 0.10; }
+  .w2 { top: 49%; opacity: 0.08; }
+  .w3 { top: 65%; opacity: 0.06; }
+  .w4 { top: 80%; opacity: 0.05; }
+
+  .inner { position: relative; z-index: 2; padding: 48mm 26mm 0 26mm; }
+  .brand { font-size: 12pt; letter-spacing: 9px; font-weight: 700; opacity: 0.9; }
+  .rule { width: 30mm; height: 2px; background: rgba(255,255,255,0.55); margin: 9mm 0 12mm 0; }
+  .title { font-family: "EB Garamond", "Garamond", "Georgia", serif; font-weight: 400; font-size: 43pt; line-height: 1.06; margin: 0; letter-spacing: 0.3px; }
+  .sub { font-size: 13pt; font-weight: 300; opacity: 0.88; margin-top: 10mm; max-width: 120mm; line-height: 1.5; }
+  .confidential { margin-top: 13mm; display: inline-block; font-size: 8pt; letter-spacing: 3px; font-weight: 600; text-transform: uppercase; color: #ffd9d2; border: 1px solid rgba(255,150,140,0.5); padding: 2.5mm 5mm; }
+
+  .footer { position: absolute; left: 26mm; right: 26mm; bottom: 24mm; z-index: 2; border-top: 1px solid rgba(255,255,255,0.25); padding-top: 6mm; display: table; width: auto; }
+  .footer .col { display: table-cell; padding-right: 18mm; vertical-align: top; }
+  .footer .label { display: block; font-size: 7.5pt; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; margin-bottom: 2mm; }
+  .footer .value { font-size: 10pt; font-weight: 500; opacity: 0.95; }
+</style>
+</head>
+<body>
+<div class="cover">
+  <svg class="wave w1" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,100 C200,40 400,160 600,100 C800,40 1000,160 1200,100 L1200,200 L0,200 Z" fill="#ffffff"/></svg>
+  <svg class="wave w2" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,110 C220,50 420,170 640,105 C840,45 1020,150 1200,110 L1200,200 L0,200 Z" fill="#ffffff"/></svg>
+  <svg class="wave w3" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,100 C200,40 400,160 600,100 C800,40 1000,160 1200,100 L1200,200 L0,200 Z" fill="#ffffff"/></svg>
+  <svg class="wave w4" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,115 C240,60 430,165 660,110 C860,55 1040,150 1200,115 L1200,200 L0,200 Z" fill="#ffffff"/></svg>
+
+  <div class="inner">
+    <div class="brand">A I B O S</div>
+    <div class="rule"></div>
+    <h1 class="title">Ogasawara<br>Fishing Guide</h1>
+    <p class="sub">VIP Fishing Hospitality Operations Manual</p>
+    <div class="confidential">Confidential &mdash; AIBOS Team Use Only</div>
+  </div>
+
+  <div class="footer">
+    <div class="col"><span class="label">Location</span><span class="value">Hahajima, Ogasawara Islands</span></div>
+    <div class="col"><span class="label">Date</span><span class="value">June 2026</span></div>
+    <div class="col"><span class="label">Standard</span><span class="value">AIBOS / AEGIS</span></div>
+  </div>
+</div>
+</body>
+</html>
