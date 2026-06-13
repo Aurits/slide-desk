@@ -27,3 +27,4 @@ render "$SCRIPT_DIR/fishing_gear_guide.html"        "Ogasawara_Fishing_Gear_Usag
 render "$SCRIPT_DIR/fishing_gear_guide_jp.html"     "Ogasawara_Fishing_Gear_Usage_Guide_JP_Ambrose.pdf"
 render "$SCRIPT_DIR/how_to_clean_fishing_gear.html"    "Ogasawara_Fishing_Gear_Cleaning_Guide_EN_Ambrose.pdf"
 render "$SCRIPT_DIR/how_to_clean_fishing_gear_jp.html" "Ogasawara_Fishing_Gear_Cleaning_Guide_JP_Ambrose.pdf"
+render "$SCRIPT_DIR/aibos_ogasawara_fishing_guide.html" "AIBOS_Ogasawara_Fishing_Guide.pdf"
