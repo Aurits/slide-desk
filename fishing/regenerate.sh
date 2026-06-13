@@ -38,13 +38,17 @@ render_with_cover() {
     --margin-top 22mm --margin-bottom 26mm --margin-left 22mm --margin-right 22mm \
     --encoding UTF-8 "$body_html" "$base" >/dev/null 2>&1
 
-  local body_pages
+  local body_pages body_stamped="/tmp/_fish_bstamp_$$.pdf"
   body_pages=$(pdfinfo "$base" | awk '/^Pages:/ {print $2}')
 
-  sed "s/#TOTAL#/${body_pages}/" "$SCRIPT_DIR/stamp_footer.ps" > "$stamp"
-  gs -o "$SCRIPT_DIR/$pdf_name" -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -dQUIET "$stamp" "$cov" "$base"
+  # Stamp footers on the body ALONE (numbers every body page 1..N), then prepend
+  # the unstamped full-bleed cover. This keeps numbering correct regardless of how
+  # the cover PDF interacts with the EndPage hook.
+  sed "s/#TOTAL#/${body_pages}/" "$SCRIPT_DIR/stamp_footer_noskip.ps" > "$stamp"
+  gs -o "$body_stamped" -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -dQUIET "$stamp" "$base"
+  gs -o "$SCRIPT_DIR/$pdf_name" -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -dQUIET "$cov" "$body_stamped"
   echo "→ $pdf_name  (1 cover + $body_pages content)"
-  rm -f "$cov" "$base" "$stamp"
+  rm -f "$cov" "$base" "$stamp" "$body_stamped"
 }
 
 render "$SCRIPT_DIR/fishing_gear_guide.html"        "Ogasawara_Fishing_Gear_Usage_Guide_EN_Ambrose.pdf"
