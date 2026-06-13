@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AIBOS 小笠原フィッシングガイド</title>
+<style>
+  /* ============ デザインシステム ============
+     書体: Noto Serif CJK JP（本文・明朝）＋ Noto Sans CJK JP（ラベル・ゴシック）。
+     配色: 表紙から引き継いだオーシャンパレット。
+       墨 #1a1a1a / 中間 #6b6b6b / 濃ティール #0d4a63 / ティール #11607a / 明 #1aa39a
+       危険 #9a3b3b / 注意 #9a6a16 */
+  html, body {
+    margin: 0; padding: 0; color: #1a1a1a; background: #ffffff;
+    font-family: "Noto Serif CJK JP", "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 10.5pt; line-height: 1.85; -webkit-font-smoothing: antialiased;
+  }
+  .sans { font-family: "Noto Sans CJK JP", "Noto Sans JP", "Yu Gothic", sans-serif; }
+
+  /* ---------- 目次 ---------- */
+  .toc { page-break-after: always; }
+  .toc-head { border-bottom: 2px solid #0d4a63; padding-bottom: 6mm; margin-bottom: 9mm; }
+  .toc-head .kicker { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 8.5pt; letter-spacing: 2px; color: #11607a; margin-bottom: 4mm; }
+  .toc-head h1 { font-weight: 600; font-size: 24pt; margin: 0; letter-spacing: 2px; }
+  .toc-head .meta-line { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 9pt; color: #6b6b6b; margin-top: 4mm; }
+  .toc-head .meta-line span + span::before { content: "・"; margin: 0 6px; color: #b0b0b0; }
+  .toc-grid { display: flex; flex-wrap: wrap; gap: 0 14mm; }
+  .toc-col { flex: 1; min-width: 72mm; }
+  .toc-part { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 10pt; font-weight: 700; color: #0d4a63; margin: 5mm 0 1mm 0; }
+  .toc-items { font-size: 9.5pt; color: #4a4a4a; margin: 0 0 2mm 0; line-height: 1.7; }
+
+  /* ---------- 部の扉 ---------- */
+  .part { page-break-before: always; }
+  .part-bar { height: 3mm; background: linear-gradient(90deg, #0d4a63 0%, #11607a 45%, #1aa39a 100%); margin: 0 0 5mm 0; }
+  .part-label { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 10pt; font-weight: 700; letter-spacing: 2px; color: #11607a; margin-bottom: 2mm; }
+  .part-title { font-weight: 600; font-size: 21pt; line-height: 1.25; margin: 0 0 1mm 0; page-break-after: avoid; letter-spacing: 1px; }
+  .romaji { font-size: 11pt; color: #8a8a8a; margin: 0 0 7mm 0; page-break-after: avoid; font-style: italic; }
+
+  h3.sub { font-weight: 600; font-size: 13pt; color: #0d4a63; margin: 8mm 0 2mm 0; page-break-after: avoid; }
+  h4.mini { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 10.5pt; font-weight: 700; color: #1a1a1a; margin: 5mm 0 1mm 0; page-break-after: avoid; }
+  h4.mini .jp { color: #1aa39a; font-weight: 400; font-style: italic; font-family: "Noto Serif CJK JP", serif; margin-left: 8px; font-size: 9.5pt; }
+  p { margin: 0 0 5mm 0; text-align: justify; }
+  p.lead-in { page-break-after: avoid; text-align: left; }
+
+  ul { margin: 2mm 0 6mm 0; padding-left: 7mm; list-style: none; page-break-inside: avoid; }
+  ul li { margin-bottom: 1.5mm; position: relative; padding-left: 5mm; }
+  ul li::before { content: "\2022"; position: absolute; left: 0; color: #1aa39a; font-size: 9pt; top: 0.4mm; }
+  ul.checklist li::before { content: "\2610"; color: #11607a; font-size: 11pt; }
+
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 3mm 0 6mm 0; }
+  ol.steps li { position: relative; padding-left: 12mm; margin-bottom: 3.5mm; page-break-inside: avoid; text-align: left; }
+  ol.steps li::before {
+    counter-increment: step; content: counter(step, decimal-leading-zero);
+    position: absolute; left: 0; top: 1mm;
+    font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 9pt; font-weight: 700;
+    color: #11607a; letter-spacing: 1px;
+  }
+  ol.steps li b { font-weight: 700; }
+
+  /* ---------- 表 ---------- */
+  table.tbl { width: 100%; border-collapse: collapse; margin: 4mm 0 7mm 0; page-break-inside: avoid; }
+  table.tbl th { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 8.5pt; font-weight: 700; letter-spacing: 0.5px; color: #11607a; text-align: left; padding: 0 5mm 2.5mm 0; border-bottom: 1.5px solid #0d4a63; vertical-align: bottom; }
+  table.tbl td { font-size: 9.5pt; padding: 2.5mm 5mm 2.5mm 0; border-bottom: 0.5px solid #e4ecef; vertical-align: top; line-height: 1.6; }
+  table.tbl th:last-child, table.tbl td:last-child { padding-right: 0; }
+  table.tbl.break { page-break-inside: auto; }
+  table.tbl.break tr { page-break-inside: avoid; }
+
+  /* ---------- 注意ボックス ---------- */
+  .callout { padding: 3mm 5mm; margin: 4mm 0 6mm 0; page-break-inside: avoid; border-left: 3px solid #11607a; background: #f1f7f9; }
+  .callout.danger { border-left-color: #9a3b3b; background: #fbf2f1; }
+  .callout.caution { border-left-color: #9a6a16; background: #fbf6ea; }
+  .callout .label { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 8.5pt; letter-spacing: 0.5px; color: #11607a; display: block; margin-bottom: 1.5mm; font-weight: 700; }
+  .callout.danger .label { color: #9a3b3b; }
+  .callout.caution .label { color: #9a6a16; }
+  .callout p { margin: 0; text-align: left; }
+
+  /* ---------- 写真 ---------- */
+  .photos { display: flex; gap: 5mm; margin: 5mm 0 2mm 0; page-break-inside: avoid; }
+  .photos figure { margin: 0; flex: 1; }
+  .photos img { width: 100%; height: 50mm; object-fit: contain; background: #f5f8f9; display: block; border: 1px solid #d9e2e6; padding: 1.5mm; box-sizing: border-box; }
+  .photos.diagram img { background: #fff; height: 62mm; }
+  .photos.tall img { height: 62mm; }
+  .figfull { text-align: center; margin: 5mm 0 3mm 0; page-break-inside: avoid; }
+  .figfull img { height: 150mm; width: auto; max-width: 100%; border: 1px solid #d9e2e6; display: block; margin: 0 auto; background: #fff; }
+  .figfull figcaption { text-align: center; }
+  figcaption { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 8pt; color: #8a8a8a; margin-top: 2mm; line-height: 1.5; }
+
+  /* ---------- カード／チェックリスト ---------- */
+  .cards { display: flex; flex-wrap: wrap; gap: 5mm; margin: 4mm 0 6mm 0; }
+  .card { flex: 1 1 44%; border: 1px solid #d9e2e6; border-top: 3px solid #11607a; padding: 4mm 5mm; page-break-inside: avoid; }
+  .card .ctitle { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 9pt; font-weight: 700; letter-spacing: 0.5px; color: #0d4a63; margin-bottom: 2mm; }
+  .card ul { margin: 0; }
+
+  /* ---------- 魚種リファレンス ---------- */
+  .stars { color: #c8941f; letter-spacing: 1px; white-space: nowrap; font-size: 10pt; }
+  .stars .off { color: #dcdcdc; }
+  .tag { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 7.5pt; font-weight: 700; padding: 0.6mm 2mm; border-radius: 2px; white-space: nowrap; }
+  .tag.keep { background: #e1f0ea; color: #1f7a5a; }
+  .tag.caution { background: #f7ebd2; color: #9a6a16; }
+  .tag.cig { background: #fbe3df; color: #9a3b3b; }
+  .tag.local { background: #eceff1; color: #6b6b6b; }
+  .legend { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 8.5pt; color: #6b6b6b; margin: 2mm 0 6mm 0; line-height: 2; }
+  .legend .tag { margin-right: 2mm; }
+
+  .closing { margin-top: 11mm; padding-top: 6mm; border-top: 2px solid #0d4a63; page-break-inside: avoid; }
+  .closing .ganbatte { font-size: 14pt; color: #0d4a63; font-weight: 600; }
+  .colophon { font-family: "Noto Sans CJK JP","Noto Sans JP",sans-serif; font-size: 8pt; color: #8a8a8a; margin-top: 6mm; }
+</style>
+</head>
+<body>
+
+<!-- ===================== 目次 ===================== -->
+<section class="toc">
+  <div class="toc-head">
+    <div class="kicker">AIBOS 小笠原フィッシングガイド ・ 社外秘</div>
+    <h1>目次</h1>
+    <p class="meta-line"><span>母島・小笠原諸島</span><span>2026年6月</span></p>
+  </div>
+  <div class="toc-grid">
+    <div class="toc-col">
+      <div class="toc-part">第1部 ― 水辺へようこそ</div>
+      <div class="toc-items">1.1 あなたはアングラー ・ 1.2 小笠原：あなたの釣り場 ・ 1.3 あなたの任務 ・ 1.4 本ガイドの使い方</div>
+      <div class="toc-part">第2部 ― 心構え：6つの原則</div>
+      <div class="toc-items">2.1〜2.6 6つの基本原則</div>
+      <div class="toc-part">第3部 ― タックルを知る</div>
+      <div class="toc-items">3.1 ロッド ・ 3.2 リール ・ 3.3 フックとオモリ ・ 3.4 ライン ・ 3.5 ノット ・ 3.6 エサ ・ 3.7 ルアー ・ 3.8 ウェア</div>
+      <div class="toc-part">第4部 ― 必須スキル</div>
+      <div class="toc-items">4.1 キャスト ・ 4.2 ジギング ・ 4.3 サビキ ・ 4.4 エサ付け ・ 4.5 ファイトと取り込み ・ 4.6 針外し ・ 4.7 素早い結び直し</div>
+      <div class="toc-part">第5部 ― 釣りのシーン</div>
+      <div class="toc-items">魚の居場所 早見表 ・ 5.1 港・桟橋 ・ 5.2 磯 ・ 5.3 ジギング・沖</div>
+    </div>
+    <div class="toc-col">
+      <div class="toc-part">第6部 ― VIPへの対応</div>
+      <div class="toc-items">6.1 優先順位 ・ 6.2 渡辺様 ・ 6.3 永谷様 ・ 6.4 釣り場での快適さ</div>
+      <div class="toc-part">第7部 ― タックルの手入れと洗浄</div>
+      <div class="toc-items">7.1〜7.6 すすぎ・整備・点検・保管</div>
+      <div class="toc-part">第8部 ― 安全と緊急対応</div>
+      <div class="toc-items">8.1〜8.7 母島の現実・役割・負傷・熱中症・危険生物・連絡</div>
+      <div class="toc-part">第9部 ― すべきこと／してはいけないこと</div>
+      <div class="toc-items">9.1 すべきこと ・ 9.2 禁止事項</div>
+      <div class="toc-part">第10部 ― 出発前トレーニング</div>
+      <div class="toc-items">10.1 日程 ・ 10.2 担当割り当て ・ 10.3 ブリーフィング</div>
+      <div class="toc-part">付録</div>
+      <div class="toc-items">A. 装備チェックリスト ・ B. ノット ・ C. ハンドサイン ・ D. 緊急カード ・ E. 洗浄チェックリスト ・ F. 魚種と食味ガイド ・ G. 図解リファレンス</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 第1部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第1部</div>
+  <h2 class="part-title">水辺へようこそ</h2>
+  <p class="romaji">Welcome to the Water</p>
+
+  <h3 class="sub">1.1 あなたはアングラー</h3>
+  <p>あなたは見物人ではありません。乗客でもありません。あの船に乗り込み、あるいは岩場に足を踏み入れたその瞬間から、あなたはアングラーです。そしてその言葉には重みがあります。アングラーは海を読み、海に敬意を払い、次に起こることを予測し、目的を持って動きます。今回の遠征では、あなたはそれ以上の存在でもあります。釣竿を手にしたホスピタリティのプロフェッショナルなのです。</p>
+  <p>本ガイドは、必要なことのすべてをお伝えします。30度の炎天下、火山岩の上で片手にロッド、片手にネットを持っているとき、調べている時間はありません。事前の準備こそが、あなたの命綱です。</p>
+
+  <h3 class="sub">1.2 小笠原：あなたの釣り場</h3>
+  <p>小笠原諸島は東京の南およそ1,000kmに位置する、ユネスコ世界自然遺産の火山島群で、日本でも有数の豊かな漁場に囲まれています。拠点は母島です。</p>
+  <table class="tbl">
+    <tr><th>6月の小笠原</th><th>状況</th></tr>
+    <tr><td>気温</td><td>26〜30℃、極度の高湿度</td></tr>
+    <tr><td>海水温</td><td>25〜27℃</td></tr>
+    <tr><td>紫外線</td><td>極めて強い</td></tr>
+    <tr><td>潮流</td><td>リーフ周辺で強い</td></tr>
+    <tr><td>補給</td><td>ゼロ。フェリーは週1〜2便</td></tr>
+    <tr><td>医療搬送</td><td>ほぼ不可能。最寄りの病院まで船で24時間</td></tr>
+  </table>
+
+  <h3 class="sub">1.3 あなたの任務：VIPフィッシング・ホスピタリティ</h3>
+  <p>あなたはAEGIS基準のもと、AIBOSの一員として働きます。完璧が標準です。誰も手を止めてはいけません。あなたの任務は、渡辺様、永谷様、そしてゲストの皆様に最高の釣り体験をご提供すること。仕掛けにエサを付け、ドリンクを切らさず、道具を整え、安全を絶やさないことです。</p>
+
+  <h3 class="sub">1.4 本ガイドの使い方</h3>
+  <p>全10部と付録で構成されています。第1〜2部は心構え。第3〜4部はタックルとスキル。第5部は釣りのシーン。第6〜7部はVIP対応と道具の整備。第8〜9部は安全とルール。第10部はトレーニング。付録はラミネート可能なリファレンスカードで、魚種と食味の完全ガイドも含みます。最初から最後まで読み、常に手元に置いてください。</p>
+</section>
+
+<!-- ===================== 第2部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第2部</div>
+  <h2 class="part-title">心構え ― 6つの原則</h2>
+  <p class="romaji">Your Mindset — 6 Principles</p>
+  <p>この6つの原則を頭に叩き込んでください。釣り、給仕、荷造り、桟橋に立つときまで、あらゆる場面で通用します。</p>
+
+  <h4 class="mini">#1 先回りし、決して手を止めない<span class="jp">Sakimawari Suru</span></h4>
+  <p>指示を待ってはいけません。エサを付け、ドリンクを注ぎ足し、ネットを構え、ドラグを確認する。誰かに頼まれる前に。待機時間はゼロ。常に。</p>
+
+  <h4 class="mini">#2 VIPを最優先に<span class="jp">VIP Saiyusen</span></h4>
+  <p>厳格な優先順位：渡辺様 ＞ 永谷様 ＞ ゲスト ＞ AEGIS。給仕の順番、ラインへの注意、日陰、最初の一杯。常にその状態を把握すること。</p>
+
+  <h4 class="mini">#3 流れを止めない<span class="jp">Nagare wo Tomenai</span></h4>
+  <p>素早く結び直す。すぐにネットを入れる。近くで誰かが掛けたら自分の仕掛けを回収する。船長には即座に応じる。決して全員を待たせない。</p>
+
+  <h4 class="mini">#4 安全がすべてに優先する<span class="jp">Anzen ga Subete ni Yusen</span></h4>
+  <p>至る所に危険があります。危険なら、止まる。どんな魚も怪我に値しません。他のすべての原則に優先します。</p>
+
+  <h4 class="mini">#5 道具を守れ<span class="jp">Dougu wo Mamore</span></h4>
+  <p>母島に釣具店はありません。壊せば、それで終わり。擦れる前に結び直し、釣行後はすすぎ、根掛かりを避け、衝撃から守ること。</p>
+
+  <h4 class="mini">#6 元気と楽しさを<span class="jp">Genki to Tanoshisa</span></h4>
+  <p>ホスピタリティの雰囲気は、あなたの振る舞いそのもの。目に見えて前向きに、元気よく。一匹一匹の釣果に全力で喜ぶこと。</p>
+</section>
+
+<!-- ===================== 第3部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第3部</div>
+  <h2 class="part-title">タックルを知る</h2>
+  <p class="romaji">Know Your Tackle</p>
+  <p>ここで扱うものはすべて、火山島の地形における亜熱帯のソルトウォーター（海水）を前提としています。</p>
+
+  <h3 class="sub">3.1 ロッド</h3>
+  <div class="photos">
+    <figure><img src="images/rod_shore_set.jpg"><figcaption>磯のセット：長いロッドにスピニングリールを下付けにした、岩場釣りの基本装備。</figcaption></figure>
+    <figure><img src="images/rod_jigging.jpg"><figcaption>短く硬いオフショアのジギングロッド。深場の魚の引きで曲がっている。</figcaption></figure>
+  </div>
+  <table class="tbl">
+    <tr><th>タイプ</th><th>用途</th><th>特徴</th></tr>
+    <tr><td>磯（I/II）</td><td>岩場釣り</td><td>4〜5mと長く、先調子は柔軟、バットは強い</td></tr>
+    <tr><td>ジギング</td><td>オフショア</td><td>1.5〜1.8mと短く硬い。重いジグ用</td></tr>
+    <tr><td>ライト</td><td>港・桟橋</td><td>中庸で汎用的</td></tr>
+  </table>
+
+  <h3 class="sub">3.2 リール</h3>
+  <div class="photos">
+    <figure><img src="images/spinning_reel.jpg"><figcaption>ソルト用スピニングリール（固定スプール、ベール）。ロッドの下に取り付ける。</figcaption></figure>
+    <figure><img src="images/baitcaster.jpg"><figcaption>コンベンショナル／ベイトの装備：回転スプール、よりパワフルで、上付け。</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>スピニング</b>：固定スプール、ベール式。ロッドの下に取り付ける。投げやすい。磯・桟橋・サビキ向き。</li>
+    <li><b>コンベンショナル</b>：回転スプール。よりパワフル。上付け。深場のジギング向き。落とす前に必ずドラグを設定すること。</li>
+  </ul>
+  <div class="callout">
+    <span class="label">道具を守れ</span>
+    <p>リールをガンネル（船べり）、地面、砂に決して触れさせないこと。母島に替えはありません。</p>
+  </div>
+
+  <h3 class="sub">3.3 フック・オモリ・仕掛け</h3>
+  <div class="photos">
+    <figure><img src="images/hook_circle.jpg"><figcaption>さまざまなサイズのフック（カエシ付き）。取り扱いは慎重に。</figcaption></figure>
+    <figure><img src="images/sinker.jpg"><figcaption>オモリはエサを沈める。深場や潮には重めを。</figcaption></figure>
+    <figure><img src="images/swivel.jpg"><figcaption>スイベルとスナップはライン絡みを防ぐ。ジギングには必須。</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>フック</b>：各種サイズ、カエシ付き。取り扱い注意。</li>
+    <li><b>オモリ</b>：エサを沈める。深場ほど重く。</li>
+    <li><b>スイベル／スプリットリング</b>：ライン絡みを防ぐ。ジギングに必須。</li>
+    <li><b>サビキ仕掛け</b>：港でエサとなる小魚を釣る多針仕掛け。</li>
+  </ul>
+
+  <h3 class="sub">3.4 ライン</h3>
+  <table class="tbl">
+    <tr><th>タイプ</th><th>特性</th><th>用途</th></tr>
+    <tr><td>モノ（ナイロン）</td><td>伸びがあり扱いやすい</td><td>リーダー、軽い仕掛け</td></tr>
+    <tr><td>ブレイド（PE）</td><td>伸びゼロ、細く強い</td><td>ジギングのメインライン</td></tr>
+    <tr><td>フロロカーボン</td><td>見えにくく、擦れに強い</td><td>フック／ルアーへのリーダー</td></tr>
+  </table>
+  <div class="callout">
+    <span class="label">深場ではPE3号</span>
+    <p>オナガを狙う水深250m以上では、細いPEのほうが潮を切る。誤差の余地は少ない。ノットは完璧でなければならない。</p>
+  </div>
+
+  <h3 class="sub">3.5 覚えるべきノット</h3>
+  <p>岩場で見ながら真似できる手本はありません。これらは体で覚える必要があります。濡れた状態で、立ったまま、風の中で、それぞれ練習すること。詳しい手順は<strong>付録B</strong>にあります。</p>
+  <table class="tbl">
+    <tr><th>ノット</th><th>つなぐもの</th><th>ひと言</th></tr>
+    <tr><td>FGノット</td><td>PE（ブレイド）とリーダー</td><td>強度ほぼ100%。ガイドを通るほど細い</td></tr>
+    <tr><td>インプルーブド・クリンチ</td><td>ラインとフック／オモリ</td><td>通して5〜6回巻き、湿らせて締める。30秒以内で</td></tr>
+    <tr><td>電車結び</td><td>ライン同士</td><td>互いを5回ずつ巻き、寄せて締める</td></tr>
+  </table>
+
+  <h3 class="sub">3.6 海のエサ</h3>
+  <p>エサ屋はありません。エサの確保は、最も重要なスキルの一つです。</p>
+  <div class="photos tall">
+    <figure><img src="images/sp_muroaji.jpg"><figcaption>ムロアジ：小笠原でハタ類・ヒラアジ類・フエダイ類を狙う主力のエサ。</figcaption></figure>
+    <figure><img src="images/terminal_tackle.jpg"><figcaption>いつでも使えるよう準備したエサ・仕掛けトレー。VIPが必要とする前に整えておく。</figcaption></figure>
+  </div>
+  <table class="tbl">
+    <tr><th>エサ</th><th>入手先</th><th>釣れる魚</th></tr>
+    <tr><td>クロガニ（磯ガニ）</td><td>港で網</td><td>磯魚</td></tr>
+    <tr><td>小アジ</td><td>サビキ</td><td>フィッシュイーター用の生きエサ</td></tr>
+    <tr><td>ムロアジ</td><td>支給品</td><td>ハタ類、ヒラアジ類、フエダイ類</td></tr>
+    <tr><td>ウニ</td><td>岩場で採取</td><td>イシガキダイ</td></tr>
+    <tr><td>イカ</td><td>支給品</td><td>磯魚全般</td></tr>
+  </table>
+
+  <h3 class="sub">3.7 ルアーとジグ</h3>
+  <div class="photos">
+    <figure><img src="images/lure_stickbait.jpg"><figcaption>GTなど表層のフィッシュイーターに投げるトップウォーターのスティックベイト。</figcaption></figure>
+    <figure><img src="images/hook_treble.jpg"><figcaption>プラグやスティックベイトに付くトレブルフック。</figcaption></figure>
+    <figure><img src="images/hook_assist.jpg"><figcaption>メタルジグの頭部にセットするアシストフック。深場用。</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>メタルジグ（300g〜）</b>：深場用。高価。根掛かり＝大きな損失。</li>
+    <li><b>インチクジグ</b>：タコベイト系のハイブリッド。浅いリーフのハタ類に。</li>
+    <li><b>ソフトプラスチック（ワーム）</b>：リーフ際のアカハタやカッポレに。</li>
+  </ul>
+
+  <h3 class="sub">3.8 ウェアと保護具</h3>
+  <div class="photos">
+    <figure><img src="images/safety_rockshoes.jpg"><figcaption>スパイク／フェルトソールの磯ブーツ。濡れた火山岩でのグリップ用。普通の靴＝命取り。</figcaption></figure>
+    <figure><img src="images/safety_lifevest.jpg"><figcaption>岩場で着用するライフジャケット。水に近づく瞬間から必須。</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>UVロングスリーブ</b>：数分で日焼けします。</li>
+    <li><b>帽子＋偏光サングラス</b></li>
+    <li><b>磯ブーツ（I/II）</b>：スパイク／フェルトソール。普通の靴＝命取り。</li>
+    <li><b>ライフジャケット</b>：必須。</li>
+    <li><b>グローブ</b>：PEラインは骨まで切る。</li>
+    <li><b>アイウェア（保護メガネ）</b>：ジギングでは必須。</li>
+  </ul>
+</section>
+
+<!-- ===================== 第4部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第4部</div>
+  <h2 class="part-title">必須スキル</h2>
+  <p class="romaji">Essential Skills</p>
+
+  <h3 class="sub">4.1 キャスト</h3>
+  <div class="photos diagram">
+    <figure><img src="images/casting_basics.jpg"><figcaption>キャストの動作：後ろでロッドに力をため、滑らかに前へ振り抜き、ターゲットへ向けて放つ。</figcaption></figure>
+  </div>
+  <h4 class="mini">オーバーヘッドキャスト</h4>
+  <p>基本のキャスト。ロッドを2時の位置から滑らかに10時へ、そこでリリース。スムーズになるまで練習を。</p>
+  <h4 class="mini">ロールキャスト</h4>
+  <p>後ろにスペースがないとき。ロッドを上げて前へ振り、ラインを転がし出す。飛距離は落ちるが安全。</p>
+  <h4 class="mini">アンダーハンドピッチ</h4>
+  <p>短く正確に。ルアーを持ち、ベールを開け、前へ振り出す。磯のエサ釣りに静かで正確。</p>
+
+  <h3 class="sub">4.2 ジギング ― 落とす・止める・巻く・しゃくる</h3>
+  <ul>
+    <li><b>DROP（落とす）</b>：ベールを開ける。ラインを見る。早く止まれば底か魚。</li>
+    <li><b>BAIL（止める）</b>：ラインが緩んだら、即座にベールを閉じる。</li>
+    <li><b>REEL 8〜10（巻く）</b>：底を切って力強く8〜10回転。妥協不可。ジグを守る。</li>
+    <li><b>PITCH（しゃくる）</b>：ロッドを上げ、巻きながら下げる。ジグが手負いの獲物のように動く。</li>
+    <li><b>REPEAT（繰り返す）</b>：船長が「上げ」と言ったら速く巻く。待たない。</li>
+  </ul>
+  <div class="callout">
+    <span class="label">8〜10回転ルール</span>
+    <p>根掛かり＝ジグを失い、全員が止まる。8〜10回転ルールは保険。毎回必ず。</p>
+  </div>
+
+  <h3 class="sub">4.3 サビキ釣り</h3>
+  <p>中層まで落とし、軽くしゃくる。一度に複数の魚が掛かる。新鮮な海水を入れたバケツに移す。</p>
+
+  <h3 class="sub">4.4 エサ付け</h3>
+  <div class="photos tall">
+    <figure><img src="images/hook_livebait.jpg"><figcaption>生きエサが弱らず自然に泳ぐように針を掛ける。フィッシュイーター用。</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>カニ</b>：大きいものは割って胴に針を通す。小さいものは尾側の甲羅に掛ける。</li>
+    <li><b>生きアジ</b>：背または鼻に針を通す。生かしておく。</li>
+    <li><b>ムロアジの切り身</b>：短冊にし、針を2回通す。</li>
+    <li><b>ウニ</b>：割って中身をすくい、針に盛る。先に殻をまく。</li>
+  </ul>
+
+  <h3 class="sub">4.5 ファイトと取り込み</h3>
+  <div class="photos">
+    <figure><img src="images/landing_net_pole.jpg"><figcaption>伸縮式のランディングネットの柄。高い岩棚から水面まで届く。</figcaption></figure>
+    <figure><img src="images/fishgrip_boga.jpg"><figcaption>取り込んだ魚を安全に保持し、針を外すためのフィッシュグリップ。</figcaption></figure>
+  </div>
+  <p>アタリがあったら、ロッドを上に鋭くあおってフッキング。ファイトはロッドを45度に保ち、ポンピングして巻く。ドラグが出ているときに巻いてはいけない。</p>
+  <p>ハタ類は即座にリーフへ突っ込む。2秒以内に浮かせないとラインが切れる。</p>
+  <p>ネットは必ず頭から。磯では体勢を安定させて。船では船べりから一歩下がる。</p>
+
+  <h3 class="sub">4.6 針外し</h3>
+  <p>プライヤーを。必ず。カエシ付きの針は簡単に皮膚を貫く。イソマグロは鋭い歯を持つ。アオチビキはぬめるので、グローブを使う。</p>
+
+  <h3 class="sub">4.7 素早い結び直し</h3>
+  <p>針を失い、ラインが切れたとき、VIPが裸のラインで待つ一秒一秒が失敗です。最大60秒。濡れた状態で、立って、風の中で練習を。</p>
+</section>
+
+<!-- ===================== 第5部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第5部</div>
+  <h2 class="part-title">釣りのシーン</h2>
+  <p class="romaji">Fishing Scenarios</p>
+  <p>すべての釣行は、3つのシーンのいずれかです。完璧に覚えること。下の表は、各シーンで魚がどこにつき、どう狙うかをまとめたものです。魚種の詳細は<strong>付録F</strong>にあります。</p>
+
+  <table class="tbl break">
+    <tr><th>シーン</th><th>水深・場所</th><th>主なターゲット</th><th>エサ・釣法</th></tr>
+    <tr><td>港・桟橋</td><td>表層〜浅場、桟橋から</td><td>アジ（生きエサ用）、小型の磯魚</td><td>サビキ、カニ</td></tr>
+    <tr><td>磯</td><td>岸際〜水深約100mのリーフ</td><td>スジアラ、アカハタ、バラハタ、イシガキダイ、フエフキダイ、アオチビキ、GT、カッポレ</td><td>ムロアジ、ウニ、カニ、ワーム、ジギング</td></tr>
+    <tr><td>ジギング・沖</td><td>100〜300m</td><td>カンパチ、シマアジ、イソマグロ、キハダ・スマ、オナガ（250〜300m）、ウメイロ</td><td>メタル・インチクジグ、ウメイロにはサビキ</td></tr>
+  </table>
+
+  <h3 class="sub">5.1 港・桟橋（II）</h3>
+  <p>桟橋・防波堤での釣り。エサ集めの作業＋VIPのゆったりとした釣り。</p>
+  <h4 class="mini">装備</h4>
+  <ul>
+    <li>タバコ＋ドリンク</li>
+    <li>雨具・カバー</li>
+    <li>ハサミ／ラインカッター</li>
+    <li>小型ロッド＋リール＋サビキ＋オモリ</li>
+    <li>長いネット＋バケツ＋フィッシュバッグ＋ヘッドライト</li>
+  </ul>
+  <h4 class="mini">作業</h4>
+  <p>最優先はエサの確保。カニは網で、アジはサビキで。エサバケツを管理する。</p>
+  <h4 class="mini">振る舞い</h4>
+  <ul>
+    <li>渡辺様の様子を確認。先回りしてドリンクを勧める。</li>
+    <li>掛けたらネットを準備。針外しを手伝う。</li>
+    <li>切れた仕掛けは素早く結び直す。</li>
+    <li>一緒に行動。元気よく。周囲は整頓。</li>
+  </ul>
+
+  <h3 class="sub">5.2 磯（I）</h3>
+  <div class="callout danger">
+    <span class="label">最も危険なシーン</span>
+    <p>一字一句読むこと。船が火山リーフに5〜6時間下ろします。戻れません。エサとルアーの釣りです。</p>
+  </div>
+  <div class="photos tall">
+    <figure><img src="images/safety_lifevest.jpg"><figcaption>磯釣り：ライフジャケットを着用し、足元を確認し、決して海に背を向けない。</figcaption></figure>
+  </div>
+  <h4 class="mini">磯への渡礁</h4>
+  <ol class="steps">
+    <li>岩に着く前にライフジャケットを着用。</li>
+    <li>一人ずつ。船長の合図で。</li>
+    <li>うねりの頂点で、跳ばずに踏み出す。</li>
+    <li>手は空ける。道具はリレーで渡す。</li>
+    <li>体重をかける前に足場を確認。</li>
+    <li>戻りはさらに危険。同じ規律で。</li>
+  </ol>
+  <h4 class="mini">安全</h4>
+  <ul>
+    <li>足元を見る。後ろ向きに歩いたり、スマホを見たりしない。</li>
+    <li>決して海に背を向けない。波はセットで来る。退避場所を把握しておく。</li>
+    <li>道具は波しぶきのかからない場所へ。縁の近くに緩んだものを置かない。</li>
+  </ul>
+  <h4 class="mini">長丁場</h4>
+  <p>6時間、30℃、日陰なし、逃げ場なし。絶えず水分を。電解質も。渡辺様の熱中症に注意。必要なものは、持ち込んだものがすべてです。</p>
+  <h4 class="mini">VIP対応</h4>
+  <ul>
+    <li>エサを確保。素早く結び直す。ドリンク＋タバコ。</li>
+    <li>掛けたらネット。足場の悪い場所では特に重要。</li>
+    <li>ネットは頭から。自分の仕掛けは自分で付ける。元気よく。</li>
+  </ul>
+
+  <h3 class="sub">5.3 ジギング・沖（IIII）</h3>
+  <p>船からの深場の釣り。水深100〜200m。大物：カンパチ、マグロ、深場のフエダイ類。</p>
+  <h4 class="mini">装備</h4>
+  <ul>
+    <li>ジギングロッド＋リール</li>
+    <li>仕掛け＋プライヤー＋グローブ</li>
+    <li>ドリンク入りクーラー</li>
+    <li>アイウェア（保護メガネ）</li>
+  </ul>
+  <h4 class="mini">ルール</h4>
+  <ul>
+    <li><b>ドラグ設定</b>：毎回、落とす前に。</li>
+    <li><b>ラインを見る</b>：止まれば底か魚。</li>
+    <li><b>8〜10回転</b>：底を切る。ジグを守る。</li>
+    <li><b>間隔を空ける</b>：密集しない。動けるように。</li>
+    <li><b>ゆっくり巻く</b>：ジグが見えたら。飛んでくるジグ＝危険。</li>
+    <li><b>速く巻き上げる</b>：近くで誰かが掛けたら。</li>
+    <li><b>ジグを持つ</b>：決してぶらぶらさせない。</li>
+    <li><b>一歩下がる</b>：魚が浮いたら船べりから。</li>
+    <li><b>船長に従う</b>：即座に。遅れない。</li>
+    <li><b>声を出す</b>：「通ります！」必ず。</li>
+    <li><b>常に備える</b>：いつでも。</li>
+  </ul>
+  <div class="callout danger">
+    <span class="label">絶対厳守</span>
+    <p>テンションの掛かったPEを素手で触らない。グローブを。リールを船べりに当てない。</p>
+  </div>
+</section>
+
+<!-- ===================== 第6部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第6部</div>
+  <h2 class="part-title">VIPへの対応</h2>
+  <p class="romaji">Taking Care of Your VIPs</p>
+
+  <h3 class="sub">6.1 優先順位</h3>
+  <table class="tbl">
+    <tr><th>優先</th><th>対象</th><th>担当範囲</th></tr>
+    <tr><td>1番</td><td>渡辺様</td><td>すべてを最優先。</td></tr>
+    <tr><td>2番</td><td>永谷様</td><td>その直後に。</td></tr>
+    <tr><td>3番</td><td>ゲスト</td><td>招待客の皆様。</td></tr>
+    <tr><td>4番</td><td>その他AEGIS</td><td>飲食・着席は最後。</td></tr>
+  </table>
+
+  <h3 class="sub">6.2 渡辺様</h3>
+  <ul>
+    <li>食事ではフォークは歯を下向きに。</li>
+    <li>どの場所でもビーチチェアを。</li>
+    <li>熱中症：監視の最優先事項。</li>
+    <li>船酔い：個室＋薬＋カップ麺＋軽食。</li>
+    <li>タバコ＋ドリンク：決して切らさない。</li>
+  </ul>
+
+  <h3 class="sub">6.3 永谷様</h3>
+  <ul>
+    <li>甘いものを好まれる。船内のバー席を確保。</li>
+  </ul>
+
+  <h3 class="sub">6.4 釣り場での快適さ</h3>
+  <p>仕草を読む。集中している＝近くにいるが付きまとわない。休んでいる＝ドリンクを勧める。魚が掛かった＝振り向く前にネットを準備。</p>
+</section>
+
+<!-- ===================== 第7部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第7部</div>
+  <h2 class="part-title">タックルの手入れと洗浄</h2>
+  <p class="romaji">Tackle Care and Cleaning</p>
+
+  <h3 class="sub">7.1 なぜ海水が道具を壊すのか</h3>
+  <p>塩は数時間で金属を腐食させる。砂はベアリングを削る。紫外線はモノ（ナイロン）を劣化させる。道具は10日間もたせなければならない。手入れ＝生き残り。</p>
+
+  <h3 class="sub">7.2 釣行後のすすぎ</h3>
+  <ol class="steps">
+    <li>ロッドをすすぐ。ガイドを重点的に。</li>
+    <li>リールは優しくすすぐ。水没・高圧は厳禁。</li>
+    <li>すべてのドラグを緩める。</li>
+    <li>フック／ルアー／ジグをすすぐ。乾かしてから収納。</li>
+    <li>グリップとリールシートを拭く。</li>
+    <li>ロッドは立てるか平らに。</li>
+  </ol>
+
+  <h3 class="sub">7.3 リールの整備</h3>
+  <ul>
+    <li><b>ベール</b>：開閉がスムーズか。</li>
+    <li><b>ドラグ</b>：滑らかに回るか。ざらつき＝内部に塩。</li>
+    <li><b>スプール</b>：ラインに傷がないか確認。</li>
+    <li><b>ハンドル</b>：スムーズか。ゴリ感＝リーダーに報告。</li>
+  </ul>
+
+  <h3 class="sub">7.4 フック・ルアーの手入れ</h3>
+  <ul>
+    <li>すすぎ、乾燥、ケースも乾燥。</li>
+    <li>爪で鋭さをテスト。</li>
+    <li>スプリットリングとアシストフックを点検。</li>
+  </ul>
+
+  <h3 class="sub">7.5 ラインの点検</h3>
+  <p>先端10mを指でなぞる。傷んだ部分は切り戻す。白濁したモノ＝交換。毛羽立ったブレイド＝巻き替え。</p>
+
+  <h3 class="sub">7.6 保管</h3>
+  <ul>
+    <li>直射日光を避ける。</li>
+    <li>ベールは開け、ドラグは緩める。</li>
+    <li>タックルボックスは陰干し。</li>
+    <li>濡れた道具を、閉じたバッグに一晩入れない。</li>
+  </ul>
+</section>
+
+<!-- ===================== 第8部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第8部</div>
+  <h2 class="part-title">安全と緊急対応</h2>
+  <p class="romaji">Safety and Emergency</p>
+
+  <h3 class="sub">8.1 母島の現実</h3>
+  <div class="callout danger">
+    <span class="label">予防こそ唯一の策</span>
+    <p>病院なし。フェリーは週1〜2便。携帯の電波なし。あなたが第一発見者であり、対応者です。</p>
+  </div>
+
+  <h3 class="sub">8.2 緊急時の役割</h3>
+  <table class="tbl">
+    <tr><th>役割</th><th>担当</th></tr>
+    <tr><td>1. 現場リーダー</td><td>指揮を執る。</td></tr>
+    <tr><td>2. 船長連絡</td><td>ノブ／ハラと連絡。</td></tr>
+    <tr><td>3. 記録・通訳</td><td>記録する。EN／JPの橋渡し。</td></tr>
+    <tr><td>4. VIP付き添い</td><td>VIPのそばを離れない。</td></tr>
+  </table>
+
+  <h3 class="sub">8.3 落水（マンオーバーボード）</h3>
+  <div class="callout danger">
+    <span class="label">飛び込まない</span>
+    <p>あなたの役目は、見失わず、船を向かわせること。</p>
+  </div>
+  <ol class="steps">
+    <li>浮くもの／ロープを投げる。</li>
+    <li>船長に連絡。</li>
+    <li>指を差し続ける。</li>
+  </ol>
+
+  <h3 class="sub">8.4 負傷</h3>
+  <ul>
+    <li><b>骨折</b>：動かさない。保温。出血を止める。状態を共有。</li>
+    <li><b>針</b>：無理に抜かない。固定する。医療判断を。</li>
+    <li><b>裂傷</b>：直接圧迫。</li>
+  </ul>
+
+  <h3 class="sub">8.5 熱中症</h3>
+  <p>磯での最大のリスク。大量の発汗、吐き気、めまい。発汗が止まる＝熱射病＝緊急事態。日陰＋首・脇に冷水＋水分補給。渡辺様に注意。</p>
+
+  <h3 class="sub">8.6 危険な海洋生物</h3>
+  <p>素手厳禁。ゴンズイ（毒のあるトゲ）、ウツボ、ガンガゼ（ウニ）、イソマグロ（鋭い歯）。</p>
+  <div class="callout caution">
+    <span class="label">シガテラ ― バラフエダイ</span>
+    <p>個体によって毒を持つ。無臭・無味で熱にも強く、加熱しても消えない。しびれや温度感覚の逆転が、数時間後に現れることがある。疑わしければ食べない。どの魚を警戒すべきかは付録Fを参照。</p>
+  </div>
+
+  <h3 class="sub">8.7 連絡</h3>
+  <p>ハンドサインはトレーニングのブロック3で確定：魚が掛かった／巻き上げ／通ります／止まれ／緊急。一人で抱え込まない。すぐに共有する。VIPの安全＞釣果。</p>
+</section>
+
+<!-- ===================== 第9部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第9部</div>
+  <h2 class="part-title">すべきこと／してはいけないこと</h2>
+  <p class="romaji">Dos and Don'ts</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="ctitle">9.1 必ずすること</div>
+      <ul>
+        <li>船でも岩場でもライフジャケットを着用。</li>
+        <li>落とす前にドラグを設定。</li>
+        <li>釣行ごとに道具をすすぐ。</li>
+        <li>渡辺様の持ち物を運ぶ。</li>
+        <li>救急用品の場所を把握。</li>
+        <li>傷んだラインは結び直す。</li>
+        <li>後ろを通るときは声をかける。</li>
+        <li>ネットは頭から。</li>
+        <li>船長には即座に応じる。</li>
+        <li>問題は共有。一人で抱えない。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ctitle">9.2 してはいけないこと</div>
+      <ul>
+        <li>海に背を向ける。</li>
+        <li>渡礁中に跳ぶ。</li>
+        <li>渡礁中に道具を持つ。</li>
+        <li>ジグをぶらぶらさせる。</li>
+        <li>グローブなしでPEを扱う。</li>
+        <li>生き物を素手で触る。</li>
+        <li>カエシ付きの針を無理に抜く。</li>
+        <li>リールを船べりに当てる。</li>
+        <li>手を止めて立っている。</li>
+        <li>VIPの備品を切らす。</li>
+        <li>岩場で後ろ向きに歩く。</li>
+        <li>足場の悪い場所でスマホを見る。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 第10部 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">第10部</div>
+  <h2 class="part-title">出発前トレーニング</h2>
+  <p class="romaji">Pre-Trip Training</p>
+
+  <h3 class="sub">10.1 日程（6月9〜18日）</h3>
+  <table class="tbl">
+    <tr><th>日付</th><th>ブロック</th><th>内容</th></tr>
+    <tr><td>6月9〜11日</td><td>基礎</td><td>ノット、エサ付け、仕掛け。まずノットから。</td></tr>
+    <tr><td>6月12〜15日</td><td>振る舞い</td><td>桟橋・ジギング・磯の実地訓練＋給仕</td></tr>
+    <tr><td>6月16〜17日</td><td>リハーサル</td><td>ハンドサイン＋緊急シナリオ</td></tr>
+    <tr><td>6月18日</td><td>出発前日</td><td>安全ブリーフィング＋通し練習＋荷造り</td></tr>
+    <tr><td>6月19日</td><td>出発</td><td>―</td></tr>
+  </table>
+
+  <h3 class="sub">10.2 スキル担当</h3>
+  <p>各自が一つのスキルを習得し、チームに教える。担当は松本とネイトが割り当てる。</p>
+
+  <h3 class="sub">10.3 最終ブリーフィング（6月18日）</h3>
+  <p>完全な安全ブリーフィング＋陸上での渡礁の実地練習＋在庫リストと照合する最終の荷造り確認。</p>
+</section>
+
+<!-- ===================== 付録 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">付録</div>
+  <h2 class="part-title">リファレンスカード</h2>
+  <p class="romaji">Reference Cards（ラミネート推奨）</p>
+
+  <h3 class="sub">A. 装備マスターチェックリスト</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="ctitle">港</div>
+      <ul class="checklist">
+        <li>タバコ＋ライター</li><li>ドリンク</li><li>雨具・カバー</li><li>ハサミ</li>
+        <li>小型ロッド＋リール</li><li>サビキ＋オモリ</li><li>長いネット</li>
+        <li>ロープ付きバケツ</li><li>フィッシュバッグ</li><li>ヘッドライト</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ctitle">磯</div>
+      <ul class="checklist">
+        <li>タバコ＋ライター</li><li>ドリンク（6時間以上分）</li><li>椅子／マット</li>
+        <li>磯ロッド＋リール＋仕掛け＋エサ</li><li>ライフジャケット</li><li>昼食＋電解質</li>
+        <li>日焼け止め＋帽子＋UV</li><li>ネット</li><li>救急用品</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ctitle">ジギング</div>
+      <ul class="checklist">
+        <li>ジギングロッド＋リール</li><li>仕掛け＋プライヤー</li><li>グローブ</li>
+        <li>クーラー＋ドリンク</li><li>アイウェア</li><li>ライフジャケット</li><li>救急用品</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub">B. ノット早見表</h3>
+  <table class="tbl">
+    <tr><th>ノット</th><th>手順</th></tr>
+    <tr><td>FGノット</td><td>リーダーをループにし、PEを15〜20回編み込む。交互にハーフヒッチ6回。カット。ガイドを通ること。</td></tr>
+    <tr><td>インプルーブド・クリンチ</td><td>環に約15cm通す。5〜6回巻く。小さい輪、続いて大きい輪に通す。湿らせ、締め、カット。</td></tr>
+    <tr><td>電車結び</td><td>15cm重ねる。AがBを5回巻いて通す。BがAを5回巻いて通す。湿らせ、寄せて締め、カット。</td></tr>
+  </table>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_knot_clinch.png">
+      <figcaption>インプルーブド・クリンチ・ノットの手順。ラインをフックやオモリに結ぶ定番。30秒以内でできるまで練習を。</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub">C. ハンドサイン</h3>
+  <table class="tbl">
+    <tr><th>サイン</th><th>意味</th></tr>
+    <tr><td>拳を上に突き上げる</td><td>魚が掛かった！</td></tr>
+    <tr><td>手をぐるぐる回す</td><td>巻き上げ</td></tr>
+    <tr><td>手のひらを前に</td><td>止まれ／待て</td></tr>
+    <tr><td>腕を振る</td><td>緊急</td></tr>
+    <tr><td>肩を指して叩く</td><td>通ります</td></tr>
+  </table>
+
+  <h3 class="sub">D. 緊急カード</h3>
+  <table class="tbl">
+    <tr><th>状況</th><th>対応</th></tr>
+    <tr><td>落水</td><td>飛び込まない。浮具を投げる。船長に連絡。指を差す。</td></tr>
+    <tr><td>骨折</td><td>動かさない。保温。出血を止める。共有。</td></tr>
+    <tr><td>針</td><td>無理に抜かない。固定。医療。</td></tr>
+    <tr><td>熱中症</td><td>日陰。冷却。水分。発汗なしなら熱射病。</td></tr>
+    <tr><td>危険生物</td><td>素手厳禁。洗浄。圧迫。医療。</td></tr>
+  </table>
+
+  <h3 class="sub">E. タックル洗浄チェックリスト</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="ctitle">毎日</div>
+      <ul class="checklist">
+        <li>ロッドをすすいだ</li><li>ガイドを点検した</li><li>リールを優しくすすいだ</li>
+        <li>ドラグを緩めた</li><li>フック・ルアーを乾かした</li><li>ライン先端10mを点検した</li><li>グリップを拭いた</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 付録F — 魚種 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">付録F</div>
+  <h2 class="part-title">魚種と食味ガイド</h2>
+  <p class="romaji">Ogasawara Species &amp; Edibility</p>
+  <p>何を釣っているのか、どこにつき、何に反応し、どう扱うかを知ること。食味の評価は、地元・小笠原の魚種ガイドによります。ホスピタリティでは、<span class="tag keep">キープ</span>の魚、すなわち4つ星・5つ星の魚が、VIPにお出しするものです。</p>
+
+  <div class="photos">
+    <figure><img src="images/sp_akahata.jpg"><figcaption>アカハタ：簡単でよく釣れ、非常に美味なリーフの魚。</figcaption></figure>
+    <figure><img src="images/sp_muroaji.jpg"><figcaption>ムロアジ：ターゲットではなくエサ。ここでの多くのリーフ魚を釣る鍵。</figcaption></figure>
+  </div>
+
+  <p class="legend">
+    <span class="tag keep">キープ</span> VIPの食卓向けの上物 &nbsp;
+    <span class="tag cig">シガテラ</span> 毒のリスク。疑わしければ食べない &nbsp;
+    <span class="tag caution">取扱注意</span> 歯・トゲ・ぬめり &nbsp;
+    <span class="tag local">食用稀</span> 小笠原ではあまり食べない
+  </p>
+
+  <table class="tbl break">
+    <tr><th>魚種（和名／英名）</th><th>場所・釣り方</th><th>水深</th><th>エサ・ルアー</th><th>食味</th><th>備考</th></tr>
+
+    <tr><td><b>スジアラ</b><br>Leopard Coral Grouper</td><td>岩場、ジギングでも</td><td>100m未満</td><td>ウニ、ムロアジ、貝</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">キープ</span> 最高級の美味。</td></tr>
+
+    <tr><td><b>オナガ（ハマダイ）</b><br>Ruby Snapper</td><td>船からスロージギング</td><td>250〜300m</td><td>ジグ300g〜、PE3号</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">キープ</span> 深場。潮の影響が大きい。</td></tr>
+
+    <tr><td><b>シマアジ</b><br>White Trevally</td><td>船からジギング（カンパチ狙いで）</td><td>浅場〜200m超</td><td>メタルジグ。あおりすぎない</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">キープ</span> 母島周辺では取り込み難。</td></tr>
+
+    <tr><td><b>アオチビキ</b><br>Green Jobfish</td><td>岩場、ジギング</td><td>リーフ</td><td>ジグ、ムロアジの一本針</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">キープ</span> <span class="tag caution">取扱注意</span> ぬめる。グローブを。80cm超。</td></tr>
+
+    <tr><td><b>スマ</b><br>Mackerel Tuna</td><td>船からジギング（中層）</td><td>中層</td><td>メタルジグ</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td><td><span class="tag keep">キープ</span> 必ずキープ。一日一匹程度。</td></tr>
+
+    <tr><td><b>アカハタ（「アカバ」）</b><br>Blacktip Grouper</td><td>浅いリーフ、簡単</td><td>浅いリーフ</td><td>ジグ、インチク、ワーム</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> よく釣れる定番。</td></tr>
+
+    <tr><td><b>バラハタ（「チギ」）</b><br>Yellow-edged Lyretail</td><td>浅いリーフ、ジギング＆磯</td><td>浅いリーフ</td><td>ムロアジ、ジグ</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 唐揚げが絶品。</td></tr>
+
+    <tr><td><b>カンパチ</b><br>Greater Amberjack</td><td>船からジギング、キャスト</td><td>浅場〜200m超</td><td>メタルジグ</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 3〜5kgが美味。ライン切れ注意。</td></tr>
+
+    <tr><td><b>キハダ（マグロ）</b><br>Yellowfin Tuna</td><td>船からジギング（中層）</td><td>中層</td><td>メタルジグ</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 群れに当たれば数釣り。</td></tr>
+
+    <tr><td><b>ウメイロ</b><br>Yellowtail Blue Snapper</td><td>船からサビキ</td><td>20〜30m</td><td>イカを付けたサビキ</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 底を切って巻かないと他魚が掛かる。</td></tr>
+
+    <tr><td><b>オオモンハタ</b><br>Areolate Grouper</td><td>アカハタ狙いの外道で</td><td>リーフ</td><td>インチクジグ</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 約35cm。</td></tr>
+
+    <tr><td><b>ツチホゼリ</b><br>Speckled Blue Grouper</td><td>岩場、非常に稀</td><td>浅い砂地リーフ</td><td>ムロアジの一本針</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 約1m。巣穴を掘る。</td></tr>
+
+    <tr><td><b>イシガキダイ（「クチジロ」）</b><br>Spotted Knifejaw</td><td>岩場、ウニの殻をまく</td><td>リーフ</td><td>ウニ、カニ、貝</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></span></td><td><span class="tag keep">キープ</span> 30cm前後が美味。80cmまで。</td></tr>
+
+    <tr><td><b>イソマグロ</b><br>Dogtooth Tuna</td><td>船・岩場からジギング</td><td>リーフ・中層</td><td>メタルジグ</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag caution">取扱注意</span> 鋭い歯。約2m。</td></tr>
+
+    <tr><td><b>カッポレ</b><br>Black Trevally</td><td>岩場、多い</td><td>表層・リーフ</td><td>ムロアジ、ルアー、ワーム</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag keep">キープ</span> 小さくてもよく引く。</td></tr>
+
+    <tr><td><b>フエフキダイ</b><br>Emperor Fish</td><td>岩場、底付近</td><td>リーフ</td><td>ムロアジ</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag local">食用稀</span> リーフに突っ込むので素早く浮かせる。</td></tr>
+
+    <tr><td><b>ロウニンアジ（GT）</b><br>Giant Trevally</td><td>キャスト、船・岩場</td><td>表層・リーフ</td><td>スティックベイト、ムロアジ</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag local">食用稀</span> 50kg超。釣るのは難しい。</td></tr>
+
+    <tr><td><b>バラフエダイ</b><br>Two-spot Red Snapper</td><td>岩場周りでキャスト</td><td>リーフ</td><td>ルアー、エサ</td><td><span class="stars">&#9733;&#9733;&#9733;<span class="off">&#9733;&#9733;</span></span></td><td><span class="tag cig">シガテラ</span> <span class="tag local">食用稀</span> 10kgほどに。</td></tr>
+
+    <tr><td><b>イソモンガラ</b><br>Rough Triggerfish</td><td>イシガキダイ狙いの外道で</td><td>リーフ</td><td>甲殻類のエサ</td><td><span class="stars"><span class="off">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td><span class="tag local">食用稀</span> 食味不明。肝が大きい。</td></tr>
+
+    <tr><td><b>イスズミ</b><br>Rudderfish</td><td>岩場、多い</td><td>表層</td><td>ムロアジ、ワーム</td><td><span class="stars">&#9733;&#9733;<span class="off">&#9733;&#9733;&#9733;</span></span></td><td><span class="tag local">食用稀</span> 表層付近でよく見かける。</td></tr>
+  </table>
+</section>
+
+<!-- ===================== 付録G — 図解 ===================== -->
+<section class="part">
+  <div class="part-bar"></div>
+  <div class="part-label">付録G</div>
+  <h2 class="part-title">図解リファレンス</h2>
+  <p class="romaji">Tackle &amp; Technique at a Glance</p>
+  <p>トレーニング中にひと目で確認できる、一般的な技術の図解です。装備のタイプ、仕掛け、ルアーの種類といった普遍的な仕組みを示します。図中の魚種名やライン番手は一般的な例です。小笠原に固有の魚種・水深・エサについては、必ず<strong>第3部</strong>と<strong>付録F</strong>を参照してください。</p>
+
+  <h3 class="sub">G.1 ロッドとリールの組み合わせ</h3>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_rod_outfits.png">
+      <figcaption>スピンキャスト（上）、スピニング（中）、ベイトキャスティング（下）。小笠原では主にスピニングとコンベンショナルを使用。</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub">G.2 ライン・オモリ・フック・道具</h3>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_hooks_sinkers.png">
+      <figcaption>仕掛けのリファレンス：ライン、ウキ・オモリの種類、フックサイズ、基本の道具。番手は一般的なもの。小笠原では第3部の仕掛けを使用。</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="sub">G.3 ルアーとジグ</h3>
+  <div class="figfull">
+    <figure>
+      <img src="images/fig_lures.png">
+      <figcaption>一般的なルアーの種類。小笠原での主力はメタルジグ、インチクジグ、ソフトプラスチック（3.7参照）。</figcaption>
+    </figure>
+  </div>
+
+  <div class="closing">
+    <p>本ガイドを読み終えました。原則、タックル、スキル、シーン、ルールを理解しました。あとは訓練し、練習し、準備するのみ。母島に降り立つとき、あなたは準備ができています。</p>
+    <p class="ganbatte">幸運を、アングラー。頑張って。</p>
+    <p class="colophon">AIBOS ｜ 小笠原フィッシングガイド ｜ 2026年6月 ｜ 社外秘 ｜ 魚種データ：小笠原2018魚種ガイド</p>
+  </div>
+</section>
+
+</body>
+</html>
